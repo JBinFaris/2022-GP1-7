@@ -1,7 +1,11 @@
 import 'package:faydh/awarenessPost.dart';
 import 'package:flutter/material.dart';
+import 'package:faydh/dbHelper/mongodb.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await MongoDatabase.connect();
   runApp(const MyApp());
 }
 
