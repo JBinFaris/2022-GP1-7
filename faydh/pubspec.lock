@@ -44,7 +44,7 @@ packages:
     source: hosted
     version: "1.0.5"
   dropdown_button2:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: dropdown_button2
       url: "https://pub.dartlang.org"
