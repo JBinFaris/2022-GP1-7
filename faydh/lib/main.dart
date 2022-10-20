@@ -1,6 +1,8 @@
 import 'package:faydh/awarenessPost.dart';
+import 'package:faydh/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/dbHelper/mongodb.dart';
+import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: awarenessPost(),
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const signInSreen(),
     );
   }
 }
