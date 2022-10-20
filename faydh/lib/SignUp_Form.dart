@@ -18,6 +18,9 @@ class _SignupFormState extends State<SignupForm> {
  final _passwordController = TextEditingController();
  final _phonenumberController = TextEditingController();
  final _UserTypeController = TextEditingController();
+ bool? _isChecked = false ;
+ bool? seen = false ;
+String? SelectedValue;
 
 final List<String> UserTypes = [
   'فرد',
@@ -26,8 +29,8 @@ final List<String> UserTypes = [
   'مشرف',
 ];
 
-String? SelectedValue;
-bool? isChecked = false ;
+
+
 
  @override
  void dispose() {
@@ -87,7 +90,7 @@ bool? isChecked = false ;
                     textAlign: TextAlign.right ,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                     icon: Icon(Icons.email , size: 30, color: Color.fromARGB(255, 18, 57, 20) , ),
+                     prefixIcon: Icon(Icons.email , size: 30, color: Color.fromARGB(255, 18, 57, 20) , ),
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50.0),
@@ -118,7 +121,7 @@ bool? isChecked = false ;
                     controller: _usernameController, //field value
                     textAlign: TextAlign.right ,
                     decoration: InputDecoration(
-                    icon: Icon(Icons.account_circle_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
+                    prefixIcon: Icon(Icons.account_circle_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50.0),
@@ -155,7 +158,7 @@ bool? isChecked = false ;
                     autocorrect: false,
                     textAlign: TextAlign.right ,
                     decoration: InputDecoration(
-                    icon: Icon(Icons.password_rounded , size: 30 ,color: Color.fromARGB(255, 18, 57, 20) ,),
+                    prefixIcon: Icon(Icons.password_rounded , size: 30 ,color: Color.fromARGB(255, 18, 57, 20) ,),
                     contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50.0),
@@ -190,7 +193,7 @@ bool? isChecked = false ;
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.right ,
                     decoration: InputDecoration(
-                     icon: Icon(Icons.phone_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
+                     prefixIcon: Icon(Icons.phone_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
                       contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                       border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50.0),
@@ -216,7 +219,125 @@ bool? isChecked = false ;
                    ),
                   ),
                   //user type
-                 const SizedBox(height: 10),
+                   Padding(
+                padding: const EdgeInsets.only(top:8, bottom: 4),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: DropdownButtonFormField<String>(
+                   alignment: Alignment.centerRight,
+                   value: SelectedValue,
+                    icon:  Align(alignment:Alignment.centerLeft, child: const Icon(Icons.arrow_drop_down)),
+                   elevation: 16,
+                   borderRadius:BorderRadius.circular(40),
+                     decoration: InputDecoration(
+                     // errorStyle: TextStyle( align: TextAlign.right),
+                     prefixIcon: Icon(Icons.supervised_user_circle_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
+                      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      borderSide: BorderSide(color:Color.fromARGB(255, 18, 57, 20)),
+                      ), 
+                     filled: true,
+                     hintStyle: TextStyle(color: Colors.grey[800]),
+                     label: Align(alignment: Alignment.centerRight,
+                     child: Text('نوع المستخدم') ),
+                    // contentPadding: EdgeInsets.only(left:230), 
+                     fillColor: Colors.white70,
+                    ),
+                   
+                   items: UserTypes.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                     );
+                   }).toList(), 
+                    validator: (value) {
+                     if (value == null) {
+                      return 'الرجاء اختيار نوع المستخدم' ;
+                     }
+                     }, onChanged: (String? value) {
+                //Do something when changing the item if you want.
+                setState(() {
+                       SelectedValue = value!;
+                      });
+                     },
+                    onSaved: (value) {
+                    SelectedValue = value.toString();
+                    
+                     },
+                   ))),
+             //checkbox
+                 Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                  padding:const EdgeInsets.only(top:5, bottom: 2),
+                  child: CheckboxListTile(
+                   title: Text("اوافق على الاحكام والشروط", textAlign: TextAlign.right,),
+                   value: _isChecked ,
+                   activeColor: Color.fromARGB(255, 18, 57, 20),
+                   onChanged: (newBool){
+                    setState(() {
+                      _isChecked = newBool ;
+                      seen = true;
+                     
+                    }); },
+                  subtitle: seen == true && _isChecked == false 
+                   ? Padding(
+                     padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0), 
+                     child: Text('يجب الموافقة على الاحكام والشروط', style: TextStyle(color: Color(0xFFe53935), fontSize: 12),textAlign: TextAlign.right,) ,)
+                     : null,
+                     ),
+                   
+                   
+                   ),
+                  ),
+                  
+                  //submit button
+                 Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                  padding: const EdgeInsets.only(top:5, bottom: 2),
+                  child: SizedBox(  
+                    width: 200,
+                    height: 50,
+                    
+                    child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    backgroundColor: Color.fromARGB(255, 18, 57, 20), 
+                    shape: StadiumBorder(),
+                    ),
+                    onPressed: (){
+                      if(_formKey.currentState!.validate()){
+
+                      }
+
+                    },
+                    child: Text('تسجيل', style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
+                  ),)
+                  
+                  )) ,
+               
+                ],
+              ), 
+            
+            ),
+
+
+          ),
+
+
+
+        ),
+     ),
+     ) 
+     );
+    
+     
+
+  }
+}
+/*    const SizedBox(height: 10),
                  DropdownButtonFormField2(
                  decoration: InputDecoration(
                   isDense: true,
@@ -250,6 +371,7 @@ bool? isChecked = false ;
                           item,
                           style: const TextStyle(
                             fontSize: 14,
+                            
                           ),
                         ),
                       ))
@@ -265,65 +387,4 @@ bool? isChecked = false ;
                     SelectedValue = value.toString();
                     
                      },
-                    ),
-                 Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                  padding:const EdgeInsets.only(top:5, bottom: 2),
-                  child: CheckboxListTile(
-                   title: Text("اوافق على الاحكام والشروط", textAlign: TextAlign.right,),
-                   value: isChecked ,
-                   activeColor: Color.fromARGB(255, 18, 57, 20),
-                   onChanged: (newBool){
-                    setState(() {
-                      isChecked = newBool ;
-                    });
-                   },
-                   ),
-                  )
-                  ),
-                  //submit button
-                 Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                  padding: const EdgeInsets.only(top:5, bottom: 2),
-                  child: SizedBox(  
-                    width: 200,
-                    height: 50,
-                    
-                    child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    backgroundColor: Color.fromARGB(255, 18, 57, 20), 
-                    shape: StadiumBorder(),
-                    ),
-                    onPressed: (){
-                      if(_formKey.currentState!.validate()){
-
-                      }
-
-                    },
-                    child: Text('تسجيل', style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
-                  ),)
-                  
-                  )) 
-
-                ],
-              ), 
-            
-            ),
-
-
-          ),
-
-
-
-        ),
-     ),
-     ) 
-     );
-    
-     
-
-  }
-}
+                    ),*/
