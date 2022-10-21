@@ -125,7 +125,7 @@ class _HomePageState extends State<awarenessPost> {
         ),
         floatingActionButton: FloatingActionButton.large(
             onPressed: () {},
-            child: new Image.asset('assets/imags/Faydh2.png'),
+            child: new Image.asset('assets/images/faydh2.png'),
 
             // backgroundColor:Color.fromARGB(255, 235, 241, 233),
 
