@@ -81,7 +81,7 @@ final List<String> UserTypes = [
                     child: Align(
                       alignment: Alignment.center,
                      child: Image.asset(
-                     'Faydh.png',
+                     'images/Faydh.png',
                      width: 200,
                      height: 200,
                      fit: BoxFit.cover,
