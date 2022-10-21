@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
 
@@ -62,6 +61,14 @@ final List<String> UserTypes = [
             ),)),
          
         body: SingleChildScrollView(
+        child: Container(
+          decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              stops: [0.1, 0.9],
+              colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
+        ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 80),
             child: Form(
@@ -326,7 +333,8 @@ final List<String> UserTypes = [
 
           ),
 
-
+) 
+        
 
         ),
      ),
