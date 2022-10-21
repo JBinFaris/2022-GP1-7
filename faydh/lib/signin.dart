@@ -35,13 +35,13 @@ class _signInSreenState extends State<signInSreen> {
           scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 120),
+              const SizedBox(height: 110),
               Image.asset(
-                'assets/imgs/logo.png',
+                'imgs/logo.png',
                 width: 250,
                 height: 250,
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 70),
               TextField(
                 textAlign: TextAlign.right,
                 decoration: InputDecoration(

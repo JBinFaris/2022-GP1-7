@@ -1,3 +1,4 @@
+import 'package:faydh/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -50,7 +51,15 @@ class _SignupFormState extends State<SignupForm> {
             child: Padding(
               padding: const EdgeInsets.only(top: 70, right: 5, left: 5),
               child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    onTap:
+                    () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const signInSreen();
+                      }));
+                    };
+                  },
                   icon: Icon(
                     Icons.arrow_back_ios_new,
                     color: Color.fromARGB(255, 18, 57, 20),
@@ -68,13 +77,13 @@ class _SignupFormState extends State<SignupForm> {
                     padding: const EdgeInsets.only(bottom: 5),
                     child: ClipOval(
                         child: Align(
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              'Faydh.png',
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
-                            ))),
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        'imgs/logo.png',
+                        width: 250,
+                        height: 250,
+                      ),
+                    )),
                   ),
                   //email
                   Padding(
