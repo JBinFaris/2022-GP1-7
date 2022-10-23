@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
+
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
 
@@ -82,7 +83,7 @@ final List<String> UserTypes = [
                     child: Align(
                       alignment: Alignment.center,
                      child: Image.asset(
-                     'Faydh.png',
+                     'images/Faydh.png',
                      width: 200,
                      height: 200,
                      fit: BoxFit.cover,
