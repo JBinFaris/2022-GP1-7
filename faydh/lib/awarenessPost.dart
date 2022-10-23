@@ -1,10 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:faydh/MongoDBModel.dart';
+import 'package:faydh/dbHelper/mongodb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:path/path.dart' as Path;
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:mongo_dart/mongo_dart.dart' as M;
+import 'package:mongo_dart/mongo_dart.dart' show Db, GridFS;
 
 class awarenessPost extends StatefulWidget {
   const awarenessPost({super.key});
@@ -13,16 +19,49 @@ class awarenessPost extends StatefulWidget {
   State<awarenessPost> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<awarenessPost> {
+class _HomePageState extends State<awarenessPost>
+    with SingleTickerProviderStateMixin {
   @override
+  var contentController = new TextEditingController();
+  final File? _picController = new File('file.txt'); //ماتأكدت
+
+  // final pickedFile = await _picker.pickImage(source: ImageSource.gallery);//piiicc
+  final url = [
+    "mongodb:replicaSet=<MySet>&authSource=admin&retryWrites=true&w=majority",
+    "mongodb:replicaSet=<MySet>&authSource=admin&retryWrites=true&w=majority",
+    "mongodb:replicaSet=<MySet>&authSource=admin&retryWrites=true&w=majority"
+  ];
+
+  final picker = ImagePicker();
   PickedFile? pickedImage;
   File? imageFile;
-
-  final TextEditingController _nameController = TextEditingController();
-  // final pickedFile = await _picker.pickImage(source: ImageSource.gallery);//piiicc
-
+  late File _image;
+  late GridFS bucket;
+  // AnimationController _animationController;
+  //Animation<Color> _colorTween;
+  ImageProvider? provider;
+  var flag = false;
   @override
   Widget build(BuildContext context) {
+    void _clearAll() {
+      contentController.text = "";
+      Navigator.of(this.context).pop();
+    }
+
+    Future<void> _insertData(String content) async {
+      //Navigator.of(this.context).pop();
+      var _id = M.ObjectId();
+      final data = MongoDbModel(
+        id: _id,
+        content: content,
+      );
+      var result = await MongoDatabase.insert(data);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Inserted Id :" + _id.$oid)));
+
+      _clearAll();
+    }
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -32,6 +71,31 @@ class _HomePageState extends State<awarenessPost> {
             colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
       ),
       child: Scaffold(
+        body: SafeArea(
+            child: FutureBuilder(
+                future: MongoDatabase.getData(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      var totalData = snapshot.data.length;
+                      print("Total Data" + totalData.toString());
+                      return ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return displayCard(
+                                MongoDbModel.fromJson(snapshot.data[index]));
+                          });
+                    } else {
+                      return Center(
+                        child: Text("No data available"),
+                      );
+                    }
+                  }
+                })),
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Center(child: Text('المنتدى التوعوي       ')),
@@ -60,7 +124,7 @@ class _HomePageState extends State<awarenessPost> {
                         children: [
                           TextField(
                             textAlign: TextAlign.right,
-                            controller: _nameController,
+                            controller: contentController,
                             decoration: const InputDecoration(
                               hintText: "اكتب هنا",
                               focusedBorder: UnderlineInputBorder(
@@ -92,7 +156,9 @@ class _HomePageState extends State<awarenessPost> {
                                 alignment: Alignment.center,
                                 child: ElevatedButton(
                                   child: const Text('إضافة'),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _insertData(contentController.text);
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     primary: Color(0xFF1A4D2E),
                                   ),
@@ -105,7 +171,6 @@ class _HomePageState extends State<awarenessPost> {
             },
           ),
         ),
-        body: const MyStatelessWidget(),
         bottomNavigationBar: BottomNavigationBar(
           fixedColor: Color(0xFF1A4D2E),
           iconSize: 35,
@@ -125,7 +190,7 @@ class _HomePageState extends State<awarenessPost> {
         ),
         floatingActionButton: FloatingActionButton.large(
             onPressed: () {},
-            child: new Image.asset('assets/images/faydh2.png'),
+            child: new Image.asset('assets/imgs/Faydh2.png'),
 
             // backgroundColor:Color.fromARGB(255, 235, 241, 233),
 
@@ -146,57 +211,125 @@ class _HomePageState extends State<awarenessPost> {
                     ListTile(
                       leading: Icon(Icons.image),
                       title: Text('Gallery'),
-                      onTap: () => _imageFromGallery(context),
+                      onTap: () => {//_imageFromGallery()
+                      },
                     ),
-                    ListTile(
+                    /*    ListTile(
                       leading: Icon(Icons.camera),
                       title: Text('Camera'),
-                      onTap: () => _imageFromCamera(context),
-                    ),
+                      onTap: () => _imageFromCamera(),
+                    ),*/
                   ],
                 ),
               ),
             ));
   }
+/*
+  Future _imageFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    var _cmpressed_image;
+    PickedFile? pickedImage;
+    File? imageFile;
+    if (pickedFile != null) {
+      try {
+        _cmpressed_image = await FlutterImageCompress.compressWithFile(
+            pickedFile.path ?? "",
+            format: CompressFormat.heic,
+            quality: 70);
+      } catch (e) {
+        _cmpressed_image = await FlutterImageCompress.compressWithFile(
+            pickedFile.path ?? "",
+            format: CompressFormat.jpeg,
+            quality: 70);
+      }
+      setState(() {
+        flag = true;
+      });
+      Map<String, dynamic> image = {
+        "_id": pickedFile.path.split("/").last,
+        "data": base64Encode(_cmpressed_image) ?? ""
+      };
+      var res = await bucket.chunks.insert(image);
+      var img =
+          await bucket.chunks.findOne({"_id": pickedFile.path.split("/").last});
+      setState(() {
+        provider = MemoryImage(base64Decode(img!["data"]));
+        flag = false;
+      });
+    }
+  }*/
 
-  Future _imageFromGallery(BuildContext context) async {
-    imageFile = File(await ImagePicker()
-        .getImage(source: ImageSource.gallery)
-        .then((pickedFile) => pickedFile?.path ?? ''));
+  Widget displayCard(MongoDbModel data) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          width: 0,
+          color: Colors.white,
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      margin: const EdgeInsets.all(8),
+      child: ListTile(
+        leading: SizedBox(
+          width: 50,
+        ),
+        title: Text(
+          "${data.content}",
+          // data.content,
+
+          textAlign: TextAlign.right,
+        ),
+        subtitle: Container(
+          child: provider == null
+              ? Text('No image selected.')
+              : Image(
+                  image: provider as ImageProvider,
+                ),
+        ),
+        trailing: Icon(
+          Icons.account_circle_rounded,
+          size: 40,
+        ),
+      ),
+    );
   }
 
-  Future _imageFromCamera(BuildContext context) async {
-    imageFile = File(await ImagePicker()
-        .getImage(source: ImageSource.gallery)
-        .then((pickedFile) => pickedFile?.path ?? ''));
+  Future connection() async {
+    Db _db = new Db.pool(url);
+    await _db.open(secure: true);
+    bucket = GridFS(_db, "image");
   }
 }
 
+/*
 class MyStatelessWidget extends StatelessWidget {
   const MyStatelessWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            width: 0,
-            color: Colors.white,
-          ),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        margin: const EdgeInsets.all(8),
-        child: ListTile(
-          leading: SizedBox(
-            width: 50,
-          ),
-          trailing: Icon(
-            Icons.account_circle_rounded,
-            size: 40,
-          ),
-        ),
-      ),
+    return Scaffold(
+body: SafeArea(
+          child: FutureBuilder(
+          future:MongoDatabase.getData(),    
+            builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          if (snapshot.hasData) {
+            var totalData = snapshot.data.length; 
+
+          } else {
+            return Center(
+              child: Text("No data available"),
+            );
+          }
+        }
+      })),
+    
+      
     );
   }
 }
+*/
