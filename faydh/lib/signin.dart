@@ -1,4 +1,5 @@
 import 'package:faydh/SignUp_Form.dart';
+import 'package:faydh/awarenessPost.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/animation/animation_controller.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -115,7 +116,13 @@ class _signInSreenState extends State<signInSreen> {
                     borderRadius: BorderRadius.circular(50),
                     borderSide: BorderSide.none,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const awarenessPost()),
+                    );
+                  }),
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
