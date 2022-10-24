@@ -26,16 +26,17 @@ class MongoDatabase {
     return arrData;
   }
 
-  static Future<String> insert(MongoDbModel data) async {
+  static Future<String> insert(data) async {
     try {
-      var result = await userCollection.insertOne(data.toJson());
+      var result = await userCollection!.insertOne(data);
       if (result.isSuccess) {
-        return "Data Inserted";
+        return "data inserted";
       } else {
-        return "Something Wrong while inserting data.";
+        return "data not inserted";
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
+
       return e.toString();
     }
   }
