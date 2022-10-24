@@ -53,4 +53,38 @@ class MongoDatabase {
       return e.toString();
     }
   }
+
+  static Future<Map<String, dynamic>?> getUserData(String id) async {
+    try {
+      Map<String, dynamic>? result =
+          await userCollection!.findOne({'_id': ObjectId.fromHexString(id)});
+
+      if (result != null) {
+        return result;
+      } else {
+        log('data not found');
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<Map<String, dynamic>> updateUserData(
+      String id, Map<String, dynamic> update) async {
+    try {
+      WriteResult result = await userCollection!
+          .replaceOne({'_id': ObjectId.fromHexString(id)}, update);
+
+      if (result.isSuccess) {
+        return {'success': true, 'message': "data updated"};
+      } else {
+        return {'success': false, 'message': "data not updated"};
+      }
+    } catch (e) {
+      log(e.toString());
+      return {'success': false, 'message': e.toString()};
+    }
+  }
 }
