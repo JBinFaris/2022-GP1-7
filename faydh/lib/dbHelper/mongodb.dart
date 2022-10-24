@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:faydh/dbHelper/SignUpModel.dart';
 import 'package:faydh/dbHelper/constant.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -13,5 +14,15 @@ class MongoDatabase {
     inspect(db);
 
     userCollection = db.collection(USER_COLLECTION);
+  }
+  static Future<void> insert(MongoDbModel data) async{
+    try{
+
+
+    }catch(e){
+      print(e.toString());
+    }
+
+
   }
 }
