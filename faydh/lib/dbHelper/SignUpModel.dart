@@ -7,12 +7,12 @@ import 'dart:convert';
 
 import 'package:mongo_dart/mongo_dart.dart';
 
-MongoDbModel mongoDbModelFromJson(String str) => MongoDbModel.fromJson(json.decode(str));
+MongoDbModel2 mongoDbMode2lFromJson(String str) => MongoDbModel2.fromJson(json.decode(str));
 
-String mongoDbModelToJson(MongoDbModel data) => json.encode(data.toJson());
+String mongoDbModel2ToJson(MongoDbModel2 data) => json.encode(data.toJson());
 
-class MongoDbModel {
-    MongoDbModel({
+class MongoDbModel2 {
+    MongoDbModel2({
         required this.id,
         required this.username,
         required this.email,
@@ -28,7 +28,7 @@ class MongoDbModel {
     String phone;
     String? userType;
 
-    factory MongoDbModel.fromJson(Map<String, dynamic> json) => MongoDbModel(
+    factory MongoDbModel2.fromJson(Map<String, dynamic> json) => MongoDbModel2(
         id: json["_id"],
         username: json["username"],
         email: json["email"],

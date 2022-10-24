@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:faydh/dbHelper/SignUpModel.dart';
 import 'package:faydh/MongoDBModel.dart';
 import 'package:faydh/dbHelper/constant.dart';
@@ -90,7 +89,7 @@ class MongoDatabase {
       return {'success': false, 'message': e.toString()};
     }
   }
-  static Future<void> insert(MongoDbModel data) async{
+  static Future<void> insert3(MongoDbModel2 data) async{
     try{
 
 
