@@ -28,8 +28,8 @@ String? SelectedValue ;
 
 Future<void> _insertData(String Uname, String Email, String passWord, String Phone, String? Utype) async{
   var _id = M.ObjectId() ;
-  final data = MongoDbModel(id: _id, username: Uname, email: Email, password: passWord, phone: Phone, userType: Utype);
-  var result = await MongoDatabase.insert(data);
+  final data = MongoDbModel2(id: _id, username: Uname, email: Email, password: passWord, phone: Phone, userType: Utype);
+  var result = await MongoDatabase.insert3(data);
 }
 
 
@@ -92,7 +92,7 @@ final List< String> UserTypes = [
                     child: Align(
                       alignment: Alignment.center,
                      child: Image.asset(
-                     'images/Faydh.png',
+                     'assets/imgs/logo.png',
                      width: 200,
                      height: 200,
                      fit: BoxFit.cover,

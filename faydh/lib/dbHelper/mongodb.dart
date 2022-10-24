@@ -91,7 +91,7 @@ class MongoDatabase {
   }
   static Future<void> insert3(MongoDbModel2 data) async{
     try{
-
+      var result = await userCollection!.insertOne(data);
 
     }catch(e){
       print(e.toString());
