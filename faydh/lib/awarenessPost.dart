@@ -22,8 +22,10 @@ class awarenessPost extends StatefulWidget {
 class _HomePageState extends State<awarenessPost>
     with SingleTickerProviderStateMixin {
   @override
-  var contentController = new TextEditingController();
+  final contentController = TextEditingController();
   final File? _picController = new File('file.txt'); //ماتأكدت
+  String userPost = '';
+  String s = '';
 
   // final pickedFile = await _picker.pickImage(source: ImageSource.gallery);//piiicc
   final url = [
@@ -55,7 +57,7 @@ class _HomePageState extends State<awarenessPost>
         id: _id,
         content: content,
       );
-      var result = await MongoDatabase.insert(data);
+      var result = await MongoDatabase.insert2(data);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Inserted Id :" + _id.$oid)));
 
@@ -73,7 +75,7 @@ class _HomePageState extends State<awarenessPost>
       child: Scaffold(
         body: SafeArea(
             child: FutureBuilder(
-                future: MongoDatabase.getData(),
+                future: MongoDatabase.getData2(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -157,6 +159,8 @@ class _HomePageState extends State<awarenessPost>
                                 child: ElevatedButton(
                                   child: const Text('إضافة'),
                                   onPressed: () {
+                                    // userPost = contentController.text;
+
                                     _insertData(contentController.text);
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -211,7 +215,8 @@ class _HomePageState extends State<awarenessPost>
                     ListTile(
                       leading: Icon(Icons.image),
                       title: Text('Gallery'),
-                      onTap: () => {//_imageFromGallery()
+                      onTap: () => {
+                        //_imageFromGallery()
                       },
                     ),
                     /*    ListTile(
@@ -274,7 +279,7 @@ class _HomePageState extends State<awarenessPost>
           width: 50,
         ),
         title: Text(
-          "${data.content}",
+          userPost = "${data.content}",
           // data.content,
 
           textAlign: TextAlign.right,
