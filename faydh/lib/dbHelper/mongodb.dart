@@ -26,16 +26,17 @@ class MongoDatabase {
     return arrData;
   }
 
-  static Future<String> insert(MongoDbModel data) async {
+  static Future<String> insert(data) async {
     try {
-      var result = await userCollection.insertOne(data.toJson());
+      var result = await userCollection!.insertOne(data);
       if (result.isSuccess) {
-        return "Data Inserted";
+        return "data inserted";
       } else {
-        return "Something Wrong while inserting data.";
+        return "data not inserted";
       }
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
+
       return e.toString();
     }
   }
@@ -51,6 +52,40 @@ class MongoDatabase {
     } catch (e) {
       print(e.toString());
       return e.toString();
+    }
+  }
+
+  static Future<Map<String, dynamic>?> getUserData(String id) async {
+    try {
+      Map<String, dynamic>? result =
+          await userCollection!.findOne({'_id': ObjectId.fromHexString(id)});
+
+      if (result != null) {
+        return result;
+      } else {
+        log('data not found');
+        return null;
+      }
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<Map<String, dynamic>> updateUserData(
+      String id, Map<String, dynamic> update) async {
+    try {
+      WriteResult result = await userCollection!
+          .replaceOne({'_id': ObjectId.fromHexString(id)}, update);
+
+      if (result.isSuccess) {
+        return {'success': true, 'message': "data updated"};
+      } else {
+        return {'success': false, 'message': "data not updated"};
+      }
+    } catch (e) {
+      log(e.toString());
+      return {'success': false, 'message': e.toString()};
     }
   }
 }
