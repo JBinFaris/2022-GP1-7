@@ -3,10 +3,6 @@ import 'package:faydh/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:faydh/dbHelper/mongodb.dart';
-
-
-void main() {
-
 import 'UserProfile.dart';
 
 void main() async {
@@ -22,7 +18,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -31,6 +26,5 @@ class MyApp extends StatelessWidget {
       ),
       home: const UserProfile(),
     );
-
   }
 }
