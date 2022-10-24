@@ -36,6 +36,7 @@ class MongoDatabase {
       }
     } catch (e) {
       log(e.toString());
+
       return e.toString();
     }
   }
