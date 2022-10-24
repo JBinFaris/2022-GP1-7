@@ -36,7 +36,7 @@ class _signInSreenState extends State<signInSreen> {
           scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 120),
+              const SizedBox(height: 30),
               Image.asset(
                 'assets/imgs/logo.png',
                 width: 250,
