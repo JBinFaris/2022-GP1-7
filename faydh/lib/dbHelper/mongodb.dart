@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:faydh/dbHelper/SignUpModel.dart';
 import 'package:faydh/MongoDBModel.dart';
@@ -89,12 +90,17 @@ class MongoDatabase {
       return {'success': false, 'message': e.toString()};
     }
   }
-  static Future<void> insert3(MongoDbModel2 data) async{
+  static Future<String> insert3(MongoDbModel2 data) async{
+   var result = await userCollection!.insertOne(data.toJson());
     try{
-      var result = await userCollection!.insertOne(data);
-
+         if(result.isSuccess)
+         return "Added successfully";
+         else {
+        log('data could not be added');
+        return "";   }   
     }catch(e){
       print(e.toString());
+      return "" ;
     }
 
 
