@@ -1,7 +1,9 @@
+import 'package:faydh/dbHelper/SignUpModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-
+import 'package:faydh/dbHelper/mongodb.dart';
+import 'package:mongo_dart/mongo_dart.dart' as M;
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -20,16 +22,15 @@ class _SignupFormState extends State<SignupForm> {
  final _UserTypeController = TextEditingController();
  bool? _isChecked = false ;
  bool? seen = false ;
-String? SelectedValue;
-
-final List<String> UserTypes = [
-  'فرد',
-  'منظمة تجارية',
-  'منظمة خيرية',
-  'مشرف',
-];
+String? SelectedValue ;
 
 
+
+Future<void> _insertData(String Uname, String Email, String passWord, String Phone, String? Utype) async{
+  var _id = M.ObjectId() ;
+  final data = MongoDbModel(id: _id, username: Uname, email: Email, password: passWord, phone: Phone, userType: Utype);
+  var result = await MongoDatabase.insert(data);
+}
 
 
  @override
@@ -42,6 +43,14 @@ final List<String> UserTypes = [
 
  super.dispose();
 }
+
+
+final List< String> UserTypes = [
+  "فرد",
+  "منظمة تجارية",
+  "منظمة خيرية",
+  "مشرف"
+];
 
 
   Widget build(BuildContext context) {
@@ -317,7 +326,9 @@ final List<String> UserTypes = [
                     ),
                     onPressed: (){
                       if(_formKey.currentState!.validate()){
-
+                        if(_isChecked == true && SelectedValue != ""){
+                        _insertData( _usernameController.text , _emailController.text, _passwordController.text, _phonenumberController.text, SelectedValue);
+                        }
                       }
 
                     },
@@ -328,72 +339,14 @@ final List<String> UserTypes = [
                
                 ],
               ), 
-            
             ),
-
-
           ),
-
-) 
-        
-
+      ) 
         ),
      ),
      ) 
      );
-    
-     
+ 
 
   }
 }
-/*    const SizedBox(height: 10),
-                 DropdownButtonFormField2(
-                 decoration: InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.fromLTRB(2.0, 0.5, 2.0, 0.5),
-                  border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                prefixIcon: Icon(Icons.supervised_user_circle_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
-                filled: true,
-                hintStyle: TextStyle(color: Colors.grey[800]),
-                label: Align(alignment: Alignment.centerRight,
-                child: Text('نوع المستخدم', style: TextStyle(fontSize: 15), ),) ,
-                 ),
-                  isExpanded: true,
-                  icon: Align(
-                    alignment: Alignment.centerLeft,
-                    child:Icon(
-                         Icons.arrow_drop_down,
-                        color: Color.fromARGB(255, 18, 57, 20),
-                         size: 30, 
-                         ) ,) ,
-                alignment: Alignment.centerRight,
-                 buttonHeight: 60,
-                 buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-                 dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                 ),
-                 items: UserTypes.map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            
-                          ),
-                        ),
-                      ))
-                      .toList(),
-                      validator: (value) {
-                     if (value == null) {
-                     return 'الرجاء اختيار نوع المستخدم';
-                     }
-                     }, onChanged: (value) {
-                //Do something when changing the item if you want.
-                     },
-                    onSaved: (value) {
-                    SelectedValue = value.toString();
-                    
-                     },
-                    ),*/
