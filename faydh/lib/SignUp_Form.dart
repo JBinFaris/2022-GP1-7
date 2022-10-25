@@ -1,9 +1,12 @@
 import 'package:faydh/dbHelper/SignUpModel.dart';
+import 'package:faydh/individual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:faydh/dbHelper/mongodb.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
+
+import 'signin.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -63,7 +66,12 @@ final List< String> UserTypes = [
             child:Padding(
               padding: const EdgeInsets.only(top: 70, right: 5, left: 5) ,
               child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                   Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                    return const signInSreen();
+                  }));
+              },
               icon: Icon(
                Icons.arrow_back_ios_new,
                color: Color.fromARGB(255, 18, 57, 20) ,
@@ -295,10 +303,10 @@ final List< String> UserTypes = [
                    onChanged: (newBool){
                     setState(() {
                       _isChecked = newBool ;
-                      seen = true;
+                      
                      
                     }); },
-                  subtitle: seen == true && _isChecked == false 
+                  subtitle:  _isChecked == false
                    ? Padding(
                      padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0), 
                      child: Text('يجب الموافقة على الاحكام والشروط', style: TextStyle(color: Color(0xFFe53935), fontSize: 12),textAlign: TextAlign.right,) ,)
@@ -328,6 +336,10 @@ final List< String> UserTypes = [
                       if(_formKey.currentState!.validate()){
                         if(_isChecked == true && SelectedValue != ""){
                         _insertData( _usernameController.text , _emailController.text, _passwordController.text, _phonenumberController.text, SelectedValue);
+                        Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                       return const individual();
+                      }));
                         }
                       }
 
