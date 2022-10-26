@@ -27,26 +27,18 @@ class _SignupFormState extends State<SignupForm> {
   bool? seen = false;
   String? SelectedValue;
 
-
- final _formKey = GlobalKey<FormState>();
- final _usernameController = TextEditingController();
- final _emailController = TextEditingController();
- final _passwordController = TextEditingController();
- final _phonenumberController = TextEditingController();
- final _UserTypeController = TextEditingController();
- bool? _isChecked = false ;
- bool? seen = false ;
-String? SelectedValue ;
-
-
-
-Future<void> _insertData(String Uname, String Email, String passWord, String Phone, String? Utype) async{
-  var _id = M.ObjectId() ;
-  final data = MongoDbModel2(id: _id, username: Uname, email: Email, password: passWord, phone: Phone, userType: Utype);
-  var result = await MongoDatabase.insert3(data);
-}
-
-
+  Future<void> _insertData(String Uname, String Email, String passWord,
+      String Phone, String? Utype) async {
+    var _id = M.ObjectId();
+    final data = MongoDbModel2(
+        id: _id,
+        username: Uname,
+        email: Email,
+        password: passWord,
+        phone: Phone,
+        userType: Utype);
+    var result = await MongoDatabase.insert3(data);
+  }
 
   @override
   void dispose() {
@@ -433,49 +425,59 @@ Future<void> _insertData(String Uname, String Email, String passWord, String Pho
                               : null,
                         ),
                       ),
-                    ),),
-
-
-                  //submit button
-                 Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                  padding: const EdgeInsets.only(top:5, bottom: 2),
-                  child: SizedBox(  
-                    width: 200,
-                    height: 50,
-                    child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                    backgroundColor: Color.fromARGB(255, 18, 57, 20), 
-                    shape: StadiumBorder(),
                     ),
-                    onPressed: (){
-                      if(_formKey.currentState!.validate()){
-                        if(_isChecked == true && SelectedValue != "" && password_strength == 1){
-                         var P = Crypt.sha256(_passwordController.text) ;
-                        _insertData( _usernameController.text , _emailController.text, P.toString(), _phonenumberController.text, SelectedValue);
-                        Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                       return const individual();
-                      }));
-                        }
-                      }
-                    },
-                    child: Text('تسجيل', style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
-                  ),)
-                  )) ,
-               
-                ],
-              ), 
+
+                    //submit button
+                    Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 5, bottom: 2),
+                            child: SizedBox(
+                              width: 200,
+                              height: 50,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 18, 57, 20),
+                                  shape: StadiumBorder(),
+                                ),
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    if (_isChecked == true &&
+                                        SelectedValue != "" &&
+                                        password_strength == 1) {
+                                      var P = Crypt.sha256(
+                                          _passwordController.text);
+                                      _insertData(
+                                          _usernameController.text,
+                                          _emailController.text,
+                                          P.toString(),
+                                          _phonenumberController.text,
+                                          SelectedValue);
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return const individual();
+                                      }));
+                                    }
+                                  }
+                                },
+                                child: Text(
+                                  'تسجيل',
+                                  style: TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
+                                ),
+                              ),
+                            ))),
+                  ],
+                ),
+              ),
             ),
           )),
         ),
-
-     ),
-     
-     ),);
- 
-
+      ),
+    );
   }
 }
