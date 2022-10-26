@@ -3,10 +3,12 @@ import 'package:faydh/individual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'package:faydh/dbHelper/mongodb.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:crypt/crypt.dart';
 import 'signin.dart';
+
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -17,6 +19,7 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   @override
+
  final _formKey = GlobalKey<FormState>();
  final _usernameController = TextEditingController();
  final _emailController = TextEditingController();
@@ -36,17 +39,23 @@ Future<void> _insertData(String Uname, String Email, String passWord, String Pho
 }
 
 
- @override
- void dispose() {
- _usernameController.dispose();
- _emailController.dispose();
- _passwordController.dispose();
- _phonenumberController.dispose();
- _UserTypeController.dispose();
+  final List<String> UserTypes = [
+    'فرد',
+    'منظمة تجارية',
+    'منظمة خيرية',
+    'مشرف',
+  ];
 
- super.dispose();
-}
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _phonenumberController.dispose();
+    _UserTypeController.dispose();
 
+    super.dispose();
+  }
 
 final List< String> UserTypes = [
   "فرد",
@@ -99,14 +108,16 @@ final List< String> UserTypes = [
 
   Widget build(BuildContext context) {
     return Container(
-      child:Padding(padding: const EdgeInsets.only(top: 15),
+        child: Padding(
+      padding: const EdgeInsets.only(top: 15),
       child: Scaffold(
-          backgroundColor: Color.fromARGB(242, 214, 236, 208),
-          floatingActionButton : Align(
+        backgroundColor: Color.fromARGB(242, 214, 236, 208),
+        floatingActionButton: Align(
             alignment: Alignment.topLeft,
-            child:Padding(
-              padding: const EdgeInsets.only(top: 70, right: 5, left: 5) ,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 70, right: 5, left: 5),
               child: IconButton(
+
               onPressed: () {
                    Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) {
@@ -120,14 +131,14 @@ final List< String> UserTypes = [
             ),)),
          
         body: SingleChildScrollView(
-        child: Container(
+            child: Container(
           decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.bottomLeft,
-              end: Alignment.topRight,
-              stops: [0.1, 0.9],
-              colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
-        ),
+            gradient: LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                stops: [0.1, 0.9],
+                colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 80),
             child: Form(
@@ -138,6 +149,7 @@ final List< String> UserTypes = [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: ClipOval(
+
                     child: Align(
                       alignment: Alignment.center,
                      child: Image.asset(
@@ -147,74 +159,93 @@ final List< String> UserTypes = [
                      fit: BoxFit.cover,
                      ))
                     ),
-                  ),
+
+),
                   //email
                   Padding(
-                   padding: const EdgeInsets.only(top:8, bottom: 4),
-                   child: TextFormField(
-                    controller: _emailController, //field value
-                    textAlign: TextAlign.right ,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                     prefixIcon: Icon(Icons.email , size: 30, color: Color.fromARGB(255, 18, 57, 20) , ),
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                      border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      borderSide: BorderSide(color:Color.fromARGB(255, 18, 57, 20)),
-                      ), 
-                     filled: true,
-                     hintStyle: TextStyle(color: Colors.grey[800]),
-                     label: Align(alignment: Alignment.centerRight,
-                     child: Text('البريد الإلكتروني'),) ,
-                    
-                    // contentPadding: EdgeInsets.only(left:230), 
-                     fillColor: Colors.white70,
-                    ),
-                    validator: (value){
-                     if(value == null || value.isEmpty){
-                      return 'الرجاء إدخال البربد الإلكتروني' ;
-                    } else if (!value.contains("@") || !value.contains(".")){
-                      return 'الرجاء إدخال بريد إلكتروني صالح';
-                    }
-                    return null;
-                    } ,
-                   ),
-                  ),
-                //username
-                 Padding(
-                   padding: const EdgeInsets.only(top:8, bottom: 4),
-                   child: TextFormField(
-                    controller: _usernameController, //field value
-                    textAlign: TextAlign.right ,
-                    decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.account_circle_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
-                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                      border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      borderSide: BorderSide(color:Color.fromARGB(255, 18, 57, 20)),
-                      ), 
-                     filled: true,
-                     hintStyle: TextStyle(color: Colors.grey[800]),
-                     label: Align(alignment: Alignment.centerRight,
-                     child: Text('اسم المستخدم'),) ,
-                    
-                    // contentPadding: EdgeInsets.only(left:230), 
-                     fillColor: Colors.white70,
-                    ),
-                    validator: (value){
-                     if(value == null || value.isEmpty){
-                      return 'الرجاء إدخال إسم المستخدم' ;
-                    } else if(value.length < 3){
-                      return 'إسم المستخدم يجب ان يكون اكثر من ٣ رموز' ;
-                     }else if (value.length > 8){
-                      return 'لا يمكن لإسم المستخدم ان يكون اكثر من ٨ رموز';
-                     }
+                    padding: const EdgeInsets.only(top: 8, bottom: 4),
+                    child: TextFormField(
+                      controller: _emailController, //field value
+                      textAlign: TextAlign.right,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.email,
+                          size: 30,
+                          color: Color.fromARGB(255, 18, 57, 20),
+                        ),
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 18, 57, 20)),
+                        ),
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.grey[800]),
+                        label: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text('البريد الإلكتروني'),
+                        ),
 
-                    return null;
-                    } ,
-                   ),
+                        // contentPadding: EdgeInsets.only(left:230),
+                        fillColor: Colors.white70,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'الرجاء إدخال البربد الإلكتروني';
+                        } else if (!value.contains("@") ||
+                            !value.contains(".")) {
+                          return 'الرجاء إدخال بريد إلكتروني صالح';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  //username
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 4),
+                    child: TextFormField(
+                      controller: _usernameController, //field value
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.account_circle_rounded,
+                          size: 30,
+                          color: Color.fromARGB(255, 18, 57, 20),
+                        ),
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 18, 57, 20)),
+                        ),
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.grey[800]),
+                        label: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text('اسم المستخدم'),
+                        ),
+
+                        // contentPadding: EdgeInsets.only(left:230),
+                        fillColor: Colors.white70,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'الرجاء إدخال إسم المستخدم';
+                        } else if (value.length < 3) {
+                          return 'إسم المستخدم يجب ان يكون اكثر من ٣ رموز';
+                        } else if (value.length > 8) {
+                          return 'لا يمكن لإسم المستخدم ان يكون اكثر من ٨ رموز';
+                        }
+
+                        return null;
+                      },
+                    ),
                   ),
                   //password
+
                     Padding(
                    padding: const EdgeInsets.only(top:8, bottom: 4),
                    child: TextFormField(
@@ -252,7 +283,8 @@ final List< String> UserTypes = [
                         }}
                     } ,
                    ),
-                  ),
+
+),
                   Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: LinearProgressIndicator(
@@ -269,64 +301,135 @@ final List< String> UserTypes = [
                 ),
               ),
                   //phone number
-                     Padding(
-                   padding: const EdgeInsets.only(top:8, bottom: 4),
-                   child: TextFormField(
-                    controller: _phonenumberController, //field value
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.right ,
-                    decoration: InputDecoration(
-                     prefixIcon: Icon(Icons.phone_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
-                      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                      border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      borderSide: BorderSide(color:Color.fromARGB(255, 18, 57, 20)),
-                      ), 
-                     filled: true,
-                     hintStyle: TextStyle(color: Colors.grey[800]),
-                     label: Align(alignment: Alignment.centerRight,
-                     child: Text('رقم الجوال'),) ,
-                    
-                    // contentPadding: EdgeInsets.only(left:230), 
-                     fillColor: Colors.white70,
-                    ),
-                    validator: (value){
-                     if(value == null || value.isEmpty){
-                      return 'الرجاء إدخال رقم الجوال' ;
-                    } else if( value.length != 10 ){
-                      return 'رقم الجوال يجب ان يكون مكون من ١٠ رموز' ;
-                     }
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 4),
+                    child: TextFormField(
+                      controller: _phonenumberController, //field value
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.phone_rounded,
+                          size: 30,
+                          color: Color.fromARGB(255, 18, 57, 20),
+                        ),
+                        contentPadding:
+                            EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 18, 57, 20)),
+                        ),
+                        filled: true,
+                        hintStyle: TextStyle(color: Colors.grey[800]),
+                        label: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text('رقم الجوال'),
+                        ),
 
-                    return null;
-                    } ,
-                   ),
+                        // contentPadding: EdgeInsets.only(left:230),
+                        fillColor: Colors.white70,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'الرجاء إدخال رقم الجوال';
+                        } else if (value.length != 10) {
+                          return 'رقم الجوال يجب ان يكون مكون من ١٠ رموز';
+                        }
+
+                        return null;
+                      },
+                    ),
                   ),
                   //user type
-                   Padding(
-                padding: const EdgeInsets.only(top:8, bottom: 4),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: DropdownButtonFormField<String>(
-                   alignment: Alignment.centerRight,
-                   value: SelectedValue,
-                    icon:  Align(alignment:Alignment.centerLeft, child: const Icon(Icons.arrow_drop_down)),
-                   elevation: 16,
-                   borderRadius:BorderRadius.circular(40),
-                     decoration: InputDecoration(
-                     // errorStyle: TextStyle( align: TextAlign.right),
-                     prefixIcon: Icon(Icons.supervised_user_circle_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
-                      contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                      border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      borderSide: BorderSide(color:Color.fromARGB(255, 18, 57, 20)),
-                      ), 
-                     filled: true,
-                     hintStyle: TextStyle(color: Colors.grey[800]),
-                     label: Align(alignment: Alignment.centerRight,
-                     child: Text('نوع المستخدم') ),
-                    // contentPadding: EdgeInsets.only(left:230), 
-                     fillColor: Colors.white70,
+                  Padding(
+                      padding: const EdgeInsets.only(top: 8, bottom: 4),
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: DropdownButtonFormField<String>(
+                            alignment: Alignment.centerRight,
+                            value: SelectedValue,
+                            icon: Align(
+                                alignment: Alignment.centerLeft,
+                                child: const Icon(Icons.arrow_drop_down)),
+                            elevation: 16,
+                            borderRadius: BorderRadius.circular(40),
+                            decoration: InputDecoration(
+                              // errorStyle: TextStyle( align: TextAlign.right),
+                              prefixIcon: Icon(
+                                Icons.supervised_user_circle_rounded,
+                                size: 30,
+                                color: Color.fromARGB(255, 18, 57, 20),
+                              ),
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50.0),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 18, 57, 20)),
+                              ),
+                              filled: true,
+                              hintStyle: TextStyle(color: Colors.grey[800]),
+                              label: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text('نوع المستخدم')),
+                              // contentPadding: EdgeInsets.only(left:230),
+                              fillColor: Colors.white70,
+                            ),
+                            items: UserTypes.map<DropdownMenuItem<String>>(
+                                (String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            validator: (value) {
+                              if (value == null) {
+                                return 'الرجاء اختيار نوع المستخدم';
+                              }
+                            },
+                            onChanged: (String? value) {
+                              //Do something when changing the item if you want.
+                              setState(() {
+                                SelectedValue = value!;
+                              });
+                            },
+                            onSaved: (value) {
+                              SelectedValue = value.toString();
+                            },
+                          ))),
+                  //checkbox
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 2),
+                      child: CheckboxListTile(
+                        title: Text(
+                          "اوافق على الاحكام والشروط",
+                          textAlign: TextAlign.right,
+                        ),
+                        value: _isChecked,
+                        activeColor: Color.fromARGB(255, 18, 57, 20),
+                        onChanged: (newBool) {
+                          setState(() {
+                            _isChecked = newBool;
+                            seen = true;
+                          });
+                        },
+                        subtitle: seen == true && _isChecked == false
+                            ? Padding(
+                                padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0),
+                                child: Text(
+                                  'يجب الموافقة على الاحكام والشروط',
+                                  style: TextStyle(
+                                      color: Color(0xFFe53935), fontSize: 12),
+                                  textAlign: TextAlign.right,
+                                ),
+                              )
+                            : null,
+                      ),
                     ),
+
                    
                    items: UserTypes.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(

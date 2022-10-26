@@ -1,10 +1,13 @@
 import 'package:faydh/SignUp_Form.dart';
 import 'package:faydh/awarenessPost.dart';
+import 'package:faydh/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/animation/animation_controller.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/ticker_provider.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
 import 'forget-password.dart';
 
@@ -16,6 +19,8 @@ class signInSreen extends StatefulWidget {
 }
 
 class _signInSreenState extends State<signInSreen> {
+  int _selectedIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -119,8 +124,7 @@ class _signInSreenState extends State<signInSreen> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const awarenessPost()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );
                   }),
               const SizedBox(height: 20),
