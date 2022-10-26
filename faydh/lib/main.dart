@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:faydh/awarenessPost.dart';
 import 'package:faydh/home_page.dart';
 import 'package:faydh/signin.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Faydh',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

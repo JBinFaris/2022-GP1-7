@@ -34,14 +34,14 @@ class _signInSreenState extends State<signInSreen> {
         ),
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 70,
+          vertical: 55,
         ),
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
-              const SizedBox(height: 120),
+              const SizedBox(height: 30),
               Image.asset(
                 'assets/imgs/logo.png',
                 width: 250,
@@ -141,7 +141,7 @@ class _signInSreenState extends State<signInSreen> {
                       fontSize: 20,
                     )),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
                   Navigator.of(context)

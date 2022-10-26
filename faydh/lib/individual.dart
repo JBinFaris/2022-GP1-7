@@ -67,6 +67,8 @@ class _individualPageState extends State<individual> {
           )
         ]),
       ),
+
+
     );
   }
 }

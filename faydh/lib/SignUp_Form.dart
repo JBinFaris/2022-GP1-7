@@ -1,6 +1,14 @@
+import 'package:faydh/dbHelper/SignUpModel.dart';
+import 'package:faydh/individual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+
+import 'package:faydh/dbHelper/mongodb.dart';
+import 'package:mongo_dart/mongo_dart.dart' as M;
+import 'package:crypt/crypt.dart';
+import 'signin.dart';
+
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -11,15 +19,25 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   @override
-  final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _phonenumberController = TextEditingController();
-  final _UserTypeController = TextEditingController();
-  bool? _isChecked = false;
-  bool? seen = false;
-  String? SelectedValue;
+
+ final _formKey = GlobalKey<FormState>();
+ final _usernameController = TextEditingController();
+ final _emailController = TextEditingController();
+ final _passwordController = TextEditingController();
+ final _phonenumberController = TextEditingController();
+ final _UserTypeController = TextEditingController();
+ bool? _isChecked = false ;
+ bool? seen = false ;
+String? SelectedValue ;
+
+
+
+Future<void> _insertData(String Uname, String Email, String passWord, String Phone, String? Utype) async{
+  var _id = M.ObjectId() ;
+  final data = MongoDbModel2(id: _id, username: Uname, email: Email, password: passWord, phone: Phone, userType: Utype);
+  var result = await MongoDatabase.insert3(data);
+}
+
 
   final List<String> UserTypes = [
     'فرد',
@@ -39,6 +57,55 @@ class _SignupFormState extends State<SignupForm> {
     super.dispose();
   }
 
+final List< String> UserTypes = [
+  "فرد",
+  "منظمة تجارية",
+  "منظمة خيرية",
+];
+
+//A function that validate user entered password
+  bool validatePassword(String pass){
+    String _password = pass.trim();
+
+    if(_password.isEmpty){
+      setState(() {
+        password_strength = 0;
+      });
+    }else if(_password.length < 6 ){
+      setState(() {
+        password_strength = 1 / 4;                    //string length less then 6 character
+      });
+    }else if(_password.length < 8){
+      setState(() {
+        password_strength = 2 / 4;                   //string length greater then 6 & less then 8
+      });
+    }else{
+       if(pass_valid.hasMatch(_password)){            // regular expression to check password valid or not
+        setState(() {
+          password_strength = 4 / 4;                 
+        });
+        return true;                                
+      }else{
+        setState(() {
+          password_strength = 3 / 4;
+        });
+        return false;
+      }
+    }
+    return false;
+  }
+  
+  // regular expression to check if string
+  RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
+  double password_strength = 0; 
+
+   // 0: No password
+  // 1/4: Weak
+  // 2/4: Medium
+  // 3/4: Strong
+  //   1:   Great
+
+
   Widget build(BuildContext context) {
     return Container(
         child: Padding(
@@ -50,12 +117,19 @@ class _SignupFormState extends State<SignupForm> {
             child: Padding(
               padding: const EdgeInsets.only(top: 70, right: 5, left: 5),
               child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Color.fromARGB(255, 18, 57, 20),
-                  )),
-            )),
+
+              onPressed: () {
+                   Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) {
+                    return const signInSreen();
+                  }));
+              },
+              icon: Icon(
+               Icons.arrow_back_ios_new,
+               color: Color.fromARGB(255, 18, 57, 20) ,
+              )
+            ),)),
+         
         body: SingleChildScrollView(
             child: Container(
           decoration: const BoxDecoration(
@@ -75,15 +149,18 @@ class _SignupFormState extends State<SignupForm> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 5),
                     child: ClipOval(
-                        child: Align(
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              'images/Faydh.png',
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.cover,
-                            ))),
-                  ),
+
+                    child: Align(
+                      alignment: Alignment.center,
+                     child: Image.asset(
+                     'assets/imgs/logo.png',
+                     width: 200,
+                     height: 200,
+                     fit: BoxFit.cover,
+                     ))
+                    ),
+
+),
                   //email
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 4),
@@ -168,50 +245,61 @@ class _SignupFormState extends State<SignupForm> {
                     ),
                   ),
                   //password
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 4),
-                    child: TextFormField(
-                      controller: _passwordController, //field value
-                      obscureText: true,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      textAlign: TextAlign.right,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.password_rounded,
-                          size: 30,
-                          color: Color.fromARGB(255, 18, 57, 20),
-                        ),
-                        contentPadding:
-                            EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                          borderSide: BorderSide(
-                              color: Color.fromARGB(255, 18, 57, 20)),
-                        ),
-                        filled: true,
-                        hintStyle: TextStyle(color: Colors.grey[800]),
-                        label: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text('كلمة المرور'),
-                        ),
 
-                        // contentPadding: EdgeInsets.only(left:230),
-                        fillColor: Colors.white70,
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'الرجاء إدخال كلمة المرور';
-                        } else if (value.length < 8) {
-                          return 'كلمة المرور يجب ان تكون اكثر من ٨ رموز';
-                        } else if (value.length > 15) {
-                          return 'لا يمكن لكلمة المرور ان تكون اكثر من ١٥ رمز';
-                        }
-
-                        return null;
-                      },
+                    Padding(
+                   padding: const EdgeInsets.only(top:8, bottom: 4),
+                   child: TextFormField(
+                    controller: _passwordController, //field value
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    textAlign: TextAlign.right ,
+                    decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.password_rounded , size: 30 ,color: Color.fromARGB(255, 18, 57, 20) ,),
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      borderSide: BorderSide(color:Color.fromARGB(255, 18, 57, 20)),
+                      ), 
+                     filled: true,
+                     hintStyle: TextStyle(color: Colors.grey[800]),
+                     label: Align(alignment: Alignment.centerRight,
+                     child: Text('كلمة المرور'),) ,
+                    
+                    // contentPadding: EdgeInsets.only(left:230), 
+                     fillColor: Colors.white70,
                     ),
-                  ),
+                    validator: (value){
+                     if(value == null || value.isEmpty){
+                      return 'الرجاء إدخال كلمة المرور' ;
+                    } else{ 
+                      //call function to check password
+                      bool result = validatePassword(value);
+                      if(result){
+                        return null;
+                      }
+                      else{
+                        return "كلمةالمرور يجب ان تتكون على الأقل من حرف كبير ،حرف صغير ،رقم ورمز مميز";
+                        }}
+                    } ,
+                   ),
+
+),
+                  Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: LinearProgressIndicator(
+                  value: password_strength,
+                  backgroundColor: Colors.grey[300],
+                  minHeight: 5,
+                  color: password_strength <= 1 / 4
+                      ? Colors.red
+                      : password_strength == 2 / 4
+                      ? Colors.yellow
+                      : password_strength == 3 / 4
+                      ? Colors.blue
+                      : Colors.green,
+                ),
+              ),
                   //phone number
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 4),
@@ -341,91 +429,93 @@ class _SignupFormState extends State<SignupForm> {
                             : null,
                       ),
                     ),
-                  ),
 
-                  //submit button
-                  Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                          padding: const EdgeInsets.only(top: 5, bottom: 2),
-                          child: SizedBox(
-                            width: 200,
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding:
-                                    EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                                backgroundColor:
-                                    Color.fromARGB(255, 18, 57, 20),
-                                shape: StadiumBorder(),
-                              ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {}
-                              },
-                              child: Text(
-                                'تسجيل',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 255, 255)),
-                              ),
-                            ),
-                          ))),
-                ],
-              ),
-            ),
-          ),
-        )),
-      ),
-    ));
-  }
-}
-/*    const SizedBox(height: 10),
-                 DropdownButtonFormField2(
-                 decoration: InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.fromLTRB(2.0, 0.5, 2.0, 0.5),
-                  border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                prefixIcon: Icon(Icons.supervised_user_circle_rounded , size: 30, color: Color.fromARGB(255, 18, 57, 20) ,),
-                filled: true,
-                hintStyle: TextStyle(color: Colors.grey[800]),
-                label: Align(alignment: Alignment.centerRight,
-                child: Text('نوع المستخدم', style: TextStyle(fontSize: 15), ),) ,
-                 ),
-                  isExpanded: true,
-                  icon: Align(
-                    alignment: Alignment.centerLeft,
-                    child:Icon(
-                         Icons.arrow_drop_down,
-                        color: Color.fromARGB(255, 18, 57, 20),
-                         size: 30, 
-                         ) ,) ,
-                alignment: Alignment.centerRight,
-                 buttonHeight: 60,
-                 buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-                 dropdownDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                 ),
-                 items: UserTypes.map((item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            
-                          ),
-                        ),
-                      ))
-                      .toList(),
-                      validator: (value) {
+                   
+                   items: UserTypes.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                     );
+                   }).toList(), 
+                    validator: (value) {
                      if (value == null) {
-                     return 'الرجاء اختيار نوع المستخدم';
+                      return 'الرجاء اختيار نوع المستخدم' ;
                      }
-                     }, onChanged: (value) {
+                     }, onChanged: (String? value) {
                 //Do something when changing the item if you want.
+                setState(() {
+                       SelectedValue = value!;
+                      });
                      },
                     onSaved: (value) {
                     SelectedValue = value.toString();
                     
                      },
-                    ),*/
+                   ))),
+             //checkbox
+                 Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                  padding:const EdgeInsets.only(top:2, bottom: 2),
+                  child: CheckboxListTile(
+                   title: Text("اوافق على الاحكام والشروط", textAlign: TextAlign.right,),
+                   value: _isChecked ,
+                   activeColor: Color.fromARGB(255, 18, 57, 20),
+                   onChanged: (newBool){
+                    setState(() {
+                      _isChecked = newBool ;
+                    }); },
+                  subtitle:  _isChecked == false
+                   ? Padding(
+                     padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0), 
+                     child: Text('يجب الموافقة على الاحكام والشروط', style: TextStyle(color: Color(0xFFe53935), fontSize: 12),textAlign: TextAlign.right,) ,)
+                     : null,
+                     ),
+                   
+                   
+                   ),
+                  ),
+                  
+                  //submit button
+                 Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                  padding: const EdgeInsets.only(top:5, bottom: 2),
+                  child: SizedBox(  
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                    backgroundColor: Color.fromARGB(255, 18, 57, 20), 
+                    shape: StadiumBorder(),
+                    ),
+                    onPressed: (){
+                      if(_formKey.currentState!.validate()){
+                        if(_isChecked == true && SelectedValue != "" && password_strength == 1){
+                         var P = Crypt.sha256(_passwordController.text) ;
+                        _insertData( _usernameController.text , _emailController.text, P.toString(), _phonenumberController.text, SelectedValue);
+                        Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                       return const individual();
+                      }));
+                        }
+                      }
+                    },
+                    child: Text('تسجيل', style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
+                  ),)
+                  )) ,
+               
+                ],
+              ), 
+            ),
+          ),
+      ) 
+        ),
+     ),
+     ) 
+     );
+ 
+
+  }
+}
