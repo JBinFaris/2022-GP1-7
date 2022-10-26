@@ -2,6 +2,7 @@
 //
 //     final mongoDbModel = mongoDbModelFromJson(jsonString);
 
+import 'package:crypt/crypt.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 

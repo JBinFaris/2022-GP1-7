@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:faydh/dbHelper/mongodb.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
-
+import 'package:crypt/crypt.dart';
 import 'signin.dart';
 
 class SignupForm extends StatefulWidget {
@@ -52,8 +52,49 @@ final List< String> UserTypes = [
   "فرد",
   "منظمة تجارية",
   "منظمة خيرية",
-  "مشرف"
 ];
+
+//A function that validate user entered password
+  bool validatePassword(String pass){
+    String _password = pass.trim();
+
+    if(_password.isEmpty){
+      setState(() {
+        password_strength = 0;
+      });
+    }else if(_password.length < 6 ){
+      setState(() {
+        password_strength = 1 / 4;                    //string length less then 6 character
+      });
+    }else if(_password.length < 8){
+      setState(() {
+        password_strength = 2 / 4;                   //string length greater then 6 & less then 8
+      });
+    }else{
+       if(pass_valid.hasMatch(_password)){            // regular expression to check password valid or not
+        setState(() {
+          password_strength = 4 / 4;                 
+        });
+        return true;                                
+      }else{
+        setState(() {
+          password_strength = 3 / 4;
+        });
+        return false;
+      }
+    }
+    return false;
+  }
+  
+  // regular expression to check if string
+  RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
+  double password_strength = 0; 
+
+   // 0: No password
+  // 1/4: Weak
+  // 2/4: Medium
+  // 3/4: Strong
+  //   1:   Great
 
 
   Widget build(BuildContext context) {
@@ -200,16 +241,33 @@ final List< String> UserTypes = [
                     validator: (value){
                      if(value == null || value.isEmpty){
                       return 'الرجاء إدخال كلمة المرور' ;
-                    } else if(value.length < 8){
-                      return 'كلمة المرور يجب ان تكون اكثر من ٨ رموز' ;
-                     }else if (value.length > 15){
-                      return 'لا يمكن لكلمة المرور ان تكون اكثر من ١٥ رمز';
-                     }
-
-                    return null;
+                    } else{ 
+                      //call function to check password
+                      bool result = validatePassword(value);
+                      if(result){
+                        return null;
+                      }
+                      else{
+                        return "كلمةالمرور يجب ان تتكون على الأقل من حرف كبير ،حرف صغير ،رقم ورمز مميز";
+                        }}
                     } ,
                    ),
                   ),
+                  Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: LinearProgressIndicator(
+                  value: password_strength,
+                  backgroundColor: Colors.grey[300],
+                  minHeight: 5,
+                  color: password_strength <= 1 / 4
+                      ? Colors.red
+                      : password_strength == 2 / 4
+                      ? Colors.yellow
+                      : password_strength == 3 / 4
+                      ? Colors.blue
+                      : Colors.green,
+                ),
+              ),
                   //phone number
                      Padding(
                    padding: const EdgeInsets.only(top:8, bottom: 4),
@@ -295,7 +353,7 @@ final List< String> UserTypes = [
                  Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
-                  padding:const EdgeInsets.only(top:5, bottom: 2),
+                  padding:const EdgeInsets.only(top:2, bottom: 2),
                   child: CheckboxListTile(
                    title: Text("اوافق على الاحكام والشروط", textAlign: TextAlign.right,),
                    value: _isChecked ,
@@ -303,8 +361,6 @@ final List< String> UserTypes = [
                    onChanged: (newBool){
                     setState(() {
                       _isChecked = newBool ;
-                      
-                     
                     }); },
                   subtitle:  _isChecked == false
                    ? Padding(
@@ -325,7 +381,6 @@ final List< String> UserTypes = [
                   child: SizedBox(  
                     width: 200,
                     height: 50,
-                    
                     child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -334,19 +389,18 @@ final List< String> UserTypes = [
                     ),
                     onPressed: (){
                       if(_formKey.currentState!.validate()){
-                        if(_isChecked == true && SelectedValue != ""){
-                        _insertData( _usernameController.text , _emailController.text, _passwordController.text, _phonenumberController.text, SelectedValue);
+                        if(_isChecked == true && SelectedValue != "" && password_strength == 1){
+                         var P = Crypt.sha256(_passwordController.text) ;
+                        _insertData( _usernameController.text , _emailController.text, P.toString(), _phonenumberController.text, SelectedValue);
                         Navigator.of(context)
                       .push(MaterialPageRoute(builder: (context) {
                        return const individual();
                       }));
                         }
                       }
-
                     },
                     child: Text('تسجيل', style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),),
                   ),)
-                  
                   )) ,
                
                 ],

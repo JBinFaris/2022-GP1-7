@@ -21,7 +21,7 @@ class individual extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: ClipOval(
               child: Image.asset(
-                'images/Faydh.png',
+                'assets/imgs/logo.png',
                 width: 140,
                 height: 140,
                 fit: BoxFit.cover,
@@ -81,7 +81,7 @@ class individual extends StatelessWidget {
 
       floatingActionButton: FloatingActionButton.large(
           onPressed: () {},
-          child: Image.asset('images/Faydh.png'),
+          child: Image.asset('assets/imgs/logo.png'),
 
           // backgroundColor:Color.fromARGB(255, 235, 241, 233),
 
