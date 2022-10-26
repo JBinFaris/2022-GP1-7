@@ -3,7 +3,6 @@ import 'package:faydh/individual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-
 import 'package:faydh/dbHelper/mongodb.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:crypt/crypt.dart';
@@ -38,13 +37,6 @@ Future<void> _insertData(String Uname, String Email, String passWord, String Pho
   var result = await MongoDatabase.insert3(data);
 }
 
-
-  final List<String> UserTypes = [
-    'فرد',
-    'منظمة تجارية',
-    'منظمة خيرية',
-    'مشرف',
-  ];
 
   @override
   void dispose() {
@@ -428,54 +420,8 @@ final List< String> UserTypes = [
                               )
                             : null,
                       ),
-                    ),
+                    ),),
 
-                   
-                   items: UserTypes.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                     );
-                   }).toList(), 
-                    validator: (value) {
-                     if (value == null) {
-                      return 'الرجاء اختيار نوع المستخدم' ;
-                     }
-                     }, onChanged: (String? value) {
-                //Do something when changing the item if you want.
-                setState(() {
-                       SelectedValue = value!;
-                      });
-                     },
-                    onSaved: (value) {
-                    SelectedValue = value.toString();
-                    
-                     },
-                   ))),
-             //checkbox
-                 Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                  padding:const EdgeInsets.only(top:2, bottom: 2),
-                  child: CheckboxListTile(
-                   title: Text("اوافق على الاحكام والشروط", textAlign: TextAlign.right,),
-                   value: _isChecked ,
-                   activeColor: Color.fromARGB(255, 18, 57, 20),
-                   onChanged: (newBool){
-                    setState(() {
-                      _isChecked = newBool ;
-                    }); },
-                  subtitle:  _isChecked == false
-                   ? Padding(
-                     padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0), 
-                     child: Text('يجب الموافقة على الاحكام والشروط', style: TextStyle(color: Color(0xFFe53935), fontSize: 12),textAlign: TextAlign.right,) ,)
-                     : null,
-                     ),
-                   
-                   
-                   ),
-                  ),
-                  
                   //submit button
                  Align(
                   alignment: Alignment.center,
@@ -513,8 +459,8 @@ final List< String> UserTypes = [
       ) 
         ),
      ),
-     ) 
-     );
+     
+     ),);
  
 
   }
