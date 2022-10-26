@@ -90,19 +90,43 @@ class MongoDatabase {
       return {'success': false, 'message': e.toString()};
     }
   }
-  static Future<String> insert3(MongoDbModel2 data) async{
-   var result = await userCollection!.insertOne(data.toJson());
-    try{
-         if(result.isSuccess)
-         return "Added successfully";
-         else {
+
+  static Future<String> insert3(MongoDbModel2 data) async {
+    var result = await userCollection!.insertOne(data.toJson());
+    try {
+      if (result.isSuccess)
+        return "Added successfully";
+      else {
         log('data could not be added');
-        return "";   }   
-    }catch(e){
+        return "";
+      }
+    } catch (e) {
       print(e.toString());
-      return "" ;
+      return "";
     }
+  }
 
+  static Future<List<Map<String, dynamic>>?> Get() async {
+    final Data = await awarCollection!.find().toList();
+    return Data;
+  }
 
+  static Future<Map<String, dynamic>> updateAwar(
+      String id, Map<String, dynamic> update) async {
+    try {
+      print(id);
+      print(update);
+      WriteResult result = await awarCollection!
+          .replaceOne({'_id': ObjectId.fromHexString(id)}, update);
+
+      if (result.isSuccess) {
+        return {'success': true, 'message': "data updated"};
+      } else {
+        return {'success': false, 'message': "data not updated"};
+      }
+    } catch (e) {
+      log(e.toString());
+      return {'success': false, 'message': e.toString()};
+    }
   }
 }
