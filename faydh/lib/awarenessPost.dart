@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:faydh/MongoDBModel.dart';
 import 'package:faydh/dbHelper/mongodb.dart';
+import 'package:faydh/individual.dart';
+import 'package:faydh/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/src/foundation/diagnostics.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart' as Path;
@@ -11,6 +14,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:mongo_dart/mongo_dart.dart' show Db, GridFS;
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
 class awarenessPost extends StatefulWidget {
   const awarenessPost({super.key});
@@ -20,9 +25,9 @@ class awarenessPost extends StatefulWidget {
 }
 
 class _HomePageState extends State<awarenessPost>
-    with SingleTickerProviderStateMixin {
+    with AutomaticKeepAliveClientMixin {
   @override
-  final contentController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
   final File? _picController = new File('file.txt'); //ماتأكدت
   String userPost = '';
   String s = '';
@@ -65,40 +70,8 @@ class _HomePageState extends State<awarenessPost>
     }
 
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            stops: [0.1, 0.9],
-            colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
-      ),
       child: Scaffold(
-        body: SafeArea(
-            child: FutureBuilder(
-                future: MongoDatabase.getData2(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    if (snapshot.hasData) {
-                      var totalData = snapshot.data.length;
-                      print("Total Data" + totalData.toString());
-                      return ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            return displayCard(
-                                MongoDbModel.fromJson(snapshot.data[index]));
-                          });
-                    } else {
-                      return Center(
-                        child: Text("No data available"),
-                      );
-                    }
-                  }
-                })),
-        backgroundColor: Colors.transparent,
+        body: const MyStatelessWidget(),
         appBar: AppBar(
           title: const Center(child: Text('المنتدى التوعوي       ')),
           backgroundColor: Color(0xFFF7F7F7),
@@ -175,10 +148,11 @@ class _HomePageState extends State<awarenessPost>
             },
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
+
+        /*bottomNavigationBar: BottomNavigationBar(
           fixedColor: Color(0xFF1A4D2E),
           iconSize: 35,
-          items: const <BottomNavigationBarItem>[
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.playlist_add_rounded),
               label: 'المنتدى التوعوي',
@@ -188,6 +162,8 @@ class _HomePageState extends State<awarenessPost>
               label: 'الملف الشخصي',
             ),
           ],
+          type: BottomNavigationBarType.fixed,
+
           //  currentIndex: _selectedIndex,
           // selectedItemColor: Colors.amber[800],
           // onTap: _onItemTapped,
@@ -199,7 +175,7 @@ class _HomePageState extends State<awarenessPost>
             // backgroundColor:Color.fromARGB(255, 235, 241, 233),
 
             backgroundColor: Colors.white),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,*/
       ),
     );
   }
@@ -264,7 +240,63 @@ class _HomePageState extends State<awarenessPost>
     }
   }*/
 
+  Future connection() async {
+    Db _db = new Db.pool(url);
+    await _db.open(secure: true);
+    bucket = GridFS(_db, "image");
+  }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+}
+
+class MyStatelessWidget extends StatelessWidget {
+  const MyStatelessWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            stops: [0.1, 0.9],
+            colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
+      ),
+      child: Scaffold(
+        body: SafeArea(
+            child: FutureBuilder(
+                future: MongoDatabase.getData2(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      var totalData = snapshot.data.length;
+                      print("Total Data" + totalData.toString());
+                      return ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return displayCard(
+                                MongoDbModel.fromJson(snapshot.data[index]));
+                          });
+                    } else {
+                      return Center(
+                        child: Text("No data available"),
+                      );
+                    }
+                  }
+                })),
+        backgroundColor: Colors.transparent,
+      ),
+    );
+  }
+
   Widget displayCard(MongoDbModel data) {
+    var provider;
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(
@@ -279,7 +311,7 @@ class _HomePageState extends State<awarenessPost>
           width: 50,
         ),
         title: Text(
-          userPost = "${data.content}",
+          "${data.content}",
           // data.content,
 
           textAlign: TextAlign.right,
@@ -298,43 +330,4 @@ class _HomePageState extends State<awarenessPost>
       ),
     );
   }
-
-  Future connection() async {
-    Db _db = new Db.pool(url);
-    await _db.open(secure: true);
-    bucket = GridFS(_db, "image");
-  }
 }
-
-/*
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-body: SafeArea(
-          child: FutureBuilder(
-          future:MongoDatabase.getData(),    
-            builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          if (snapshot.hasData) {
-            var totalData = snapshot.data.length; 
-
-          } else {
-            return Center(
-              child: Text("No data available"),
-            );
-          }
-        }
-      })),
-    
-      
-    );
-  }
-}
-*/

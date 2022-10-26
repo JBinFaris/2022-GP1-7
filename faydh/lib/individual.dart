@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
-class individual extends StatelessWidget {
-  const individual({Key? key}) : super(key: key);
+class individual extends StatefulWidget {
+  const individual({super.key});
+  @override
+  State<individual> createState() => _individualPageState();
+}
 
+@override
+class _individualPageState extends State<individual> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +28,7 @@ class individual extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: ClipOval(
               child: Image.asset(
-                'images/Faydh.png',
+                'assets/imgs/logo.png',
                 width: 140,
                 height: 140,
                 fit: BoxFit.cover,
@@ -60,33 +67,6 @@ class individual extends StatelessWidget {
           )
         ]),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Color(0xFF1A4D2E),
-        iconSize: 35,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add_rounded),
-            label: 'المنتدى التوعوي',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'الملف الشخصي',
-          ),
-        ],
-        //  currentIndex: _selectedIndex,
-        // selectedItemColor: Colors.amber[800],
-        // onTap: _onItemTapped,
-      ),
-      // Add new product
-
-      floatingActionButton: FloatingActionButton.large(
-          onPressed: () {},
-          child: Image.asset('images/Faydh.png'),
-
-          // backgroundColor:Color.fromARGB(255, 235, 241, 233),
-
-          backgroundColor: Colors.white),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

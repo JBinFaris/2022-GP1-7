@@ -1,4 +1,5 @@
 import 'package:faydh/awarenessPost.dart';
+import 'package:faydh/home_page.dart';
 import 'package:faydh/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const UserProfile(),
+      home: const signInSreen(),
     );
   }
 }

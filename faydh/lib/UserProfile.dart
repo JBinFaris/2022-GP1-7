@@ -357,7 +357,7 @@ class _UserProfileState extends State<UserProfile> {
           ]),
         ),
       ),
-
+/*
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: Color.fromARGB(226, 29, 92, 76),
         selectedItemColor: Color.fromARGB(226, 29, 92, 76),
@@ -375,16 +375,16 @@ class _UserProfileState extends State<UserProfile> {
         //  currentIndex: _selectedIndex,
         // selectedItemColor: Colors.amber[800],
         // onTap: _onItemTapped,
-      ),
+      ),*/
       // Add new product
 
-      floatingActionButton: FloatingActionButton.large(
-          onPressed: () {},
-          child: Image.asset('assets/imgs/Faydh2.png'),
+     // floatingActionButton: FloatingActionButton.large(
+          //onPressed: () {},
+          //child: Image.asset('assets/imgs/Faydh2.png'),
 
           // backgroundColor:Color.fromARGB(255, 235, 241, 233),
 
-          backgroundColor: Colors.white),
+       //   backgroundColor: Colors.white),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
