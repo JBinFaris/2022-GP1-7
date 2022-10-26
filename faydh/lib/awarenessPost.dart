@@ -14,8 +14,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:mongo_dart/mongo_dart.dart' show Db, GridFS;
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:line_icons/line_icons.dart';
 
 class awarenessPost extends StatefulWidget {
   const awarenessPost({super.key});
@@ -238,13 +236,13 @@ class _HomePageState extends State<awarenessPost>
         flag = false;
       });
     }
-  }*/
+  }
 
   Future connection() async {
     Db _db = new Db.pool(url);
     await _db.open(secure: true);
     bucket = GridFS(_db, "image");
-  }
+  }*/
 
   @override
   // TODO: implement wantKeepAlive
@@ -321,7 +319,7 @@ class MyStatelessWidget extends StatelessWidget {
               ? Text('No image selected.')
               : Image(
                   image: provider as ImageProvider,
-                ),
+                ), 
         ),
         trailing: Icon(
           Icons.account_circle_rounded,
