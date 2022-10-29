@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import 'forget_password.dart';
-
 class PasswordReset extends StatefulWidget {
   const PasswordReset({Key? key}) : super(key: key);
 
