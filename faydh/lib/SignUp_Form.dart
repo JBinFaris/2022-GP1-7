@@ -87,6 +87,7 @@ class _SignupFormState extends State<SignupForm> {
   // 3/4: Strong
   //   1:   Great
 
+  
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
@@ -105,7 +106,7 @@ class _SignupFormState extends State<SignupForm> {
                       }));
                     },
                     icon: Icon(
-                      Icons.arrow_back_ios_new,
+                      Icons.arrow_forward_ios_rounded,
                       color: Color.fromARGB(255, 18, 57, 20),
                     )),
               )),
@@ -141,7 +142,8 @@ class _SignupFormState extends State<SignupForm> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8, bottom: 4),
                       child: TextFormField(
-                        controller: _emailController, //field value
+                        controller: _emailController,
+                        //field value
                         textAlign: TextAlign.right,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
@@ -225,7 +227,8 @@ class _SignupFormState extends State<SignupForm> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8, bottom: 4),
                       child: TextFormField(
-                        controller: _passwordController, //field value
+                        controller: _passwordController,
+                        //field value
                         obscureText: true,
                         enableSuggestions: false,
                         autocorrect: false,
@@ -287,7 +290,8 @@ class _SignupFormState extends State<SignupForm> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8, bottom: 4),
                       child: TextFormField(
-                        controller: _phonenumberController, //field value
+                        controller: _phonenumberController,
+                        //field value
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.right,
                         decoration: InputDecoration(
@@ -431,10 +435,30 @@ class _SignupFormState extends State<SignupForm> {
                                   shape: StadiumBorder(),
                                 ),
                                 onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                   
-                                    }
-                                  },
+                                  if (_formKey.currentState!.validate()) {}
+                                  if (_isChecked == true &&
+                                      SelectedValue != "" &&
+                                      password_strength == 1) {
+                                    AuthMethods()
+                                        .signUpUser(
+                                            role: SelectedValue.toString(),
+                                            username: _usernameController.text,
+                                            email: _emailController.text,
+                                            phoneNumber:
+                                                _phonenumberController.text,
+                                            password: _passwordController.text)
+                                        .then((value) {
+                                      if (value == "success") {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const HomePage();
+                                        }));
+                                      }
+                                      showSnackBar(value.toString(), context);
+                                    });
+                                  }
+                                },
                                 child: Text(
                                   'تسجيل',
                                   style: TextStyle(
