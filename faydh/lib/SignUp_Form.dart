@@ -24,18 +24,6 @@ class _SignupFormState extends State<SignupForm> {
   bool? seen = false;
   String? SelectedValue;
 
-  Future<void> _insertData(String Uname, String Email, String passWord,
-      String Phone, String? Utype) async {
-    var _id = M.ObjectId();
-    final data = MongoDbModel2(
-        id: _id,
-        username: Uname,
-        email: Email,
-        password: passWord,
-        phone: Phone,
-        userType: Utype);
-    var result = await MongoDatabase.insert3(data);
-  }
 
   @override
   void dispose() {
@@ -442,24 +430,9 @@ class _SignupFormState extends State<SignupForm> {
                                 ),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    if (_isChecked == true &&
-                                        SelectedValue != "" &&
-                                        password_strength == 1) {
-                                      var P = Crypt.sha256(
-                                          _passwordController.text);
-                                      _insertData(
-                                          _usernameController.text,
-                                          _emailController.text,
-                                          P.toString(),
-                                          _phonenumberController.text,
-                                          SelectedValue);
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                        return const individual();
-                                      }));
+                                   
                                     }
-                                  }
-                                },
+                                  },
                                 child: Text(
                                   'تسجيل',
                                   style: TextStyle(
