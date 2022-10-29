@@ -59,7 +59,7 @@ class _PasswordResetState extends State<PasswordReset> {
                   controller: _emailController,
                   textAlign: TextAlign.right,
                   decoration: InputDecoration(
-                    hintText: 'اسم المستخدم',
+                    hintText: 'البريد الالكتروني',
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                       borderSide: const BorderSide(
@@ -129,4 +129,3 @@ class _PasswordResetState extends State<PasswordReset> {
     );
   }
 }
-

@@ -2,6 +2,8 @@ import 'package:faydh/UserProfile.dart';
 import 'package:faydh/awarenessPost.dart';
 import 'package:faydh/individual.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,39 +36,53 @@ class _HomePageState extends State<HomePage> {
         onPageChanged: _onPageChanged,
         physics: NeverScrollableScrollPhysics(),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _onItemTapped,
-        unselectedLabelStyle:
-            const TextStyle(color: Color(0xFF1A4D2E), fontSize: 14),
-        backgroundColor: Color(0xFF1A4D2E),
-        fixedColor: Colors.white,
-        unselectedItemColor: Colors.white, //<-- add this
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: _selectedIndex == 0 ? Color(0xFFD6ECD0) : Colors.white,
-              size: 35,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFF1A4D2E),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 20,
+              color: Colors.black.withOpacity(.1),
+            )
+          ],
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            child: GNav(
+              rippleColor: Colors.grey[300]!,
+              hoverColor: Colors.grey[100]!,
+              gap: 8,
+              activeColor: Colors.black,
+              iconSize: 24,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              duration: Duration(milliseconds: 400),
+              tabBackgroundColor: Colors.grey[100]!,
+              color: Colors.black,
+              onTabChange: _onItemTapped,
+              tabs: [
+                GButton(
+                  icon: LineIcons.home,
+                  iconColor:
+                      _selectedIndex == 0 ? Color(0xFFD6ECD0) : Colors.white,
+                  text: "الصفحة الرئيسية",
+                ),
+                GButton(
+                  icon: LineIcons.list,
+                  iconColor:
+                      _selectedIndex == 1 ? Color(0xFFD6ECD0) : Colors.white,
+                  text: "المنتدى التوعوي",
+                ),
+                GButton(
+                  icon: LineIcons.user,
+                  iconColor:
+                      _selectedIndex == 2 ? Color(0xFFD6ECD0) : Colors.white,
+                  text: "الملف الشخصي",
+                ),
+              ],
             ),
-            label: "الصفحة الرئيسية",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.playlist_add,
-              color: _selectedIndex == 1 ? Color(0xFFD6ECD0) : Colors.white,
-              size: 35,
-            ),
-            label: "المنتدى التوعوي",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: _selectedIndex == 2 ? Color(0xFFD6ECD0) : Colors.white,
-              size: 35,
-            ),
-            label: "الملف الشخصي",
-          ),
-        ],
+        ),
       ),
     );
   }
