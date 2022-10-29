@@ -1,10 +1,7 @@
-import 'package:faydh/dbHelper/SignUpModel.dart';
 import 'package:faydh/individual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:faydh/dbHelper/mongodb.dart';
-import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:crypt/crypt.dart';
 import 'signin.dart';
 
