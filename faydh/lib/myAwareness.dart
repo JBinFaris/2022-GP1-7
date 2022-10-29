@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/widgets/my_awerness_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class myAware extends StatefulWidget {
   myAware({Key? key}) : super(key: key);
+
   @override
   _myAwareState createState() => _myAwareState();
 }
@@ -10,8 +14,10 @@ class myAware extends StatefulWidget {
 class _myAwareState extends State<myAware> {
   @override
   TextEditingController awarPost = TextEditingController();
+
   //bool _isEnable = false;
   String id = '6358fc8e8e5eae4234fa51bf';
+
   // void initState() {
   // Future.microtask(() {
   //   MongoDatabase.Get();
@@ -19,139 +25,65 @@ class _myAwareState extends State<myAware> {
   // super.initState();
   //}
 
+  String idddd = FirebaseAuth.instance.currentUser!.uid;
+
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-          child: FutureBuilder(
-              future: MongoDatabase.Get(),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return displayData(
-                            MongoDbModel.fromJson(snapshot.data[index]));
-                        //mongodb.Get()
-                      },
-                    );
-                  } else {
-                    return Center(child: Text("data not found"));
-                  }
-                }
-              })),
-      backgroundColor: Color.fromARGB(225, 30, 122, 99),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Color.fromARGB(226, 29, 92, 76),
-        selectedItemColor: Color.fromARGB(226, 29, 92, 76),
-        iconSize: 30,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.playlist_add_rounded),
-            label: 'المنتدى التوعوي',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'الملف الشخصي',
-          ),
-        ],
-        //  currentIndex: _selectedIndex,
-        // selectedItemColor: Colors.amber[800],
-        // onTap: _onItemTapped,
-      ),
-      // Add new product
-
-      floatingActionButton: FloatingActionButton.large(
-          onPressed: () {},
-          child: Image.asset('images/Faydh.png'),
-
-          // backgroundColor:Color.fromARGB(255, 235, 241, 233),
-
-          backgroundColor: Colors.white),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
-  }
-
-  Widget displayData(MongoDbModel data) {
-    return Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextField(
-                  controller: TextEditingController(
-                    text: "${data.content}",
-                  ),
-                  //enabled: _isEnable,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(300),
-                  ],
-                  //keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          //setState(() {
-                          //  _isEnable = true;
-                          //});
-                        },
-                        child: Text('تحرير'),
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            primary: Color.fromARGB(255, 172, 8, 8),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 2.0, vertical: 3.0),
-                            textStyle: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          //controller:
-                          //awarPost.text;
-                          Map<String, dynamic> data =
-                              await MongoDatabase.updateAwar(id, {
-                            'content': awarPost.text,
-                          });
-                          final snackBar =
-                              SnackBar(content: Text(data['message']));
-
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        },
-                        child: Text('حذف'),
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            primary: Color.fromARGB(255, 172, 8, 8),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 2.0, vertical: 3.0),
-                            textStyle: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Center(child: Text('      محتواي التوعوي ')),
+        backgroundColor: Color(0xFF1A4D2E),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Color.fromARGB(225, 255, 255, 255),
             ),
-          ),
+          )
+        ],
+      ),
+      body: SafeArea(
+        child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  stops: [0.1, 0.9],
+                  colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
+            ),
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("posts")
+                  .where('userId', isEqualTo: idddd)
+                  .snapshots(),
+              builder: (context,
+                  AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snaphot) {
+                if (snaphot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.green,
+                    ),
+                  );
+                }
 
-          //child: Row(children: const [],),
-        ));
+                return ListView.builder(
+                  itemCount: snaphot.data?.docs.length,
+                  itemBuilder: (context, index) => MyCard(
+                    id: snaphot.data?.docs[index].id,
+                    snap: snaphot.data?.docs[index].data(),
+                    delete: snaphot.data?.docs[index].reference,
+                  ),
+                );
+              },
+            )),
+
+        // Add new product
+
+        // backgroundColor:Color.fromARGB(255, 235, 241, 233),
+      ),
+    );
   }
 }
