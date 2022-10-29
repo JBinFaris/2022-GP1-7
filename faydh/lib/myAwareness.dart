@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'MongoDBModel.dart';
-import 'dbHelper/mongodb.dart';
 
 class myAware extends StatefulWidget {
   myAware({Key? key}) : super(key: key);

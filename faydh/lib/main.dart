@@ -1,18 +1,11 @@
-import 'dart:io';
-import 'package:faydh/awarenessPost.dart';
-import 'package:faydh/home_page.dart';
 import 'package:faydh/signin.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:faydh/dbHelper/mongodb.dart';
-import 'UserProfile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await MongoDatabase.connect();
-
-  runApp(const MyApp());
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
