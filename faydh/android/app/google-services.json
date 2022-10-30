@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "982213000116",
+    "project_id": "faydh-eb436",
+    "storage_bucket": "faydh-eb436.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982213000116:android:60cf1f959e6b8f48dc50e1",
+        "android_client_info": {
+          "package_name": "com.example.faydh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982213000116-1cc1be5b130b7o9ctdiac4ck6pivfvtj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHRNaLS96OeOP4911ITA5GaszhaId-VeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982213000116-1cc1be5b130b7o9ctdiac4ck6pivfvtj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "982213000116-ceuiavbbiognafmujiaeejllls503ib4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.faydh"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
