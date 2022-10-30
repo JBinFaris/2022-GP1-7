@@ -91,7 +91,7 @@ class _SignupFormState extends State<SignupForm> {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: const EdgeInsets.only(top: 15),
+        padding: const EdgeInsets.only(top: 8),
         child: Scaffold(
           backgroundColor: Color.fromARGB(242, 214, 236, 208),
           floatingActionButton: Align(
@@ -232,8 +232,8 @@ class _SignupFormState extends State<SignupForm> {
                             return 'الرجاء إدخال إسم المستخدم';
                           } else if (value.length < 3) {
                             return 'إسم المستخدم يجب ان يكون اكثر من ٣ رموز';
-                          } else if (value.length > 8) {
-                            return 'لا يمكن لإسم المستخدم ان يكون اكثر من ٨ رموز';
+                          } else if (value.length > 15) {
+                            return 'لا يمكن لإسم المستخدم ان يكون اكثر من ١٥ رموز';
                           }
 
                           return null;
