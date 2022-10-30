@@ -7,7 +7,7 @@ pickIamge(ImageSource source) async {
   if (_file != null) {
     return await _file.readAsBytes();
   }
-  print("No Iamge Selected");
+  print("لم يتم اختيار صورة");
 }
 
 /// function for showing snackbar

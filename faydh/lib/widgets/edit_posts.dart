@@ -32,13 +32,7 @@ class _EditPostState extends State<EditPost> {
   TextEditingController _title = TextEditingController();
   bool _showProgress = false;
 
-  // void dispose() {
-  //   super.dispose();
-  //   _title.dispose();
-  //   _description.dispose();
-  //   _price.dispose();
-  // }
-
+  
   _clearThings() {
     _image?.clear();
     _title.clear();

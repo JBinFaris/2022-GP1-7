@@ -17,7 +17,7 @@ class FirestoreMethods {
     required String postTitle,
     Uint8List? file, //
   }) async {
-    String res = "Some error occured";
+    String res = "حصل خطأ";
 
     try {
       String image = '';
@@ -40,7 +40,7 @@ class FirestoreMethods {
 
       _firestore.collection("posts").add(posts.toJson());
 
-      res = "succces";
+      res = "تم بنجاح";
     } catch (err) {
       res = err.toString();
       print(res);
@@ -54,7 +54,7 @@ class FirestoreMethods {
     required String title,
     required String id,
   }) async {
-    String res = "Some error occurred";
+    String res = "حصل خطأ";
     print(res);
     print("men....$id");
     try {
@@ -67,7 +67,7 @@ class FirestoreMethods {
           .doc(id)
           .update(values)
           .then((value) {
-        res = "success";
+        res = "تم بنجاح";
       });
     } catch (e) {
       print(e.toString());
