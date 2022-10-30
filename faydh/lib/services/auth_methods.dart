@@ -18,7 +18,7 @@ class AuthMethods {
     required String password,
     String? uid,
   }) async {
-    String res = "Success";
+    String res = "تم بنجاح";
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
@@ -41,14 +41,14 @@ class AuthMethods {
             .collection("users")
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .set(user.toJson());
-        return "success";
+        return "تم بنجاح";
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == "invalid-email") {
         if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE')
-          res = "The email is badly formatted.";
+          res =" الرجاء إدخال بريد إلكتروني صالح";
       } else if (error.code == "weak-password") {
-        res = "Your password  should atleast 6 digits";
+        res = "الرجاء إدخال كلمة مرور صالحة";
       }
     } catch (err) {
       res = err.toString();
@@ -58,10 +58,10 @@ class AuthMethods {
 
   /// Logout
   Future signOut() async {
-    String res = "Some error occurd";
+    String res = "حصل خطأ";
     try {
       await _auth.signOut();
-      res = "success";
+      res = "تم بنجاح";
     } on FirebaseAuthException catch (e) {
       print(e.toString());
     }
@@ -70,10 +70,10 @@ class AuthMethods {
 
   ///Resting password:
   Future<String> resetPassword({required String email}) async {
-    String res = "Some error occurd";
+    String res = "حصل خطأ";
     try {
       await _auth.sendPasswordResetEmail(email: email);
-      res = "success";
+      res = "تم بنجاح";
     } on FirebaseAuthException catch (e) {
       print(e.toString());
     }
@@ -83,22 +83,22 @@ class AuthMethods {
   //// Login user
   Future<String> loginUser(
       {required String email, required String password}) async {
-    String res = "Some error occurd";
+    String res = "حصل خطأ";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-        res = "success";
+        res = "تم بنجاح";
       } else {
-        res = "Please enters all the feild";
+        res = "الرجاء إدخال جميع الحقول";
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
-        res = "User not found";
+        res = "البريد الإلكتروني غير مسجل";
       } else {
         e.code == "wrong-password";
         {
-          res = "Password is not correct";
+          res = "كلمة المرور غير صحيحة";
         }
       }
     } catch (error) {
@@ -116,7 +116,7 @@ class AuthMethods {
     required String phoneNumber,
     String? uid,
   }) async {
-    String res = "Success";
+    String res = "تم بنجاح";
     try {
       if (username.isNotEmpty ||
           role.isNotEmpty ||
@@ -137,9 +137,9 @@ class AuthMethods {
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == "invalid-email") {
-        res = "The email is badly formatted.";
+        res = "الرجاء إدخال بريد إلكتروني صالح";
       } else if (error.code == "weak-password") {
-        res = "Your password  should atleast 6 digits";
+        res = "الرجاء إدخال كلمة مرور صالحة";
       }
     } catch (err) {
       res = err.toString();
