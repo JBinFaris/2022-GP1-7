@@ -264,11 +264,11 @@ class _UserProfileState extends State<UserProfile> {
                                         builder: (BuildContext context) {
                                           return AlertDialog(
                                               title: Text(
-                                                'تأكيد الحذف',
+                                                'تسجيل الخروج',
                                                 textAlign: TextAlign.right,
                                               ),
                                               content: Text(
-                                                "حذف المحتوى ؟ ",
+                                                "هل ترغب بتسجيل الخروج ؟ ",
                                                 textAlign: TextAlign.right,
                                               ),
                                               actions: <Widget>[
@@ -316,60 +316,63 @@ class _UserProfileState extends State<UserProfile> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                              title: Text(
-                                                'حفظ التغييرات',
-                                                textAlign: TextAlign.right,
-                                              ),
-                                              content: Text(
-                                                "هل أنت متأكد من حفظ التغييرات  ؟ ",
-                                                textAlign: TextAlign.right,
-                                              ),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  child: Text("إلغاء"),
-                                                  onPressed: () {
-                                                    // callback function for on click event of Cancel button
-                                                    Navigator.of(context).pop();
-                                                  },
+                                    if (_formKey.currentState!.validate()) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: Text(
+                                                  'حفظ التغييرات',
+                                                  textAlign: TextAlign.right,
                                                 ),
-                                                TextButton(
-                                                  child: Text("موافق"),
-                                                  onPressed: () async {
-                                                    if (_formKey.currentState!
-                                                        .validate()) {
-                                                      AuthMethods()
-                                                          .upDateProfile(
-                                                        role: _role.text,
-                                                        username:
-                                                            _username.text,
-                                                        phoneNumber:
-                                                            _phone.text,
-                                                      )
-                                                          .then((value) {
-                                                        if (value ==
-                                                            "success") {
-                                                          setState(() {
-                                                            _getUserData();
-                                                            userName;
-                                                            userEmail;
+                                                content: Text(
+                                                  "هل أنت متأكد من حفظ التغييرات  ؟ ",
+                                                  textAlign: TextAlign.right,
+                                                ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child: Text("إلغاء"),
+                                                    onPressed: () {
+                                                      // callback function for on click event of Cancel button
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child: Text("موافق"),
+                                                    onPressed: () async {
+                                                      if (_formKey.currentState!
+                                                          .validate()) {
+                                                        AuthMethods()
+                                                            .upDateProfile(
+                                                          role: _role.text,
+                                                          username:
+                                                              _username.text,
+                                                          phoneNumber:
+                                                              _phone.text,
+                                                        )
+                                                            .then((value) {
+                                                          if (value ==
+                                                              "success") {
+                                                            setState(() {
+                                                              _getUserData();
+                                                              userName;
+                                                              userEmail;
 
-                                                            phoneNumber;
-                                                            myrole;
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          });
-                                                        }
-                                                      });
-                                                    }
-                                                  },
-                                                ),
-                                              ]);
-                                        });
+                                                              phoneNumber;
+                                                              myrole;
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            });
+                                                          }
+                                                        });
+                                                      }
+                                                    },
+                                                  ),
+                                                ]);
+                                          });
+                                    }
                                   },
                                   child: Text(' حفظ التغييرات'),
                                   style: ElevatedButton.styleFrom(
