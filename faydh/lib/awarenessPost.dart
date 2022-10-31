@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mongo_dart/mongo_dart.dart' as M;
 
 class awarenessPost extends StatefulWidget {
   const awarenessPost({super.key});
@@ -75,22 +74,24 @@ class _HomePageState extends State<awarenessPost>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextField(
-                        textAlign: TextAlign.right,
-                        controller: _contentController,
-                        decoration: const InputDecoration(
-                          hintText: "اكتب هنا",
-                          focusedBorder: UnderlineInputBorder(
-                            //<-- SEE HERE
-                            borderSide:
-                                BorderSide(width: 2, color: Color(0xFF1A4D2E)),
+                      Form(
+                        child: TextFormField(
+                          textAlign: TextAlign.right,
+                          controller: _contentController,
+                          decoration: const InputDecoration(
+                            hintText: "اكتب هنا",
+                            focusedBorder: UnderlineInputBorder(
+                              //<-- SEE HERE
+                              borderSide: BorderSide(
+                                  width: 2, color: Color(0xFF1A4D2E)),
+                            ),
                           ),
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(300),
+                          ],
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
                         ),
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(300),
-                        ],
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
                       ),
 
                       const SizedBox(
