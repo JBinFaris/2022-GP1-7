@@ -17,7 +17,7 @@ class FirestoreMethods {
     required String postTitle,
     Uint8List? file, //
   }) async {
-    String res = "حصل خطأ";
+    String res = "Some error occured";
 
     try {
       String image = '';
@@ -40,34 +40,28 @@ class FirestoreMethods {
 
       _firestore.collection("posts").add(posts.toJson());
 
-      res = "تم بنجاح";
+      res = "succces";
     } catch (err) {
       res = err.toString();
       print(res);
     }
     return res;
   }
-  
 
   Future<String> updatePostTwo({
-
     required String title,
     required String id,
   }) async {
-    String res = "حصل خطأ";
+    String res = "Some error occurred";
     print(res);
     print("men....$id");
     try {
       // var photoUrl =
       //     await StorageMethods().uploadImageToStorage("postImages", file, true);
 
-      Map<String, String> values = {"postTitle": title };
-      await _firestore
-          .collection('posts')
-          .doc(id)
-          .update(values)
-          .then((value) {
-        res = "Success" ;
+      Map<String, String> values = {"postTitle": title};
+      await _firestore.collection('posts').doc(id).update(values).then((value) {
+        res = "success";
       });
     } catch (e) {
       print(e.toString());

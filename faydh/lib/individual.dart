@@ -27,8 +27,8 @@ class _individualPageState extends State<individual> {
                   0.9
                 ],
                 colors: [
-                  Color.fromARGB(142, 255, 255, 255),
-                  Color.fromARGB(255, 253, 253, 253)
+                  Color.fromARGB(0, 26, 77, 46),
+                  Color.fromARGB(17, 214, 236, 208)
                 ]),
           ),
           alignment: Alignment.center,

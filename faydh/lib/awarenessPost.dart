@@ -58,134 +58,131 @@ class _HomePageState extends State<awarenessPost>
 
   @override
   Widget build(BuildContext context) {
-    void _clearAll() {
-      _contentController.text = "";
-      Navigator.of(this.context).pop();
-    }
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(child: Text('المنتدى التوعوي       ')),
-        backgroundColor: Color(0xFF1A4D2E),
-        foregroundColor: Color(0xFFF7F7F7),
-        leading: IconButton(
-          icon: Icon(Icons.add_circle),
-          // tooltip: 'إضافة',
-          color: Color(0xFFF7F7F7),
-          focusColor: Color(0xFFD6ECD0),
-          iconSize: 40,
-          onPressed: () {
-            showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (BuildContext ctx) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        top: 20,
-                        left: 20,
-                        right: 20,
-                        bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextField(
-                          textAlign: TextAlign.right,
-                          controller: _contentController,
-                          decoration: const InputDecoration(
-                            hintText: "اكتب هنا",
-                            focusedBorder: UnderlineInputBorder(
-                              //<-- SEE HERE
-                              borderSide: BorderSide(
-                                  width: 2, color: Color(0xFF1A4D2E)),
-                            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (BuildContext ctx) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                      bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        textAlign: TextAlign.right,
+                        controller: _contentController,
+                        decoration: const InputDecoration(
+                          hintText: "اكتب هنا",
+                          focusedBorder: UnderlineInputBorder(
+                            //<-- SEE HERE
+                            borderSide:
+                                BorderSide(width: 2, color: Color(0xFF1A4D2E)),
                           ),
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(300),
-                          ],
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        //اضبط لونها ومكاناها
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(300),
+                        ],
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                      ),
 
-                        const SizedBox(
-                          height: 10,
-                        ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      //اضبط لونها ومكاناها
 
-                        _image != null
-                            ? Center(
-                                child: Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Image(
-                                      image: MemoryImage(
-                                        _image!,
-                                      ),
-                                      fit: BoxFit.cover,
-                                    )),
-                              )
-                            : Center(
-                                child: Container(
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      _image != null
+                          ? Center(
+                              child: Container(
+                                  height: 100,
+                                  width: 100,
                                   decoration: BoxDecoration(
                                     color: Colors.grey,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  height: 100,
-                                  width: 100,
-                                ),
-                              ),
-
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            FloatingActionButton(
-                              onPressed: () {
-                                selectImage();
-                              },
-                              child: const Icon(Icons.add_photo_alternate),
-                              backgroundColor: Color(0xFF1A4D2E),
-                            ),
-                            Container(
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: ElevatedButton(
-                                    child: const Text('إضافة'),
-                                    onPressed: () {
-                                      FirestoreMethods()
-                                          .uploadPost(
-                                              postUserName: myUsername,
-                                              postTitle:
-                                                  _contentController.text,
-                                              file: _image)
-                                          .then((value) {
-                                        if (value == "succces") {
-                                          _clearAll();
-                                        }
-                                      });
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Color(0xFF1A4D2E),
+                                  child: Image(
+                                    image: MemoryImage(
+                                      _image!,
                                     ),
+                                    fit: BoxFit.cover,
                                   )),
+                            )
+                          : Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                height: 100,
+                                width: 100,
+                              ),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                });
-          },
+
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FloatingActionButton(
+                            onPressed: () {
+                              selectImage();
+                            },
+                            child: const Icon(Icons.add_photo_alternate),
+                            backgroundColor: Color(0xFF1A4D2E),
+                          ),
+                          Container(
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: ElevatedButton(
+                                  child: const Text('إضافة'),
+                                  onPressed: () {
+                                    FirestoreMethods()
+                                        .uploadPost(
+                                            postUserName: myUsername,
+                                            postTitle: _contentController.text,
+                                            file: _image)
+                                        .then((value) {
+                                      if (value == "succces") {
+                                        _clearAll();
+                                      }
+                                    });
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFF1A4D2E),
+                                  ),
+                                )),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              });
+        },
+        child: Icon(
+          Icons.add_outlined,
+          size: 50,
         ),
+        backgroundColor: Color(0xFF1A4D2E),
+        foregroundColor: Color.fromARGB(255, 255, 255, 255),
+      ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Center(child: Text('المنتدى التوعوي       ')),
+        backgroundColor: Color(0xFF1A4D2E),
+        foregroundColor: Color(0xFFF7F7F7),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -216,10 +213,16 @@ class _HomePageState extends State<awarenessPost>
           },
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
     );
   }
 
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => throw UnimplementedError();
+
+  void _clearAll() {
+    _contentController.text = "";
+    Navigator.of(this.context).pop();
+  }
 }
