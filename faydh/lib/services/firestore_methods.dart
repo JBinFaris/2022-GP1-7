@@ -67,7 +67,7 @@ class FirestoreMethods {
           .doc(id)
           .update(values)
           .then((value) {
-        res = "تم بنجاح";
+        res = "Success" ;
       });
     } catch (e) {
       print(e.toString());
