@@ -4,6 +4,7 @@ class Posts {
   final String postTitle; //
 
   final String postImage; //
+  final String pathImage; //
   final String userId;
   final String postUserName;
 
@@ -11,13 +12,15 @@ class Posts {
     required this.postUserName,
     required this.postTitle,
     required this.postImage, //
+    required this.pathImage, //
     required this.userId,
   });
 
   Map<String, dynamic> toJson() => {
         "postTitle": postTitle,
         "postImage": postImage,
-    "postUserName": postUserName,
+        "pathImage": pathImage,
+        "postUserName": postUserName,
         "userId": userId,
       };
 
@@ -28,6 +31,7 @@ class Posts {
       userId: snapshot["userId"],
       postUserName: snapshot["postUserName"],
       postTitle: snapshot["postTitle"],
+      pathImage: snapshot["pathImage"],
       postImage: snapshot["postImage"],
     );
   }

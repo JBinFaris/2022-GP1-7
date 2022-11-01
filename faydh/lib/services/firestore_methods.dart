@@ -1,11 +1,10 @@
-import 'dart:math';
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/models/post_model.dart';
 import 'package:faydh/services/storage_method.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uuid/uuid.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -20,21 +19,17 @@ class FirestoreMethods {
     String res = "Some error occured";
 
     try {
-      String image = '';
+      Map<String, String> photoUrl = {};
       if (file != null) {
-        String photoUrl = await StorageMethods()
+        photoUrl = await StorageMethods()
             .uploadImageToStorage("postsImage", file, true);
-        if (photoUrl.isEmpty) {
-          image = '';
-        } else {
-          image = photoUrl;
-        }
       }
       String userId = _auth.currentUser!.uid;
 
       Posts posts = Posts(
           postTitle: postTitle,
-          postImage: image,
+          postImage: photoUrl['downloadUrl'] ?? '',
+          pathImage: photoUrl['path'] ?? '',
           userId: userId,
           postUserName: postUserName);
 
@@ -43,28 +38,36 @@ class FirestoreMethods {
       res = "succces";
     } catch (err) {
       res = err.toString();
-      print(res);
+      log(res);
     }
     return res;
   }
 
   Future<String> updatePostTwo({
     required String title,
+    required String oldImage,
     required String id,
+    Uint8List? file,
+    required DocumentReference<Map<String, dynamic>> reference,
   }) async {
     String res = "Some error occurred";
-    print(res);
-    print("men....$id");
     try {
-      // var photoUrl =
-      //     await StorageMethods().uploadImageToStorage("postImages", file, true);
+      Map<String, String> photoUrl = {};
+      if (file != null) {
+        photoUrl = await StorageMethods()
+            .uploadImageToStorage("postsImage", file, true, filename: oldImage);
+      }
 
       Map<String, String> values = {"postTitle": title};
-      await _firestore.collection('posts').doc(id).update(values).then((value) {
+      if (photoUrl['downloadUrl']!.isNotEmpty) {
+        values.putIfAbsent('postImage', () => photoUrl['downloadUrl']!);
+        values.putIfAbsent('pathImage', () => photoUrl['path']!);
+      }
+      await reference.update(values).then((value) {
         res = "success";
       });
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
     }
     return res;
   }

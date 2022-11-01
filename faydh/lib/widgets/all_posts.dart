@@ -84,19 +84,27 @@ class AllPostsCard extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            child: _dta != ""
-                ? Image(
-                    height: 150,
-                    width: 250,
-                    image: NetworkImage(
-                      "${snap["postImage"].toString()}",
-                    ))
-                : SizedBox(
-                    height: 0,
-                    width: 0,
-                  ),
+          SizedBox(
+            height: 20,
           ),
+          if (_dta.isNotEmpty)
+            SizedBox(
+              width: 250,
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    color: Colors.grey,
+                    child: Image(
+                      image: NetworkImage(_dta),
+                      fit: BoxFit.cover,
+                      height: 150,
+                      width: 250,
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

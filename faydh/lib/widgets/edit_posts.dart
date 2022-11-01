@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/myAwareness.dart';
 import 'package:faydh/widgets/my_awerness_card.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,17 @@ class EditPost extends StatefulWidget {
   final String title;
 
   final imgUrl;
+  final path;
   final String newID;
+  final DocumentReference<Map<String, dynamic>> reference;
 
-  EditPost({required this.title, required this.imgUrl, required this.newID});
+  EditPost({
+    required this.title,
+    required this.imgUrl,
+    required this.newID,
+    required this.path,
+    required this.reference,
+  });
 
   @override
   _EditPostState createState() => _EditPostState();
@@ -23,22 +32,31 @@ class EditPost extends StatefulWidget {
 
 class _EditPostState extends State<EditPost> {
   Future _selectImage() async {
-    Uint8List im = await pickIamge(ImageSource.gallery);
-    setState(() {
-      _image = im;
-    });
+    Uint8List? im = await pickIamge(ImageSource.gallery);
+    if (im != null) {
+      setState(() {
+        _image = im;
+      });
+    }
   }
 
-  TextEditingController _title = TextEditingController();
+  final _title = TextEditingController();
   bool _showProgress = false;
 
   _clearThings() {
-    _image?.clear();
+    _image = null;
     _title.clear();
+    setState(() {});
   }
 
   Uint8List? _image;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _title.text = widget.title;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +69,19 @@ class _EditPostState extends State<EditPost> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(
+              child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.white,
               ),
             )
           ],
-          title: Align(
+          title: const Align(
             alignment: Alignment.center,
             child: Text(
               "      تحرير المحتوى ",
             ),
           ),
-          backgroundColor: Color(0xFF1A4D2E),
+          backgroundColor: const Color(0xFF1A4D2E),
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -88,25 +106,63 @@ class _EditPostState extends State<EditPost> {
                               }
                               return null;
                             },
-                            decoration: InputDecoration(
-                                labelText: 'اكتب هنا', hintText: widget.title),
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(300),
-                            ],
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              labelText: 'اكتب هنا',
+                              hintText: "اكتب هنا",
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Center(
+                          child: _image != null
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    color: Colors.grey,
+                                    child: Image(
+                                      width: 100,
+                                      height: 100,
+                                      image: MemoryImage(
+                                        _image!,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ))
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    color: Colors.grey,
+                                    child: Image(
+                                      image: NetworkImage(widget.imgUrl),
+                                      fit: BoxFit.cover,
+                                      height: 100,
+                                      width: 100,
+                                    ),
+                                  ),
+                                ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: FloatingActionButton(
+                            onPressed: () {
+                              _selectImage();
+                            },
+                            backgroundColor: const Color(0xFF1A4D2E),
+                            child: const Icon(Icons.add_photo_alternate),
                           ),
                         ),
                         const SizedBox(height: 45.0),
                         _showProgress
-                            ? Center(
+                            ? const Center(
                                 child: CircularProgressIndicator(
                                   color: Color(0xFF1A4D2E),
                                 ),
                               )
                             : MaterialButton(
-                                child: Text("تحديث "),
-                                color: Color(0xFF1A4D2E),
+                                color: const Color(0xFF1A4D2E),
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
@@ -114,26 +170,22 @@ class _EditPostState extends State<EditPost> {
                                     });
                                     FirestoreMethods()
                                         .updatePostTwo(
-                                            title: _title.text,
-                                            id: widget.newID)
+                                      title: _title.text,
+                                      oldImage: widget.path,
+                                      id: widget.newID,
+                                      file: _image,
+                                      reference: widget.reference,
+                                    )
                                         .then((value) {
                                       if (value == "success") {
                                         _clearThings();
-
-                                        Future.delayed(Duration(seconds: 3),
-                                            () {
-                                          setState(() {
-                                            _showProgress = false;
-                                          });
+                                        setState(() {
+                                          _showProgress = false;
                                         });
 
                                         showSnackBar(
                                             "تم تحديث المحتوى بنجاح", context);
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return myAware();
-                                        }));
+                                        Navigator.of(context).pop();
                                       }
                                     });
                                   }
@@ -143,6 +195,7 @@ class _EditPostState extends State<EditPost> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
+                                child: const Text("تحديث "),
                               ),
                       ],
                     ),

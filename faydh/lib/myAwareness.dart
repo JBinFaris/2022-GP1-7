@@ -32,13 +32,13 @@ class _myAwareState extends State<myAware> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Center(child: Text('      محتواي التوعوي ')),
-        backgroundColor: Color(0xFF1A4D2E),
+        backgroundColor: const Color(0xFF1A4D2E),
         actions: [
           GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.arrow_forward_ios_rounded,
               color: Color.fromARGB(225, 255, 255, 255),
             ),
@@ -62,7 +62,7 @@ class _myAwareState extends State<myAware> {
               builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snaphot) {
                 if (snaphot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(
                       color: Colors.green,
                     ),
@@ -74,7 +74,7 @@ class _myAwareState extends State<myAware> {
                   itemBuilder: (context, index) => MyCard(
                     id: snaphot.data?.docs[index].id,
                     snap: snaphot.data?.docs[index].data(),
-                    delete: snaphot.data?.docs[index].reference,
+                    reference: snaphot.data!.docs[index].reference,
                   ),
                 );
               },

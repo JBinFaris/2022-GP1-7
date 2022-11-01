@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +9,12 @@ import 'edit_posts.dart';
 class MyCard extends StatelessWidget {
   final snap;
   var id;
-  var delete;
+  DocumentReference<Map<String, dynamic>> reference;
 
   MyCard({
     required this.snap,
     required this.id,
-    required this.delete,
+    required this.reference,
     super.key,
   });
 
@@ -54,7 +55,6 @@ class MyCard extends StatelessWidget {
                   children: [
                     GestureDetector(
                         onTap: () {
-                          print(snap);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -62,6 +62,8 @@ class MyCard extends StatelessWidget {
                                       newID: id,
                                       title: "${snap["postTitle"]}",
                                       imgUrl: "${snap["postImage"]}",
+                                      path: "${snap["pathImage"]}",
+                                      reference: reference,
                                     )),
                           );
                         },
@@ -94,7 +96,7 @@ class MyCard extends StatelessWidget {
                                     TextButton(
                                       child: Text("موافق"),
                                       onPressed: () async {
-                                        delete.delete();
+                                        reference.delete();
 
                                         print(id.toString());
 
@@ -157,19 +159,24 @@ class MyCard extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            child: _dta != ""
-                ? Image(
-                    height: 150,
-                    width: 250,
-                    image: NetworkImage(
-                      "${snap["postImage"].toString()}",
-                    ))
-                : SizedBox(
-                    height: 0,
-                    width: 0,
+          if (_dta.isNotEmpty)
+            SizedBox(
+              width: 250,
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    color: Colors.grey,
+                    child: Image(
+                      image: NetworkImage(_dta),
+                      fit: BoxFit.cover,
+                      height: 150,
+                      width: 250,
+                    ),
                   ),
-          ),
+                ),
+              ),
+            ),
         ],
       ),
     );
