@@ -32,7 +32,6 @@ class _EditPostState extends State<EditPost> {
   TextEditingController _title = TextEditingController();
   bool _showProgress = false;
 
-  
   _clearThings() {
     _image?.clear();
     _title.clear();
@@ -89,9 +88,13 @@ class _EditPostState extends State<EditPost> {
                               }
                               return null;
                             },
-                            keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                                 labelText: 'اكتب هنا', hintText: widget.title),
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(300),
+                            ],
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
                           ),
                         ),
                         const SizedBox(height: 45.0),

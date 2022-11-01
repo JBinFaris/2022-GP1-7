@@ -174,8 +174,8 @@ class _UserProfileState extends State<UserProfile> {
                                   return 'الرجاء إدخال إسم المستخدم';
                                 } else if (value.length < 3) {
                                   return 'إسم المستخدم يجب ان يكون اكثر من ٣ رموز';
-                                } else if (value.length > 8) {
-                                  return 'لا يمكن لإسم المستخدم ان يكون اكثر من ٨ رموز';
+                                } else if (value.length > 15) {
+                                  return 'لا يمكن لإسم المستخدم ان يكون اكثر من ١٥ رموز';
                                 }
 
                                 return null;
