@@ -1,7 +1,5 @@
-import 'package:faydh/individual.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'home_page.dart';
