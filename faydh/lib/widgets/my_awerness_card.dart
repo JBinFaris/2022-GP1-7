@@ -82,7 +82,7 @@ class MyCard extends StatelessWidget {
                                     textAlign: TextAlign.right,
                                   ),
                                   content: Text(
-                                    "حذف المحتوى ؟ ",
+                                    "هل أنت متأكد من حذف المحتوى ؟ ",
                                     textAlign: TextAlign.right,
                                   ),
                                   actions: <Widget>[
