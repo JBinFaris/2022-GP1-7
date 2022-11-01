@@ -299,12 +299,18 @@ class _SignupFormState extends State<SignupForm> {
                             if (result) {
                               return null;
                             } else {
-                              return "كلمةالمرور يجب ان تتكون على الأقل من حرف كبير ،حرف صغير ،رقم ورمز مميز";
+                              return 'الرجاء إدخال كلمة مرور صحيحة';
                             }
                           }
                         },
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3, bottom: 3),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text( "كلمة المرور يجب ان تتكون من: حرف كبير ،حرف صغير ،رقم ورمز مميز", style: TextStyle( color: Colors.grey[350] , fontSize:13, ) , textAlign: TextAlign.right, ),
+                      ),),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: LinearProgressIndicator(
