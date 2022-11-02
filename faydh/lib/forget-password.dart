@@ -106,7 +106,7 @@ class _PasswordResetState extends State<PasswordReset> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 20, horizontal: 80),
                     child: const Text(
-                      "هل نسيت كلمة السر",
+                      " نسيت كلمة السر",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

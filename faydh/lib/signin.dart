@@ -174,7 +174,7 @@ class _signInSreenState extends State<signInSreen> {
                   },
                   child: const Text('مستخدم جديد؟ تسجيل',
                       style: TextStyle(
-                        color: Color(0xff201a19),
+                        color: Color.fromARGB(255, 245, 242, 241),
                         fontSize: 20,
                       )),
                 ),

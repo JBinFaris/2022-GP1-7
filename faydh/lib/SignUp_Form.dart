@@ -306,7 +306,7 @@ class _SignupFormState extends State<SignupForm> {
                     padding: const EdgeInsets.only(top: 3, bottom: 3),
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: Text( "كلمة المرور يجب ان تتكون من: حرف كبير ،حرف صغير ،رقم ورمز مميز", style: TextStyle( color: Colors.grey[350] , fontSize:13, ) , textAlign: TextAlign.right, ),
+                      child: Text( "كلمة المرور يجب ان تتكون من: حرف كبير ،حرف صغير ،رقم ورمز مميز", style: TextStyle( color: Color.fromARGB(255, 0, 0, 0) , fontSize:13, ) , textAlign: TextAlign.right, ),
                     ),),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
