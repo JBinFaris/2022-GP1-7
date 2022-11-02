@@ -50,7 +50,7 @@ class _individualPageState extends State<individual> {
                 padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: Text('مستهلك'),
+                  child: Text('متبرع'),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
