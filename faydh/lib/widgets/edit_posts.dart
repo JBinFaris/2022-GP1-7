@@ -96,14 +96,19 @@ class _EditPostState extends State<EditPost> {
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: TextFormField(
+                            maxLength: 300,
                             controller: _title,
                             validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'الرجاء كتابة مالايقل عن ٤ أحرف';
+                              if (value == null || value.isEmpty) {
+                                return null;
+                              } else if (value.length > 300) {
+                                return 'الحد الأقصى للكتابة هو 300 حرف';
                               }
+
                               return null;
                             },
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
                             decoration: const InputDecoration(
                               labelText: 'اكتب هنا',
                               hintText: "اكتب هنا",

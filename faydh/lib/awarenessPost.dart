@@ -46,8 +46,7 @@ class _HomePageState extends State<awarenessPost>
       if (myUsername == "") {
         // print("value...${value.}");
         myUsername = value["username"].toString();
-      } else {
-      }
+      } else {}
     });
   }
 
@@ -82,9 +81,16 @@ class _HomePageState extends State<awarenessPost>
                                   width: 2, color: Color(0xFF1A4D2E)),
                             ),
                           ),
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(300),
-                          ],
+                          maxLength: 300,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return null;
+                            } else if (value.length > 300) {
+                              return 'الحد الأقصى للكتابة هو 300 حرف';
+                            }
+
+                            return null;
+                          },
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
                         ),
