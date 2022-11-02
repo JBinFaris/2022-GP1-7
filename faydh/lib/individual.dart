@@ -48,11 +48,10 @@ class _individualPageState extends State<individual> {
                 padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: const Text("متبرع (انتظرونا قريباً)"),
+                  child: const Text("متبرع  "),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      primary: const Color(0xFF1A4D2E),
+                          borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 110.0, vertical: 25.0),
                       textStyle:
@@ -64,7 +63,7 @@ class _individualPageState extends State<individual> {
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: const Text('(انتظرونا قريباً) مستفيد'),
+                child: const Text('مستفيد'),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
