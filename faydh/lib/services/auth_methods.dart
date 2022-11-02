@@ -46,10 +46,10 @@ class AuthMethods {
     } on FirebaseAuthException catch (error) {
       if (error.code == "invalid-email") {
         if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-          res = "The email is badly formatted.";
+          res = "البريد الإلكتروني مستخدم سابقاً";
         }
       } else if (error.code == "weak-password") {
-        res = "Your password  should atleast 6 digits";
+        res = "الرجاء إدخال كلمة مرور صالحة";
       }
     } catch (err) {
       res = err.toString();
@@ -59,7 +59,7 @@ class AuthMethods {
 
   /// Logout
   Future signOut() async {
-    String res = "Some error occurd";
+    String res =  "حصل خطأ ما";
     try {
       await _auth.signOut();
       res = "success";
@@ -71,7 +71,7 @@ class AuthMethods {
 
   ///Resting password:
   Future<String> resetPassword({required String email}) async {
-    String res = "Some error occurd";
+    String res =  "حصل خطأ ما";
     try {
       await _auth.sendPasswordResetEmail(email: email);
       res = "success";
@@ -84,23 +84,18 @@ class AuthMethods {
   //// Login user
   Future<String> loginUser(
       {required String email, required String password}) async {
-    String res = "Some error occurd";
+    String res = "حصل خطأ ما";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
         res = "success";
       } else {
-        res = "Please enters all the feild";
+        res = "الرجاء إدخال كل الحقول";
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found") {
-        res = "User not found";
-      } else {
-        e.code == "wrong-password";
-        {
-          res = "Password is not correct";
-        }
+      if (e.code == "user-not-found" || e.code == "wrong-password") {
+        res = " البريد الإلكتروني او كلمة المرور خاطئة";
       }
     } catch (error) {
       res = error.toString();
@@ -138,9 +133,9 @@ class AuthMethods {
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == "invalid-email") {
-        res = "The email is badly formatted.";
+        res = "البريد الإلكتروني مستخدم سابقاً";
       } else if (error.code == "weak-password") {
-        res = "Your password  should atleast 6 digits";
+        res = "الرجاء إدخال كلمة مرور صالحة";
       }
     } catch (err) {
       res = err.toString();
