@@ -29,6 +29,22 @@ class _PasswordResetState extends State<PasswordReset> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+       floatingActionButton: Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 70, right: 5, left: 5),
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const signInSreen();
+                    }));
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Color.fromARGB(255, 18, 57, 20),
+                  )),
+            )),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -39,7 +55,7 @@ class _PasswordResetState extends State<PasswordReset> {
         ),
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 55,
+          vertical: 150,
         ),
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
