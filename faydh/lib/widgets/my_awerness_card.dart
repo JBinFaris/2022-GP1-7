@@ -26,7 +26,7 @@ class MyCard extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(
+          side: const BorderSide(
             width: 0,
             color: Colors.white,
           ),
@@ -34,9 +34,9 @@ class MyCard extends StatelessWidget {
         ),
         margin: const EdgeInsets.all(8),
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: new BorderRadius.all(
+              borderRadius: BorderRadius.all(
                 Radius.circular(30.0),
               )),
           child: Padding(
@@ -67,7 +67,7 @@ class MyCard extends StatelessWidget {
                                     )),
                           );
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.edit,
                           color: Color.fromARGB(226, 29, 92, 76),
                         )),
@@ -77,24 +77,24 @@ class MyCard extends StatelessWidget {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                  title: Text(
+                                  title: const Text(
                                     'تأكيد الحذف',
                                     textAlign: TextAlign.right,
                                   ),
-                                  content: Text(
+                                  content: const Text(
                                     "هل أنت متأكد من حذف المحتوى ؟ ",
                                     textAlign: TextAlign.right,
                                   ),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: Text("إلغاء"),
+                                      child: const Text("إلغاء"),
                                       onPressed: () {
                                         // callback function for on click event of Cancel button
                                         Navigator.of(context).pop();
                                       },
                                     ),
                                     TextButton(
-                                      child: Text("موافق"),
+                                      child: const Text("موافق"),
                                       onPressed: () async {
                                         reference.delete();
 
@@ -108,7 +108,7 @@ class MyCard extends StatelessWidget {
                                   ]);
                             });
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.delete,
                         color: Color.fromARGB(255, 172, 8, 8),
                       ),
@@ -126,7 +126,7 @@ class MyCard extends StatelessWidget {
   Widget tweetAvatar() {
     return Container(
       margin: const EdgeInsets.all(10.0),
-      child: CircleAvatar(
+      child: const CircleAvatar(
         backgroundColor: Colors.white,
         child: Icon(
           Icons.account_circle_rounded,
@@ -147,16 +147,14 @@ class MyCard extends StatelessWidget {
           Padding(
             padding:
                 const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, right: 0, bottom: 2, left: 50),
-                child: Text("${snap["postTitle"].toString()}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, right: 0, bottom: 2, left: 50),
+              child: Text("${snap["postTitle"].toString()}",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  )),
             ),
           ),
           if (_dta.isNotEmpty)
@@ -191,7 +189,7 @@ class MyCard extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: Text(
               "${snap["postUserName"].toString()}",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),

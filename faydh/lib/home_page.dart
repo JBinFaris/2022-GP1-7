@@ -13,8 +13,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController _pageController = PageController();
-  List<Widget> _screens = [individual(), awarenessPost(), UserProfile()];
+  final PageController _pageController = PageController();
+  final List<Widget> _screens = [const individual(), const awarenessPost(), const UserProfile()];
 
   int _selectedIndex = 0;
   void _onPageChanged(int index) {
@@ -34,11 +34,11 @@ class _HomePageState extends State<HomePage> {
         controller: _pageController,
         children: _screens,
         onPageChanged: _onPageChanged,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Color(0xFF1A4D2E),
+          color: const Color(0xFF1A4D2E),
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> {
               gap: 8,
               activeColor: Colors.black,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: Duration(milliseconds: 400),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              duration: const Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
               color: Colors.black,
               onTabChange: _onItemTapped,
@@ -64,19 +64,19 @@ class _HomePageState extends State<HomePage> {
                 GButton(
                   icon: LineIcons.home,
                   iconColor:
-                      _selectedIndex == 0 ? Color(0xFFD6ECD0) : Colors.white,
+                      _selectedIndex == 0 ? const Color(0xFFD6ECD0) : Colors.white,
                   text: "الصفحة الرئيسية",
                 ),
                 GButton(
                   icon: LineIcons.list,
                   iconColor:
-                      _selectedIndex == 1 ? Color(0xFFD6ECD0) : Colors.white,
+                      _selectedIndex == 1 ? const Color(0xFFD6ECD0) : Colors.white,
                   text: "المنتدى التوعوي",
                 ),
                 GButton(
                   icon: LineIcons.user,
                   iconColor:
-                      _selectedIndex == 2 ? Color(0xFFD6ECD0) : Colors.white,
+                      _selectedIndex == 2 ? const Color(0xFFD6ECD0) : Colors.white,
                   text: "الملف الشخصي",
                 ),
               ],

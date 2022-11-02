@@ -61,9 +61,9 @@ class PostCardAll extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: Card(
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: new BorderRadius.all(
+                borderRadius: BorderRadius.all(
                   Radius.circular(30.0),
                 )),
             child: Row(
@@ -82,7 +82,7 @@ class PostCardAll extends StatelessWidget {
   Widget tweetAvatar() {
     return Container(
       margin: const EdgeInsets.all(10.0),
-      child: CircleAvatar(
+      child: const CircleAvatar(
         child: Icon(
           Icons.account_circle_rounded,
           size: 40,
@@ -99,7 +99,7 @@ class PostCardAll extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             tweetHeader(),
-            Container(
+            SizedBox(
               height: 150,
               width: 150,
               child: Image(
@@ -120,22 +120,20 @@ class PostCardAll extends StatelessWidget {
           margin: const EdgeInsets.only(right: 5.0),
           child: Text(
             "${snap["postUserName"].toString()}",
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
             ),
           ),
         ),
-        Spacer(),
-        Container(
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: Text("${snap["postTitle"].toString()}",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                )),
-          ),
+        const Spacer(),
+        Directionality(
+          textDirection: TextDirection.rtl,
+          child: Text("${snap["postTitle"].toString()}",
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              )),
         ),
       ],
     );

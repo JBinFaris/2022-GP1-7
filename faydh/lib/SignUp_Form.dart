@@ -86,6 +86,7 @@ class _SignupFormState extends State<SignupForm> {
   //   1:   Great
 
   
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
@@ -302,8 +303,8 @@ class _SignupFormState extends State<SignupForm> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3, bottom: 3),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 3, bottom: 3),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Text( "كلمة المرور يجب ان تتكون من: حرف كبير ،حرف صغير ،رقم ورمز مميز", style: TextStyle( color: Color.fromARGB(255, 0, 0, 0) , fontSize:13, ) , textAlign: TextAlign.right, ),

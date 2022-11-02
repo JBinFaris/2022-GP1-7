@@ -1,13 +1,10 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faydh/myAwareness.dart';
-import 'package:faydh/widgets/my_awerness_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../services/firestore_methods.dart';
-import '../services/storage_method.dart';
 import '../utilis/utilis.dart';
 
 class EditPost extends StatefulWidget {

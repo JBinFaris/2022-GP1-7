@@ -20,6 +20,7 @@ class _UserProfileState extends State<UserProfile> {
   String phoneNumber = "";
   String myrole = "";
 
+  @override
   void initState() {
     super.initState();
     _getUserData();
@@ -32,9 +33,8 @@ class _UserProfileState extends State<UserProfile> {
         .get();
 
     setState(() {
-      if (snap == null) {
-        print("emmmmmpty");
-      } else {
+      if (snap != null) {
+
         userName = (snap.data() as Map<String, dynamic>)['username'];
 
         userEmail = (snap.data() as Map<String, dynamic>)['email'];

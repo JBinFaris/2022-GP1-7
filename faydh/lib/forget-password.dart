@@ -1,11 +1,7 @@
-import 'package:faydh/SignUp_Form.dart';
-import 'package:faydh/home_page.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/signin.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class PasswordReset extends StatefulWidget {
   const PasswordReset({Key? key}) : super(key: key);
@@ -18,6 +14,7 @@ class _PasswordResetState extends State<PasswordReset> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -27,6 +24,7 @@ class _PasswordResetState extends State<PasswordReset> {
   @override
   final _formKey = GlobalKey<FormState>();
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
        floatingActionButton: Align(

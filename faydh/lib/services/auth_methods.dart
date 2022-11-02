@@ -45,8 +45,9 @@ class AuthMethods {
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == "invalid-email") {
-        if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE')
+        if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
           res = "The email is badly formatted.";
+        }
       } else if (error.code == "weak-password") {
         res = "Your password  should atleast 6 digits";
       }

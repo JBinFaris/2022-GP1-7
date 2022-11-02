@@ -19,6 +19,7 @@ class _signInSreenState extends State<signInSreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -28,6 +29,7 @@ class _signInSreenState extends State<signInSreen> {
   @override
   final _formKey = GlobalKey<FormState>();
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

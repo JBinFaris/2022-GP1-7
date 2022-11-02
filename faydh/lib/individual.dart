@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:faydh/components/background.dart';
 
 class individual extends StatefulWidget {
@@ -18,7 +16,7 @@ class _individualPageState extends State<individual> {
       resizeToAvoidBottomInset: false,
       body: Background(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
@@ -32,7 +30,7 @@ class _individualPageState extends State<individual> {
                 ]),
           ),
           alignment: Alignment.center,
-          padding: EdgeInsets.only(top: 90.0, left: 20.0, right: 20.0),
+          padding: const EdgeInsets.only(top: 90.0, left: 20.0, right: 20.0),
           child: Expanded(
             child: Column(children: <Widget>[
               Align(
@@ -47,34 +45,33 @@ class _individualPageState extends State<individual> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
                 child: ElevatedButton(
                   onPressed: () {},
-                  child: Text("متبرع (انتظرونا قريباً)"),
+                  child: const Text("متبرع (انتظرونا قريباً)"),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      primary: Color(0xFF1A4D2E),
-                      padding: EdgeInsets.symmetric(
+                      primary: const Color(0xFF1A4D2E),
+                      padding: const EdgeInsets.symmetric(
                           horizontal: 110.0, vertical: 25.0),
                       textStyle:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                          const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text('(انتظرونا قريباً) مستفيد'),
+                child: const Text('(انتظرونا قريباً) مستفيد'),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    primary: Color(0xFF1A4D2E),
+                        borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
                     padding:
-                        EdgeInsets.symmetric(horizontal: 110.0, vertical: 25.0),
+                        const EdgeInsets.symmetric(horizontal: 110.0, vertical: 25.0),
                     textStyle:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                        const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
               )
             ]),
           ),

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faydh/home_page.dart';
 import 'package:faydh/services/firestore_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'package:faydh/widgets/all_posts.dart';
@@ -17,7 +16,7 @@ class awarenessPost extends StatefulWidget {
 
 class _HomePageState extends State<awarenessPost>
     with AutomaticKeepAliveClientMixin {
-  TextEditingController _contentController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
   Uint8List? _image;
 
   /// seelct image
@@ -44,13 +43,10 @@ class _HomePageState extends State<awarenessPost>
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
-      print("ABC");
       if (myUsername == "") {
         // print("value...${value.}");
         myUsername = value["username"].toString();
-        print(myUsername);
       } else {
-        print("m");
       }
     });
   }
@@ -130,7 +126,7 @@ class _HomePageState extends State<awarenessPost>
                               ),
                             ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -141,30 +137,28 @@ class _HomePageState extends State<awarenessPost>
                               selectImage();
                             },
                             child: const Icon(Icons.add_photo_alternate),
-                            backgroundColor: Color(0xFF1A4D2E),
+                            backgroundColor: const Color(0xFF1A4D2E),
                           ),
-                          Container(
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: ElevatedButton(
-                                  child: const Text('إضافة'),
-                                  onPressed: () {
-                                    FirestoreMethods()
-                                        .uploadPost(
-                                            postUserName: myUsername,
-                                            postTitle: _contentController.text,
-                                            file: _image)
-                                        .then((value) {
-                                      if (value == "succces") {
-                                        _clearAll();
-                                      }
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFF1A4D2E),
-                                  ),
-                                )),
-                          ),
+                          Align(
+                              alignment: Alignment.center,
+                              child: ElevatedButton(
+                                child: const Text('إضافة'),
+                                onPressed: () {
+                                  FirestoreMethods()
+                                      .uploadPost(
+                                          postUserName: myUsername,
+                                          postTitle: _contentController.text,
+                                          file: _image)
+                                      .then((value) {
+                                    if (value == "succces") {
+                                      _clearAll();
+                                    }
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF1A4D2E),
+                                ),
+                              )),
                         ],
                       ),
                     ],
@@ -172,18 +166,18 @@ class _HomePageState extends State<awarenessPost>
                 );
               });
         },
-        child: Icon(
+        child: const Icon(
           Icons.add_outlined,
           size: 50,
         ),
-        backgroundColor: Color(0xFF1A4D2E),
-        foregroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color(0xFF1A4D2E),
+        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Center(child: Text('المنتدى التوعوي       ')),
-        backgroundColor: Color(0xFF1A4D2E),
-        foregroundColor: Color(0xFFF7F7F7),
+        backgroundColor: const Color(0xFF1A4D2E),
+        foregroundColor: const Color(0xFFF7F7F7),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -198,7 +192,7 @@ class _HomePageState extends State<awarenessPost>
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snaphot) {
             if (snaphot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(
                   color: Colors.green,
                 ),

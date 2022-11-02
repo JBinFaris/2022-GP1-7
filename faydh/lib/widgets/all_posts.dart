@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'edit_posts.dart';
 
 class AllPostsCard extends StatelessWidget {
   final snap;
@@ -21,27 +20,25 @@ class AllPostsCard extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(
+          side: const BorderSide(
             width: 0,
             color: Colors.white,
           ),
           borderRadius: BorderRadius.circular(20),
         ),
         margin: const EdgeInsets.all(8),
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    tweetAvatar(),
-                    tweetBody(),
-                  ],
-                ),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  tweetAvatar(),
+                  tweetBody(),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -51,7 +48,7 @@ class AllPostsCard extends StatelessWidget {
   Widget tweetAvatar() {
     return Container(
       margin: const EdgeInsets.all(10.0),
-      child: CircleAvatar(
+      child: const CircleAvatar(
         backgroundColor: Colors.white,
         child: Icon(
           Icons.account_circle_rounded,
@@ -72,19 +69,17 @@ class AllPostsCard extends StatelessWidget {
           Padding(
             padding:
                 const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 20, right: 0, bottom: 2, left: 50),
-                child: Text("${snap["postTitle"].toString()}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, right: 0, bottom: 2, left: 50),
+              child: Text("${snap["postTitle"].toString()}",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  )),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           if (_dta.isNotEmpty)
@@ -119,7 +114,7 @@ class AllPostsCard extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             child: Text(
               "${snap["postUserName"].toString()}",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),

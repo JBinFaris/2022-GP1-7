@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class myAware extends StatefulWidget {
-  myAware({Key? key}) : super(key: key);
+  const myAware({Key? key}) : super(key: key);
 
   @override
   _myAwareState createState() => _myAwareState();
@@ -27,6 +27,7 @@ class _myAwareState extends State<myAware> {
 
   String idddd = FirebaseAuth.instance.currentUser!.uid;
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
