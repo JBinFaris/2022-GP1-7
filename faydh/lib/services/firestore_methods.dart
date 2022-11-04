@@ -45,7 +45,7 @@ class FirestoreMethods {
 
   Future<String> updatePostTwo({
     required String title,
-    required String oldImage,
+    required String? oldImage,
     required String id,
     Uint8List? file,
     required DocumentReference<Map<String, dynamic>> reference,
@@ -59,7 +59,8 @@ class FirestoreMethods {
       }
 
       Map<String, String> values = {"postTitle": title};
-      if (photoUrl['downloadUrl']!.isNotEmpty) {
+      if (photoUrl.containsKey('downloadUrl') &&
+          photoUrl['downloadUrl']!.isNotEmpty) {
         values.putIfAbsent('postImage', () => photoUrl['downloadUrl']!);
         values.putIfAbsent('pathImage', () => photoUrl['path']!);
       }

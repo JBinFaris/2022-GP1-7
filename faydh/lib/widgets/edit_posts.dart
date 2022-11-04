@@ -10,8 +10,8 @@ import '../utilis/utilis.dart';
 class EditPost extends StatefulWidget {
   final String title;
 
-  final imgUrl;
-  final path;
+  final String? imgUrl;
+  final String? path;
   final String newID;
   final DocumentReference<Map<String, dynamic>> reference;
 
@@ -137,12 +137,17 @@ class _EditPostState extends State<EditPost> {
                                   borderRadius: BorderRadius.circular(20),
                                   child: Container(
                                     color: Colors.grey,
-                                    child: Image(
-                                      image: NetworkImage(widget.imgUrl),
-                                      fit: BoxFit.cover,
-                                      height: 100,
-                                      width: 100,
-                                    ),
+                                    height: 100,
+                                    width: 100,
+                                    child: widget.imgUrl != null &&
+                                            widget.imgUrl!.isNotEmpty
+                                        ? Image(
+                                            image: NetworkImage(widget.imgUrl!),
+                                            fit: BoxFit.cover,
+                                            height: 100,
+                                            width: 100,
+                                          )
+                                        : Container(),
                                   ),
                                 ),
                         ),
