@@ -22,7 +22,7 @@ String myUsername = "";
 
  var _value;
 var seen = false ; 
-var iddd;
+
   @override
   void initState() {
     getUser2();
@@ -46,8 +46,6 @@ if (docSnapshot!= null && mounted ) {
 
   @override
   Widget build(BuildContext context) {
-     iddd = "${widget.snap["userId"].toString()}" ;
-
     var _dta = "${widget.snap["postImage"].toString()}";
 
     return Directionality(
