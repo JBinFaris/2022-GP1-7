@@ -104,7 +104,7 @@ if (docSnapshot!= null && mounted ) {
             child: Padding(
               padding: const EdgeInsets.only(
                   top: 20, right: 0, bottom: 2, left: 50),
-              child: Text("${widget.snap["postTitle"].toString()}",
+              child: Text("${widget.snap["postText"].toString()}",
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,

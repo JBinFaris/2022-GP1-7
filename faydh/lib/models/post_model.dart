@@ -4,14 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Posts {
   final String Cid ;
-  final String postTitle; //
+  final String postText; //
   final String postImage; //
   final String pathImage; //
   final String userId;
 
   Posts({
      required this.Cid,
-    required this.postTitle,
+    required this.postText,
     required this.postImage, //
     required this.pathImage, //
     required this.userId,
@@ -19,7 +19,7 @@ class Posts {
 
   Map<String, dynamic> toJson() => {
         "Cid": Cid,
-        "postTitle": postTitle,
+        "postText": postText,
         "postImage": postImage,
         "pathImage": pathImage,
         "userId": userId,
@@ -34,7 +34,7 @@ class Posts {
     return Posts(
       Cid: snapshot["Cid"],
       userId: snapshot["userId"],
-      postTitle: snapshot["postTitle"],
+     postText: snapshot["postText"],
       pathImage: snapshot["pathImage"],
       postImage: snapshot["postImage"],
     );

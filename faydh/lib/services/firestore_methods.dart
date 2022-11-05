@@ -20,7 +20,7 @@ final DocumentReference ref =
   Future<String> uploadPost({
      Cid,
     required postUserName,
-    required String postTitle,
+    required String postText,
     Uint8List? file, //
   }) async {
     String res = "Some error occured";
@@ -36,7 +36,7 @@ final DocumentReference ref =
 
       Posts posts = Posts(
           Cid:  ref.id,
-          postTitle: postTitle,
+          postText: postText,
           postImage: photoUrl['downloadUrl'] ?? '',
           pathImage: photoUrl['path'] ?? '',
           userId: userId,);
@@ -66,7 +66,7 @@ final DocumentReference ref =
             .uploadImageToStorage("postsImage", file, true, filename: oldImage);
       }
 
-      Map<String, String> values = {"postTitle": title};
+      Map<String, String> values = {"postText": title};
       if (photoUrl.containsKey('downloadUrl') &&
           photoUrl['downloadUrl']!.isNotEmpty) {
         values.putIfAbsent('postImage', () => photoUrl['downloadUrl']!);

@@ -153,7 +153,7 @@ class _HomePageState extends State<awarenessPost>
                                   FirestoreMethods()
                                       .uploadPost(
                                           postUserName: myUsername,
-                                          postTitle: _contentController.text,
+                                          postText: _contentController.text,
                                           file: _image)
                                       .then((value) {
                                     if (value == "succces") {
