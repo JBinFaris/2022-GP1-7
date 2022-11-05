@@ -62,13 +62,13 @@ class _UserProfileState extends State<UserProfile> {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: 90.0),
+          padding: const EdgeInsets.only(top: 90.0),
           child: Stack(children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 80.0),
+              margin: const EdgeInsets.only(top: 80.0),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   gradient: LinearGradient(
                       begin: Alignment.bottomLeft,
                       end: Alignment.topRight,
@@ -90,7 +90,7 @@ class _UserProfileState extends State<UserProfile> {
                     key: _formKey,
                     child: Container(
                       padding:
-                          EdgeInsets.only(top: 105.0, left: 20.0, right: 20.0),
+                          const EdgeInsets.only(top: 105.0, left: 20.0, right: 20.0),
                       child: Column(
                         children: <Widget>[
                           // Text("الملف الشخصي",
@@ -98,7 +98,7 @@ class _UserProfileState extends State<UserProfile> {
                           //    fontSize: 30.0,
                           //    height: 2.0,
                           //  )),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Padding(
@@ -110,21 +110,21 @@ class _UserProfileState extends State<UserProfile> {
                               textAlign: TextAlign.right,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.email,
                                   size: 30,
                                   color: Color.fromARGB(255, 18, 57, 20),
                                 ),
                                 contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                    const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50.0),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: Color.fromARGB(255, 18, 57, 20)),
                                 ),
                                 filled: true,
                                 hintStyle: TextStyle(color: Colors.grey[800]),
-                                label: Align(
+                                label: const Align(
                                   alignment: Alignment.centerRight,
                                   child: Text('البريد الإلكتروني'),
                                 ),
@@ -134,7 +134,7 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           //username
@@ -144,21 +144,21 @@ class _UserProfileState extends State<UserProfile> {
                               controller: _username, //field value
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.account_circle_rounded,
                                   size: 30,
                                   color: Color.fromARGB(255, 18, 57, 20),
                                 ),
                                 contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                    const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50.0),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: Color.fromARGB(255, 18, 57, 20)),
                                 ),
                                 filled: true,
                                 hintStyle: TextStyle(color: Colors.grey[800]),
-                                label: Align(
+                                label: const Align(
                                   alignment: Alignment.centerRight,
                                   child: Text('اسم المستخدم'),
                                 ),
@@ -179,7 +179,7 @@ class _UserProfileState extends State<UserProfile> {
                               },
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           //password
@@ -193,21 +193,21 @@ class _UserProfileState extends State<UserProfile> {
                               keyboardType: TextInputType.number,
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.phone_rounded,
                                   size: 30,
                                   color: Color.fromARGB(255, 18, 57, 20),
                                 ),
                                 contentPadding:
-                                    EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                    const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50.0),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: Color.fromARGB(255, 18, 57, 20)),
                                 ),
                                 filled: true,
                                 hintStyle: TextStyle(color: Colors.grey[800]),
-                                label: Align(
+                                label: const Align(
                                   alignment: Alignment.centerRight,
                                   child: Text('رقم الجوال'),
                                 ),
@@ -227,25 +227,24 @@ class _UserProfileState extends State<UserProfile> {
                             ),
                           ),
 
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           ElevatedButton.icon(
                             onPressed: () {
                               Navigator.of(context)
                                   .push(MaterialPageRoute(builder: (context) {
-                                return myAware();
+                                return const myAware();
                               }));
                             },
-                            label: Text('محتواي التوعوي'),
-                            icon: Icon(Icons.arrow_back_ios_new),
+                            label: const Text('محتواي التوعوي'),
+                            icon: const Icon(Icons.arrow_back_ios_new),
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                primary: Color(0xFF1A4D2E),
-                                padding: EdgeInsets.symmetric(
+                                    borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 90.0, vertical: 15.0),
-                                textStyle: TextStyle(
+                                textStyle: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold)),
                           ),
 
@@ -260,24 +259,24 @@ class _UserProfileState extends State<UserProfile> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                              title: Text(
+                                              title: const Text(
                                                 'تسجيل الخروج',
                                                 textAlign: TextAlign.right,
                                               ),
-                                              content: Text(
+                                              content: const Text(
                                                 "هل ترغب بتسجيل الخروج ؟ ",
                                                 textAlign: TextAlign.right,
                                               ),
                                               actions: <Widget>[
                                                 TextButton(
-                                                  child: Text("إلغاء"),
+                                                  child: const Text("إلغاء"),
                                                   onPressed: () {
                                                     // callback function for on click event of Cancel button
                                                     Navigator.of(context).pop();
                                                   },
                                                 ),
                                                 TextButton(
-                                                  child: Text("موافق"),
+                                                  child: const Text("موافق"),
                                                   onPressed: () async {
                                                     AuthMethods()
                                                         .signOut()
@@ -287,7 +286,7 @@ class _UserProfileState extends State<UserProfile> {
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) {
-                                                          return signInSreen();
+                                                          return const signInSreen();
                                                         }));
                                                       }
                                                     });
@@ -296,15 +295,14 @@ class _UserProfileState extends State<UserProfile> {
                                               ]);
                                         });
                                   },
-                                  child: Text('تسجيل الخروج'),
+                                  child: const Text('تسجيل الخروج'),
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20)),
-                                      primary: Color.fromARGB(255, 172, 8, 8),
-                                      padding: EdgeInsets.symmetric(
+                                              BorderRadius.circular(20)), backgroundColor: const Color.fromARGB(255, 172, 8, 8),
+                                      padding: const EdgeInsets.symmetric(
                                           horizontal: 10.0, vertical: 5.0),
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold)),
                                 ),
@@ -318,17 +316,17 @@ class _UserProfileState extends State<UserProfile> {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                                title: Text(
+                                                title: const Text(
                                                   'حفظ التغييرات',
                                                   textAlign: TextAlign.right,
                                                 ),
-                                                content: Text(
+                                                content: const Text(
                                                   "هل أنت متأكد من حفظ التغييرات  ؟ ",
                                                   textAlign: TextAlign.right,
                                                 ),
                                                 actions: <Widget>[
                                                   TextButton(
-                                                    child: Text("إلغاء"),
+                                                    child: const Text("إلغاء"),
                                                     onPressed: () {
                                                       // callback function for on click event of Cancel button
                                                       Navigator.of(context)
@@ -336,7 +334,7 @@ class _UserProfileState extends State<UserProfile> {
                                                     },
                                                   ),
                                                   TextButton(
-                                                    child: Text("موافق"),
+                                                    child: const Text("موافق"),
                                                     onPressed: () async {
                                                       if (_formKey.currentState!
                                                           .validate()) {
@@ -371,15 +369,14 @@ class _UserProfileState extends State<UserProfile> {
                                           });
                                     }
                                   },
-                                  child: Text(' حفظ التغييرات'),
+                                  child: const Text(' حفظ التغييرات'),
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20)),
-                                      primary: Color.fromARGB(255, 172, 8, 8),
-                                      padding: EdgeInsets.symmetric(
+                                              BorderRadius.circular(20)), backgroundColor: const Color.fromARGB(255, 172, 8, 8),
+                                      padding: const EdgeInsets.symmetric(
                                           horizontal: 10.0, vertical: 5.0),
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold)),
                                 ),
@@ -407,7 +404,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                     ),
                   ),
-                  Center(
+                  const Center(
                     child: Text("الملف الشخصي",
                         style: TextStyle(
                           fontSize: 30.0,
@@ -424,7 +421,7 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   OutlineInputBorder myInputBorder() {
-    return OutlineInputBorder(
+    return const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide(
           color: Color.fromARGB(226, 29, 92, 76),
@@ -433,7 +430,7 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   OutlineInputBorder myFocusBorder() {
-    return OutlineInputBorder(
+    return const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide(
           color: Color(0xff1A4D2E),
