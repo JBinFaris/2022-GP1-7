@@ -1,10 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
-class AllPostsCard extends StatelessWidget {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+class AllPostsCard extends StatefulWidget {
   final snap;
 
   AllPostsCard({
@@ -13,8 +12,43 @@ class AllPostsCard extends StatelessWidget {
   });
 
   @override
+  State<AllPostsCard> createState() => _AllPostsCardState();
+}
+class _AllPostsCardState extends State<AllPostsCard> {
+
+
+String myUsername = "";
+
+
+ var _value;
+var seen = false ; 
+var iddd;
+  @override
+  void initState() {
+    getUser2();
+    // TODO: implement initState
+  }
+Future getUser2() async{
+ 
+  if(!seen){
+    var collection = FirebaseFirestore.instance.collection('users');
+var docSnapshot = await collection.doc("${widget.snap["userId"].toString()}" ).get();
+if (docSnapshot!= null && mounted ) {
+  Map<String, dynamic>? data = docSnapshot.data();
+   _value = data?['username'];
+   setState((){
+    myUsername = _value.toString() ;
+   });
+ //myUsername = _value.toString() ;
+ }}
+
+}
+
+  @override
   Widget build(BuildContext context) {
-    var _dta = "${snap["postImage"].toString()}";
+     iddd = "${widget.snap["userId"].toString()}" ;
+
+    var _dta = "${widget.snap["postImage"].toString()}";
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -60,7 +94,7 @@ class AllPostsCard extends StatelessWidget {
   }
 
   Widget tweetBody() {
-    var _dta = "${snap["postImage"].toString()}";
+    var _dta = "${widget.snap["postImage"].toString()}";
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +106,7 @@ class AllPostsCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(
                   top: 20, right: 0, bottom: 2, left: 50),
-              child: Text("${snap["postTitle"].toString()}",
+              child: Text("${widget.snap["postTitle"].toString()}",
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -113,7 +147,7 @@ class AllPostsCard extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Text(
-              "${snap["postUserName"].toString()}",
+              myUsername,
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

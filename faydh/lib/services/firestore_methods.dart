@@ -30,8 +30,7 @@ class FirestoreMethods {
           postTitle: postTitle,
           postImage: photoUrl['downloadUrl'] ?? '',
           pathImage: photoUrl['path'] ?? '',
-          userId: userId,
-          postUserName: postUserName);
+          userId: userId,);
 
       _firestore.collection("posts").add(posts.toJson());
 

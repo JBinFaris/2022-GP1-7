@@ -6,10 +6,8 @@ class Posts {
   final String postImage; //
   final String pathImage; //
   final String userId;
-  final String postUserName;
 
   Posts({
-    required this.postUserName,
     required this.postTitle,
     required this.postImage, //
     required this.pathImage, //
@@ -20,7 +18,6 @@ class Posts {
         "postTitle": postTitle,
         "postImage": postImage,
         "pathImage": pathImage,
-        "postUserName": postUserName,
         "userId": userId,
       };
 
@@ -29,7 +26,6 @@ class Posts {
 
     return Posts(
       userId: snapshot["userId"],
-      postUserName: snapshot["postUserName"],
       postTitle: snapshot["postTitle"],
       pathImage: snapshot["pathImage"],
       postImage: snapshot["postImage"],

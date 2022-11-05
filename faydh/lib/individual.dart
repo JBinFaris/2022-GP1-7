@@ -44,8 +44,12 @@ class _individualPageState extends State<individual> {
                   ),
                 ),
               ),
+             Container(
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Text("انتظرونا قريباً", style: TextStyle(color: Colors.red[900], fontSize: 30), textAlign:TextAlign.center,),
+),
               Container(
-                padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+                padding: const EdgeInsets.only(top: 3.0, left: 20.0, right: 20.0),
                 child: ElevatedButton(
                   onPressed: () {},
                   child: const Text("متبرع  "),
