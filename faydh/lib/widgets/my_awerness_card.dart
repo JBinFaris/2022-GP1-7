@@ -1,12 +1,14 @@
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:faydh/services/firestore_methods.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'edit_posts.dart';
 
-class MyCard extends StatelessWidget {
+class MyCard extends StatefulWidget {
   final snap;
   var id;
   DocumentReference<Map<String, dynamic>> reference;
@@ -19,9 +21,42 @@ class MyCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    var _dta = "${snap["postImage"].toString()}";
+  State<MyCard> createState() => _MyCardState();
+}
 
+class _MyCardState extends State<MyCard> {
+String myUsername = "";
+
+
+ var _value;
+var seen = false ; 
+
+  @override
+  void initState() {
+    getUser2();
+    // TODO: implement initState
+  }
+Future getUser2() async{
+ 
+  if(!seen){
+    var collection = FirebaseFirestore.instance.collection('users');
+var docSnapshot = await collection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+if (docSnapshot!= null && mounted ) {
+  Map<String, dynamic>? data = docSnapshot.data();
+   _value = data?['username'];
+   setState((){
+    myUsername = _value.toString() ;
+   });
+ //myUsername = _value.toString() ;
+ }}
+
+}
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    var _dta = "${widget.snap["postImage"].toString()}";
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
@@ -59,11 +94,11 @@ class MyCard extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => EditPost(
-                                      newID: id,
-                                      title: "${snap["postTitle"]}",
-                                      imgUrl: "${snap["postImage"]}",
-                                      path: "${snap["pathImage"]}",
-                                      reference: reference,
+                                      newID: widget.id,
+                                      title: "${widget.snap["postText"]}",
+                                      imgUrl: "${widget.snap["postImage"]}",
+                                      path: "${widget.snap["pathImage"]}",
+                                      reference: widget.reference,
                                     )),
                           );
                         },
@@ -96,9 +131,9 @@ class MyCard extends StatelessWidget {
                                     TextButton(
                                       child: const Text("موافق"),
                                       onPressed: () async {
-                                        reference.delete();
+                                        widget.reference.delete();
 
-                                        print(id.toString());
+                                        print(widget.id.toString());
 
                                         Navigator.pop(context);
 
@@ -138,7 +173,7 @@ class MyCard extends StatelessWidget {
   }
 
   Widget tweetBody() {
-    var _dta = "${snap["postImage"].toString()}";
+    var _dta = "${widget.snap["postImage"].toString()}";
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,7 +185,7 @@ class MyCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(
                   top: 20, right: 0, bottom: 2, left: 50),
-              child: Text("${snap["postTitle"].toString()}",
+              child: Text("${widget.snap["postText"].toString()}",
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -187,8 +222,8 @@ class MyCard extends StatelessWidget {
           margin: const EdgeInsets.only(right: 5.0),
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: Text(
-              "${snap["postUserName"].toString()}",
+            child:Text(
+             myUsername,
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

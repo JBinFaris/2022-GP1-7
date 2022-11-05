@@ -15,15 +15,6 @@ class _myAwareState extends State<myAware> {
   @override
   TextEditingController awarPost = TextEditingController();
 
-  //bool _isEnable = false;
-  String id = '6358fc8e8e5eae4234fa51bf';
-
-  // void initState() {
-  // Future.microtask(() {
-  //   MongoDatabase.Get();
-  // });
-  // super.initState();
-  //}
 
   String idddd = FirebaseAuth.instance.currentUser!.uid;
 

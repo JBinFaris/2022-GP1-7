@@ -4,7 +4,6 @@ class User {
   final String role;
   final String email;
   final String uid;
-
   final String username;
   final String phoneNumber;
 
