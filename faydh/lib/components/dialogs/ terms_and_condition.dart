@@ -13,8 +13,6 @@ class TermsAndConditions extends StatefulWidget {
   State<TermsAndConditions> createState() => _TermsAndConditionsState();
 }
 
-String Terms = "sssshhhaaaddeeeennn";
-
 class _TermsAndConditionsState extends State<TermsAndConditions> {
   @override
   @override
@@ -49,8 +47,8 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
               colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
         ),
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 00,
+          horizontal: 25,
+          vertical: 20,
         ),
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(

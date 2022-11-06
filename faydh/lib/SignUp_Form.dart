@@ -463,19 +463,38 @@ class _SignupFormState extends State<SignupForm> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 2),
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return const TermsAndConditions();
-                          }));
-                        },
-                        child: const Text(
-                            'تسجيل دخولك يعني موافقتك على الشروط والأحكام',
-                            style: TextStyle(
-                              color: Color(0xff201a19),
-                              fontSize: 15,
-                            )),
-                      ),
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return const TermsAndConditions();
+                            }));
+                          },
+                          child: Text.rich(
+                            TextSpan(
+                              text: '*   تسجيل دخولك يعني موافقتك ',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xff201a19),
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'على الشروط والأحكام',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Color(0xff201a19),
+                                    )),
+                                // can add more TextSpans here...
+                              ],
+                            ),
+                          )
+
+                          // const Text(
+                          //     'ت على الشروط والأحكام',
+                          //     style: TextStyle(
+                          //       color: Color(0xff201a19),
+                          //       fontSize: 15,
+                          //     )),
+                          ),
                     ),
                   ),
 
