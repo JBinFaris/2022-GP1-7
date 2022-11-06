@@ -34,7 +34,7 @@ Future getUser2() async{
   if(!seen){
     var collection = FirebaseFirestore.instance.collection('users');
 var docSnapshot = await collection.doc("${widget.snap["userId"].toString()}" ).get();
-if (docSnapshot!= null ) {
+if (docSnapshot!= null && mounted ) {
   Map<String, dynamic>? data = docSnapshot.data();
   var _value = data?['username'];
    setState((){
@@ -43,7 +43,6 @@ if (docSnapshot!= null ) {
    });
  //myUsername = _value.toString() ;
  }}
-
 }
 
   @override
