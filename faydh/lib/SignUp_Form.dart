@@ -1,3 +1,4 @@
+import 'package:faydh/components/dialogs/%20terms_and_condition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:faydh/services/auth_methods.dart';
@@ -23,7 +24,6 @@ class _SignupFormState extends State<SignupForm> {
   bool? _isChecked = false;
   bool? seen = false;
   String? selectedValue;
-
 
   @override
   void dispose() {
@@ -85,7 +85,6 @@ class _SignupFormState extends State<SignupForm> {
   // 3/4: Strong
   //   1:   Great
 
-  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -151,13 +150,13 @@ class _SignupFormState extends State<SignupForm> {
                           color: Color.fromARGB(255, 18, 57, 20),
                         ),
                         contentPadding:
-                           const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
                         ),
                         filled: true,
                         hintStyle: TextStyle(color: Colors.grey[800]),
@@ -167,7 +166,6 @@ class _SignupFormState extends State<SignupForm> {
                         ),
 
                         // contentPadding: EdgeInsets.only(left:230),
-                        
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -196,25 +194,25 @@ class _SignupFormState extends State<SignupForm> {
                             const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                           borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
+                          borderSide: const BorderSide(
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
                         ),
-                         disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                  ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
+                        ),
                         filled: true,
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         label: const Align(
@@ -223,7 +221,6 @@ class _SignupFormState extends State<SignupForm> {
                         ),
 
                         // contentPadding: EdgeInsets.only(left:230),
-                        
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -260,24 +257,24 @@ class _SignupFormState extends State<SignupForm> {
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
                         ),
-                         disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                  ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
+                        ),
                         filled: true,
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         label: const Align(
@@ -286,7 +283,6 @@ class _SignupFormState extends State<SignupForm> {
                         ),
 
                         // contentPadding: EdgeInsets.only(left:230),
-                        
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -307,8 +303,16 @@ class _SignupFormState extends State<SignupForm> {
                     padding: EdgeInsets.only(top: 3, bottom: 3),
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: Text( "كلمة المرور يجب ان تتكون من: حرف كبير ،حرف صغير ،رقم ورمز مميز", style: TextStyle( color: Color.fromARGB(255, 0, 0, 0) , fontSize:13, ) , textAlign: TextAlign.right, ),
-                    ),),
+                      child: Text(
+                        "كلمة المرور يجب ان تتكون من: حرف كبير ،حرف صغير ،رقم ورمز مميز",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 13,
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: LinearProgressIndicator(
@@ -342,25 +346,25 @@ class _SignupFormState extends State<SignupForm> {
                             const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
-                           borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
+                          borderSide: const BorderSide(
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
                         ),
-                         disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                  ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Color(0xffd6ecd0),
+                            width: 1.0,
+                          ),
+                        ),
                         filled: true,
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         label: const Align(
@@ -369,7 +373,6 @@ class _SignupFormState extends State<SignupForm> {
                         ),
 
                         // contentPadding: EdgeInsets.only(left:230),
-                        
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -402,29 +405,29 @@ class _SignupFormState extends State<SignupForm> {
                                 size: 30,
                                 color: Color.fromARGB(255, 18, 57, 20),
                               ),
-                              contentPadding:
-                                  const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                              contentPadding: const EdgeInsets.fromLTRB(
+                                  20.0, 10.0, 20.0, 10.0),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                        ),
-                         disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(
-                      color: Color(0xffd6ecd0),
-                      width: 1.0,
-                    ),
-                  ),
+                                borderSide: const BorderSide(
+                                  color: Color(0xffd6ecd0),
+                                  width: 1.0,
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: const BorderSide(
+                                  color: Color(0xffd6ecd0),
+                                  width: 1.0,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: const BorderSide(
+                                  color: Color(0xffd6ecd0),
+                                  width: 1.0,
+                                ),
+                              ),
                               filled: true,
                               hintStyle: TextStyle(color: Colors.grey[800]),
                               label: const Align(
@@ -432,8 +435,8 @@ class _SignupFormState extends State<SignupForm> {
                                   child: Text('نوع المستخدم')),
                               // contentPadding: EdgeInsets.only(left:230),
                             ),
-                            items: userTypes.map<DropdownMenuItem<String>>(
-                                (String value) {
+                            items: userTypes
+                                .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),
@@ -455,34 +458,24 @@ class _SignupFormState extends State<SignupForm> {
                             },
                           ))),
                   //checkbox
+
                   Align(
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 2),
-                      child: CheckboxListTile(
-                        title: const Text(
-                          "اوافق على الاحكام والشروط",
-                          textAlign: TextAlign.right,
-                        ),
-                        value: _isChecked,
-                        activeColor: const Color.fromARGB(255, 18, 57, 20),
-                        onChanged: (newBool) {
-                          setState(() {
-                            _isChecked = newBool;
-                            seen = true;
-                          });
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return const TermsAndConditions();
+                          }));
                         },
-                        subtitle: seen == true && _isChecked == false
-                            ? const Padding(
-                                padding: EdgeInsets.fromLTRB(12.0, 0, 0, 0),
-                                child: Text(
-                                  'يجب الموافقة على الاحكام والشروط',
-                                  style: TextStyle(
-                                      color: Color(0xFFe53935), fontSize: 12),
-                                  textAlign: TextAlign.right,
-                                ),
-                              )
-                            : null,
+                        child: const Text(
+                            'تسجيل دخولك يعني موافقتك على الشروط والأحكام',
+                            style: TextStyle(
+                              color: Color(0xff201a19),
+                              fontSize: 15,
+                            )),
                       ),
                     ),
                   ),
@@ -519,8 +512,7 @@ class _SignupFormState extends State<SignupForm> {
                                       .then((value) {
                                     if (value == "success") {
                                       Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) {
+                                          MaterialPageRoute(builder: (context) {
                                         return const HomePage();
                                       }));
                                     }
@@ -531,8 +523,7 @@ class _SignupFormState extends State<SignupForm> {
                               child: const Text(
                                 'تسجيل',
                                 style: TextStyle(
-                                    color:
-                                        Color.fromARGB(255, 255, 255, 255)),
+                                    color: Color.fromARGB(255, 255, 255, 255)),
                               ),
                             ),
                           ))),
