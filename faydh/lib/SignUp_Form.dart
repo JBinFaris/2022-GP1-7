@@ -21,7 +21,6 @@ class _SignupFormState extends State<SignupForm> {
   final _passwordController = TextEditingController();
   final _phonenumberController = TextEditingController();
   final _userTypeController = TextEditingController();
-  bool? _isChecked = false;
   bool? seen = false;
   String? selectedValue;
 
@@ -497,27 +496,28 @@ class _SignupFormState extends State<SignupForm> {
                                 shape: const StadiumBorder(),
                               ),
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {}
-                                if (_isChecked == true &&
-                                    selectedValue != "" &&
-                                    passwordStrength == 1) {
-                                  AuthMethods()
-                                      .signUpUser(
-                                          role: selectedValue.toString(),
-                                          username: _usernameController.text,
-                                          email: _emailController.text,
-                                          phoneNumber:
-                                              _phonenumberController.text,
-                                          password: _passwordController.text)
-                                      .then((value) {
-                                    if (value == "success") {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                        return const HomePage();
-                                      }));
-                                    }
-                                    showSnackBar(value.toString(), context);
-                                  });
+                                if (_formKey.currentState!.validate()) {
+                                  if (selectedValue != "" &&
+                                      passwordStrength == 1) {
+                                    AuthMethods()
+                                        .signUpUser(
+                                            role: selectedValue.toString(),
+                                            username: _usernameController.text,
+                                            email: _emailController.text,
+                                            phoneNumber:
+                                                _phonenumberController.text,
+                                            password: _passwordController.text)
+                                        .then((value) {
+                                      if (value == "success") {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const HomePage();
+                                        }));
+                                      }
+                                      showSnackBar(value.toString(), context);
+                                    });
+                                  }
                                 }
                               },
                               child: const Text(
