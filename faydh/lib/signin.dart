@@ -16,6 +16,8 @@ class signInSreen extends StatefulWidget {
 }
 
 class _signInSreenState extends State<signInSreen> {
+  bool _isObscure = true;
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -88,10 +90,21 @@ class _signInSreenState extends State<signInSreen> {
                 ),
                 const SizedBox(height: 30),
                 TextFormField(
-                  obscureText: true,
+                  obscureText: _isObscure,
                   controller: _passwordController,
                   textAlign: TextAlign.right,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 12.0),
+                    prefix: IconButton(
+                      icon: Icon(
+                          _isObscure ? Icons.visibility : Icons.visibility_off),
+                      onPressed: () {
+                        setState(() {
+                          _isObscure = !_isObscure;
+                        });
+                      },
+                    ),
                     hintText: 'كلمة المرور',
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
