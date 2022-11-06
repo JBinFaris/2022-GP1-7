@@ -33,6 +33,7 @@ var seen = false ;
 
   @override
   void initState() {
+   myUsername = ""; 
     getUser2();
     // TODO: implement initState
   }
