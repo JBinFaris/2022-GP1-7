@@ -38,6 +38,7 @@ if (docSnapshot!= null && mounted ) {
   Map<String, dynamic>? data = docSnapshot.data();
   var _value = data?['username'];
    setState((){
+    myUsername = ""; 
     myUsername = _value.toString() ;
    });
  //myUsername = _value.toString() ;
@@ -48,7 +49,7 @@ if (docSnapshot!= null && mounted ) {
   @override
   Widget build(BuildContext context) {
     var _dta = "${widget.snap["postImage"].toString()}";
-
+     myUsername = ""; 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
