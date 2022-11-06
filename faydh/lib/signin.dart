@@ -62,6 +62,8 @@ class _signInSreenState extends State<signInSreen> {
                 const SizedBox(height: 30),
                 TextFormField(
                   controller: _emailController,
+                  keyboardType: TextInputType.emailAddress,
+
                   textAlign: TextAlign.right,
                   decoration: InputDecoration(
                     hintText: 'البريد الإلكتروني',
