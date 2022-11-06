@@ -49,7 +49,6 @@ if (docSnapshot!= null && mounted ) {
   @override
   Widget build(BuildContext context) {
     var _dta = "${widget.snap["postImage"].toString()}";
-     myUsername = ""; 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
