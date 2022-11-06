@@ -160,6 +160,9 @@ class _HomePageState extends State<awarenessPost>
                                       _clearAll();
                                     }
                                   });
+                                  setState(() {
+                                    
+                                  });
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF1A4D2E),

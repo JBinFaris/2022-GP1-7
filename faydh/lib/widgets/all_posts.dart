@@ -20,11 +20,12 @@ class _AllPostsCardState extends State<AllPostsCard> {
 String myUsername = "";
 
 
- var _value;
+
 var seen = false ; 
 
   @override
   void initState() {
+     myUsername = ""; 
     getUser2();
     // TODO: implement initState
   }
@@ -35,19 +36,18 @@ Future getUser2() async{
 var docSnapshot = await collection.doc("${widget.snap["userId"].toString()}" ).get();
 if (docSnapshot!= null && mounted ) {
   Map<String, dynamic>? data = docSnapshot.data();
-   _value = data?['username'];
+  var _value = data?['username'];
    setState((){
+    myUsername = ""; 
     myUsername = _value.toString() ;
    });
  //myUsername = _value.toString() ;
  }}
-
 }
 
   @override
   Widget build(BuildContext context) {
     var _dta = "${widget.snap["postImage"].toString()}";
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
