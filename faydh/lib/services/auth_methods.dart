@@ -19,7 +19,7 @@ class AuthMethods {
     required String password,
     String? uid,
   }) async {
-    String res = "success";
+    String res = "Success";
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
@@ -42,6 +42,7 @@ class AuthMethods {
             .collection("users")
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .set(user.toJson());
+            return "Success";
       }
     }  on FirebaseAuthException catch (error) {
         if (error.code.toUpperCase() == "EMAIL-ALREADY-IN-USE") {
