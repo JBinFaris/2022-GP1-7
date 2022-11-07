@@ -527,7 +527,7 @@ class _SignupFormState extends State<SignupForm> {
                                                 _phonenumberController.text,
                                             password: _passwordController.text)
                                         .then((value) {
-                                      if (value == "success") {
+                                      if (value == "Success") {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) {
