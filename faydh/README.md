@@ -1,16 +1,21 @@
-# faydh
+# Faydh
 
-A new Flutter project.
+Faydh is an android mobile application that helps reduce food waste by allowing providers and consumers to share surplus food and content to raise food awareness. Faydh will allow food providers to post the food and information related to it, view statistics related to their surplus food, remove the foods that have been picked up, and post awareness content. In contrast, it allows The food consumer to search for the food, reserve the food they want, specify the picked-up details, and post awareness content.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+# Technology
+- Dart
+- Flutter framework
 
-A few resources to get you started if this is your first Flutter project:
+# Launching instructions
+- Dowload Visual Studio code and emulator
+- Open Visual Studio code
+- Choose Clone Git Reposotery
+- Paste the link
+[https://github.com/JBinFaris/2022-GP1-7.git](https://github.com/JBinFaris/2022-GP1-7.git)
+- Choose folder to put the project in
+- Get the packages
+- Run the app
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+or you can install in your android phone the apk file provided in the Faydh_apk folder 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
