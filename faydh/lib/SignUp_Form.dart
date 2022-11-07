@@ -14,6 +14,8 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
+  bool _isObscure = true;
+
   @override
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
@@ -241,18 +243,23 @@ class _SignupFormState extends State<SignupForm> {
                     child: TextFormField(
                       controller: _passwordController,
                       //field value
-                      obscureText: true,
+                      obscureText: _isObscure,
                       enableSuggestions: false,
                       autocorrect: false,
                       textAlign: TextAlign.right,
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.password_rounded,
-                          size: 30,
-                          color: Color.fromARGB(255, 18, 57, 20),
+                        prefix: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          },
                         ),
                         contentPadding:
-                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                            const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(
