@@ -144,13 +144,12 @@ class _HomePageState extends State<awarenessPost>
                             onPressed: () {
                               selectImage();
                             },
-                            child: const Icon(Icons.add_photo_alternate),
                             backgroundColor: const Color(0xFF1A4D2E),
+                            child: const Icon(Icons.add_photo_alternate),
                           ),
                           Align(
                               alignment: Alignment.center,
                               child: ElevatedButton(
-                                child: const Text('إضافة'),
                                 onPressed: () {
                                   if (_image == null &&
                                       _contentController.text == "") {
@@ -181,6 +180,7 @@ class _HomePageState extends State<awarenessPost>
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF1A4D2E),
                                 ),
+                                child: const Text('إضافة'),
                               )),
                         ],
                       ),
