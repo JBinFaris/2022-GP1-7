@@ -46,10 +46,10 @@ class AuthMethods {
     } on FirebaseAuthException catch (error) {
       if (error.code == "invalid-email") {
         if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-          res = "البريد الإلكتروني مستخدم سابقاً";
+          res = " البريد الإلكتروني مستخدم سابقاً";
         }
       } else if (error.code == "weak-password") {
-        res = "الرجاء إدخال كلمة مرور صالحة";
+        res = " الرجاء إدخال كلمة مرور صالحة";
       }
     } catch (err) {
       res = err.toString();
@@ -94,8 +94,13 @@ class AuthMethods {
         res = "الرجاء إدخال كل الحقول";
       }
     } on FirebaseAuthException catch (e) {
-      if (e.code == "user-not-found" || e.code == "wrong-password") {
+         if (e.code == "user-not-found") {
         res = " البريد الإلكتروني او كلمة المرور خاطئة";
+      } else {
+        e.code == "wrong-password";
+        {
+           res = "  البريد الإلكتروني او كلمة المرور خاطئة";
+        }
       }
     } catch (error) {
       res = error.toString();
