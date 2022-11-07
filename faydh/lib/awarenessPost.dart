@@ -6,8 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 
 class awarenessPost extends StatefulWidget {
   const awarenessPost({super.key});
@@ -151,31 +149,16 @@ class _HomePageState extends State<awarenessPost>
                               alignment: Alignment.center,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  if (_image == null &&
-                                      _contentController.text == "") {
-                                    Fluttertoast.showToast(
-                                        msg: "أدخل نصًا أو حدد صورة",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.black54,
-                                        textColor: Colors.white);
-                                  } else {
-                                    DateTime now = DateTime.now();
-                                    String formattedDate =
-                                        DateFormat('kk:mm:ss EEE d MMM')
-                                            .format(now);
-                                    FirestoreMethods()
-                                        .uploadPost(
-                                            postUserName: myUsername,
-                                            postText: _contentController.text,
-                                            file: _image,
-                                            postDate: now)
-                                        .then((value) {
-                                      if (value == "succces") {
-                                        _clearAll();
-                                      }
-                                    });
-                                  }
+                                  FirestoreMethods()
+                                      .uploadPost(
+                                          postUserName: myUsername,
+                                          postText: _contentController.text,
+                                          file: _image)
+                                      .then((value) {
+                                    if (value == "succces") {
+                                      _clearAll();
+                                    }
+                                  });
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF1A4D2E),
@@ -211,10 +194,7 @@ class _HomePageState extends State<awarenessPost>
               colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
         ),
         child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection("posts")
-              .orderBy('postDate', descending: true)
-              .snapshots(),
+          stream: FirebaseFirestore.instance.collection("posts").snapshots(),
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snaphot) {
             if (snaphot.connectionState == ConnectionState.waiting) {
@@ -244,7 +224,6 @@ class _HomePageState extends State<awarenessPost>
 
   void _clearAll() {
     _contentController.text = "";
-    _image = null;
     Navigator.of(this.context).pop();
   }
 }

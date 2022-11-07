@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import '../services/firestore_methods.dart';
 import '../utilis/utilis.dart';
 
@@ -42,7 +42,7 @@ class _EditPostState extends State<EditPost> {
 
   _clearThings() {
     _image = null;
-    _title.text = "";
+    _title.clear();
     setState(() {});
   }
 
@@ -171,41 +171,30 @@ class _EditPostState extends State<EditPost> {
                             : MaterialButton(
                                 color: const Color(0xFF1A4D2E),
                                 onPressed: () async {
-                                  if (_image == null &&
-                                      _title.text.trim() == "") {
-                                    Fluttertoast.showToast(
-                                        msg: "أدخل نصًا أو حدد صورة",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.black54,
-                                        textColor: Colors.white);
-                                  } else {
-                                    if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        _showProgress = true;
-                                      });
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      _showProgress = true;
+                                    });
+                                    FirestoreMethods()
+                                        .updatePostTwo(
+                                      title: _title.text,
+                                      oldImage: widget.path,
+                                      id: widget.newID,
+                                      file: _image,
+                                      reference: widget.reference,
+                                    )
+                                        .then((value) {
+                                      if (value == "success") {
+                                        _clearThings();
+                                        setState(() {
+                                          _showProgress = false;
+                                        });
 
-                                      FirestoreMethods()
-                                          .updatePostTwo(
-                                        title: _title.text,
-                                        oldImage: widget.path,
-                                        id: widget.newID,
-                                        file: _image,
-                                        reference: widget.reference,
-                                      )
-                                          .then((value) {
-                                        if (value == "success") {
-                                          _clearThings();
-                                          setState(() {
-                                            _showProgress = false;
-                                          });
-
-                                          showSnackBar("تم تحديث المحتوى بنجاح",
-                                              context);
-                                          Navigator.of(context).pop();
-                                        }
-                                      });
-                                    }
+                                        showSnackBar(
+                                            "تم تحديث المحتوى بنجاح", context);
+                                        Navigator.of(context).pop();
+                                      }
+                                    });
                                   }
                                 },
                                 textColor: Colors.white,

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 class AllPostsCard extends StatefulWidget {
   final snap;
 
@@ -15,35 +14,36 @@ class AllPostsCard extends StatefulWidget {
   @override
   State<AllPostsCard> createState() => _AllPostsCardState();
 }
-
 class _AllPostsCardState extends State<AllPostsCard> {
-  String myUsername = "";
 
-  var seen = false;
+
+String myUsername = "";
+
+
+
+var seen = false ; 
 
   @override
   void initState() {
-    myUsername = "";
+     myUsername = ""; 
     getUser2();
     // TODO: implement initState
   }
-
-  Future getUser2() async {
-    if (!seen) {
-      var collection = FirebaseFirestore.instance.collection('users');
-      var docSnapshot =
-          await collection.doc("${widget.snap["userId"].toString()}").get();
-      if (docSnapshot != null && mounted) {
-        Map<String, dynamic>? data = docSnapshot.data();
-        var _value = data?['username'];
-        setState(() {
-          myUsername = "";
-          myUsername = _value.toString();
-        });
-        //myUsername = _value.toString() ;
-      }
-    }
-  }
+Future getUser2() async{
+ 
+  if(!seen){
+    var collection = FirebaseFirestore.instance.collection('users');
+var docSnapshot = await collection.doc("${widget.snap["userId"].toString()}" ).get();
+if (docSnapshot!= null && mounted ) {
+  Map<String, dynamic>? data = docSnapshot.data();
+  var _value = data?['username'];
+   setState((){
+    myUsername = ""; 
+    myUsername = _value.toString() ;
+   });
+ //myUsername = _value.toString() ;
+ }}
+}
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +102,8 @@ class _AllPostsCardState extends State<AllPostsCard> {
             padding:
                 const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
             child: Padding(
-              padding:
-                  const EdgeInsets.only(top: 20, right: 0, bottom: 2, left: 50),
+              padding: const EdgeInsets.only(
+                  top: 20, right: 0, bottom: 2, left: 50),
               child: Text("${widget.snap["postText"].toString()}",
                   style: const TextStyle(
                     color: Colors.black,
