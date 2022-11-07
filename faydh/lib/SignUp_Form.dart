@@ -21,6 +21,7 @@ class _SignupFormState extends State<SignupForm> {
   final _passwordController = TextEditingController();
   final _phonenumberController = TextEditingController();
   final _userTypeController = TextEditingController();
+  bool? seen = false;
   String? selectedValue;
 
   @override
@@ -32,16 +33,6 @@ class _SignupFormState extends State<SignupForm> {
     _userTypeController.dispose();
 
     super.dispose();
-  }
-
-  void _clearAll() {
-    _usernameController.text = "";
-    _emailController.text = "";
-   _passwordController.text = "";
-    _userTypeController.text = "";
-     _phonenumberController.text ="";
-    selectedValue = "";
-    Navigator.of(this.context);
   }
 
   final List<String> userTypes = [
@@ -524,47 +515,43 @@ class _SignupFormState extends State<SignupForm> {
                                 shape: const StadiumBorder(),
                               ),
                               onPressed: () {
-                               if (_formKey.currentState!.validate()) { }
-                                  if (
-                                    selectedValue != "" &&
-                                    passwordStrength == 1 &&  _phonenumberController.text!="" ) {
-                                  AuthMethods()
-                                      .signUpUser(
-                                          role: selectedValue.toString(),
-                                          username: _usernameController.text,
-                                          email: _emailController.text,
-                                          phoneNumber:
-                                              _phonenumberController.text,
-                                          password: _passwordController.text)
-                                      .then((value) {
-                                    if (value == "success") {
+                                if (_formKey.currentState!.validate()) {
+                                  if (selectedValue != "" &&
+                                      passwordStrength == 1) {
+                                    AuthMethods()
+                                        .signUpUser(
+                                            role: selectedValue.toString(),
+                                            username: _usernameController.text,
+                                            email: _emailController.text,
+                                            phoneNumber:
+                                                _phonenumberController.text,
+                                            password: _passwordController.text)
+                                        .then((value) {
+                                      if (value == "success") {
                                         Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                        return const HomePage();
-                                      }));
-                                    }
-                                    showSnackBar(value.toString(), context);
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const HomePage();
+                                        }));
+                                      }
+                                      showSnackBar(value.toString(), context);
+                                    });
                                   }
-                                  );
-                                  }
-                                },
+                                }
+                              },
                               child: const Text(
                                 'تسجيل',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 255, 255, 255)),
-                              ),),
+                              ),
                             ),
-                          )),
+                          ))),
                 ],
               ),
             ),
           ),
         )),
       ),
-      
     );
-    
   }
-  
 }
-
