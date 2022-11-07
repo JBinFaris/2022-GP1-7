@@ -34,12 +34,11 @@ class _UserProfileState extends State<UserProfile> {
 
     setState(() {
       if (snap != null) {
-
         userName = (snap.data() as Map<String, dynamic>)['username'];
 
         userEmail = (snap.data() as Map<String, dynamic>)['email'];
         phoneNumber = (snap.data() as Map<String, dynamic>)['phoneNumber'];
-        myrole = (snap.data() as Map<String, dynamic>)['role'];
+        //   myrole = (snap.data() as Map<String, dynamic>)['role'];
       }
     });
   }
@@ -89,8 +88,8 @@ class _UserProfileState extends State<UserProfile> {
                   Form(
                     key: _formKey,
                     child: Container(
-                      padding:
-                          const EdgeInsets.only(top: 105.0, left: 20.0, right: 20.0),
+                      padding: const EdgeInsets.only(
+                          top: 105.0, left: 20.0, right: 20.0),
                       child: Column(
                         children: <Widget>[
                           // Text("الملف الشخصي",
@@ -115,8 +114,8 @@ class _UserProfileState extends State<UserProfile> {
                                   size: 30,
                                   color: Color.fromARGB(255, 18, 57, 20),
                                 ),
-                                contentPadding:
-                                    const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                contentPadding: const EdgeInsets.fromLTRB(
+                                    20.0, 10.0, 20.0, 10.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50.0),
                                   borderSide: const BorderSide(
@@ -149,8 +148,8 @@ class _UserProfileState extends State<UserProfile> {
                                   size: 30,
                                   color: Color.fromARGB(255, 18, 57, 20),
                                 ),
-                                contentPadding:
-                                    const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                contentPadding: const EdgeInsets.fromLTRB(
+                                    20.0, 10.0, 20.0, 10.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50.0),
                                   borderSide: const BorderSide(
@@ -198,8 +197,8 @@ class _UserProfileState extends State<UserProfile> {
                                   size: 30,
                                   color: Color.fromARGB(255, 18, 57, 20),
                                 ),
-                                contentPadding:
-                                    const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                                contentPadding: const EdgeInsets.fromLTRB(
+                                    20.0, 10.0, 20.0, 10.0),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(50.0),
                                   borderSide: const BorderSide(
@@ -241,7 +240,8 @@ class _UserProfileState extends State<UserProfile> {
                             icon: const Icon(Icons.arrow_back_ios_new),
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
+                                    borderRadius: BorderRadius.circular(20)),
+                                backgroundColor: const Color(0xFF1A4D2E),
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 90.0, vertical: 15.0),
                                 textStyle: const TextStyle(
@@ -299,7 +299,9 @@ class _UserProfileState extends State<UserProfile> {
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20)), backgroundColor: const Color.fromARGB(255, 172, 8, 8),
+                                              BorderRadius.circular(20)),
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 172, 8, 8),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10.0, vertical: 5.0),
                                       textStyle: const TextStyle(
@@ -373,7 +375,9 @@ class _UserProfileState extends State<UserProfile> {
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(20)), backgroundColor: const Color.fromARGB(255, 172, 8, 8),
+                                              BorderRadius.circular(20)),
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 172, 8, 8),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10.0, vertical: 5.0),
                                       textStyle: const TextStyle(

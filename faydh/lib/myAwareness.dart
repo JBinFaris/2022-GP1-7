@@ -15,7 +15,6 @@ class _myAwareState extends State<myAware> {
   @override
   TextEditingController awarPost = TextEditingController();
 
-
   String idddd = FirebaseAuth.instance.currentUser!.uid;
 
   @override
