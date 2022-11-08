@@ -224,6 +224,7 @@ class _HomePageState extends State<awarenessPost>
 
   void _clearAll() {
     _contentController.text = "";
+    _image = null;
     Navigator.of(this.context).pop();
   }
 }
