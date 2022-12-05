@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/models/post_model.dart';
+import 'package:faydh/models/user_model.dart';
 import 'package:faydh/services/firestore_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'package:faydh/widgets/all_posts.dart';
+import 'package:faydh/models/user_data_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 class awarenessPost extends StatefulWidget {
   const awarenessPost({super.key});
@@ -30,11 +35,44 @@ class _HomePageState extends State<awarenessPost>
   }
 
   String myUsername = "";
+  var dataoaded;
+  List<UserData> usersList = [];
+  List<Posts> postList = [];
+
+  @override
+  void dispose() {
+    dataoaded = false;
+    super.dispose();
+  }
 
   @override
   void initState() {
-    getUser();
+    dataoaded = false;
+    //getUser();
     // TODO: implement initState
+  }
+
+  assignUserNamesToPosts(List<QuerySnapshot<Map<String, dynamic>>> docs) {}
+
+  Future getAllUsers() async {
+    var collection = FirebaseFirestore.instance.collection('users');
+
+    QuerySnapshot querySnapshot = await collection.get();
+
+    List<dynamic> allData =
+        querySnapshot.docs.map((doc) => doc.data()).toList();
+    for (var element in allData) {
+      usersList.add(UserData(
+          email: element['email'],
+          role: element['role'],
+          uid: element['uid'],
+          phoneNumber: element['phoneNumber'],
+          username: element['username']));
+    }
+
+    setState(() {
+      dataoaded = true;
+    });
   }
 
   getUser() {
@@ -45,13 +83,17 @@ class _HomePageState extends State<awarenessPost>
         .then((value) {
       if (myUsername == "") {
         // print("value...${value.}");
-        myUsername = value["username"].toString();
+        setState(() {
+          myUsername = value["username"].toString();
+        });
       } else {}
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!dataoaded) getAllUsers();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -142,28 +184,43 @@ class _HomePageState extends State<awarenessPost>
                             onPressed: () {
                               selectImage();
                             },
-                            backgroundColor: const Color(0xFF1A4D2E),
                             child: const Icon(Icons.add_photo_alternate),
+                            backgroundColor: const Color(0xFF1A4D2E),
                           ),
                           Align(
                               alignment: Alignment.center,
                               child: ElevatedButton(
+                                child: const Text('إضافة'),
                                 onPressed: () {
-                                  FirestoreMethods()
-                                      .uploadPost(
-                                          postUserName: myUsername,
-                                          postText: _contentController.text,
-                                          file: _image)
-                                      .then((value) {
-                                    if (value == "succces") {
-                                      _clearAll();
-                                    }
-                                  });
+                                  if (_image == null &&
+                                      _contentController.text == "") {
+                                    Fluttertoast.showToast(
+                                        msg: "أدخل نصًا أو حدد صورة",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        backgroundColor: Colors.black54,
+                                        textColor: Colors.white);
+                                  } else {
+                                    DateTime now = DateTime.now();
+                                    String formattedDate =
+                                        DateFormat('kk:mm:ss EEE d MMM')
+                                            .format(now);
+                                    FirestoreMethods()
+                                        .uploadPost(
+                                            //postUserName: myUsername,
+                                            postText: _contentController.text,
+                                            file: _image,
+                                            postDate: now)
+                                        .then((value) {
+                                      if (value == "succces") {
+                                        _clearAll();
+                                      }
+                                    });
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF1A4D2E),
                                 ),
-                                child: const Text('إضافة'),
                               )),
                         ],
                       ),
@@ -194,7 +251,10 @@ class _HomePageState extends State<awarenessPost>
               colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
         ),
         child: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection("posts")
+              .orderBy('postDate', descending: true)
+              .snapshots(),
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snaphot) {
             if (snaphot.connectionState == ConnectionState.waiting) {
@@ -205,12 +265,50 @@ class _HomePageState extends State<awarenessPost>
               );
             }
 
-            return ListView.builder(
-              itemCount: snaphot.data?.docs.length,
-              itemBuilder: (context, index) => AllPostsCard(
-                snap: snaphot.data?.docs[index].data(),
-              ),
-            );
+            if (!dataoaded) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.green,
+                ),
+              );
+            } else {
+              QuerySnapshot<Object?>? querySnapshot = snaphot.data;
+
+              List<dynamic>? allData =
+                  querySnapshot?.docs?.map((doc) => doc.data()).toList();
+              for (var element in allData!) {
+                postList.add(Posts.allPostsConstructor(
+                    Cid: element['Cid'],
+                    postUserName: (element['postUserName'] == null) ? "" : "",
+                    postText: element['postText'],
+                    postImage: element['postImage'],
+                    pathImage: element['pathImage'],
+                    userId: element['userId'],
+                    postDate: DateTime.fromMicrosecondsSinceEpoch(
+                        element['postDate'].millisecondsSinceEpoch)));
+              }
+
+              for (var i = 0; i < usersList.length; i++) {
+                for (var j = 0; j < postList.length; j++) {
+                  if (usersList[i].uid == postList[j].userId) {
+                    postList[j].postUserName = usersList[i].username;
+                  }
+                }
+              }
+
+              return ListView.builder(
+                itemCount: postList.length,
+                itemBuilder: (context, index) => AllPostsCard(
+                  postData: postList[index],
+                ),
+              );
+              // return ListView.builder(
+              //   itemCount: snaphot.data?.docs.length,
+              //   itemBuilder: (context, index) => AllPostsCard(
+              //     snap: snaphot.data?.docs[index].data(),
+              //   ),
+              // );
+            }
           },
         ),
       ),
@@ -225,6 +323,7 @@ class _HomePageState extends State<awarenessPost>
   void _clearAll() {
     _contentController.text = "";
     _image = null;
+    postList.clear();
     Navigator.of(this.context).pop();
   }
 }

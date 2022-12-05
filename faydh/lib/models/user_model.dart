@@ -31,7 +31,6 @@ class User {
       role: snapshot["role"],
       uid: snapshot["uid"],
       email: snapshot["email"],
-      phoneNumber: snapshot["phoneNumber"],
-    );
+      phoneNumber: snapshot["phoneNumber"]);
   }
 }

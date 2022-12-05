@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:faydh/models/user_model.dart' as model;
-import 'package:flutter/services.dart';
 
 import '../utilis/utilis.dart';
 
@@ -42,13 +41,14 @@ class AuthMethods {
             .collection("users")
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .set(user.toJson());
-            return "Success";
+        return "success";
       }
-    }  on FirebaseAuthException catch (error) {
-        if (error.code.toUpperCase() == "EMAIL-ALREADY-IN-USE") {
+    } on FirebaseAuthException catch (error) {
+      if (error.code == "invalid-email") {
+        if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
           res = " البريد الإلكتروني مستخدم سابقاً";
         }
-       else if (error.code == "weak-password") {
+      } else if (error.code == "weak-password") {
         res = " الرجاء إدخال كلمة مرور صالحة";
       }
     } catch (err) {
