@@ -11,6 +11,7 @@ class individual extends StatefulWidget {
 class _individualPageState extends State<individual> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Background(
@@ -30,57 +31,53 @@ class _individualPageState extends State<individual> {
           ),
           alignment: Alignment.center,
           padding: const EdgeInsets.only(top: 90.0, left: 20.0, right: 20.0),
-          child: Column(children: <Widget>[
-            Align(
-              alignment: Alignment.topCenter,
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/imgs/logo.png',
-                  width: 300,
-                  height: 300,
-                  fit: BoxFit.cover,
+          child: Expanded(
+            child: Column(children: <Widget>[
+              Align(
+                alignment: Alignment.topCenter,
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/imgs/logo.png',
+                    width: 300,
+                    height: 300,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Container(
+             Container(
               padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: Text(
-                "انتظرونا قريباً",
-                style: TextStyle(color: Colors.red[900], fontSize: 30),
-                textAlign: TextAlign.center,
+              child: Text("انتظرونا قريباً", style: TextStyle(color: Colors.red[900], fontSize: 30), textAlign:TextAlign.center,),
+),
+              Container(
+                padding: const EdgeInsets.only(top: 3.0, left: 20.0, right: 20.0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("متبرع  "),
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 110.0, vertical: 25.0),
+                      textStyle:
+                          const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 3.0, left: 20.0, right: 20.0),
-              child: ElevatedButton(
+              const SizedBox(
+                height: 20.0,
+              ),
+              ElevatedButton(
                 onPressed: () {},
+                child: const Text('مستفيد'),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    backgroundColor: const Color(0xFF1A4D2E),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 110.0, vertical: 25.0),
-                    textStyle: const TextStyle(
-                        fontSize: 30, fontWeight: FontWeight.bold)),
-                child: const Text("متبرع  "),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  backgroundColor: const Color(0xFF1A4D2E),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 110.0, vertical: 25.0),
-                  textStyle: const TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.bold)),
-              child: const Text('مستفيد'),
-            )
-          ]),
+                        borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 110.0, vertical: 25.0),
+                    textStyle:
+                        const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+              )
+            ]),
+          ),
         ),
       ),
     );

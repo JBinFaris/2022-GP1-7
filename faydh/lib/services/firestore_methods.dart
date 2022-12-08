@@ -9,22 +9,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-final DocumentReference ref = 
-    FirebaseFirestore.instance.collection("posts").doc();
-
-
-
-
+  final DocumentReference ref =
+      FirebaseFirestore.instance.collection("posts").doc();
 
   // Uplaod the post::
   Future<String> uploadPost({
-     Cid,
-    required postUserName,
+    Cid,
+    //required String postUserName,
     required String postText,
+    required DateTime postDate,
     Uint8List? file, //
   }) async {
     String res = "Some error occured";
-   
 
     try {
       Map<String, String> photoUrl = {};
@@ -34,12 +30,13 @@ final DocumentReference ref =
       }
       String userId = _auth.currentUser!.uid;
 
-      Posts posts = Posts(
-          Cid:  ref.id,
-          postText: postText,
-          postImage: photoUrl['downloadUrl'] ?? '',
-          pathImage: photoUrl['path'] ?? '',
-          userId: userId,);
+      Posts posts = Posts.postConstructor(
+          ref.id,
+          postText,
+          photoUrl['downloadUrl'] ?? '',
+          photoUrl['path'] ?? '',
+          userId,
+          postDate);
 
       _firestore.collection("posts").add(posts.toJson());
 

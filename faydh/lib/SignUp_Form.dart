@@ -14,8 +14,6 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
-  bool _isObscure = true;
-
   @override
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
@@ -23,7 +21,6 @@ class _SignupFormState extends State<SignupForm> {
   final _passwordController = TextEditingController();
   final _phonenumberController = TextEditingController();
   final _userTypeController = TextEditingController();
-  bool? seen = false;
   String? selectedValue;
 
   @override
@@ -35,6 +32,16 @@ class _SignupFormState extends State<SignupForm> {
     _userTypeController.dispose();
 
     super.dispose();
+  }
+
+  void _clearAll() {
+    _usernameController.text = "";
+    _emailController.text = "";
+   _passwordController.text = "";
+    _userTypeController.text = "";
+     _phonenumberController.text ="";
+    selectedValue = "";
+    Navigator.of(this.context);
   }
 
   final List<String> userTypes = [
@@ -243,23 +250,18 @@ class _SignupFormState extends State<SignupForm> {
                     child: TextFormField(
                       controller: _passwordController,
                       //field value
-                      obscureText: _isObscure,
+                      obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
                       textAlign: TextAlign.right,
                       decoration: InputDecoration(
-                        prefix: IconButton(
-                          icon: Icon(_isObscure
-                              ? Icons.visibility
-                              : Icons.visibility_off),
-                          onPressed: () {
-                            setState(() {
-                              _isObscure = !_isObscure;
-                            });
-                          },
+                        prefixIcon: const Icon(
+                          Icons.password_rounded,
+                          size: 30,
+                          color: Color.fromARGB(255, 18, 57, 20),
                         ),
                         contentPadding:
-                            const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(
@@ -522,43 +524,47 @@ class _SignupFormState extends State<SignupForm> {
                                 shape: const StadiumBorder(),
                               ),
                               onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  if (selectedValue != "" &&
-                                      passwordStrength == 1) {
-                                    AuthMethods()
-                                        .signUpUser(
-                                            role: selectedValue.toString(),
-                                            username: _usernameController.text,
-                                            email: _emailController.text,
-                                            phoneNumber:
-                                                _phonenumberController.text,
-                                            password: _passwordController.text)
-                                        .then((value) {
-                                      if (value == "Success") {
+                               if (_formKey.currentState!.validate()) { }
+                                  if (
+                                    selectedValue != "" &&
+                                    passwordStrength == 1 &&  _phonenumberController.text!="" ) {
+                                  AuthMethods()
+                                      .signUpUser(
+                                          role: selectedValue.toString(),
+                                          username: _usernameController.text,
+                                          email: _emailController.text,
+                                          phoneNumber:
+                                              _phonenumberController.text,
+                                          password: _passwordController.text)
+                                      .then((value) {
+                                    if (value == "success") {
                                         Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return const HomePage();
-                                        }));
-                                      }
-                                      showSnackBar(value.toString(), context);
-                                    });
+                                          MaterialPageRoute(builder: (context) {
+                                        return const HomePage();
+                                      }));
+                                    }
+                                    showSnackBar(value.toString(), context);
                                   }
-                                }
-                              },
+                                  );
+                                  }
+                                },
                               child: const Text(
                                 'تسجيل',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 255, 255, 255)),
-                              ),
+                              ),),
                             ),
-                          ))),
+                          )),
                 ],
               ),
             ),
           ),
         )),
       ),
+      
     );
+    
   }
+  
 }
+

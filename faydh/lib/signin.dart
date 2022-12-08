@@ -3,6 +3,8 @@ import 'package:faydh/home_page.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
 import 'forget-password.dart';
 
@@ -26,6 +28,7 @@ class _signInSreenState extends State<signInSreen> {
     super.dispose();
   }
 
+  @override
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -133,6 +136,14 @@ class _signInSreenState extends State<signInSreen> {
                     color: const Color(0xff1a4d2e),
                     padding: const EdgeInsets.symmetric(
                         vertical: 20, horizontal: 80),
+                    child: const Text(
+                      'تسجيل الدخول',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide.none,
@@ -154,15 +165,7 @@ class _signInSreenState extends State<signInSreen> {
                           }
                         });
                       }
-                    },
-                    child: const Text(
-                      'تسجيل الدخول',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
+                    }),
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {

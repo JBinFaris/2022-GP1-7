@@ -3,51 +3,55 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../models/post_model.dart';
+
 class AllPostsCard extends StatefulWidget {
   final snap;
+  final Posts postData;
 
   AllPostsCard({
-    required this.snap,
+    this.snap,
+    required this.postData,
     super.key,
   });
 
   @override
   State<AllPostsCard> createState() => _AllPostsCardState();
 }
+
 class _AllPostsCardState extends State<AllPostsCard> {
+  String myUsername = "";
 
-
-String myUsername = "";
-
-
-
-var seen = false ; 
+  var seen = false;
 
   @override
   void initState() {
-     myUsername = ""; 
-    getUser2();
+    myUsername = "";
+    //getUser2();
     // TODO: implement initState
   }
-Future getUser2() async{
- 
-  if(!seen){
-    var collection = FirebaseFirestore.instance.collection('users');
-var docSnapshot = await collection.doc("${widget.snap["userId"].toString()}" ).get();
-if (docSnapshot!= null && mounted ) {
-  Map<String, dynamic>? data = docSnapshot.data();
-  var _value = data?['username'];
-   setState((){
-    myUsername = ""; 
-    myUsername = _value.toString() ;
-   });
- //myUsername = _value.toString() ;
- }}
-}
+
+  Future getUser2() async {
+    if (!seen) {
+      var collection = FirebaseFirestore.instance.collection('users');
+      var docSnapshot =
+          await collection.doc("${widget.snap["userId"].toString()}").get();
+      if (docSnapshot != null && mounted) {
+        Map<String, dynamic>? data = docSnapshot.data();
+        var _value = data?['username'];
+        setState(() {
+          myUsername = "";
+          myUsername = _value.toString();
+        });
+        //myUsername = _value.toString() ;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    var _dta = "${widget.snap["postImage"].toString()}";
+    //var _dta = "${widget.snap["postImage"].toString()}";
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
@@ -92,7 +96,9 @@ if (docSnapshot!= null && mounted ) {
   }
 
   Widget tweetBody() {
-    var _dta = "${widget.snap["postImage"].toString()}";
+    //var _dta = "${widget.snap["postImage"].toString()}";
+    var _dta = widget.postData.postImage.toString();
+
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,9 +108,10 @@ if (docSnapshot!= null && mounted ) {
             padding:
                 const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
             child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, right: 0, bottom: 2, left: 50),
-              child: Text("${widget.snap["postText"].toString()}",
+              padding:
+                  const EdgeInsets.only(top: 20, right: 0, bottom: 2, left: 50),
+              child: Text(//"${widget.snap["postText"].toString()}",
+                widget.postData.postText.toString(),
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -145,7 +152,9 @@ if (docSnapshot!= null && mounted ) {
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Text(
-              myUsername,
+              //"${widget.snap["postUserName"].toString()}",
+              widget.postData.postUserName.toString(),
+              //myUsername,
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
