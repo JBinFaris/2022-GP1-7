@@ -16,6 +16,8 @@ class AuthMethods {
     required String email,
     required String phoneNumber,
     required String password,
+    String? regNo,
+    String? status,
     String? uid,
   }) async {
     String res = "Success";
@@ -35,6 +37,8 @@ class AuthMethods {
           username: username,
           email: email,
           phoneNumber: phoneNumber,
+          regNo: regNo,
+          status: status, 
         );
 
         await _firestore
@@ -59,7 +63,7 @@ class AuthMethods {
 
   /// Logout
   Future signOut() async {
-    String res =  "حصل خطأ ما";
+    String res = "حصل خطأ ما";
     try {
       await _auth.signOut();
       res = "success";
@@ -71,7 +75,7 @@ class AuthMethods {
 
   ///Resting password:
   Future<String> resetPassword({required String email}) async {
-    String res =  "حصل خطأ ما";
+    String res = "حصل خطأ ما";
     try {
       await _auth.sendPasswordResetEmail(email: email);
       res = "success";
@@ -94,12 +98,12 @@ class AuthMethods {
         res = "الرجاء إدخال كل الحقول";
       }
     } on FirebaseAuthException catch (e) {
-         if (e.code == "user-not-found") {
+      if (e.code == "user-not-found") {
         res = " البريد الإلكتروني او كلمة المرور خاطئة";
       } else {
         e.code == "wrong-password";
         {
-           res = "  البريد الإلكتروني او كلمة المرور خاطئة";
+          res = "  البريد الإلكتروني او كلمة المرور خاطئة";
         }
       }
     } catch (error) {
@@ -119,9 +123,7 @@ class AuthMethods {
   }) async {
     String res = "Success";
     try {
-      if (username.isNotEmpty ||
-          role.isNotEmpty ||
-          phoneNumber.isNotEmpty ) {
+      if (username.isNotEmpty || role.isNotEmpty || phoneNumber.isNotEmpty) {
         model.User user = model.User(
           uid: FirebaseAuth.instance.currentUser!.uid,
           role: role,
