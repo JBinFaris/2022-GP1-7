@@ -72,9 +72,11 @@ void _loginUser({required String email, required String password}) async {
                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
 
              }else if (myrole =="منظمة تجارية"){
+               Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
 
              }else if (myrole =="منظمة خيرية"){
-              
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+
              }else if(myrole == "Admin"){
                Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminMain()));
 
