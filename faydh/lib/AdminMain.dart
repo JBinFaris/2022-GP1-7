@@ -1,3 +1,4 @@
+import 'package:faydh/ApproveBusiness.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,7 +67,10 @@ class  _AdminMainPageState extends State<AdminMain> {
                    const Color.fromARGB(255, 18, 57, 20),
                      shape: const StadiumBorder(),
                 ),
-               onPressed: (){},
+               onPressed: (){
+               Navigator.push(context, MaterialPageRoute(builder: (context) => const ApproveBusiness()));
+
+               },
                
                child: const Text(
                "التحقق من الشركات",
