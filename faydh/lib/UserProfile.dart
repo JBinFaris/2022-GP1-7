@@ -19,7 +19,7 @@ class _UserProfileState extends State<UserProfile> {
   String userEmail = "";
   String phoneNumber = "";
   String myrole = "";
-  String myReg = "";
+  String myCr = "";
   String myStatus = "";
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _UserProfileState extends State<UserProfile> {
         myrole = (snap.data() as Map<String, dynamic>)['role'];
         {
           if (myrole == "منظمة تجارية") {
-            myReg = (snap.data() as Map<String, dynamic>)['regNo'];
+            myCr = (snap.data() as Map<String, dynamic>)['crNo'];
             myStatus = (snap.data() as Map<String, dynamic>)['status'];
           }
 
@@ -64,8 +64,8 @@ class _UserProfileState extends State<UserProfile> {
         TextEditingController.fromValue(TextEditingValue(text: phoneNumber));
     TextEditingController _role =
         TextEditingController.fromValue(TextEditingValue(text: myrole));
-    TextEditingController _regNo =
-        TextEditingController.fromValue(TextEditingValue(text: myReg));
+    TextEditingController _crNo =
+        TextEditingController.fromValue(TextEditingValue(text: myCr));
     //var _formkey = GlobalKey<FormState>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -239,19 +239,20 @@ class _UserProfileState extends State<UserProfile> {
                             height: 15,
                           ),
                           //Commercial registration
-                          if (myrole == "منظمة تجارية")
+                          if (myrole == "منظمة تجارية" && myStatus == "0")
                             Padding(
                               padding: const EdgeInsets.only(top: 8, bottom: 4),
                               child: TextFormField(
-                                controller: _regNo, //field value
+                                controller: _crNo, //field value
                                 enabled: false,
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.right,
                                 decoration: InputDecoration(
                                   prefixIcon: const Icon(
-                                    Icons.sticky_note_2_rounded,
+                                    Icons.hourglass_top_rounded,
                                     size: 30,
-                                    color: Color.fromARGB(255, 18, 57, 20),
+                                    // color: Color.fromARGB(255, 18, 57, 20),
+                                    color: Color.fromARGB(255, 249, 176, 4),
                                   ),
                                   contentPadding: const EdgeInsets.fromLTRB(
                                       20.0, 10.0, 20.0, 10.0),
@@ -281,36 +282,93 @@ class _UserProfileState extends State<UserProfile> {
                                 },
                               ),
                             ),
-                          if (myrole == "منظمة تجارية" && myStatus == "0")
-                            const Text(
-                              "Waiting",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                height: 1.0,
-                                color: Colors.yellow,
-                              ),
-                              textAlign: TextAlign.start,
-                            ),
                           if (myrole == "منظمة تجارية" && myStatus == "1")
-                            const Text(
-                              "Approved",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                height: 1.0,
-                                color: Colors.green,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8, bottom: 4),
+                              child: TextFormField(
+                                controller: _crNo, //field value
+                                enabled: false,
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.right,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(
+                                    Icons.check,
+                                    size: 30,
+                                    //color: Color.fromARGB(255, 18, 57, 20),
+                                    color: Color.fromARGB(255, 16, 205, 63),
+                                  ),
+                                  contentPadding: const EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 18, 57, 20)),
+                                  ),
+                                  filled: true,
+                                  hintStyle: TextStyle(color: Colors.grey[800]),
+                                  label: const Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text('رقم السجل التجاري'),
+                                  ),
+
+                                  // contentPadding: EdgeInsets.only(left:230),
+                                  fillColor: Colors.white70,
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'الرجاء إدخال رقم السجل التجاري';
+                                  } else if (value.length != 10) {
+                                    return 'رقم السجل التجاري يجب ان يكون مكون من ١٠ رموز';
+                                  }
+
+                                  return null;
+                                },
                               ),
-                              textAlign: TextAlign.start,
                             ),
                           if (myrole == "منظمة تجارية" && myStatus == "2")
-                            const Text(
-                              "Declined",
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                height: 1.0,
-                                color: Colors.red,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8, bottom: 4),
+                              child: TextFormField(
+                                controller: _crNo, //field value
+                                enabled: false,
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.right,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(
+                                    Icons.close,
+                                    size: 30,
+                                    // color: Color.fromARGB(255, 18, 57, 20),
+                                    color: Color.fromARGB(255, 223, 67, 20),
+                                  ),
+                                  contentPadding: const EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 18, 57, 20)),
+                                  ),
+                                  filled: true,
+                                  hintStyle: TextStyle(color: Colors.grey[800]),
+                                  label: const Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text('رقم السجل التجاري'),
+                                  ),
+
+                                  // contentPadding: EdgeInsets.only(left:230),
+                                  fillColor: Colors.white70,
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'الرجاء إدخال رقم السجل التجاري';
+                                  } else if (value.length != 10) {
+                                    return 'رقم السجل التجاري يجب ان يكون مكون من ١٠ رموز';
+                                  }
+
+                                  return null;
+                                },
                               ),
-                              textAlign: TextAlign.start,
                             ),
+
                           const SizedBox(
                             height: 30,
                           ),

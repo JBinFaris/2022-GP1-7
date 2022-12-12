@@ -21,7 +21,7 @@ class _SignupFormState extends State<SignupForm> {
   final _passwordController = TextEditingController();
   final _phonenumberController = TextEditingController();
   final _userTypeController = TextEditingController();
-  final _regNoController = TextEditingController();
+  final _crNoController = TextEditingController();
   final _statusController = TextEditingController();
 
   String? selectedValue;
@@ -35,7 +35,7 @@ class _SignupFormState extends State<SignupForm> {
     _passwordController.dispose();
     _phonenumberController.dispose();
     _userTypeController.dispose();
-    _regNoController.dispose();
+    _crNoController.dispose();
     super.dispose();
   }
 
@@ -45,7 +45,7 @@ class _SignupFormState extends State<SignupForm> {
     _passwordController.text = "";
     _userTypeController.text = "";
     _phonenumberController.text = "";
-    _regNoController.text = "";
+    _crNoController.text = "";
     selectedValue = "";
     Navigator.of(this.context);
   }
@@ -476,7 +476,7 @@ class _SignupFormState extends State<SignupForm> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8, bottom: 4),
                       child: TextFormField(
-                        controller: _regNoController,
+                        controller: _crNoController,
                         //field value
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.right,
@@ -600,7 +600,7 @@ class _SignupFormState extends State<SignupForm> {
                                 email: _emailController.text,
                                 phoneNumber: _phonenumberController.text,
                                 password: _passwordController.text,
-                                regNo: _regNoController.text,
+                                crNo: _crNoController.text,
                                 status: _statusController.text, 
                                 
                               )

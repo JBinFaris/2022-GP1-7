@@ -8,7 +8,7 @@ class User {
   final String uid;
   final String username;
   final String phoneNumber;
-  final String? regNo;
+  final String? crNo;
   final String? status;
 
   User({
@@ -17,7 +17,7 @@ class User {
     required this.uid,
     required this.phoneNumber,
     required this.username,
-    this.regNo,
+    this.crNo,
     this.status,
   });
 
@@ -27,7 +27,7 @@ class User {
         "phoneNumber": phoneNumber,
         "email": email,
         "role": role,
-        if (role == "منظمة تجارية") "regNo": regNo,
+        if (role == "منظمة تجارية") "crNo": crNo,
         if (role == "منظمة تجارية") "status": "0",
       };
 
@@ -40,7 +40,7 @@ class User {
       uid: snapshot["uid"],
       email: snapshot["email"],
       phoneNumber: snapshot["phoneNumber"],
-      regNo: snapshot["regNo"],
+      crNo: snapshot["crNo"],
       status: snapshot["status"],
     );
   }
