@@ -16,7 +16,7 @@ class AuthMethods {
     required String email,
     required String phoneNumber,
     required String password,
-    String? regNo,
+    String? crNo,
     String? status,
     String? uid,
   }) async {
@@ -37,7 +37,7 @@ class AuthMethods {
           username: username,
           email: email,
           phoneNumber: phoneNumber,
-          regNo: regNo,
+          crNo: crNo,
           status: status, 
         );
 
