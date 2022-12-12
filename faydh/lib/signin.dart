@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/AdminMain.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:faydh/SignUp_Form.dart';
 import 'package:faydh/home_page.dart';
 import 'package:faydh/services/auth_methods.dart';
@@ -5,8 +8,12 @@ import 'package:faydh/utilis/utilis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:flutter/widgets.dart';
 import 'forget-password.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
 
 class signInSreen extends StatefulWidget {
   const signInSreen({Key? key}) : super(key: key);
@@ -31,6 +38,88 @@ class _signInSreenState extends State<signInSreen> {
   @override
   final _formKey = GlobalKey<FormState>();
 
+void _loginUser({required String email, required String password}) async {
+    String res = "حصل خطأ ما";
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+       final CUser = await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+            if(CUser != null){
+             res = "success";
+
+             final User? user = await _auth.currentUser ;
+             final userID = user!.uid ;
+             
+
+             print(userID);
+              
+              DocumentSnapshot snap ;
+              DocumentSnapshot snap2;
+
+           
+              
+           snap = await FirebaseFirestore.instance
+              .collection("users")
+              .doc(userID)
+              .get();
+              print("object2");
+
+              if(snap != null){
+                 final  myrole = (snap.data() as Map<String, dynamic>)['role'];
+
+             if(myrole == "فرد"){
+
+               Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+
+             }else if (myrole =="منظمة تجارية"){
+
+             }else if (myrole =="منظمة خيرية"){
+              
+             }else if(myrole == "Admin"){
+               Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminMain()));
+
+             }
+              }     /* else{  print("object");
+                snap2 = await FirebaseFirestore.instance
+                 .collection("Admins")
+                 .doc(userID)
+                 .get();
+               
+               
+
+              if(snap2 != null){
+                final  UN = (snap2.data() as Map<String, dynamic>)['username'];
+                if(UN == "Admin"){
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminMain()));
+               }else if(UN == null){ print("object4444");}
+               }
+
+               
+              }*/
+             }
+      } else {
+        res = "الرجاء إدخال كل الحقول";
+         showSnackBar(res, context);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        res = " البريد الإلكتروني او كلمة المرور خاطئة";
+      } else {
+        e.code == "wrong-password";
+        {
+          res = "  البريد الإلكتروني او كلمة المرور خاطئة";
+        }
+      }
+    } catch (error) {
+      res = error.toString();
+    }
+     showSnackBar(res, context);
+  }
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,13 +142,14 @@ class _signInSreenState extends State<signInSreen> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 30),
+                
+                 SizedBox(height: 30),
                 Image.asset(
                   'assets/imgs/logo.png',
                   width: 250,
                   height: 250,
                 ),
-                const SizedBox(height: 30),
+                 SizedBox(height: 30),
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -89,7 +179,7 @@ class _signInSreenState extends State<signInSreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                 SizedBox(height: 30),
                 TextFormField(
                   obscureText: _isObscure,
                   controller: _passwordController,
@@ -150,23 +240,30 @@ class _signInSreenState extends State<signInSreen> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        AuthMethods()
+
+                        _loginUser(
+                                email: _emailController.text,
+                                password: _passwordController.text);
+                        
+                        /* AuthMethods()
                             .loginUser(
                                 email: _emailController.text,
                                 password: _passwordController.text)
                             .then((value) {
                           showSnackBar(value, context);
                           if (value == "success") {
-                            Navigator.push(
+
+
+                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
+                                  builder: (context) => const HomePage())
                             );
                           }
-                        });
+                        });*/
                       }
                     }),
-                const SizedBox(height: 20),
+                 SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)
@@ -180,7 +277,7 @@ class _signInSreenState extends State<signInSreen> {
                         fontSize: 20,
                       )),
                 ),
-                const SizedBox(height: 10),
+                 const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)
