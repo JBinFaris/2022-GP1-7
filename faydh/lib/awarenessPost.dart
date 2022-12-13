@@ -63,11 +63,11 @@ class _HomePageState extends State<awarenessPost>
         querySnapshot.docs.map((doc) => doc.data()).toList();
     for (var element in allData) {
       usersList.add(UserData(
-          email: element['email'],
-          role: element['role'],
-          uid: element['uid'],
-          phoneNumber: element['phoneNumber'],
-          username: element['username']));
+          email: element['email'] ?? '',
+          role: element['role'] ?? '',
+          uid: element['uid'] ?? '',
+          phoneNumber: element['phoneNumber'] ?? '',
+          username: element['username'] ?? ''));
     }
 
     setState(() {

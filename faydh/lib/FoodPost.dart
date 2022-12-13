@@ -19,9 +19,12 @@ class FoodPostScreen extends StatefulWidget {
 
 class _FoodPostScreenState extends State<FoodPostScreen> {
   @override
+  String id = FirebaseAuth.instance.currentUser!.uid;
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> foodPostStream =
-        FirebaseFirestore.instance.collection('foodPost').snapshots();
+    final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
+        .collection('foodPost')
+        .where('Cid', isEqualTo: id)
+        .snapshots();
 
     return Scaffold(
       backgroundColor: Colors.green[100],
@@ -61,31 +64,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  child: const CircleAvatar(
-                                    backgroundColor: Colors.white,
-                                    child: Icon(
-                                      Icons.account_circle_rounded,
-                                      color: Color.fromARGB(226, 29, 92, 76),
-                                      size: 40,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Text(
-                                  data['userPost'],
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    letterSpacing: 1.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
                           ), // so?
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
@@ -172,22 +150,36 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                   ),
                                 ),
                               ),
-                              // Padding(
-                              //   //ok?
-                              //   padding: const EdgeInsets.only(
-                              //       left: 12, right: 6, bottom: 8),
-                              //   child: Align(
-                              //     alignment: Alignment.topLeft,
-                              //     child: Text(
-                              //       "Post At: ${data['postDate'].toString()}",
-                              //       style: const TextStyle(
-                              //         color: Colors.grey,
-                              //         fontSize: 12,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
                             ],
+                            // Padding(
+                            //   //ok?
+                            //   padding: const EdgeInsets.only(
+                            //       left: 12, right: 6, bottom: 8),
+                            //   child: Align(
+                            //     alignment: Alignment.topLeft,
+                            //     child: Text(
+                            //       "Post At: ${data['postDate'].toString()}",
+                            //       style: const TextStyle(
+                            //         color: Colors.grey,
+                            //         fontSize: 12,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 12, bottom: 8),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Text(
+                                "تاريخ الاضافة : ${data['postExp'].toString()}",
+                                style: const TextStyle(
+                                  color: Color.fromARGB(255, 144, 177, 135),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),

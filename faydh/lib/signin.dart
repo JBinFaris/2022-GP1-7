@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/AdminMain.dart';
+import 'package:faydh/businessHome.dart';
+import 'package:faydh/charityHome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:faydh/SignUp_Form.dart';
 import 'package:faydh/home_page.dart';
@@ -67,11 +69,13 @@ class _signInSreenState extends State<signInSreen> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomePage()));
             } else if (myrole == "منظمة تجارية") {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const businessHome()));
             } else if (myrole == "منظمة خيرية") {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
+                  MaterialPageRoute(builder: (context) => const charityHome()));
             } else if (myrole == "Admin") {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AdminMain()));
