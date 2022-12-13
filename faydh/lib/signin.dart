@@ -14,7 +14,6 @@ import 'forget-password.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-
 class signInSreen extends StatefulWidget {
   const signInSreen({Key? key}) : super(key: key);
 
@@ -38,50 +37,46 @@ class _signInSreenState extends State<signInSreen> {
   @override
   final _formKey = GlobalKey<FormState>();
 
-void _loginUser({required String email, required String password}) async {
+  void _loginUser({required String email, required String password}) async {
     String res = "حصل خطأ ما";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
-       final CUser = await _auth.signInWithEmailAndPassword(
+        final CUser = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-            if(CUser != null){
-             res = "success";
+        if (CUser != null) {
+          res = "success";
 
-             final User? user = await _auth.currentUser ;
-             final userID = user!.uid ;
-             
+          final User? user = await _auth.currentUser;
+          final userID = user!.uid;
 
-             print(userID);
-              
-              DocumentSnapshot snap ;
-              DocumentSnapshot snap2;
+          print(userID);
 
-           
-              
-           snap = await FirebaseFirestore.instance
+          DocumentSnapshot snap;
+          DocumentSnapshot snap2;
+
+          snap = await FirebaseFirestore.instance
               .collection("users")
               .doc(userID)
               .get();
-              print("object2");
+          print("object2");
 
-              if(snap != null){
-                 final  myrole = (snap.data() as Map<String, dynamic>)['role'];
+          if (snap != null) {
+            final myrole = (snap.data() as Map<String, dynamic>)['role'];
 
-             if(myrole == "فرد"){
-
-               Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
-
-             }else if (myrole =="منظمة تجارية"){
-               Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
-
-             }else if (myrole =="منظمة خيرية"){
-                             Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
-
-             }else if(myrole == "Admin"){
-               Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminMain()));
-
-             }
-              }     /* else{  print("object");
+            if (myrole == "فرد") {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            } else if (myrole == "منظمة تجارية") {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            } else if (myrole == "منظمة خيرية") {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomePage()));
+            } else if (myrole == "Admin") {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const AdminMain()));
+            }
+          } /* else{  print("object");
                 snap2 = await FirebaseFirestore.instance
                  .collection("Admins")
                  .doc(userID)
@@ -98,10 +93,10 @@ void _loginUser({required String email, required String password}) async {
 
                
               }*/
-             }
+        }
       } else {
         res = "الرجاء إدخال كل الحقول";
-         showSnackBar(res, context);
+        showSnackBar(res, context);
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
@@ -115,12 +110,8 @@ void _loginUser({required String email, required String password}) async {
     } catch (error) {
       res = error.toString();
     }
-     showSnackBar(res, context);
+    showSnackBar(res, context);
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -144,14 +135,13 @@ void _loginUser({required String email, required String password}) async {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                
-                 SizedBox(height: 30),
+                SizedBox(height: 30),
                 Image.asset(
                   'assets/imgs/logo.png',
                   width: 250,
                   height: 250,
                 ),
-                 SizedBox(height: 30),
+                SizedBox(height: 30),
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -181,7 +171,7 @@ void _loginUser({required String email, required String password}) async {
                     ),
                   ),
                 ),
-                 SizedBox(height: 30),
+                SizedBox(height: 30),
                 TextFormField(
                   obscureText: _isObscure,
                   controller: _passwordController,
@@ -242,11 +232,10 @@ void _loginUser({required String email, required String password}) async {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-
                         _loginUser(
-                                email: _emailController.text,
-                                password: _passwordController.text);
-                        
+                            email: _emailController.text,
+                            password: _passwordController.text);
+
                         /* AuthMethods()
                             .loginUser(
                                 email: _emailController.text,
@@ -265,7 +254,7 @@ void _loginUser({required String email, required String password}) async {
                         });*/
                       }
                     }),
-                 SizedBox(height: 20),
+                SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)
@@ -279,7 +268,7 @@ void _loginUser({required String email, required String password}) async {
                         fontSize: 20,
                       )),
                 ),
-                 const SizedBox(height: 10),
+                const SizedBox(height: 10),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)
