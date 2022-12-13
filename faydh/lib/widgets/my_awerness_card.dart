@@ -25,38 +25,36 @@ class MyCard extends StatefulWidget {
 }
 
 class _MyCardState extends State<MyCard> {
-String myUsername = "";
+  String myUsername = "";
 
-
- var _value;
-var seen = false ; 
+  var _value;
+  var seen = false;
 
   @override
   void initState() {
-   myUsername = ""; 
+    myUsername = "";
     getUser2();
     // TODO: implement initState
   }
-Future getUser2() async{
- 
-  if(!seen){
-    var collection = FirebaseFirestore.instance.collection('users');
-var docSnapshot = await collection.doc(FirebaseAuth.instance.currentUser!.uid).get();
-if (docSnapshot!= null && mounted ) {
-  Map<String, dynamic>? data = docSnapshot.data();
-   _value = data?['username'];
-   setState((){
-    myUsername = _value.toString() ;
-   });
- //myUsername = _value.toString() ;
- }}
 
-}
-
+  Future getUser2() async {
+    if (!seen) {
+      var collection = FirebaseFirestore.instance.collection('users');
+      var docSnapshot =
+          await collection.doc(FirebaseAuth.instance.currentUser!.uid).get();
+      if (docSnapshot != null && mounted) {
+        Map<String, dynamic>? data = docSnapshot.data();
+        _value = data?['username'];
+        setState(() {
+          myUsername = _value.toString();
+        });
+        //myUsername = _value.toString() ;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
     var _dta = "${widget.snap["postImage"].toString()}";
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -184,8 +182,8 @@ if (docSnapshot!= null && mounted ) {
             padding:
                 const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
             child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, right: 0, bottom: 2, left: 50),
+              padding:
+                  const EdgeInsets.only(top: 20, right: 0, bottom: 2, left: 50),
               child: Text("${widget.snap["postText"].toString()}",
                   style: const TextStyle(
                     color: Colors.black,
@@ -223,8 +221,8 @@ if (docSnapshot!= null && mounted ) {
           margin: const EdgeInsets.only(right: 5.0),
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
-            child:Text(
-             myUsername,
+            child: Text(
+              myUsername,
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

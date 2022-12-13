@@ -21,7 +21,12 @@ class _SignupFormState extends State<SignupForm> {
   final _passwordController = TextEditingController();
   final _phonenumberController = TextEditingController();
   final _userTypeController = TextEditingController();
+  final _crNoController = TextEditingController();
+  final _statusController = TextEditingController();
+
   String? selectedValue;
+
+  get value => null;
 
   @override
   void dispose() {
@@ -30,16 +35,17 @@ class _SignupFormState extends State<SignupForm> {
     _passwordController.dispose();
     _phonenumberController.dispose();
     _userTypeController.dispose();
-
+    _crNoController.dispose();
     super.dispose();
   }
 
   void _clearAll() {
     _usernameController.text = "";
     _emailController.text = "";
-   _passwordController.text = "";
+    _passwordController.text = "";
     _userTypeController.text = "";
-     _phonenumberController.text ="";
+    _phonenumberController.text = "";
+    _crNoController.text = "";
     selectedValue = "";
     Navigator.of(this.context);
   }
@@ -465,6 +471,65 @@ class _SignupFormState extends State<SignupForm> {
                               selectedValue = value.toString();
                             },
                           ))),
+
+                  if (selectedValue == "منظمة تجارية")
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8, bottom: 4),
+                      child: TextFormField(
+                        controller: _crNoController,
+                        //field value
+                        keyboardType: TextInputType.number,
+                        textAlign: TextAlign.right,
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.sticky_note_2_rounded,
+                            size: 30,
+                            color: Color.fromARGB(255, 18, 57, 20),
+                          ),
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
+                            ),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
+                            ),
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          label: const Align(
+                            alignment: Alignment.centerRight,
+                            child: Text('رقم السجل التجاري'),
+                          ),
+
+                          // contentPadding: EdgeInsets.only(left:230),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'الرجاء إدخال رقم السجل التجاري';
+                          } else if (value.length != 10) {
+                            return 'رقم السجل يجب ان يكون مكون من ١٠ رموز';
+                          }
+
+                          return null;
+                        },
+                      ),
+                    ),
+
                   //checkbox
 
                   Align(
@@ -509,62 +574,62 @@ class _SignupFormState extends State<SignupForm> {
 
                   //submit button
                   Align(
-                      alignment: Alignment.center,
-                      child: Padding(
-                          padding: const EdgeInsets.only(top: 5, bottom: 2),
-                          child: SizedBox(
-                            width: 200,
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.fromLTRB(
-                                    20.0, 10.0, 20.0, 10.0),
-                                backgroundColor:
-                                    const Color.fromARGB(255, 18, 57, 20),
-                                shape: const StadiumBorder(),
-                              ),
-                              onPressed: () {
-                               if (_formKey.currentState!.validate()) { }
-                                  if (
-                                    selectedValue != "" &&
-                                    passwordStrength == 1 &&  _phonenumberController.text!="" ) {
-                                  AuthMethods()
-                                      .signUpUser(
-                                          role: selectedValue.toString(),
-                                          username: _usernameController.text,
-                                          email: _emailController.text,
-                                          phoneNumber:
-                                              _phonenumberController.text,
-                                          password: _passwordController.text)
-                                      .then((value) {
-                                    if (value == "success") {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(builder: (context) {
-                                        return const HomePage();
-                                      }));
-                                    }
-                                    showSnackBar(value.toString(), context);
-                                  }
-                                  );
-                                  }
-                                },
-                              child: const Text(
-                                'تسجيل',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 255, 255)),
-                              ),),
-                            ),
-                          )),
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 2),
+                      child: SizedBox(
+                        width: 200,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.fromLTRB(
+                                20.0, 10.0, 20.0, 10.0),
+                            backgroundColor:
+                                const Color.fromARGB(255, 18, 57, 20),
+                            shape: const StadiumBorder(),
+                          ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {}
+                            if (selectedValue != "" &&
+                                passwordStrength == 1 &&
+                                _phonenumberController.text != "") {
+                              AuthMethods()
+                                  .signUpUser(
+                                role: selectedValue.toString(),
+                                username: _usernameController.text,
+                                email: _emailController.text,
+                                phoneNumber: _phonenumberController.text,
+                                password: _passwordController.text,
+                                crNo: _crNoController.text,
+                                status: _statusController.text, 
+                                
+                              )
+                                  .then((value) {
+                                if (value == "success") {
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                    return const HomePage();
+                                  }));
+                                }
+                                showSnackBar(value.toString(), context);
+                              });
+                            }
+                          },
+                          child: const Text(
+                            'تسجيل',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         )),
       ),
-      
     );
-    
   }
-  
 }
-

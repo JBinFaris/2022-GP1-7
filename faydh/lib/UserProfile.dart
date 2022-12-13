@@ -19,7 +19,8 @@ class _UserProfileState extends State<UserProfile> {
   String userEmail = "";
   String phoneNumber = "";
   String myrole = "";
-
+  String myCr = "";
+  String myStatus = "";
   @override
   void initState() {
     super.initState();
@@ -39,6 +40,14 @@ class _UserProfileState extends State<UserProfile> {
         userEmail = (snap.data() as Map<String, dynamic>)['email'];
         phoneNumber = (snap.data() as Map<String, dynamic>)['phoneNumber'];
         myrole = (snap.data() as Map<String, dynamic>)['role'];
+        {
+          if (myrole == "منظمة تجارية") {
+            myCr = (snap.data() as Map<String, dynamic>)['crNo'];
+            myStatus = (snap.data() as Map<String, dynamic>)['status'];
+          }
+
+          //  Map myReg = (snap.data() ?? {}) as Map;
+        }
       }
     });
   }
@@ -55,7 +64,8 @@ class _UserProfileState extends State<UserProfile> {
         TextEditingController.fromValue(TextEditingValue(text: phoneNumber));
     TextEditingController _role =
         TextEditingController.fromValue(TextEditingValue(text: myrole));
-
+    TextEditingController _crNo =
+        TextEditingController.fromValue(TextEditingValue(text: myCr));
     //var _formkey = GlobalKey<FormState>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -225,6 +235,139 @@ class _UserProfileState extends State<UserProfile> {
                               },
                             ),
                           ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          //Commercial registration
+                          if (myrole == "منظمة تجارية" && myStatus == "0")
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8, bottom: 4),
+                              child: TextFormField(
+                                controller: _crNo, //field value
+                                enabled: false,
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.right,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(
+                                    Icons.hourglass_top_rounded,
+                                    size: 30,
+                                    // color: Color.fromARGB(255, 18, 57, 20),
+                                    color: Color.fromARGB(255, 249, 176, 4),
+                                  ),
+                                  contentPadding: const EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 18, 57, 20)),
+                                  ),
+                                  filled: true,
+                                  hintStyle: TextStyle(color: Colors.grey[800]),
+                                  label: const Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text('رقم السجل التجاري'),
+                                  ),
+
+                                  // contentPadding: EdgeInsets.only(left:230),
+                                  fillColor: Colors.white70,
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'الرجاء إدخال رقم السجل التجاري';
+                                  } else if (value.length != 10) {
+                                    return 'رقم السجل التجاري يجب ان يكون مكون من ١٠ رموز';
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                            ),
+                          if (myrole == "منظمة تجارية" && myStatus == "1")
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8, bottom: 4),
+                              child: TextFormField(
+                                controller: _crNo, //field value
+                                enabled: false,
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.right,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(
+                                    Icons.check,
+                                    size: 30,
+                                    //color: Color.fromARGB(255, 18, 57, 20),
+                                    color: Color.fromARGB(255, 16, 205, 63),
+                                  ),
+                                  contentPadding: const EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 18, 57, 20)),
+                                  ),
+                                  filled: true,
+                                  hintStyle: TextStyle(color: Colors.grey[800]),
+                                  label: const Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text('رقم السجل التجاري'),
+                                  ),
+
+                                  // contentPadding: EdgeInsets.only(left:230),
+                                  fillColor: Colors.white70,
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'الرجاء إدخال رقم السجل التجاري';
+                                  } else if (value.length != 10) {
+                                    return 'رقم السجل التجاري يجب ان يكون مكون من ١٠ رموز';
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                            ),
+                          if (myrole == "منظمة تجارية" && myStatus == "2")
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8, bottom: 4),
+                              child: TextFormField(
+                                controller: _crNo, //field value
+                                enabled: false,
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.right,
+                                decoration: InputDecoration(
+                                  prefixIcon: const Icon(
+                                    Icons.close,
+                                    size: 30,
+                                    // color: Color.fromARGB(255, 18, 57, 20),
+                                    color: Color.fromARGB(255, 223, 67, 20),
+                                  ),
+                                  contentPadding: const EdgeInsets.fromLTRB(
+                                      20.0, 10.0, 20.0, 10.0),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50.0),
+                                    borderSide: const BorderSide(
+                                        color: Color.fromARGB(255, 18, 57, 20)),
+                                  ),
+                                  filled: true,
+                                  hintStyle: TextStyle(color: Colors.grey[800]),
+                                  label: const Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text('رقم السجل التجاري'),
+                                  ),
+
+                                  // contentPadding: EdgeInsets.only(left:230),
+                                  fillColor: Colors.white70,
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'الرجاء إدخال رقم السجل التجاري';
+                                  } else if (value.length != 10) {
+                                    return 'رقم السجل التجاري يجب ان يكون مكون من ١٠ رموز';
+                                  }
+
+                                  return null;
+                                },
+                              ),
+                            ),
 
                           const SizedBox(
                             height: 30,
