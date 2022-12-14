@@ -9,6 +9,8 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+ 
+
 // Signup  method
   Future<String> signUpUser({
     required String role,
@@ -86,7 +88,7 @@ class AuthMethods {
   }
 
   //// Login user
-  Future<String> loginUser(
+  /*Future<String> loginUser(
       {required String email, required String password}) async {
     String res = "حصل خطأ ما";
     try {
@@ -110,7 +112,7 @@ class AuthMethods {
       res = error.toString();
     }
     return res;
-  }
+  }*/
 
   /////Update
 

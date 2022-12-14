@@ -3,7 +3,7 @@ import 'package:faydh/models/post_model.dart';
 import 'package:faydh/models/user_model.dart';
 import 'package:faydh/services/firestore_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
-import 'package:faydh/widgets/all_posts.dart';
+import 'package:faydh/widgets/all_foodPosts.dart';
 import 'package:faydh/models/user_data_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +12,19 @@ import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
-class awarenessPost extends StatefulWidget {
-  const awarenessPost({super.key});
+class adPost extends StatefulWidget {
+  const adPost({super.key});
 
   @override
-  State<awarenessPost> createState() => _HomePageState();
+  State<adPost> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<awarenessPost>
-    with AutomaticKeepAliveClientMixin {
+class _HomePageState extends State<adPost> with AutomaticKeepAliveClientMixin {
   final TextEditingController _contentController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _discreptionController = TextEditingController();
+  final TextEditingController _expirationController = TextEditingController();
+
   Uint8List? _image;
 
   /// seelct image
@@ -63,11 +66,11 @@ class _HomePageState extends State<awarenessPost>
         querySnapshot.docs.map((doc) => doc.data()).toList();
     for (var element in allData) {
       usersList.add(UserData(
-          email: element['email'] ?? '',
-          role: element['role'] ?? '',
-          uid: element['uid'] ?? '',
-          phoneNumber: element['phoneNumber'] ?? '',
-          username: element['username'] ?? ''));
+          email: element['email'],
+          role: element['role'],
+          uid: element['uid'],
+          phoneNumber: element['phoneNumber'],
+          username: element['username']));
     }
 
     setState(() {
@@ -114,9 +117,60 @@ class _HomePageState extends State<awarenessPost>
                       Form(
                         child: TextFormField(
                           textAlign: TextAlign.right,
+                          controller: _titleController,
+                          decoration: const InputDecoration(
+                            hintText: "عنوان الإعلان",
+                            focusedBorder: UnderlineInputBorder(
+                              //<-- SEE HERE
+                              borderSide: BorderSide(
+                                  width: 2, color: Color(0xFF1A4D2E)),
+                            ),
+                          ),
+                          maxLength: 60,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return null;
+                            } else if (value.length > 60) {
+                              return 'الحد الأقصى للكتابة هو 60 حرف';
+                            }
+
+                            return null;
+                          },
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                        ),
+                      ),
+
+                      Form(
+                        child: TextFormField(
+                          textAlign: TextAlign.right,
                           controller: _contentController,
                           decoration: const InputDecoration(
-                            hintText: "اكتب هنا",
+                            hintText: "الموقع",
+                            focusedBorder: UnderlineInputBorder(
+                              //<-- SEE HERE
+                              borderSide: BorderSide(
+                                  width: 2, color: Color(0xFF1A4D2E)),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return null;
+                            }
+
+                            return null;
+                          },
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                        ),
+                      ),
+
+                      Form(
+                        child: TextFormField(
+                          textAlign: TextAlign.right,
+                          controller: _discreptionController,
+                          decoration: const InputDecoration(
+                            hintText: "وصف الإعلان ",
                             focusedBorder: UnderlineInputBorder(
                               //<-- SEE HERE
                               borderSide: BorderSide(
@@ -129,6 +183,30 @@ class _HomePageState extends State<awarenessPost>
                               return null;
                             } else if (value.length > 300) {
                               return 'الحد الأقصى للكتابة هو 300 حرف';
+                            }
+
+                            return null;
+                          },
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                        ),
+                      ),
+
+                      Form(
+                        child: TextFormField(
+                          textAlign: TextAlign.right,
+                          controller: _expirationController,
+                          decoration: const InputDecoration(
+                            hintText: "تاريخ الانتهاء",
+                            focusedBorder: UnderlineInputBorder(
+                              //<-- SEE HERE
+                              borderSide: BorderSide(
+                                  width: 2, color: Color(0xFF1A4D2E)),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return null;
                             }
 
                             return null;
@@ -214,6 +292,9 @@ class _HomePageState extends State<awarenessPost>
                                         .then((value) {
                                       if (value == "succces") {
                                         _clearAll();
+                                        _titleController.clear();
+                                        _discreptionController.clear();
+                                        _expirationController.clear();
                                       }
                                     });
                                   }
@@ -238,7 +319,7 @@ class _HomePageState extends State<awarenessPost>
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Center(child: Text('المنتدى التوعوي')),
+        title: const Center(child: Text('صفحة التبرعات')),
         backgroundColor: const Color(0xFF1A4D2E),
         foregroundColor: const Color(0xFFF7F7F7),
       ),

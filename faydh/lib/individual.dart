@@ -1,3 +1,6 @@
+import 'package:faydh/FoodPost.dart';
+import 'package:faydh/viewAllFood.dart';
+import 'package:faydh/adPost.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/components/background.dart';
 
@@ -44,37 +47,55 @@ class _individualPageState extends State<individual> {
                   ),
                 ),
               ),
-             Container(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: Text("انتظرونا قريباً", style: TextStyle(color: Colors.red[900], fontSize: 30), textAlign:TextAlign.center,),
-),
               Container(
-                padding: const EdgeInsets.only(top: 3.0, left: 20.0, right: 20.0),
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                // child: Text(
+                //   "انتظرونا قريباً",
+                //   style: TextStyle(color: Colors.red[900], fontSize: 30),
+                //   textAlign: TextAlign.center,
+                // ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.only(top: 3.0, left: 20.0, right: 20.0),
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("متبرع  "),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return const FoodPostScreen();
+                    }));
+                  },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
+                          borderRadius: BorderRadius.circular(20)),
+                      backgroundColor: const Color(0xFF1A4D2E),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 110.0, vertical: 25.0),
-                      textStyle:
-                          const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                      textStyle: const TextStyle(
+                          fontSize: 30, fontWeight: FontWeight.bold)),
+                  child: const Text("متبرع  "),
                 ),
               ),
               const SizedBox(
                 height: 20.0,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return const viewAllFood();
+                    }),
+                  );
+                },
                 child: const Text('مستفيد'),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)), backgroundColor: const Color(0xFF1A4D2E),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 110.0, vertical: 25.0),
-                    textStyle:
-                        const TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                        borderRadius: BorderRadius.circular(20)),
+                    backgroundColor: const Color(0xFF1A4D2E),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 110.0, vertical: 25.0),
+                    textStyle: const TextStyle(
+                        fontSize: 30, fontWeight: FontWeight.bold)),
               )
             ]),
           ),

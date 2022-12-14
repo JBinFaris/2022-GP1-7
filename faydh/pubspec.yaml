@@ -51,7 +51,8 @@ dependencies:
   firebase_core_platform_interface: 4.5.1
   firebase_messaging: ^13.0.4 # will satisfy your firebase core things that depend on ^4.5.1
   fluttertoast: ^8.1.1
-
+  file_picker: ^5.2.4
+  flutter_datetime_picker: ^1.5.1
 
 dev_dependencies:
   flutter_test:
