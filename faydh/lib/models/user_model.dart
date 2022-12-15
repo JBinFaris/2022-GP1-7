@@ -37,7 +37,7 @@ class User {
     return User(
       username: snapshot["username"],
       role: snapshot["role"],
-      uid: snapshot["uid"],
+      uid: snapshot["uid"] ?? '',
       email: snapshot["email"],
       phoneNumber: snapshot["phoneNumber"],
       crNo: snapshot["crNo"],

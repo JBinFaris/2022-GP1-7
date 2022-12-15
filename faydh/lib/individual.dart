@@ -1,4 +1,5 @@
 import 'package:faydh/FoodPost.dart';
+import 'package:faydh/viewAllFood.dart';
 import 'package:faydh/adPost.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/components/background.dart';
@@ -79,7 +80,13 @@ class _individualPageState extends State<individual> {
                 height: 20.0,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return const viewAllFood();
+                    }),
+                  );
+                },
                 child: const Text('مستفيد'),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

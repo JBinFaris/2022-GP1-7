@@ -16,13 +16,12 @@ class UserData {
   });
 
   Map<String, dynamic> toJson() => {
-    "username": username,
-    "uid": uid,
-    "phoneNumber": phoneNumber,
-    "email": email,
-    "role": role,
-  };
-
+        "username": username,
+        "uid": uid,
+        "phoneNumber": phoneNumber,
+        "email": email,
+        "role": role,
+      };
 
   static UserData fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
@@ -30,7 +29,7 @@ class UserData {
     return UserData(
         username: snapshot["username"],
         role: snapshot["role"],
-        uid: snapshot["uid"],
+        uid: snapshot["uid"] ?? '',
         email: snapshot["email"],
         phoneNumber: snapshot["phoneNumber"]);
   }
