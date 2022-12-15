@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/AdminMain.dart';
+import 'package:faydh/models/user_data_model.dart';
+import 'package:faydh/models/user_model.dart';
+import 'package:faydh/widgets/Approval_Card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -12,6 +15,27 @@ class ApproveBusiness extends StatefulWidget {
 
 class _ApproveBusinessState extends State<ApproveBusiness> {
 
+  var dataloaded;
+  List<User> usersList = [];
+
+
+
+  @override
+  void dispose() {
+    dataloaded = false;
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    dataloaded = false;
+    //getUser();
+    // TODO: implement initState
+  }
+
+
+
+   
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +66,12 @@ class _ApproveBusinessState extends State<ApproveBusiness> {
                   stops: [0.1, 0.9],
                   colors: [Color.fromARGB(142, 47, 101, 69), Color(0xffd6ecd0)]),
             ),
-           /* child: StreamBuilder(
+            child: StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection("posts")
-                  .where('userId', isEqualTo: idddd)
+                  .collection("users")
+                  .where('status', isEqualTo: "0")
                   .snapshots(),
-              builder: (context,
+             builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snaphot) {
                 if (snaphot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -59,19 +83,17 @@ class _ApproveBusinessState extends State<ApproveBusiness> {
 
                 return ListView.builder(
                   itemCount: snaphot.data?.docs.length,
-                  itemBuilder: (context, index) => MyCard(
-                    id: snaphot.data?.docs[index].id,
-                    snap: snaphot.data?.docs[index].data(),
-                    reference: snaphot.data!.docs[index].reference,
+                  itemBuilder: (context, index) => ApprovalCard(
+                   snap: snaphot.data?.docs[index].data(),
                   ),
                 );
               },
-            )),*/
+            )), /**/
 
         // Add new product
 
         // backgroundColor:Color.fromARGB(255, 235, 241, 233),
       ),
-    ) );
+     );
   }
 }
