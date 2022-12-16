@@ -77,4 +77,43 @@ class FirestoreMethods {
     }
     return res;
   }
+
+  Future<String> updatePostThree({
+    required String title,
+    required String? oldImage,
+    required String id,
+    required String address,
+    required String text,
+    required String count,
+    required String expireDate,
+    Uint8List? file,
+    required DocumentReference<Map<String, dynamic>> reference,
+  }) async {
+    String res = "Some error occurred";
+    try {
+      Map<String, String> photoUrl = {};
+      if (file != null) {
+        photoUrl = await StorageMethods()
+            .uploadImageToStorage("postsImage", file, true, filename: oldImage);
+      }
+      Map<String, String> values = {
+        "postTitle": title,
+        "postAdress": address,
+        "postText": text,
+        "food_cont": count,
+        "postExp": expireDate,
+      };
+      if (photoUrl.containsKey('downloadUrl') &&
+          photoUrl['downloadUrl']!.isNotEmpty) {
+        values.putIfAbsent('postImage', () => photoUrl['downloadUrl']!);
+        values.putIfAbsent('pathImage', () => photoUrl['path']!);
+      }
+      await reference.update(values).then((value) {
+        res = "success";
+      });
+    } catch (e) {
+      log(e.toString());
+    }
+    return res;
+  }
 }
