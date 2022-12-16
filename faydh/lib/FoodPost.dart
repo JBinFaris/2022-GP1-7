@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
 import 'package:faydh/upload_api.dart';
+import 'package:faydh/widgets/edit_posts.dart';
+import 'package:faydh/widgets/edit_posts_new.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -181,6 +183,84 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               ),
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsets.all(16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => EditPostNew(
+                                                  newID: document.id,
+                                                  title: "${data["postTitle"]}",
+                                                  address:
+                                                      "${data["postAdress"]}",
+                                                  text: "${data["postText"]}",
+                                                  count: "${data["food_cont"]}",
+                                                  expireDate:
+                                                      "${data["postExp"]}",
+                                                  imgUrl:
+                                                      "${data["postImage"]}",
+                                                  path: "${data["pathImage"]}",
+                                                  reference: document.reference
+                                                      as DocumentReference<
+                                                          Map<String, dynamic>>,
+                                                )),
+                                      );
+                                    },
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: Color.fromARGB(226, 29, 92, 76),
+                                    )),
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                              title: const Text(
+                                                'تأكيد الحذف',
+                                                textAlign: TextAlign.right,
+                                              ),
+                                              content: const Text(
+                                                "هل أنت متأكد من حذف المحتوى ؟ ",
+                                                textAlign: TextAlign.right,
+                                              ),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: const Text("إلغاء"),
+                                                  onPressed: () {
+                                                    // callback function for on click event of Cancel button
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: const Text("موافق"),
+                                                  onPressed: () async {
+                                                    print(
+                                                        document.id.toString());
+
+                                                    document.reference.delete();
+
+                                                    Navigator.pop(context);
+
+                                                    print("check");
+                                                  },
+                                                ),
+                                              ]);
+                                        });
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Color.fromARGB(255, 172, 8, 8),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
