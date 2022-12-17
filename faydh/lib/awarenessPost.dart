@@ -238,7 +238,7 @@ class _HomePageState extends State<awarenessPost>
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Center(child: Text('المنتدى التوعوي')),
+        title: const Center(child: Text('المنتدى')),
         backgroundColor: const Color(0xFF1A4D2E),
         foregroundColor: const Color(0xFFF7F7F7),
       ),

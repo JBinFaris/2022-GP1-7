@@ -69,10 +69,65 @@ class _signInSreenState extends State<signInSreen> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomePage()));
             } else if (myrole == "منظمة تجارية") {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const businessHome()));
+              final status = (snap.data() as Map<String, dynamic>)['status'];
+              if(status == "0"){
+           res = "حصل خطأ ما";
+
+                showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  title: const Text(
+                                   "معلق "+":"+ " حالة الحساب" ,
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  content: const Text(
+                                    "الحساب معلق، بإنتظار موافقة المشرف على السجل التجاري\n يرجى معاودة تسجيل الدخول لاحقاً",
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text("موافق"),
+                                      onPressed: () async {
+
+                                        
+                                      Navigator.pop(context);
+
+                                      },
+                                    ),
+                                  ]);
+                            });
+              }else if(status == "2"){
+              res = "حصل خطأ ما";
+                 showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  title: const Text(
+                                   " حالة الحساب"+ ": "+  " مرفوض ",
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  content: const Text(
+                                    " الحساب مرفوض نظراً لعدم صحة السجل التجاري"+"\n"+ "يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم اي شكوى "+"\n"+"teamfaydh@gmail.com",
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text("موافق"),
+                                      onPressed: () async {
+                                     Navigator.pop(context);
+                                      },
+                                    ),
+                                  ]);
+                            });
+              }else if (status == "1"){
+                 Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const businessHome()));
+
+              }
+             
             } else if (myrole == "منظمة خيرية") {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const charityHome()));

@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
                   icon: LineIcons.list,
                   iconColor:
                       _selectedIndex == 1 ? const Color(0xFFD6ECD0) : Colors.white,
-                  text: "المنتدى التوعوي",
+                  text: "المنتدى",
                 ),
                 GButton(
                   icon: LineIcons.user,
