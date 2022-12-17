@@ -606,10 +606,18 @@ class _SignupFormState extends State<SignupForm> {
                               )
                                   .then((value) {
                                 if (value == "success") {
-                                  Navigator.of(context).push(
+                                  if(selectedValue == "منظمة تجارية"){
+
+                                     Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                    return const signInSreen();}));
+                                  }else {
+                                    Navigator.of(context).push(
                                       MaterialPageRoute(builder: (context) {
                                     return const HomePage();
                                   }));
+                                  }
+                                  
                                 }
                                 showSnackBar(value.toString(), context);
                               });
