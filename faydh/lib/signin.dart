@@ -229,12 +229,14 @@ class _signInSreenState extends State<signInSreen> {
             final myrole = (snap.data() as Map<String, dynamic>)['role'];
             final uid = (snap.data() as Map<String, dynamic>)['uid'];
 
-            getToken(id: uid);
+           
 
             if (myrole == "فرد") {
+               getToken(id: uid);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomePage()));
             } else if (myrole == "منظمة تجارية") {
+               getToken(id: uid);
               final status = (snap.data() as Map<String, dynamic>)['status'];
               if(status == "0"){
            res = "حصل خطأ ما";
@@ -295,6 +297,7 @@ class _signInSreenState extends State<signInSreen> {
               }
              
             } else if (myrole == "منظمة خيرية") {
+               getToken(id: uid);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const charityHome()));
             } else if (myrole == "Admin") {
