@@ -119,7 +119,7 @@ class _EditPostNewState extends State<EditPostNew> {
                           textAlign: TextAlign.right,
                           controller: postTitleTextEditingController,
                           decoration: const InputDecoration(
-                            hintText: "عنوان الاعلان",
+                            hintText: "نوع الطعام",
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   width: 2, color: Color(0xFF1A4D2E)),
@@ -171,7 +171,7 @@ class _EditPostNewState extends State<EditPostNew> {
                           textAlign: TextAlign.right,
                           controller: descriptionTextEditingController,
                           decoration: const InputDecoration(
-                            hintText: "العنوان",
+                            hintText: "موقع الإستلام",
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                   width: 2, color: Color(0xFF1A4D2E)),

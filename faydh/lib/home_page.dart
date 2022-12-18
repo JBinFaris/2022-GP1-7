@@ -14,7 +14,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PageController _pageController = PageController();
-  final List<Widget> _screens = [const individual(), const awarenessPost(), const UserProfile()];
+  final List<Widget> _screens = [
+    const individual(),
+    const awarenessPost(),
+    const UserProfile(),
+  ];
 
   int _selectedIndex = 0;
   void _onPageChanged(int index) {
@@ -63,20 +67,23 @@ class _HomePageState extends State<HomePage> {
               tabs: [
                 GButton(
                   icon: LineIcons.home,
-                  iconColor:
-                      _selectedIndex == 0 ? const Color(0xFFD6ECD0) : Colors.white,
+                  iconColor: _selectedIndex == 0
+                      ? const Color(0xFFD6ECD0)
+                      : Colors.white,
                   text: "الصفحة الرئيسية",
                 ),
                 GButton(
                   icon: LineIcons.list,
-                  iconColor:
-                      _selectedIndex == 1 ? const Color(0xFFD6ECD0) : Colors.white,
+                  iconColor: _selectedIndex == 1
+                      ? const Color(0xFFD6ECD0)
+                      : Colors.white,
                   text: "المنتدى",
                 ),
                 GButton(
                   icon: LineIcons.user,
-                  iconColor:
-                      _selectedIndex == 2 ? const Color(0xFFD6ECD0) : Colors.white,
+                  iconColor: _selectedIndex == 2
+                      ? const Color(0xFFD6ECD0)
+                      : Colors.white,
                   text: "الملف الشخصي",
                 ),
               ],

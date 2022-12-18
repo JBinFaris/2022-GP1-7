@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
 import 'package:faydh/upload_api.dart';
-import 'package:faydh/widgets/edit_posts.dart';
 import 'package:faydh/widgets/edit_posts_new.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +25,10 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
     final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
         .collection('foodPost')
         .where('Cid', isEqualTo: id)
+        .orderBy(
+          "docId",
+          descending: true,
+        )
         .snapshots();
 
     return Scaffold(
@@ -34,7 +37,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         elevation: 2.0,
         centerTitle: true,
         backgroundColor: const Color(0xFF1A4D2E),
-        title: const Text("اعلانات المتبرعين"),
+        title: const Text("إعلاناتي"),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodPostStream,
@@ -50,6 +53,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: ListView(
+              // reverse: false,
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
@@ -64,15 +68,16 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                       // height: MediaQuery.of(context).size.height * 0.2,
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
+                          const Padding(
+                            padding: EdgeInsets.all(12.0),
                           ), // so?
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                data['postTitle'],
+                                "نوع الطعام:  ${data['postTitle'].toString()}",
+                                //data['postTitle'],
                                 style: const TextStyle(
                                   color: Color(0xFF1A4D2E),
                                   fontWeight: FontWeight.bold,
@@ -87,7 +92,8 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                data['postAdress'],
+                                "موقع الإستلام:  ${data['postAdress'].toString()}",
+                                // data['postAdress'],
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 144, 177, 135),
                                   fontSize: 10,
@@ -102,7 +108,8 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                data['food_cont'],
+                                "كمية الطعام:  ${data['food_cont'].toString()}",
+                                //data['food_cont'],
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 144, 177, 135),
                                   fontSize: 10,
@@ -142,7 +149,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                 padding:
                                     const EdgeInsets.only(right: 12, bottom: 8),
                                 child: Align(
-                                  alignment: Alignment.topLeft,
+                                  alignment: Alignment.bottomRight,
                                   child: Text(
                                     "تاريخ الانتهاء : ${data['postExp'].toString()}",
                                     style: const TextStyle(
@@ -152,39 +159,25 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                   ),
                                 ),
                               ),
-                            ],
-                            // Padding(
-                            //   //ok?
-                            //   padding: const EdgeInsets.only(
-                            //       left: 12, right: 6, bottom: 8),
-                            //   child: Align(
-                            //     alignment: Alignment.topLeft,
-                            //     child: Text(
-                            //       "Post At: ${data['postDate'].toString()}",
-                            //       style: const TextStyle(
-                            //         color: Colors.grey,
-                            //         fontSize: 12,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 12, bottom: 8),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Text(
-                                "تاريخ الاضافة : ${data['postExp'].toString()}",
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 144, 177, 135),
-                                  fontSize: 12,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 12, bottom: 8),
+                                child: Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Text(
+                                    "تاريخ الإضافة:  ${data['postDate'].toString().split(" ").first}",
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 144, 177, 135),
+                                      fontSize: 12,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
+
                           Padding(
-                            padding: EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -341,6 +334,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
 
     final snapshot = await taskImage!.whenComplete(() {});
     urlDownloadImage = await snapshot.ref.getDownloadURL();
+    setState(() {});
 
     print('Download-Image-Link: $urlDownloadImage');
   }
@@ -378,7 +372,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                 textAlign: TextAlign.right,
                 controller: postTitleTextEditingController,
                 decoration: const InputDecoration(
-                  hintText: "عنوان الاعلان",
+                  hintText: "نوع الطعام ",
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(width: 2, color: Color(0xFF1A4D2E)),
                   ),
@@ -424,7 +418,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                 textAlign: TextAlign.right,
                 controller: addressEditingController,
                 decoration: const InputDecoration(
-                  hintText: "العنوان",
+                  hintText: "موقع الإستلام",
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(width: 2, color: Color(0xFF1A4D2E)),
                   ),
@@ -590,43 +584,105 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                     },
                     child: const Icon(Icons.add_photo_alternate),
                   ),
-                  Align(
-                      //
-                      alignment: Alignment.center,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          print("dataurl: ${urlDownloadImage}");
-                          print("useris:: ${user!.displayName}");
-                          if (_formKey.currentState!.validate() &&
-                              urlDownloadImage != null) {
-                            Database.addFoodPostData(
-                              context: context,
-                              docId: DateTime.now().toString(),
-                              userUid: user.uid.toString(),
-                              userPost: user.displayName.toString(),
-                              postTitle: postTitleTextEditingController.text
-                                  .toString(),
-                              postText: descriptionTextEditingController.text
-                                  .toString(),
-                              postAdress:
-                                  addressEditingController.text.toString(),
-                              postImage: urlDownloadImage.toString(),
-                              postExp: _date.toString(),
-                              food_cont:
-                                  foodCountEditingController.text.toString(),
-                            );
-                          } else {
-                            Fluttertoast.showToast(
-                              msg: "الرجاء تعبئة كافة الحقول",
-                              backgroundColor: Colors.red,
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF1A4D2E),
+                  urlDownloadImage == null
+                      ? Align(
+                          alignment: Alignment.center,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey,
+                            ),
+                            child: const Text('إضافة الإعلان'),
+                          ),
+                        )
+                      : Align(
+                          //
+                          alignment: Alignment.center,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Navigator.pop(context);
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: AlertDialog(
+                                          title: const Text('تأكيد!'),
+                                          content: const Text(
+                                              'عند موافقتك لنشر الاعلان لن تتمكن من تعديل أو حذف الإعلان إذا تم حجزه. '),
+                                          actions: [
+                                            Row(
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text("إلغاء"),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    print(
+                                                        "dataurl: ${urlDownloadImage}");
+                                                    print(
+                                                        "useris:: ${user!.displayName}");
+                                                    if (_formKey.currentState!
+                                                            .validate() &&
+                                                        urlDownloadImage !=
+                                                            null) {
+                                                      Database.addFoodPostData(
+                                                        context: context,
+                                                        docId: DateTime.now()
+                                                            .toString(),
+                                                        userUid:
+                                                            user.uid.toString(),
+                                                        userPost: user
+                                                            .displayName
+                                                            .toString(),
+                                                        postTitle:
+                                                            postTitleTextEditingController
+                                                                .text
+                                                                .toString(),
+                                                        postText:
+                                                            descriptionTextEditingController
+                                                                .text
+                                                                .toString(),
+                                                        postAdress:
+                                                            addressEditingController
+                                                                .text
+                                                                .toString(),
+                                                        postImage:
+                                                            urlDownloadImage
+                                                                .toString(),
+                                                        postExp:
+                                                            _date.toString(),
+                                                        food_cont:
+                                                            foodCountEditingController
+                                                                .text
+                                                                .toString(),
+                                                      );
+                                                      Navigator.pop(context);
+                                                    } else {
+                                                      Fluttertoast.showToast(
+                                                        msg:
+                                                            "الرجاء تعبئة كافة الحقول",
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                      );
+                                                    }
+                                                  },
+                                                  child: const Text("موافق"),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF1A4D2E),
+                            ),
+                            child: const Text('إضافة'),
+                          ),
                         ),
-                        child: const Text('إضافة'),
-                      )),
                 ],
               ),
             ],
