@@ -1,3 +1,4 @@
+import 'package:faydh/charityHome.dart';
 import 'package:faydh/components/dialogs/%20terms_and_condition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -601,15 +602,26 @@ class _SignupFormState extends State<SignupForm> {
                                 phoneNumber: _phonenumberController.text,
                                 password: _passwordController.text,
                                 crNo: _crNoController.text,
-                                status: _statusController.text, 
-                                
+                                status: _statusController.text,
                               )
                                   .then((value) {
                                 if (value == "success") {
-                                  Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                    return const HomePage();
-                                  }));
+                                  if (selectedValue == "منظمة تجارية") {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return const signInSreen();
+                                    }));
+                                  } else if (selectedValue == "منظمة خيرية") {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return const charityHome();
+                                    }));
+                                  } else {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return const HomePage();
+                                    }));
+                                  }
                                 }
                                 showSnackBar(value.toString(), context);
                               });
