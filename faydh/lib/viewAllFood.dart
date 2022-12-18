@@ -155,9 +155,9 @@ class _viewAllFood extends State<viewAllFood> {
                                 padding:
                                     const EdgeInsets.only(right: 12, bottom: 8),
                                 child: Align(
-                                  alignment: Alignment.bottomRight,
+                                  alignment: Alignment.bottomLeft,
                                   child: Text(
-                                    "تاريخ الاضافة : ${data['postExp'].toString()}",
+                                    "تاريخ الإضافة:  ${data['postDate'].toString().split(" ").first}",
                                     style: const TextStyle(
                                       color: Color.fromARGB(255, 144, 177, 135),
                                       fontSize: 12,
