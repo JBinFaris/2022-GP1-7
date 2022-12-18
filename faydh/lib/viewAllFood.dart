@@ -149,21 +149,50 @@ class _viewAllFood extends State<viewAllFood> {
                               ),
                             ],
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 12, bottom: 8),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Text(
-                                "تاريخ الاضافة : ${data['postExp'].toString()}",
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 144, 177, 135),
-                                  fontSize: 12,
+                          Row(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 12, bottom: 8),
+                                child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    "تاريخ الاضافة : ${data['postExp'].toString()}",
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 144, 177, 135),
+                                      fontSize: 12,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 0, 80, 10),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (context) {
+                                        return const viewAllFood();
+                                      }),
+                                    );
+                                  },
+                                  child: const Text('حجز'),
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      backgroundColor: const Color(0xFF1A4D2E),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 30.0,
+                                      ),
+                                      textStyle: const TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              )
+                            ],
                           ),
-                          ElevatedButton(
+                          /* ElevatedButton(
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context) {
@@ -181,7 +210,7 @@ class _viewAllFood extends State<viewAllFood> {
                                 ),
                                 textStyle: const TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold)),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),

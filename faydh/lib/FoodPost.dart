@@ -473,7 +473,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                         minTime: DateTime.now(),
                         maxTime: DateTime(2050, 12, 31), onConfirm: (date) {
                       print('confirm $date');
-                      _date = '${date.year} - ${date.month} - ${date.day}';
+                      _date = '${date.year}-${date.month}-${date.day}';
                       setState(() {});
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },

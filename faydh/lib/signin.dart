@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/AdminMain.dart';
 import 'package:faydh/businessHome.dart';
@@ -7,11 +10,17 @@ import 'package:faydh/SignUp_Form.dart';
 import 'package:faydh/home_page.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'forget-password.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'dart:async';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -25,9 +34,160 @@ class signInSreen extends StatefulWidget {
 
 class _signInSreenState extends State<signInSreen> {
   bool _isObscure = true;
+  String? mtoken = "";
+
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    requestPermission();
+    // getToken();
+  }
+
+  void requestPermission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('get permission');
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
+      print('get provisional permission');
+    } else
+      print('decline');
+  }
+
+  void getToken({required id}) async {
+    await FirebaseMessaging.instance.getToken().then((token) {
+      setState(() {
+        mtoken = token;
+        print('my token is $mtoken');
+      });
+      var period = const Duration(hours: 24);
+      Timer.periodic(period, (arg) {
+        print('inside save token');
+        saveToken(id: id, token: token!);
+      });
+      saveToken(id: id, token: token!);
+    });
+  }
+
+  void saveToken({required String id, required String token}) async {
+    bool test = false;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .update({'token': token});
+
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyy-MM-dd').format(now);
+    print('testttttt');
+    DateTime dt1Now = DateTime.parse(formattedDate);
+
+    FirebaseFirestore.instance
+        .collection('foodPost')
+        .where('Cid', isEqualTo: id)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        DateTime dt2Check = DateTime.parse('2023-12-23 11:47:00');
+        if (dt2Check.isAfter(dt1Now)) {
+          print("expired");
+
+          initInfo();
+          sendPushMessage(
+              token: token,
+              title: doc["postTitle"],
+              text: "this food is expired");
+        }
+        //print(doc["postDate"]);
+      });
+    });
+  }
+
+  void initInfo() async {
+    var androidInitialize =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    //var iosInitialize =const IOSInitializationSettings();
+    var initializationSettings =
+        InitializationSettings(android: androidInitialize);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print('on message');
+      print(
+          "onMessage: ${message.notification?.title}/${message.notification?.body}}");
+
+      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+        message.notification!.body.toString(),
+        htmlFormatContent: true,
+      );
+      AndroidNotificationDetails androidPlatformChanelSpecifics =
+          AndroidNotificationDetails(
+        'adfood',
+        'adfood',
+        importance: Importance.high,
+        styleInformation: bigTextStyleInformation,
+        priority: Priority.high,
+        playSound: true,
+      );
+
+      NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChanelSpecifics);
+
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
+          message.notification?.body, platformChannelSpecifics);
+    });
+  }
+
+  void sendPushMessage(
+      {required String token,
+      required String title,
+      required String text}) async {
+    print('hhhhh');
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAA5LB0-7Q:APA91bGe0F1hMmg6Hh8MNQjGBTzyvxZyz-HInHqaWWg5MJ6LmKUNTAPPURXthsQfVxCNTUVhm90czUeMdUFcHCOlFr_XPqbKt7-Z7dRf3xXl3Bt6W7Cul94feW1ObmMoXnMEGw6_y0Hl',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'Flutter_Notification_Click',
+              'status': 'done',
+              'body': text,
+              'title': title,
+            },
+            "notification": <String, dynamic>{
+              "title": title,
+              "body": text,
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print('error notification');
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -39,7 +199,10 @@ class _signInSreenState extends State<signInSreen> {
   @override
   final _formKey = GlobalKey<FormState>();
 
-  void _loginUser({required String email, required String password}) async {
+  void _loginUser({
+    required String email,
+    required String password,
+  }) async {
     String res = "حصل خطأ ما";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
@@ -64,6 +227,9 @@ class _signInSreenState extends State<signInSreen> {
 
           if (snap != null) {
             final myrole = (snap.data() as Map<String, dynamic>)['role'];
+            final uid = (snap.data() as Map<String, dynamic>)['uid'];
+
+            getToken(id: uid);
 
             if (myrole == "فرد") {
               Navigator.push(context,
