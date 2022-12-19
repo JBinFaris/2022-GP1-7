@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'home_page.dart';
 import 'signin.dart';
+import 'package:intl/intl.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -16,6 +18,7 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   @override
+  String _finaldate = "تاريخ انتهاء السجل التجاري";
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -24,6 +27,7 @@ class _SignupFormState extends State<SignupForm> {
   final _userTypeController = TextEditingController();
   final _crNoController = TextEditingController();
   final _statusController = TextEditingController();
+  //final dateinput = TextEditingController();
 
   String? selectedValue;
 
@@ -37,6 +41,7 @@ class _SignupFormState extends State<SignupForm> {
     _phonenumberController.dispose();
     _userTypeController.dispose();
     _crNoController.dispose();
+    //dateinput.dispose();
     super.dispose();
   }
 
@@ -48,6 +53,7 @@ class _SignupFormState extends State<SignupForm> {
     _phonenumberController.text = "";
     _crNoController.text = "";
     selectedValue = "";
+    //dateinput.text = "";
     Navigator.of(this.context);
   }
 
@@ -530,8 +536,63 @@ class _SignupFormState extends State<SignupForm> {
                         },
                       ),
                     ),
-
-                  //checkbox
+                  if (selectedValue == "منظمة تجارية")
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8, bottom: 4),
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: TextButton(
+                          onPressed: () {
+                            DatePicker.showDatePicker(context,
+                                theme: const DatePickerTheme(
+                                  containerHeight: 210.0,
+                                ),
+                                showTitleActions: true,
+                                minTime: DateTime.now(),
+                                maxTime: DateTime(2050, 12, 31),
+                                onConfirm: (date) {
+                              print('confirm $date');
+                              _finaldate =
+                                  '${date.year} - ${date.month} - ${date.day}';
+                              setState(() {});
+                            },
+                                currentTime: DateTime.now(),
+                                locale: LocaleType.en);
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 50.0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      child: Row(
+                                        children: <Widget>[
+                                          const Icon(
+                                            Icons.date_range,
+                                            size: 18.0,
+                                            color: Color(0xFF1A4D2E),
+                                          ),
+                                          Text(
+                                            " $_finaldate",
+                                            style: const TextStyle(
+                                                color: Color(0xFF1A4D2E),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14.0),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
 
                   Align(
                     alignment: Alignment.centerRight,
@@ -603,6 +664,7 @@ class _SignupFormState extends State<SignupForm> {
                                 password: _passwordController.text,
                                 crNo: _crNoController.text,
                                 status: _statusController.text,
+                                crNoExpDate: _finaldate.toString(),
                               )
                                   .then((value) {
                                 if (value == "success") {
