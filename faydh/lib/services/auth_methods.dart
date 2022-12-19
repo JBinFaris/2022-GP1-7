@@ -20,6 +20,7 @@ class AuthMethods {
     required String password,
     String? crNo,
     String? status,
+    String ? crNoExpDate, 
     String? uid,
   }) async {
     String res = "Success";
@@ -41,6 +42,7 @@ class AuthMethods {
           phoneNumber: phoneNumber,
           crNo: crNo,
           status: status, 
+          crNoExpDate:crNoExpDate, 
         );
 
         await _firestore

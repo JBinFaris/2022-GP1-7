@@ -10,6 +10,7 @@ class User {
   final String phoneNumber;
   final String? crNo;
   final String? status;
+  final String? crNoExpDate;
 
   User({
     required this.email,
@@ -19,6 +20,7 @@ class User {
     required this.username,
     this.crNo,
     this.status,
+    this.crNoExpDate,
   });
 
   Map<String, dynamic> toJson() => {
@@ -29,19 +31,21 @@ class User {
         "role": role,
         if (role == "منظمة تجارية") "crNo": crNo,
         if (role == "منظمة تجارية") "status": "0",
+        if (role == "منظمة تجارية")
+          "crNoExpDate": crNoExpDate.toString().trim(),
       };
 
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return User(
-      username: snapshot["username"],
-      role: snapshot["role"],
-      uid: snapshot["uid"] ?? '',
-      email: snapshot["email"],
-      phoneNumber: snapshot["phoneNumber"],
-      crNo: snapshot["crNo"],
-      status: snapshot["status"],
-    );
+        username: snapshot["username"],
+        role: snapshot["role"],
+        uid: snapshot["uid"] ?? '',
+        email: snapshot["email"],
+        phoneNumber: snapshot["phoneNumber"],
+        crNo: snapshot["crNo"],
+        status: snapshot["status"],
+        crNoExpDate: snapshot["crNoExpDate"]);
   }
 }
