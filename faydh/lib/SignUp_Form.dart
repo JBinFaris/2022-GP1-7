@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'home_page.dart';
 import 'signin.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +19,7 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   @override
-  String _finaldate = "تاريخ انتهاء السجل التجاري";
+  String _finaldate = "";
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -538,57 +539,69 @@ class _SignupFormState extends State<SignupForm> {
                     ),
                   if (selectedValue == "منظمة تجارية")
                     Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 4),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                          onPressed: () {
-                            DatePicker.showDatePicker(context,
-                                theme: const DatePickerTheme(
-                                  containerHeight: 210.0,
-                                ),
-                                showTitleActions: true,
-                                minTime: DateTime.now(),
-                                maxTime: DateTime(2050, 12, 31),
-                                onConfirm: (date) {
-                              print('confirm $date');
-                              _finaldate =
-                                  '${date.year} - ${date.month} - ${date.day}';
-                              setState(() {});
-                            },
-                                currentTime: DateTime.now(),
-                                locale: LocaleType.en);
+                      padding:
+                          const EdgeInsets.only(top: 0, bottom: 4, left: 90),
+                      child: TextButton(
+                        onPressed: () {
+                          DatePicker.showDatePicker(context,
+                              theme: const DatePickerTheme(
+                                containerHeight: 210.0,
+                              ),
+                              showTitleActions: true,
+                              minTime: DateTime.now(),
+                              maxTime: DateTime(2050, 12, 31),
+                              onConfirm: (date) {
+                            print('confirm $date');
+                            _finaldate =
+                                '${date.year} - ${date.month} - ${date.day}';
+                            setState(() {});
                           },
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 50.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Container(
+                              currentTime: DateTime.now(),
+                              locale: LocaleType.en);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 50.0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
                                       child: Row(
                                         children: <Widget>[
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              " $_finaldate",
+                                              style: const TextStyle(
+                                                  color: Color(0xFF1A4D2E),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14.0),
+                                            ),
+                                          ),
+                                          const Text(
+                                            " : تاريخ انتهاء السجل التجاري",
+                                            style: TextStyle(
+                                              color: Color(0xFF1A4D2E),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14.0,
+                                            ),
+                                          ),
                                           const Icon(
                                             Icons.date_range,
                                             size: 18.0,
                                             color: Color(0xFF1A4D2E),
                                           ),
-                                          Text(
-                                            " $_finaldate",
-                                            style: const TextStyle(
-                                                color: Color(0xFF1A4D2E),
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14.0),
-                                          ),
                                         ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -654,7 +667,8 @@ class _SignupFormState extends State<SignupForm> {
                             if (_formKey.currentState!.validate()) {}
                             if (selectedValue != "" &&
                                 passwordStrength == 1 &&
-                                _phonenumberController.text != "") {
+                                _phonenumberController.text != "" &&
+                                _finaldate.toString() != "") {
                               AuthMethods()
                                   .signUpUser(
                                 role: selectedValue.toString(),
@@ -687,6 +701,11 @@ class _SignupFormState extends State<SignupForm> {
                                 }
                                 showSnackBar(value.toString(), context);
                               });
+                            } else {
+                              Fluttertoast.showToast(
+                                msg: "الرجاء تعبئة كافة الحقول",
+                                backgroundColor: Colors.red,
+                              );
                             }
                           },
                           child: const Text(
