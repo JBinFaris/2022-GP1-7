@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:faydh/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
 
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -10,7 +13,6 @@ final  ref = _firestore.collection("users");
 
 final query = ref.where("role", isEqualTo:"منظمة تجارية");
 final query2 = query.where("status", isEqualTo: "0");
-
 
 
 class ApprovalCard extends StatefulWidget {
@@ -104,6 +106,7 @@ void updateStatus(status, id) {
                                       child: const Text("موافق"),
                                       onPressed: () async {
                                      updateStatus("1",  "${widget.snap["uid"].toString()}");
+                                     sendApproval( name: "${widget.snap["username"].toString()}",email: "${widget.snap["email"].toString()}" , st: "1" );
                                         Navigator.pop(context);
 
                                         print("check");
@@ -165,6 +168,12 @@ void updateStatus(status, id) {
                                       child: const Text("موافق"),
                                       onPressed: () async {
                                      updateStatus("2",  "${widget.snap["uid"].toString()}");
+                                     var email = "${widget.snap["email"].toString()}" ;
+                                     print(email);
+
+                                    
+                                    sendApproval( name: "${widget.snap["username"].toString()}",email: email , st: "2" );
+
                                         Navigator.pop(context);
 
                                         print("check");
@@ -287,6 +296,39 @@ void updateStatus(status, id) {
 
 
 
+Future sendApproval({
+  required String name,
+  required String email,
+  required var st ,
+})async{
+  const serviceId = 'service_g4jjg7d';
+   var userId= '7hJUinnZHv07_0-Ae' ;
+  var templateId = "";
+  if(st == "1"){
+    templateId = 'template_8ma1ebn';
+  }else if(st == "2"){
+    templateId = 'template_hc0w3sd';
+  }
+ 
+  final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+  var response = await http.post(
+    url,
+    headers: {
+      'origin': 'http:localhost',
+      'Content-Type': 'application/json',},
+    body: jsonEncode({
+      'service_id': serviceId ,
+      'user_id': userId,
+      'template_id': templateId,
+      'template_params':{
+        'to_name': name,
+         'sender_email': email,
+      }
+    }), );
+
+  print(response.body);
+
+}
 
 
 
