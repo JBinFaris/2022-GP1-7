@@ -668,7 +668,7 @@ class _SignupFormState extends State<SignupForm> {
                             if (selectedValue != "" &&
                                 passwordStrength == 1 &&
                                 _phonenumberController.text != "" &&
-                                _finaldate.toString() != "") {
+                                _finaldate.toString() != "" && _crNoController.text.length == 10) {
                               AuthMethods()
                                   .signUpUser(
                                 role: selectedValue.toString(),
