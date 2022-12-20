@@ -5,8 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import '../Database/drop_down_provider.dart';
 import '../services/firestore_methods.dart';
 import '../utilis/utilis.dart';
+import 'custom_drop_down.dart';
 
 class EditPostNew extends StatefulWidget {
   final String title;
@@ -79,6 +82,8 @@ class _EditPostNewState extends State<EditPostNew> {
 
   @override
   Widget build(BuildContext context) {
+    var data = Provider.of<DropDownProvider>(context);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -167,29 +172,8 @@ class _EditPostNewState extends State<EditPostNew> {
                         const SizedBox(
                           height: 8,
                         ),
-                        TextFormField(
-                          textAlign: TextAlign.right,
-                          controller: descriptionTextEditingController,
-                          decoration: const InputDecoration(
-                            hintText: "موقع الإستلام",
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 2, color: Color(0xFF1A4D2E)),
-                            ),
-                          ),
-                          maxLength: 60,
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                value.length >= 60) {
-                              return 'الحد الأقصى للكتابة هو 60 حرف';
-                            }
 
-                            return null;
-                          },
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                        ),
+                        /// this one
                         const SizedBox(
                           height: 8,
                         ),
@@ -208,7 +192,7 @@ class _EditPostNewState extends State<EditPostNew> {
                             if (value == null ||
                                 value.isEmpty ||
                                 value.length >= 20) {
-                              return _date;
+                              return 'الحد الأقصى للكتابة هو 20 حرف';
                             }
 
                             return null;
@@ -216,6 +200,14 @@ class _EditPostNewState extends State<EditPostNew> {
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
                         ),
+
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        DropDown(
+                            hint: 'موقع الإستلام',
+                            listItem: myList,
+                            dropDownType: 'city'),
                         const SizedBox(
                           height: 8,
                         ),
@@ -401,4 +393,70 @@ class _EditPostNewState extends State<EditPostNew> {
       ),
     );
   }
+
+  List<String> myList = [
+    "الرياض",
+    "جدة",
+    "مكة المكرمة",
+    "المدينة المنورة",
+    "سلطانة",
+    "تبوك",
+    "الطائف",
+    "بريدة",
+    " خميس مشيط",
+    "الهفوف",
+    "المبرز",
+    " حفر الباطن",
+    "حائل",
+    "نجران",
+    "الجبيل",
+    "أبها",
+    "ينبع",
+    "الخُبر",
+    "عنيزة",
+    "عرعر",
+    "سكاكا",
+    "سكاكا",
+    "القريات",
+    "الظهران",
+    "القطيف",
+    "الباحة",
+    "تاروت",
+    "البيشة",
+    "الرس",
+    "الشفا",
+    "سيهات",
+    "المذنب",
+    "الخفجي",
+    "الدوادمي",
+    "صبيا",
+    "الزلفي",
+    " أبو العريش",
+    "الصفوى",
+    "رابغ",
+    "رحيمة",
+    "الطريف",
+    "عفيف",
+    "طبرجل",
+    "الدلم",
+    "أملج",
+    "العلا",
+    "بقيق",
+    " بدر حنين",
+    "صامطة",
+    "الوجه",
+    "البكيرية",
+    "نماص",
+    "السليل",
+    "تربة",
+    "الجموم",
+    "ضباء",
+    "الطريف",
+    "القيصومة",
+    "البطالية",
+    "المنيزلة",
+    "المجاردة",
+    "تنومة",
+    "تنومة"
+  ];
 }

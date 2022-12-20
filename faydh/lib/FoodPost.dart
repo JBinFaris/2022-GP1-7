@@ -455,6 +455,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                   hint: 'موقع الإستلام',
                   listItem: myList,
                   dropDownType: 'city'),
+
               const SizedBox(
                 height: 8,
               ),
@@ -753,6 +754,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
     "المنيزلة",
     "المجاردة",
     "تنومة",
-    "تنومة,"
+    "تنومة"
   ];
 }
