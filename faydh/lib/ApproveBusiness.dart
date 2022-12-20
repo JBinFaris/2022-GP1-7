@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faydh/AdminMain.dart';
-import 'package:faydh/models/user_data_model.dart';
 import 'package:faydh/models/user_model.dart';
 import 'package:faydh/widgets/Approval_Card.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,6 @@
 import 'package:faydh/ApproveBusiness.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/signin.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/components/background.dart';
 

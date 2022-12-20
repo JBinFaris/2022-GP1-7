@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/AdminMain.dart';
@@ -8,7 +7,6 @@ import 'package:faydh/charityHome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:faydh/SignUp_Form.dart';
 import 'package:faydh/home_page.dart';
-import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -64,8 +62,9 @@ class _signInSreenState extends State<signInSreen> {
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
       print('get provisional permission');
-    } else
+    } else {
       print('decline');
+    }
   }
 
   void getToken({required id}) async {

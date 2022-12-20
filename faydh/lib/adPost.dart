@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/models/post_model.dart';
-import 'package:faydh/models/user_model.dart';
 import 'package:faydh/services/firestore_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'package:faydh/widgets/all_foodPosts.dart';
@@ -262,13 +261,12 @@ class _HomePageState extends State<adPost> with AutomaticKeepAliveClientMixin {
                             onPressed: () {
                               selectImage();
                             },
-                            child: const Icon(Icons.add_photo_alternate),
                             backgroundColor: const Color(0xFF1A4D2E),
+                            child: const Icon(Icons.add_photo_alternate),
                           ),
                           Align(
                               alignment: Alignment.center,
                               child: ElevatedButton(
-                                child: const Text('إضافة'),
                                 onPressed: () {
                                   if (_image == null &&
                                       _contentController.text == "") {
@@ -302,6 +300,7 @@ class _HomePageState extends State<adPost> with AutomaticKeepAliveClientMixin {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF1A4D2E),
                                 ),
+                                child: const Text('إضافة'),
                               )),
                         ],
                       ),
@@ -310,12 +309,12 @@ class _HomePageState extends State<adPost> with AutomaticKeepAliveClientMixin {
                 );
               });
         },
+        backgroundColor: const Color(0xFF1A4D2E),
+        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
         child: const Icon(
           Icons.add_outlined,
           size: 50,
         ),
-        backgroundColor: const Color(0xFF1A4D2E),
-        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,

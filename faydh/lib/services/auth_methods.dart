@@ -1,9 +1,7 @@
-import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:faydh/models/user_model.dart' as model;
 
-import '../utilis/utilis.dart';
 
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
