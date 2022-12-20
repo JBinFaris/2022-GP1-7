@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:faydh/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,6 +11,8 @@ import 'package:http/http.dart' as http;
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final  ref = _firestore.collection("users");
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
 final query = ref.where("role", isEqualTo:"منظمة تجارية");
 final query2 = query.where("status", isEqualTo: "0");
@@ -173,6 +176,10 @@ void updateStatus(status, id) {
 
                                     
                                     sendApproval( name: "${widget.snap["username"].toString()}",email: email , st: "2" );
+                                   var user = _auth.currentUser;
+
+                                   final  User = _firestore.collection("users").doc("${widget.snap["uid"].toString()}").delete();
+
 
                                         Navigator.pop(context);
 
@@ -243,17 +250,33 @@ void updateStatus(status, id) {
           tweetHeader(),
           Padding(
             padding:
-                const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
+                const EdgeInsets.only(top: 8, right: 0, bottom: 2, left: 2),
             child: Padding(
               padding:
-                  const EdgeInsets.only(top: 20, right: 0, bottom: 2, left: 50),
-              child: Text(
-                  //"${widget.snap["postText"].toString()}",
-                   ( "${" رقم السجل التجاري : " + widget.snap["crNo"].toString()}"),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  )),
+                  const EdgeInsets.only(top: 10, right: 0, bottom: 2, left: 30),
+              child: 
+              Column(
+                children: [
+                  Text(
+              //"${widget.snap["postText"].toString()}",
+               ( "${" رقم السجل التجاري : " + widget.snap["crNo"].toString()}"),
+               textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                
+              )),
+              Text(
+              //"${widget.snap["postText"].toString()}",
+               ( "${" تاريخ انتهاء السجل التجاري : " + widget.snap["crNoExpDate"].toString()}"),
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              )),
+
+                ],
+              ), 
             ),
           ),
           const SizedBox(
