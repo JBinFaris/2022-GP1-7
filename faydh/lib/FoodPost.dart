@@ -1,7 +1,10 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
+import 'package:faydh/Database/drop_down_provider.dart';
 import 'package:faydh/upload_api.dart';
+import 'package:faydh/widgets/custom_drop_down.dart';
 import 'package:faydh/widgets/edit_posts_new.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 
 class FoodPostScreen extends StatefulWidget {
   const FoodPostScreen({Key? key}) : super(key: key);
@@ -21,6 +25,7 @@ class FoodPostScreen extends StatefulWidget {
 class _FoodPostScreenState extends State<FoodPostScreen> {
   @override
   String id = FirebaseAuth.instance.currentUser!.uid;
+
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
         .collection('foodPost')
@@ -292,6 +297,7 @@ class MyStateFullForSheet extends StatefulWidget {
   const MyStateFullForSheet({
     super.key,
   });
+
 // problem is fixed
   @override
   State<MyStateFullForSheet> createState() => _MyStateFullForSheetState();
@@ -348,8 +354,10 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   TextEditingController foodCountEditingController = TextEditingController();
 
   TextEditingController addressEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    var data = Provider.of<DropDownProvider>(context);
     User? user = FirebaseAuth.instance.currentUser;
 
     final fileNameImage =
@@ -414,26 +422,8 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
               const SizedBox(
                 height: 8,
               ),
-              TextFormField(
-                textAlign: TextAlign.right,
-                controller: addressEditingController,
-                decoration: const InputDecoration(
-                  hintText: "موقع الإستلام",
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(width: 2, color: Color(0xFF1A4D2E)),
-                  ),
-                ),
-                maxLength: 60,
-                validator: (value) {
-                  if (value == null || value.isEmpty || value.length >= 60) {
-                    return 'الحد الأقصى للكتابة هو 60 حرف';
-                  }
 
-                  return null;
-                },
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-              ),
+              /// this one
               const SizedBox(
                 height: 8,
               ),
@@ -458,6 +448,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                 maxLines: null,
               ),
 
+              const SizedBox(
+                height: 8,
+              ),
+              DropDown(
+                  hint: 'موقع الإستلام',
+                  listItem: myList,
+                  dropDownType: 'city'),
               const SizedBox(
                 height: 8,
               ),
@@ -645,10 +642,11 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             descriptionTextEditingController
                                                                 .text
                                                                 .toString(),
-                                                        postAdress:
-                                                            addressEditingController
-                                                                .text
-                                                                .toString(),
+
+                                                        ///
+                                                        postAdress: data.getCity
+                                                            .toString(),
+
                                                         postImage:
                                                             urlDownloadImage
                                                                 .toString(),
@@ -660,7 +658,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                                 .toString(),
                                                       );
                                                       Navigator.pop(context);
-                                                 }  else {
+                                                    } else {
                                                       Fluttertoast.showToast(
                                                         msg:
                                                             "الرجاء تعبئة كافة الحقول",
@@ -691,4 +689,70 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
       ),
     );
   }
+
+  List<String> myList = [
+    "الرياض",
+    "جدة",
+    "مكة المكرمة",
+    "المدينة المنورة",
+    "سلطانة",
+    "تبوك",
+    "الطائف",
+    "بريدة",
+    " خميس مشيط",
+    "الهفوف",
+    "المبرز",
+    " حفر الباطن",
+    "حائل",
+    "نجران",
+    "الجبيل",
+    "أبها",
+    "ينبع",
+    "الخُبر",
+    "عنيزة",
+    "عرعر",
+    "سكاكا",
+    "سكاكا",
+    "القريات",
+    "الظهران",
+    "القطيف",
+    "الباحة",
+    "تاروت",
+    "البيشة",
+    "الرس",
+    "الشفا",
+    "سيهات",
+    "المذنب",
+    "الخفجي",
+    "الدوادمي",
+    "صبيا",
+    "الزلفي",
+    " أبو العريش",
+    "الصفوى",
+    "رابغ",
+    "رحيمة",
+    "الطريف",
+    "عفيف",
+    "طبرجل",
+    "الدلم",
+    "أملج",
+    "العلا",
+    "بقيق",
+    " بدر حنين",
+    "صامطة",
+    "الوجه",
+    "البكيرية",
+    "نماص",
+    "السليل",
+    "تربة",
+    "الجموم",
+    "ضباء",
+    "الطريف",
+    "القيصومة",
+    "البطالية",
+    "المنيزلة",
+    "المجاردة",
+    "تنومة",
+    "تنومة,"
+  ];
 }

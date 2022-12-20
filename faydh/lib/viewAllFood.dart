@@ -18,19 +18,42 @@ class viewAllFood extends StatefulWidget {
 }
 
 class _viewAllFood extends State<viewAllFood> {
+  bool arrow = false;
+  String? valueFromFirebase;
+  String Uid = FirebaseAuth.instance.currentUser!.uid;
+  Future<String?> getData() async {
+    var a = await FirebaseFirestore.instance.collection("users").doc(Uid).get();
+
+    final myrole = a['role'];
+    if (myrole == "فرد") {
+      arrow = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> foodPostStream =
         FirebaseFirestore.instance.collection('foodPost').snapshots();
+    getData();
+    // var userDoc = FirebaseFirestore.instance.collection('users').doc(Uid).get();
 
     return Scaffold(
       backgroundColor: Colors.green[100],
-      appBar: AppBar(
-        elevation: 2.0,
-        centerTitle: true,
-        backgroundColor: const Color(0xFF1A4D2E),
-        title: const Text("اعلانات المتبرعين"),
-      ),
+      appBar: arrow
+          ? AppBar(
+              elevation: 2.0,
+              centerTitle: true,
+              automaticallyImplyLeading: true,
+              backgroundColor: const Color(0xFF1A4D2E),
+              title: const Text("اعلانات المتبرعين"),
+            )
+          : AppBar(
+              elevation: 2.0,
+              centerTitle: false,
+              automaticallyImplyLeading: false,
+              backgroundColor: const Color(0xFF1A4D2E),
+              title: const Center(child: Text('اعلانات المتبرعين')),
+            ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodPostStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
