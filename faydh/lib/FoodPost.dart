@@ -95,7 +95,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
   String Uid = FirebaseAuth.instance.currentUser!.uid;
   initState() {
-
     getData();
   }
 
@@ -105,7 +104,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
     final myrole = a['role'];
     if (myrole == "فرد") {
       setState(() {
-
         arrow = true;
       });
     }
@@ -150,7 +148,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               centerTitle: false,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Center(child: Text('اعلانات المتبرعين ')),
+              title: const Center(child: Text('اعلاناتي')),
             ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodPostStream,
@@ -416,11 +414,8 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   UploadTask? taskImage;
   String? urlDownloadImage;
 
-
-
   _clearThings() {
-    selectedValue = null ;
-    
+    selectedValue = null;
   }
 
   /// selectFileImage code
@@ -473,7 +468,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
 
   @override
   Widget build(BuildContext context) {
-     _clearThings();
+    _clearThings();
     var data = Provider.of<DropDownProvider>(context);
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -810,7 +805,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.pop(context);
-                                                    
                                                   },
                                                   child: const Text("إلغاء"),
                                                 ),
@@ -820,7 +814,8 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                         "dataurl: ${urlDownloadImage}");
                                                     print(
                                                         "useris:: ${user!.displayName}");
-                                                    if (_date != "" &&_formKey.currentState!
+                                                    if (_date != "" &&
+                                                        _formKey.currentState!
                                                             .validate() &&
                                                         urlDownloadImage !=
                                                             null) {
@@ -860,7 +855,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                                 .text
                                                                 .toString(),
                                                       );
-                                                        selectedValue = null;
+                                                      selectedValue = null;
                                                       Navigator.pop(context);
                                                     } else {
                                                       Fluttertoast.showToast(
