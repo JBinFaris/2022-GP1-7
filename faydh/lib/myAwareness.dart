@@ -12,7 +12,6 @@ class myAware extends StatefulWidget {
 }
 
 class _myAwareState extends State<myAware> {
-  @override
   TextEditingController awarPost = TextEditingController();
 
 

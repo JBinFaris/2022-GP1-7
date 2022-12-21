@@ -392,6 +392,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   TextEditingController foodCountEditingController = TextEditingController();
 
   TextEditingController addressEditingController = TextEditingController();
+  TextEditingController nigbehoodEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -494,6 +495,22 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                   listItem: myList,
                   dropDownType: 'city'),
 
+              TextFormField(
+                textAlign: TextAlign.right,
+                controller: nigbehoodEditingController,
+                decoration: const InputDecoration(
+                  hintText: "الحي",
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(width: 2, color: Color(0xFF1A4D2E)),
+                  ),
+                ),
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+              ),
+
+              const SizedBox(
+                height: 8,
+              ),
               const SizedBox(
                 height: 8,
               ),
@@ -529,25 +546,20 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                     size: 18.0,
                                     color: Color(0xFF1A4D2E),
                                   ),
-                                  Text(
-                                    " $_date",
-                                    style: const TextStyle(
-                                        color: Color(0xFF1A4D2E),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14.0),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      " $_date",
+                                      style: const TextStyle(
+                                          color: Color(0xFF1A4D2E),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.0),
+                                    ),
                                   ),
                                 ],
                               ),
                             )
                           ],
-                        ),
-                        const Text(
-                          "تعديل",
-                          style: TextStyle(
-                            color: Color(0xFF1A4D2E),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                          ),
                         ),
                       ],
                     ),
@@ -684,7 +696,11 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
 
                                                         ///
                                                         postAdress: data.getCity
-                                                            .toString(),
+                                                                .toString() +
+                                                            ", " +
+                                                            nigbehoodEditingController
+                                                                .text
+                                                                .toString(),
 
                                                         postImage:
                                                             urlDownloadImage
@@ -696,6 +712,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                                 .text
                                                                 .toString(),
                                                       );
+                                                      data.clear();
                                                       Navigator.pop(context);
                                                     } else {
                                                       Fluttertoast.showToast(
@@ -717,7 +734,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF1A4D2E),
                             ),
-                            child: const Text('إضافة'),
+                            child: const Text(' إضافة الإعلان'),
                           ),
                         ),
                 ],

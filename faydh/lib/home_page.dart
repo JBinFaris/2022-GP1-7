@@ -36,9 +36,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: PageView(
         controller: _pageController,
-        children: _screens,
         onPageChanged: _onPageChanged,
         physics: const NeverScrollableScrollPhysics(),
+        children: _screens,
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

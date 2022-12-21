@@ -1,6 +1,5 @@
 import 'package:faydh/FoodPost.dart';
 import 'package:faydh/viewAllFood.dart';
-import 'package:faydh/adPost.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/components/background.dart';
 
@@ -14,7 +13,6 @@ class individual extends StatefulWidget {
 class _individualPageState extends State<individual> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Background(
@@ -87,7 +85,6 @@ class _individualPageState extends State<individual> {
                     }),
                   );
                 },
-                child: const Text('مستفيد'),
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
@@ -96,6 +93,7 @@ class _individualPageState extends State<individual> {
                         horizontal: 110.0, vertical: 25.0),
                     textStyle: const TextStyle(
                         fontSize: 30, fontWeight: FontWeight.bold)),
+                child: const Text('مستفيد'),
               )
             ]),
           ),
