@@ -50,11 +50,10 @@ class _EditPostNewState extends State<EditPostNew> {
   }
 
   TextEditingController postTitleTextEditingController =
-      TextEditingController();
-  TextEditingController descriptionTextEditingController =
-      TextEditingController();
+  TextEditingController();
   TextEditingController addressEditingController = TextEditingController();
   TextEditingController foodCountEditingController = TextEditingController();
+  TextEditingController nigbehoodEditingController = TextEditingController();
 
   String _date = "تاريخ انتهاء الطعام";
 
@@ -72,18 +71,29 @@ class _EditPostNewState extends State<EditPostNew> {
 
   @override
   void initState() {
-    postTitleTextEditingController.text = widget.title;
-    descriptionTextEditingController.text = widget.address;
-    addressEditingController.text = widget.text;
-    foodCountEditingController.text = widget.count;
-    _date = widget.expireDate;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      postTitleTextEditingController.text = widget.title;
+      addressEditingController.text = widget.text;
+      foodCountEditingController.text = widget.count;
+      _date = widget.expireDate;
+
+      var parsedAddress = widget.address.split(',');
+      Provider.of<DropDownProvider>(context, listen: false)
+          .setCity(parsedAddress[0]);
+
+      if(parsedAddress.length > 1){
+        nigbehoodEditingController.text = parsedAddress[1];
+      }
+
+
+
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<DropDownProvider>(context);
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -205,9 +215,24 @@ class _EditPostNewState extends State<EditPostNew> {
                           height: 8,
                         ),
                         DropDown(
-                            hint: 'موقع الإستلام',
-                            listItem: myList,
-                            dropDownType: 'city'),
+                          hint: 'موقع الإستلام',
+                          listItem: myList,
+                          dropDownType: 'city',
+                          oldSelectedData: data.getCity,
+                        ),
+                        TextFormField(
+                          textAlign: TextAlign.right,
+                          controller: nigbehoodEditingController,
+                          decoration: const InputDecoration(
+                            hintText: "الحي",
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 2, color: Color(0xFF1A4D2E)),
+                            ),
+                          ),
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                        ),
                         const SizedBox(
                           height: 8,
                         ),
@@ -223,11 +248,11 @@ class _EditPostNewState extends State<EditPostNew> {
                                   minTime: DateTime.now(),
                                   maxTime: DateTime(2050, 12, 31),
                                   onConfirm: (date) {
-                                print('confirm $date');
-                                _date =
+                                    print('confirm $date');
+                                    _date =
                                     '${date.year} - ${date.month} - ${date.day}';
-                                setState(() {});
-                              },
+                                    setState(() {});
+                                  },
                                   currentTime: DateTime.now(),
                                   locale: LocaleType.en);
                             },
@@ -236,7 +261,7 @@ class _EditPostNewState extends State<EditPostNew> {
                               height: 50.0,
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
@@ -279,35 +304,35 @@ class _EditPostNewState extends State<EditPostNew> {
                         Center(
                           child: _image != null
                               ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    color: Colors.grey,
-                                    child: Image(
-                                      width: 100,
-                                      height: 100,
-                                      image: MemoryImage(
-                                        _image!,
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ))
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    color: Colors.grey,
-                                    height: 100,
-                                    width: 100,
-                                    child: widget.imgUrl != null &&
-                                            widget.imgUrl!.isNotEmpty
-                                        ? Image(
-                                            image: NetworkImage(widget.imgUrl!),
-                                            fit: BoxFit.cover,
-                                            height: 100,
-                                            width: 100,
-                                          )
-                                        : Container(),
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                color: Colors.grey,
+                                child: Image(
+                                  width: 100,
+                                  height: 100,
+                                  image: MemoryImage(
+                                    _image!,
                                   ),
+                                  fit: BoxFit.cover,
                                 ),
+                              ))
+                              : ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Container(
+                              color: Colors.grey,
+                              height: 100,
+                              width: 100,
+                              child: widget.imgUrl != null &&
+                                  widget.imgUrl!.isNotEmpty
+                                  ? Image(
+                                image: NetworkImage(widget.imgUrl!),
+                                fit: BoxFit.cover,
+                                height: 100,
+                                width: 100,
+                              )
+                                  : Container(),
+                            ),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.centerLeft,
@@ -322,66 +347,67 @@ class _EditPostNewState extends State<EditPostNew> {
                         const SizedBox(height: 45.0),
                         _showProgress
                             ? const Center(
-                                child: CircularProgressIndicator(
-                                  color: Color(0xFF1A4D2E),
-                                ),
-                              )
+                          child: CircularProgressIndicator(
+                            color: Color(0xFF1A4D2E),
+                          ),
+                        )
                             : MaterialButton(
-                                color: const Color(0xFF1A4D2E),
-                                onPressed: () async {
-                                  if (_image == null &&
-                                      postTitleTextEditingController.text
-                                              .trim() ==
-                                          "") {
-                                    Fluttertoast.showToast(
-                                        msg: "أدخل نصًا أو حدد صورة",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        backgroundColor: Colors.black54,
-                                        textColor: Colors.white);
-                                  } else {
-                                    if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        _showProgress = true;
-                                      });
+                          color: const Color(0xFF1A4D2E),
+                          onPressed: () async {
+                            if (_image == null &&
+                                postTitleTextEditingController.text
+                                    .trim() ==
+                                    "") {
+                              Fluttertoast.showToast(
+                                  msg: "أدخل نصًا أو حدد صورة",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  backgroundColor: Colors.black54,
+                                  textColor: Colors.white);
+                            } else {
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  _showProgress = true;
+                                });
 
-                                      FirestoreMethods()
-                                          .updatePostThree(
-                                        title:
-                                            postTitleTextEditingController.text,
-                                        oldImage: widget.path,
-                                        id: widget.newID,
-                                        address:
-                                            descriptionTextEditingController
-                                                .text,
-                                        text: addressEditingController.text,
-                                        count: foodCountEditingController.text,
-                                        expireDate: _date,
-                                        file: _image,
-                                        reference: widget.reference,
-                                      )
-                                          .then((value) {
-                                        if (value == "success") {
-                                          _clearThings();
-                                          setState(() {
-                                            _showProgress = false;
-                                          });
+                                FirestoreMethods()
+                                    .updatePostThree(
+                                  title:
+                                  postTitleTextEditingController.text,
+                                  oldImage: widget.path,
+                                  id: widget.newID,
+                                  address: data.getCity.toString() +
+                                      ", " +
+                                      nigbehoodEditingController.text
+                                          .toString(),
+                                  text: addressEditingController.text,
+                                  count: foodCountEditingController.text,
+                                  expireDate: _date,
+                                  file: _image,
+                                  reference: widget.reference,
+                                )
+                                    .then((value) {
+                                  if (value == "success") {
+                                    _clearThings();
+                                    setState(() {
+                                      _showProgress = false;
+                                    });
 
-                                          showSnackBar("تم تحديث المحتوى بنجاح",
-                                              context);
-                                          Navigator.of(context).pop();
-                                        }
-                                      });
-                                    }
+                                    showSnackBar("تم تحديث المحتوى بنجاح",
+                                        context);
+                                    Navigator.of(context).pop();
                                   }
-                                },
-                                textColor: Colors.white,
-                                padding: const EdgeInsets.all(16.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                                child: const Text("تحديث "),
-                              ),
+                                });
+                              }
+                            }
+                          },
+                          textColor: Colors.white,
+                          padding: const EdgeInsets.all(16.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: const Text("تحديث "),
+                        ),
                       ],
                     ),
                   ),

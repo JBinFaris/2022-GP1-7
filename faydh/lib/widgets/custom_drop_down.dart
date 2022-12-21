@@ -6,12 +6,14 @@ class DropDown extends StatefulWidget {
   String hint;
   List listItem;
   String dropDownType;
+  String? oldSelectedData;
 
   DropDown(
       {Key? key,
       required this.hint,
       required this.listItem,
-      required this.dropDownType})
+      required this.dropDownType,
+      this.oldSelectedData})
       : super(key: key);
 
   @override
@@ -20,6 +22,16 @@ class DropDown extends StatefulWidget {
 
 class _DropDownState extends State<DropDown> {
   String? _selectedData;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if (widget.oldSelectedData != null) {
+      _selectedData = widget.oldSelectedData;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +59,7 @@ class _DropDownState extends State<DropDown> {
               _selectedData = newValue.toString();
               if (widget.dropDownType == 'city') {
                 data.setCity(newValue.toString());
-              } else if (widget.dropDownType == 'ne') {
-                data.setNigbehood(newValue.toString());
-              }
+              } 
               setState(() {});
             });
           },
