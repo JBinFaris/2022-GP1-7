@@ -21,81 +21,77 @@ class FoodPostScreen extends StatefulWidget {
   @override
   State<FoodPostScreen> createState() => _FoodPostScreenState();
 }
-  String? selectedValue;
 
+String? selectedValue;
 
- final List<String> myList = [
-    "الرياض",
-    "جدة",
-    "مكة المكرمة",
-    "المدينة المنورة",
-    "سلطانة",
-    "تبوك",
-    "الطائف",
-    "بريدة",
-    " خميس مشيط",
-    "الهفوف",
-    "المبرز",
-    " حفر الباطن",
-    "حائل",
-    "نجران",
-    "الجبيل",
-    "أبها",
-    "ينبع",
-    "الخُبر",
-    "عنيزة",
-    "عرعر",
-    "سكاكا",
-    "سكاكا",
-    "القريات",
-    "الظهران",
-    "القطيف",
-    "الباحة",
-    "تاروت",
-    "البيشة",
-    "الرس",
-    "الشفا",
-    "سيهات",
-    "المذنب",
-    "الخفجي",
-    "الدوادمي",
-    "صبيا",
-    "الزلفي",
-    " أبو العريش",
-    "الصفوى",
-    "رابغ",
-    "رحيمة",
-    "الطريف",
-    "عفيف",
-    "طبرجل",
-    "الدلم",
-    "أملج",
-    "العلا",
-    "بقيق",
-    " بدر حنين",
-    "صامطة",
-    "الوجه",
-    "البكيرية",
-    "نماص",
-    "السليل",
-    "تربة",
-    "الجموم",
-    "ضباء",
-    "الطريف",
-    "القيصومة",
-    "البطالية",
-    "المنيزلة",
-    "المجاردة",
-    "تنومة",
-    "تنومة"
-  ];
-
+final List<String> myList = [
+  "الرياض",
+  "جدة",
+  "مكة المكرمة",
+  "المدينة المنورة",
+  "سلطانة",
+  "تبوك",
+  "الطائف",
+  "بريدة",
+  " خميس مشيط",
+  "الهفوف",
+  "المبرز",
+  " حفر الباطن",
+  "حائل",
+  "نجران",
+  "الجبيل",
+  "أبها",
+  "ينبع",
+  "الخُبر",
+  "عنيزة",
+  "عرعر",
+  "سكاكا",
+  "سكاكا",
+  "القريات",
+  "الظهران",
+  "القطيف",
+  "الباحة",
+  "تاروت",
+  "البيشة",
+  "الرس",
+  "الشفا",
+  "سيهات",
+  "المذنب",
+  "الخفجي",
+  "الدوادمي",
+  "صبيا",
+  "الزلفي",
+  " أبو العريش",
+  "الصفوى",
+  "رابغ",
+  "رحيمة",
+  "الطريف",
+  "عفيف",
+  "طبرجل",
+  "الدلم",
+  "أملج",
+  "العلا",
+  "بقيق",
+  " بدر حنين",
+  "صامطة",
+  "الوجه",
+  "البكيرية",
+  "نماص",
+  "السليل",
+  "تربة",
+  "الجموم",
+  "ضباء",
+  "الطريف",
+  "القيصومة",
+  "البطالية",
+  "المنيزلة",
+  "المجاردة",
+  "تنومة",
+  "تنومة"
+];
 
 class _FoodPostScreenState extends State<FoodPostScreen> {
   bool arrow = false;
-
-
-
 
   String Uid = FirebaseAuth.instance.currentUser!.uid;
   initState() {
@@ -126,9 +122,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         )
         .snapshots();
 
-
     return Scaffold(
-
       backgroundColor: Colors.green[100],
       appBar: arrow
           ? AppBar(
@@ -564,78 +558,72 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
               const SizedBox(
                 height: 8,
               ),
-               Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 4),
-                      child: Align(
+              Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 4),
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: DropdownButtonFormField<String>(
+                        alignment: Alignment.centerRight,
+                        value: selectedValue,
+                        icon: const Align(
                           alignment: Alignment.centerRight,
-                          child: DropdownButtonFormField<String>(
-                            alignment: Alignment.centerRight,
-                            value: selectedValue,
-                            icon: const Align(
-                                alignment: Alignment.centerLeft,
-                                child: Icon(Icons.arrow_drop_down)),
-                            elevation: 16,
-                            borderRadius: BorderRadius.circular(40),
-                            decoration: InputDecoration(
-                              // errorStyle: TextStyle( align: TextAlign.right),
-                              prefixIcon: const Icon(
-                                Icons.supervised_user_circle_rounded,
-                                size: 30,
-                                color: Color.fromARGB(255, 18, 57, 20),
-                              ),
-                              contentPadding: const EdgeInsets.fromLTRB(
-                                  20.0, 10.0, 20.0, 10.0),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: const BorderSide(
-                                  color: Color(0xffd6ecd0),
-                                  width: 1.0,
-                                ),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: const BorderSide(
-                                  color: Color(0xffd6ecd0),
-                                  width: 1.0,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: const BorderSide(
-                                  color: Color(0xffd6ecd0),
-                                  width: 1.0,
-                                ),
-                              ),
-                              filled: true,
-                              hintStyle: TextStyle(color: Colors.grey[800]),
-                              label: const Align(
-                                  alignment: Alignment.center,
-                                  child: Text('نوع المستخدم')),
-                              // contentPadding: EdgeInsets.only(left:230),
+                        ),
+                        elevation: 16,
+                        borderRadius: BorderRadius.circular(40),
+                        decoration: InputDecoration(
+                          // errorStyle: TextStyle( align: TextAlign.right),
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
                             ),
-                            items: myList
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            validator: (value) {
-                              if (value == null) {
-                                return 'الرجاء اختيار نوع المستخدم';
-                              }
-                            },
-                            onChanged: (String? value) {
-                              //Do something when changing the item if you want.
-                              setState(() {
-                                selectedValue = value!;
-                              });
-                            },
-                            onSaved: (value) {
-                              selectedValue = value.toString();
-                            },
-                          ))),
-
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
+                            ),
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          label: const Align(
+                              alignment: Alignment.centerRight,
+                              child: Text('المدينه')),
+                          // contentPadding: EdgeInsets.only(left:230),
+                        ),
+                        items: myList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'الرجاء اختيار المدينة';
+                          }
+                        },
+                        onChanged: (String? value) {
+                          //Do something when changing the item if you want.
+                          setState(() {
+                            selectedValue = value!;
+                          });
+                        },
+                        onSaved: (value) {
+                          selectedValue = value.toString();
+                        },
+                      ))),
 
               TextFormField(
                 textAlign: TextAlign.right,
@@ -646,6 +634,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                     borderSide: BorderSide(width: 2, color: Color(0xFF1A4D2E)),
                   ),
                 ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'الرجاء إدخال إسم الحي';
+                  }
+
+                  return null;
+                },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
               ),
@@ -887,5 +882,4 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
       ),
     );
   }
-
 }
