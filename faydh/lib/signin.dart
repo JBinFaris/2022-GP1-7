@@ -85,10 +85,10 @@ class _signInSreenState extends State<signInSreen> {
 
   void saveToken({required String id, required String token}) async {
     bool test = false;
-    await FirebaseFirestore.instance
+    /* await FirebaseFirestore.instance
         .collection('users')
         .doc(id)
-        .update({'token': token});
+        .update({'token': token});*/
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyy-MM-dd').format(now);
