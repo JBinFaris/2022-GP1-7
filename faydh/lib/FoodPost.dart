@@ -95,6 +95,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
   String Uid = FirebaseAuth.instance.currentUser!.uid;
   initState() {
+
     getData();
   }
 
@@ -104,6 +105,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
     final myrole = a['role'];
     if (myrole == "فرد") {
       setState(() {
+
         arrow = true;
       });
     }
@@ -414,6 +416,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   UploadTask? taskImage;
   String? urlDownloadImage;
 
+
+
+  _clearThings() {
+    selectedValue = null ;
+    
+  }
+
   /// selectFileImage code
   Future selectFileImage() async {
     final results = await FilePicker.platform.pickFiles(
@@ -464,6 +473,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
 
   @override
   Widget build(BuildContext context) {
+     _clearThings();
     var data = Provider.of<DropDownProvider>(context);
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -800,6 +810,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.pop(context);
+                                                    
                                                   },
                                                   child: const Text("إلغاء"),
                                                 ),
@@ -849,7 +860,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                                 .text
                                                                 .toString(),
                                                       );
-                                                      data.clear();
+                                                        selectedValue = null;
                                                       Navigator.pop(context);
                                                     } else {
                                                       Fluttertoast.showToast(

@@ -129,6 +129,7 @@ class _EditPostNewState extends State<EditPostNew> {
   _clearThings() {
     _image = null;
     postTitleTextEditingController.text = "";
+    selectedValue = null ;
     _date = "تاريخ انتهاء الطعام";
     setState(() {});
   }
