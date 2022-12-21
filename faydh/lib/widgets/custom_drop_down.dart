@@ -47,6 +47,8 @@ class _DropDownState extends State<DropDown> {
               _selectedData = newValue.toString();
               if (widget.dropDownType == 'city') {
                 data.setCity(newValue.toString());
+              } else if (widget.dropDownType == 'ne') {
+                data.setNigbehood(newValue.toString());
               }
               setState(() {});
             });
