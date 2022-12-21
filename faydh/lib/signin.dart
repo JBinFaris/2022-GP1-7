@@ -101,9 +101,9 @@ class _signInSreenState extends State<signInSreen> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        // DateTime dt2Check = DateTime.parse(doc["postExp"]);
+        DateTime dt2Check = DateTime.parse(doc["postExp"]);
         Future.delayed(const Duration(seconds: 2), () {
-          if (doc["postExp"].isAfter(dt1Now)) {
+          if (dt2Check.isAfter(dt1Now)) {
 // Here you can write your code
             print("expired");
             initInfo();
