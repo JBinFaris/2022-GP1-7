@@ -461,7 +461,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  String _date = "تاريخ انتهاء الطعام";
+  String _date = "";
   TextEditingController postTitleTextEditingController =
       TextEditingController();
   TextEditingController descriptionTextEditingController =
@@ -820,7 +820,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                         "dataurl: ${urlDownloadImage}");
                                                     print(
                                                         "useris:: ${user!.displayName}");
-                                                    if (_formKey.currentState!
+                                                    if (_date != "" &&_formKey.currentState!
                                                             .validate() &&
                                                         urlDownloadImage !=
                                                             null) {
