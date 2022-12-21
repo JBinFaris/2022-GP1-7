@@ -19,14 +19,20 @@ class viewAllFood extends StatefulWidget {
 
 class _viewAllFood extends State<viewAllFood> {
   bool arrow = false;
-  String? valueFromFirebase;
+
   String Uid = FirebaseAuth.instance.currentUser!.uid;
+  initState() {
+    getData();
+  }
+
   Future<String?> getData() async {
     var a = await FirebaseFirestore.instance.collection("users").doc(Uid).get();
 
     final myrole = a['role'];
     if (myrole == "فرد") {
-      arrow = true;
+      setState(() {
+        arrow = true;
+      });
     }
   }
 
@@ -34,25 +40,35 @@ class _viewAllFood extends State<viewAllFood> {
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> foodPostStream =
         FirebaseFirestore.instance.collection('foodPost').snapshots();
-    getData();
+    //getData();
     // var userDoc = FirebaseFirestore.instance.collection('users').doc(Uid).get();
-
     return Scaffold(
       backgroundColor: Colors.green[100],
       appBar: arrow
           ? AppBar(
               elevation: 2.0,
               centerTitle: true,
-              automaticallyImplyLeading: true,
+              automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Text("اعلانات المتبرعين"),
+              title: const Text(" اعلانات المتبرعين"),
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Color.fromARGB(225, 255, 255, 255),
+                  ),
+                )
+              ],
             )
           : AppBar(
               elevation: 2.0,
               centerTitle: false,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Center(child: Text('اعلانات المتبرعين')),
+              title: const Center(child: Text('اعلانات المتبرعين ')),
             ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodPostStream,
@@ -90,7 +106,7 @@ class _viewAllFood extends State<viewAllFood> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                data['postTitle'],
+                                "نوع الطعام:  ${data['postTitle'].toString()}",
                                 style: const TextStyle(
                                   color: Color(0xFF1A4D2E),
                                   fontWeight: FontWeight.bold,
@@ -105,7 +121,7 @@ class _viewAllFood extends State<viewAllFood> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                data['postAdress'],
+                                "موقع الإستلام:  ${data['postAdress'].toString()}",
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 144, 177, 135),
                                   fontSize: 10,
@@ -120,7 +136,7 @@ class _viewAllFood extends State<viewAllFood> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                data['food_cont'],
+                                "كمية الطعام:  ${data['food_cont'].toString()}",
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 144, 177, 135),
                                   fontSize: 10,

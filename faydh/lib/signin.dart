@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/AdminMain.dart';
 import 'package:faydh/businessHome.dart';
@@ -101,9 +100,9 @@ class _signInSreenState extends State<signInSreen> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        DateTime dt2Check = DateTime.parse('2022-12-23 11:47:00');
-        Future.delayed(const Duration(seconds: 20), () {
-          if (dt2Check.isAfter(dt1Now)) {
+        // DateTime dt2Check = DateTime.parse(doc["postExp"]);
+        Future.delayed(const Duration(seconds: 2), () {
+          if (doc["postExp"].isAfter(dt1Now)) {
 // Here you can write your code
             print("expired");
             initInfo();

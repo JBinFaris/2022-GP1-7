@@ -23,6 +23,24 @@ class FoodPostScreen extends StatefulWidget {
 }
 
 class _FoodPostScreenState extends State<FoodPostScreen> {
+  bool arrow = false;
+
+  String Uid = FirebaseAuth.instance.currentUser!.uid;
+  initState() {
+    getData();
+  }
+
+  Future<String?> getData() async {
+    var a = await FirebaseFirestore.instance.collection("users").doc(Uid).get();
+
+    final myrole = a['role'];
+    if (myrole == "فرد") {
+      setState(() {
+        arrow = true;
+      });
+    }
+  }
+
   @override
   String id = FirebaseAuth.instance.currentUser!.uid;
 
@@ -38,12 +56,32 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
     return Scaffold(
       backgroundColor: Colors.green[100],
-      appBar: AppBar(
-        elevation: 2.0,
-        centerTitle: true,
-        backgroundColor: const Color(0xFF1A4D2E),
-        title: const Text("إعلاناتي"),
-      ),
+      appBar: arrow
+          ? AppBar(
+              elevation: 2.0,
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              backgroundColor: const Color(0xFF1A4D2E),
+              title: const Text(" اعلانات المتبرعين"),
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Color.fromARGB(225, 255, 255, 255),
+                  ),
+                )
+              ],
+            )
+          : AppBar(
+              elevation: 2.0,
+              centerTitle: false,
+              automaticallyImplyLeading: false,
+              backgroundColor: const Color(0xFF1A4D2E),
+              title: const Center(child: Text('اعلانات المتبرعين ')),
+            ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodPostStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
