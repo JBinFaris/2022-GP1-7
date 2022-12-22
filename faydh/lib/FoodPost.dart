@@ -2,18 +2,19 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
-import 'package:faydh/Database/drop_down_provider.dart';
+// import 'package:faydh/Database/drop_down_provider.dart';
 import 'package:faydh/upload_api.dart';
-import 'package:faydh/widgets/custom_drop_down.dart';
-import 'package:faydh/widgets/edit_posts_new.dart';
+// import 'package:faydh/widgets/custom_drop_down.dart';
+// import 'package:faydh/widgets/edit_posts_new.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class FoodPostScreen extends StatefulWidget {
   const FoodPostScreen({Key? key}) : super(key: key);
@@ -294,26 +295,26 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => EditPostNew(
-                                                  newID: document.id,
-                                                  title: "${data["postTitle"]}",
-                                                  address:
-                                                      "${data["postAdress"]}",
-                                                  text: "${data["postText"]}",
-                                                  count: "${data["food_cont"]}",
-                                                  expireDate:
-                                                      "${data["postExp"]}",
-                                                  imgUrl:
-                                                      "${data["postImage"]}",
-                                                  path: "${data["pathImage"]}",
-                                                  reference: document.reference
-                                                      as DocumentReference<
-                                                          Map<String, dynamic>>,
-                                                )),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) => EditPostNew(
+                                      //             newID: document.id,
+                                      //             title: "${data["postTitle"]}",
+                                      //             address:
+                                      //                 "${data["postAdress"]}",
+                                      //             text: "${data["postText"]}",
+                                      //             count: "${data["food_cont"]}",
+                                      //             expireDate:
+                                      //                 "${data["postExp"]}",
+                                      //             imgUrl:
+                                      //                 "${data["postImage"]}",
+                                      //             path: "${data["pathImage"]}",
+                                      //             reference: document.reference
+                                      //                 as DocumentReference<
+                                      //                     Map<String, dynamic>>,
+                                      //           )),
+                                      // );
                                     },
                                     child: const Icon(
                                       Icons.edit,
@@ -414,9 +415,9 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   UploadTask? taskImage;
   String? urlDownloadImage;
 
-  _clearThings() {
-    selectedValue = null;
-  }
+  // _clearThings() {
+  //   selectedValue = null;
+  // }
 
   /// selectFileImage code
   Future selectFileImage() async {
@@ -468,8 +469,8 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
 
   @override
   Widget build(BuildContext context) {
-    _clearThings();
-    var data = Provider.of<DropDownProvider>(context);
+    // _clearThings();
+    // var data = Provider.of<DropDownProvider>(context);
     User? user = FirebaseAuth.instance.currentUser;
 
     final fileNameImage =
@@ -618,15 +619,23 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           if (value == null) {
                             return 'الرجاء اختيار المدينة';
                           }
+                          return null;
                         },
                         onChanged: (String? value) {
                           //Do something when changing the item if you want.
                           setState(() {
-                            selectedValue = value!;
+                            selectedValue = value.toString();
+                            if (kDebugMode) {
+                              print(
+                                  "selectedValue  onChanged:${selectedValue}");
+                            }
                           });
                         },
                         onSaved: (value) {
                           selectedValue = value.toString();
+                          if (kDebugMode) {
+                            print("selectedValue  onSaved:${selectedValue}");
+                          }
                         },
                       ))),
 
@@ -819,6 +828,10 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             .validate() &&
                                                         urlDownloadImage !=
                                                             null) {
+                                                      if (kDebugMode) {
+                                                        print(
+                                                            "selectedValue on final:${selectedValue}");
+                                                      }
                                                       Database.addFoodPostData(
                                                         context: context,
                                                         docId: DateTime.now()
@@ -854,9 +867,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             foodCountEditingController
                                                                 .text
                                                                 .toString(),
-                                                      );
-                                                      selectedValue = null;
-                                                      Navigator.pop(context);
+                                                      ).whenComplete(() {
+                                                        Navigator.pop(context);
+                                                        setState(() {
+                                                          selectedValue = null;
+                                                        });
+                                                      });
+                                                      // selectedValue = null;
                                                     } else {
                                                       Fluttertoast.showToast(
                                                         msg:
