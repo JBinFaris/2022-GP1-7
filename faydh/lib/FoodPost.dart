@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
 // import 'package:faydh/Database/drop_down_provider.dart';
 import 'package:faydh/upload_api.dart';
+import 'package:faydh/widgets/edit_posts_new.dart';
 // import 'package:faydh/widgets/custom_drop_down.dart';
 // import 'package:faydh/widgets/edit_posts_new.dart';
 import 'package:file_picker/file_picker.dart';
@@ -295,26 +296,26 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //       builder: (context) => EditPostNew(
-                                      //             newID: document.id,
-                                      //             title: "${data["postTitle"]}",
-                                      //             address:
-                                      //                 "${data["postAdress"]}",
-                                      //             text: "${data["postText"]}",
-                                      //             count: "${data["food_cont"]}",
-                                      //             expireDate:
-                                      //                 "${data["postExp"]}",
-                                      //             imgUrl:
-                                      //                 "${data["postImage"]}",
-                                      //             path: "${data["pathImage"]}",
-                                      //             reference: document.reference
-                                      //                 as DocumentReference<
-                                      //                     Map<String, dynamic>>,
-                                      //           )),
-                                      // );
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => EditPostNew(
+                                                  newID: document.id,
+                                                  title: "${data["postTitle"]}",
+                                                  address:
+                                                      "${data["postAdress"]}",
+                                                  text: "${data["postText"]}",
+                                                  count: "${data["food_cont"]}",
+                                                  expireDate:
+                                                      "${data["postExp"]}",
+                                                  imgUrl:
+                                                      "${data["postImage"]}",
+                                                  path: "${data["pathImage"]}",
+                                                  reference: document.reference
+                                                      as DocumentReference<
+                                                          Map<String, dynamic>>,
+                                                )),
+                                      );
                                     },
                                     child: const Icon(
                                       Icons.edit,
