@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
-// import 'package:faydh/Database/drop_down_provider.dart';
 import 'package:faydh/upload_api.dart';
 import 'package:faydh/widgets/edit_posts_new.dart';
-// import 'package:faydh/widgets/custom_drop_down.dart';
-// import 'package:faydh/widgets/edit_posts_new.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -15,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
-// import 'package:provider/provider.dart';
 
 class FoodPostScreen extends StatefulWidget {
   const FoodPostScreen({Key? key}) : super(key: key);
@@ -166,7 +163,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: ListView(
-              // reverse: false,
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
@@ -178,19 +174,17 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                     ),
                     elevation: 4.0,
                     child: Container(
-                      // height: MediaQuery.of(context).size.height * 0.2,
                       child: Column(
                         children: [
                           const Padding(
                             padding: EdgeInsets.all(12.0),
-                          ), // so?
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
                                 "نوع الطعام:  ${data['postTitle'].toString()}",
-                                //data['postTitle'],
                                 style: const TextStyle(
                                   color: Color(0xFF1A4D2E),
                                   fontWeight: FontWeight.bold,
@@ -206,7 +200,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               alignment: Alignment.centerRight,
                               child: Text(
                                 "موقع الإستلام:  ${data['postAdress'].toString()}",
-                                // data['postAdress'],
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 144, 177, 135),
                                   fontSize: 10,
@@ -222,7 +215,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               alignment: Alignment.centerRight,
                               child: Text(
                                 "كمية الطعام:  ${data['food_cont'].toString()}",
-                                //data['food_cont'],
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 144, 177, 135),
                                   fontSize: 10,
@@ -244,7 +236,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               ),
                             ),
                           ),
-                          // const SizedBox(height: 5),
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Image.network(
@@ -288,7 +279,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               ),
                             ],
                           ),
-
                           Padding(
                             padding: const EdgeInsets.all(16),
                             child: Row(
@@ -339,7 +329,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                                 TextButton(
                                                   child: const Text("إلغاء"),
                                                   onPressed: () {
-                                                    // callback function for on click event of Cancel button
                                                     Navigator.of(context).pop();
                                                   },
                                                 ),
@@ -380,16 +369,15 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           mySheet(context);
+          setState(() {
+            selectedValue = null;
+          });
         },
         backgroundColor: const Color(0xFF1A4D2E),
         child: const Icon(Icons.add),
       ),
     );
   }
-
-  ///
-
-  // bottom sheett code
 
   mySheet(BuildContext context) {
     return showModalBottomSheet(
@@ -406,7 +394,6 @@ class MyStateFullForSheet extends StatefulWidget {
     super.key,
   });
 
-// problem is fixed
   @override
   State<MyStateFullForSheet> createState() => _MyStateFullForSheetState();
 }
@@ -416,18 +403,11 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   UploadTask? taskImage;
   String? urlDownloadImage;
 
-  // _clearThings() {
-  //   selectedValue = null;
-  // }
-
-  /// selectFileImage code
   Future selectFileImage() async {
     final results = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       type: FileType.image,
-    ); // sorry? yes ofcouese
-    // no no
-    // this package is alllow to picker every type of file but here i have apply just images
+    );
 
     if (results == null) return;
     final paths = results.files.single.path!;
@@ -437,8 +417,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
     uploadFileImage();
   }
 
-  // problem is this our bottomsheet is not loading after data geting...
-  ///uploadfileImage code
   Future uploadFileImage() async {
     if (fileImage == null) return;
 
@@ -470,8 +448,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
 
   @override
   Widget build(BuildContext context) {
-    // _clearThings();
-    // var data = Provider.of<DropDownProvider>(context);
     User? user = FirebaseAuth.instance.currentUser;
 
     final fileNameImage =
@@ -536,8 +512,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
               const SizedBox(
                 height: 8,
               ),
-
-              /// this one
               const SizedBox(
                 height: 8,
               ),
@@ -561,7 +535,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
               ),
-
               const SizedBox(
                 height: 8,
               ),
@@ -578,7 +551,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                         elevation: 16,
                         borderRadius: BorderRadius.circular(40),
                         decoration: InputDecoration(
-                          // errorStyle: TextStyle( align: TextAlign.right),
                           contentPadding:
                               const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
                           enabledBorder: OutlineInputBorder(
@@ -607,7 +579,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           label: const Align(
                               alignment: Alignment.centerRight,
                               child: Text('المدينه')),
-                          // contentPadding: EdgeInsets.only(left:230),
                         ),
                         items: myList
                             .map<DropdownMenuItem<String>>((String value) {
@@ -623,7 +594,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           return null;
                         },
                         onChanged: (String? value) {
-                          //Do something when changing the item if you want.
                           setState(() {
                             selectedValue = value.toString();
                             if (kDebugMode) {
@@ -639,7 +609,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           }
                         },
                       ))),
-
               TextFormField(
                 textAlign: TextAlign.right,
                 controller: nigbehoodEditingController,
@@ -659,7 +628,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
               ),
-
               const SizedBox(
                 height: 8,
               ),
@@ -718,19 +686,15 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                   ),
                 ),
               ),
-
               const SizedBox(
                 height: 8,
               ),
               const SizedBox(
                 height: 20,
               ),
-              //اضبط لونها ومكاناها
-
               const SizedBox(
                 height: 10,
               ),
-
               fileImage == null
                   ? Align(
                       alignment: Alignment.center,
@@ -796,11 +760,9 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           ),
                         )
                       : Align(
-                          //
                           alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () {
-                              // Navigator.pop(context);
                               showDialog(
                                   context: context,
                                   builder: (_) => Directionality(
@@ -833,6 +795,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                         print(
                                                             "selectedValue on final:${selectedValue}");
                                                       }
+
                                                       Database.addFoodPostData(
                                                         context: context,
                                                         docId: DateTime.now()
@@ -850,15 +813,12 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             descriptionTextEditingController
                                                                 .text
                                                                 .toString(),
-
-                                                        ///
                                                         postAdress: selectedValue
                                                                 .toString() +
                                                             ", " +
                                                             nigbehoodEditingController
                                                                 .text
                                                                 .toString(),
-
                                                         postImage:
                                                             urlDownloadImage
                                                                 .toString(),
@@ -874,7 +834,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                           selectedValue = null;
                                                         });
                                                       });
-                                                      // selectedValue = null;
                                                     } else {
                                                       Fluttertoast.showToast(
                                                         msg:
