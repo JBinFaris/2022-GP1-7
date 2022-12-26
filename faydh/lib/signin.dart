@@ -422,7 +422,7 @@ class _signInSreenState extends State<signInSreen> {
                         setState(() {
                           _isObscure = !_isObscure;
                         });
-                      },
+                      }, 
                     ),
                     hintText: 'كلمة المرور',
                     enabledBorder: OutlineInputBorder(

@@ -56,6 +56,7 @@ class _MyCardState extends State<MyCard> {
   @override
   Widget build(BuildContext context) {
     var _dta = "${widget.snap["postImage"].toString()}";
+    
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
