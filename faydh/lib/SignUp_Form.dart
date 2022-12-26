@@ -666,9 +666,13 @@ class _SignupFormState extends State<SignupForm> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {}
                             if (selectedValue != "" &&
-                                passwordStrength == 1 &&
-                                _phonenumberController.text != "" &&
-                                _finaldate.toString() != "") {
+                                    passwordStrength == 1 &&
+                                    _phonenumberController.text != "" &&
+                                    _finaldate.toString() != "" &&
+                                    selectedValue == "منظمة تجارية" &&
+                                    _crNoController.text.length == 10 ||
+                                selectedValue == "منظمة خيرية" ||
+                                selectedValue == "فرد") {
                               AuthMethods()
                                   .signUpUser(
                                 role: selectedValue.toString(),

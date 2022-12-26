@@ -21,7 +21,6 @@ class _PasswordResetState extends State<PasswordReset> {
     super.dispose();
   }
 
-  @override
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -103,14 +102,6 @@ class _PasswordResetState extends State<PasswordReset> {
                     color: const Color(0xff1a4d2e),
                     padding: const EdgeInsets.symmetric(
                         vertical: 20, horizontal: 80),
-                    child: const Text(
-                      " نسيت كلمة السر",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     shape: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide: BorderSide.none,
@@ -133,7 +124,15 @@ class _PasswordResetState extends State<PasswordReset> {
                           }
                         });
                       }
-                    }),
+                    },
+                    child: const Text(
+                      " نسيت كلمة السر",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )),
                 const SizedBox(height: 10),
               ],
             ),

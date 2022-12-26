@@ -8,7 +8,6 @@ import 'package:faydh/charityHome.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:faydh/SignUp_Form.dart';
 import 'package:faydh/home_page.dart';
-import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/utilis/utilis.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -64,8 +63,9 @@ class _signInSreenState extends State<signInSreen> {
     } else if (settings.authorizationStatus ==
         AuthorizationStatus.provisional) {
       print('get provisional permission');
-    } else
+    } else {
       print('decline');
+    }
   }
 
   void getToken({required id}) async {
@@ -85,10 +85,10 @@ class _signInSreenState extends State<signInSreen> {
 
   void saveToken({required String id, required String token}) async {
     bool test = false;
-    await FirebaseFirestore.instance
+    /* await FirebaseFirestore.instance
         .collection('users')
         .doc(id)
-        .update({'token': token});
+        .update({'token': token});*/
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyy-MM-dd').format(now);
@@ -101,16 +101,23 @@ class _signInSreenState extends State<signInSreen> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        DateTime dt2Check = DateTime.parse('2023-12-23 11:47:00');
-        if (dt2Check.isAfter(dt1Now)) {
-          print("expired");
+        DateTime dt2Check = DateTime.parse(doc["postExp"]);
+        Future.delayed(const Duration(seconds: 2), () {
+          if (dt2Check.isAfter(dt1Now)) {
+// Here you can write your code
+            print("expired");
+            initInfo();
+            sendPushMessage(
+                token: token,
+                title: doc["postTitle"],
+                text: "this food is expired");
 
-          initInfo();
-          sendPushMessage(
-              token: token,
-              title: doc["postTitle"],
-              text: "this food is expired");
-        }
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .delete();
+          }
+        });
         //print(doc["postDate"]);
       });
     });
@@ -125,6 +132,7 @@ class _signInSreenState extends State<signInSreen> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      int id = 0;
       print('on message');
       print(
           "onMessage: ${message.notification?.title}/${message.notification?.body}}");
@@ -146,8 +154,11 @@ class _signInSreenState extends State<signInSreen> {
       NotificationDetails platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChanelSpecifics);
 
-      await flutterLocalNotificationsPlugin.show(0, message.notification?.title,
-          message.notification?.body, platformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(
+          id++,
+          message.notification?.title,
+          message.notification?.body,
+          platformChannelSpecifics);
     });
   }
 
@@ -229,75 +240,72 @@ class _signInSreenState extends State<signInSreen> {
             final myrole = (snap.data() as Map<String, dynamic>)['role'];
             final uid = (snap.data() as Map<String, dynamic>)['uid'];
 
-           
-
             if (myrole == "فرد") {
-               getToken(id: uid);
+              getToken(id: uid);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomePage()));
             } else if (myrole == "منظمة تجارية") {
-               getToken(id: uid);
+              getToken(id: uid);
               final status = (snap.data() as Map<String, dynamic>)['status'];
-              if(status == "0"){
-           res = "حصل خطأ ما";
+              if (status == "0") {
+                res = "حصل خطأ ما";
 
                 showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                  title: const Text(
-                                   "معلق "+":"+ " حالة الحساب" ,
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  content: const Text(
-                                    "الحساب معلق، بإنتظار موافقة المشرف على السجل التجاري\n يرجى معاودة تسجيل الدخول لاحقاً",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text("موافق"),
-                                      onPressed: () async {
-
-                                        
-                                      Navigator.pop(context);
-
-                                      },
-                                    ),
-                                  ]);
-                            });
-              }else if(status == "2"){
-              res = "حصل خطأ ما";
-                 showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                  title: const Text(
-                                   " حالة الحساب"+ ": "+  " مرفوض ",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  content: const Text(
-                                    " الحساب مرفوض نظراً لعدم صحة السجل التجاري"+"\n"+ "يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم اي شكوى "+"\n"+"teamfaydh@gmail.com",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text("موافق"),
-                                      onPressed: () async {
-                                     Navigator.pop(context);
-                                      },
-                                    ),
-                                  ]);
-                            });
-              }else if (status == "1"){
-                 Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const businessHome()));
-
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          title: const Text(
+                            "معلق " + ":" + " حالة الحساب",
+                            textAlign: TextAlign.right,
+                          ),
+                          content: const Text(
+                            "الحساب معلق، بإنتظار موافقة المشرف على السجل التجاري\n يرجى معاودة تسجيل الدخول لاحقاً",
+                            textAlign: TextAlign.right,
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text("موافق"),
+                              onPressed: () async {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ]);
+                    });
+              } else if (status == "2") {
+                res = "حصل خطأ ما";
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          title: const Text(
+                            " حالة الحساب" + ": " + " مرفوض ",
+                            textAlign: TextAlign.right,
+                          ),
+                          content: const Text(
+                            " الحساب مرفوض نظراً لعدم صحة السجل التجاري" +
+                                "\n" +
+                                "يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم اي شكوى " +
+                                "\n" +
+                                "teamfaydh@gmail.com",
+                            textAlign: TextAlign.right,
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text("موافق"),
+                              onPressed: () async {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ]);
+                    });
+              } else if (status == "1") {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const businessHome()));
               }
-             
             } else if (myrole == "منظمة خيرية") {
-               getToken(id: uid);
+              getToken(id: uid);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const charityHome()));
             } else if (myrole == "Admin") {

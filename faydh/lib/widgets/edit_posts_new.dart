@@ -5,8 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import '../Database/drop_down_provider.dart';
 import '../services/firestore_methods.dart';
 import '../utilis/utilis.dart';
+import 'custom_drop_down.dart';
 
 class EditPostNew extends StatefulWidget {
   final String title;
@@ -36,6 +39,73 @@ class EditPostNew extends StatefulWidget {
   _EditPostNewState createState() => _EditPostNewState();
 }
 
+String? selectedValue;
+
+List<String> myList = [
+  "الرياض",
+  "جدة",
+  "مكة المكرمة",
+  "المدينة المنورة",
+  "سلطانة",
+  "تبوك",
+  "الطائف",
+  "بريدة",
+  "خميس مشيط",
+  "الهفوف",
+  "المبرز",
+  " حفر الباطن",
+  "حائل",
+  "نجران",
+  "الجبيل",
+  "أبها",
+  "ينبع",
+  "الخُبر",
+  "عنيزة",
+  "عرعر",
+  "سكاكا",
+  "سكاكا",
+  "القريات",
+  "الظهران",
+  "القطيف",
+  "الباحة",
+  "تاروت",
+  "البيشة",
+  "الرس",
+  "الشفا",
+  "سيهات",
+  "المذنب",
+  "الخفجي",
+  "الدوادمي",
+  "صبيا",
+  "الزلفي",
+  " أبو العريش",
+  "الصفوى",
+  "رابغ",
+  "رحيمة",
+  "الطريف",
+  "عفيف",
+  "طبرجل",
+  "الدلم",
+  "أملج",
+  "العلا",
+  "بقيق",
+  " بدر حنين",
+  "صامطة",
+  "الوجه",
+  "البكيرية",
+  "نماص",
+  "السليل",
+  "تربة",
+  "الجموم",
+  "ضباء",
+  "الطريف",
+  "القيصومة",
+  "البطالية",
+  "المنيزلة",
+  "المجاردة",
+  "تنومة",
+];
+
 class _EditPostNewState extends State<EditPostNew> {
   Future _selectImage() async {
     Uint8List? im = await pickIamge(ImageSource.gallery);
@@ -48,10 +118,9 @@ class _EditPostNewState extends State<EditPostNew> {
 
   TextEditingController postTitleTextEditingController =
       TextEditingController();
-  TextEditingController descriptionTextEditingController =
-      TextEditingController();
   TextEditingController addressEditingController = TextEditingController();
   TextEditingController foodCountEditingController = TextEditingController();
+  TextEditingController nigbehoodEditingController = TextEditingController();
 
   String _date = "تاريخ انتهاء الطعام";
 
@@ -60,6 +129,7 @@ class _EditPostNewState extends State<EditPostNew> {
   _clearThings() {
     _image = null;
     postTitleTextEditingController.text = "";
+    selectedValue = null ;
     _date = "تاريخ انتهاء الطعام";
     setState(() {});
   }
@@ -69,16 +139,28 @@ class _EditPostNewState extends State<EditPostNew> {
 
   @override
   void initState() {
-    postTitleTextEditingController.text = widget.title;
-    descriptionTextEditingController.text = widget.address;
-    addressEditingController.text = widget.text;
-    foodCountEditingController.text = widget.count;
-    _date = widget.expireDate;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      postTitleTextEditingController.text = widget.title;
+      addressEditingController.text = widget.text;
+      foodCountEditingController.text = widget.count;
+      _date = widget.expireDate;
+
+      var parsedAddress = widget.address.split(',');
+      //Provider.of<DropDownProvider>(context, listen: false)
+      // .setCity(parsedAddress[0]);
+
+      selectedValue = parsedAddress[0];
+
+      if (parsedAddress.length > 1) {
+        nigbehoodEditingController.text = parsedAddress[1];
+      }
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    //var data = Provider.of<DropDownProvider>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -167,29 +249,8 @@ class _EditPostNewState extends State<EditPostNew> {
                         const SizedBox(
                           height: 8,
                         ),
-                        TextFormField(
-                          textAlign: TextAlign.right,
-                          controller: descriptionTextEditingController,
-                          decoration: const InputDecoration(
-                            hintText: "موقع الإستلام",
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 2, color: Color(0xFF1A4D2E)),
-                            ),
-                          ),
-                          maxLength: 60,
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                value.length >= 60) {
-                              return 'الحد الأقصى للكتابة هو 60 حرف';
-                            }
 
-                            return null;
-                          },
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                        ),
+                        /// this one
                         const SizedBox(
                           height: 8,
                         ),
@@ -208,7 +269,105 @@ class _EditPostNewState extends State<EditPostNew> {
                             if (value == null ||
                                 value.isEmpty ||
                                 value.length >= 20) {
-                              return _date;
+                              return 'الحد الأقصى للكتابة هو 20 حرف';
+                            }
+
+                            return null;
+                          },
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                        ),
+
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        /*  DropDown(
+                          hint: 'موقع الإستلام',
+                          listItem: myList,
+                          dropDownType: 'city',
+                          oldSelectedData: data.getCity,
+                        ),*/
+                        Padding(
+                            padding: const EdgeInsets.only(top: 8, bottom: 4),
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: DropdownButtonFormField<String>(
+                                  alignment: Alignment.centerRight,
+                                  value: selectedValue,
+                                  icon: const Align(
+                                    alignment: Alignment.centerRight,
+                                  ),
+                                  elevation: 16,
+                                  borderRadius: BorderRadius.circular(40),
+                                  decoration: InputDecoration(
+                                    // errorStyle: TextStyle( align: TextAlign.right),
+                                    contentPadding: const EdgeInsets.fromLTRB(
+                                        20.0, 10.0, 20.0, 10.0),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffd6ecd0),
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffd6ecd0),
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xffd6ecd0),
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    filled: true,
+                                    hintStyle:
+                                        TextStyle(color: Colors.grey[800]),
+                                    label: const Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Text('المدينه')),
+                                    // contentPadding: EdgeInsets.only(left:230),
+                                  ),
+                                  items: myList.map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'الرجاء اختيار المدينة';
+                                    }
+                                  },
+                                  onChanged: (String? value) {
+                                    //Do something when changing the item if you want.
+                                    setState(() {
+                                      selectedValue = value!;
+                                    });
+                                  },
+                                  onSaved: (value) {
+                                    selectedValue = value.toString();
+                                  },
+                                ))),
+
+                        TextFormField(
+                          textAlign: TextAlign.right,
+                          controller: nigbehoodEditingController,
+                          decoration: const InputDecoration(
+                            hintText: "الحي",
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 2, color: Color(0xFF1A4D2E)),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'الرجاء إدخال إسم الحي';
                             }
 
                             return null;
@@ -349,37 +508,42 @@ class _EditPostNewState extends State<EditPostNew> {
                                         textColor: Colors.white);
                                   } else {
                                     if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        _showProgress = true;
-                                      });
+                                      if (selectedValue != null) {
+                                        setState(() {
+                                          _showProgress = true;
+                                        });
 
-                                      FirestoreMethods()
-                                          .updatePostThree(
-                                        title:
-                                            postTitleTextEditingController.text,
-                                        oldImage: widget.path,
-                                        id: widget.newID,
-                                        address:
-                                            descriptionTextEditingController
-                                                .text,
-                                        text: addressEditingController.text,
-                                        count: foodCountEditingController.text,
-                                        expireDate: _date,
-                                        file: _image,
-                                        reference: widget.reference,
-                                      )
-                                          .then((value) {
-                                        if (value == "success") {
-                                          _clearThings();
-                                          setState(() {
-                                            _showProgress = false;
-                                          });
+                                        FirestoreMethods()
+                                            .updatePostThree(
+                                          title: postTitleTextEditingController
+                                              .text,
+                                          oldImage: widget.path,
+                                          id: widget.newID,
+                                          address: selectedValue.toString() +
+                                              ", " +
+                                              nigbehoodEditingController.text
+                                                  .toString(),
+                                          text: addressEditingController.text,
+                                          count:
+                                              foodCountEditingController.text,
+                                          expireDate: _date,
+                                          file: _image,
+                                          reference: widget.reference,
+                                        )
+                                            .then((value) {
+                                          if (value == "success") {
+                                            _clearThings();
+                                            setState(() {
+                                              _showProgress = false;
+                                            });
 
-                                          showSnackBar("تم تحديث المحتوى بنجاح",
-                                              context);
-                                          Navigator.of(context).pop();
-                                        }
-                                      });
+                                            showSnackBar(
+                                                "تم تحديث المحتوى بنجاح",
+                                                context);
+                                            Navigator.of(context).pop();
+                                          }
+                                        });
+                                      }
                                     }
                                   }
                                 },

@@ -1,10 +1,6 @@
 import 'package:faydh/SignUp_Form.dart';
 import 'package:flutter/material.dart';
 
-import 'package:faydh/services/auth_methods.dart';
-import 'package:faydh/signin.dart';
-import 'package:faydh/utilis/utilis.dart';
-import 'package:flutter/material.dart';
 
 class TermsAndConditions extends StatefulWidget {
   const TermsAndConditions({Key? key}) : super(key: key);
@@ -14,9 +10,6 @@ class TermsAndConditions extends StatefulWidget {
 }
 
 class _TermsAndConditionsState extends State<TermsAndConditions> {
-  @override
-  @override
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

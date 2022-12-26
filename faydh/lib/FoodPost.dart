@@ -1,11 +1,14 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
 import 'package:faydh/upload_api.dart';
 import 'package:faydh/widgets/edit_posts_new.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -18,9 +21,96 @@ class FoodPostScreen extends StatefulWidget {
   State<FoodPostScreen> createState() => _FoodPostScreenState();
 }
 
+String? selectedValue;
+
+final List<String> myList = [
+  "الرياض",
+  "جدة",
+  "مكة المكرمة",
+  "المدينة المنورة",
+  "سلطانة",
+  "تبوك",
+  "الطائف",
+  "بريدة",
+  " خميس مشيط",
+  "الهفوف",
+  "المبرز",
+  " حفر الباطن",
+  "حائل",
+  "نجران",
+  "الجبيل",
+  "أبها",
+  "ينبع",
+  "الخُبر",
+  "عنيزة",
+  "عرعر",
+  "سكاكا",
+  "سكاكا",
+  "القريات",
+  "الظهران",
+  "القطيف",
+  "الباحة",
+  "تاروت",
+  "البيشة",
+  "الرس",
+  "الشفا",
+  "سيهات",
+  "المذنب",
+  "الخفجي",
+  "الدوادمي",
+  "صبيا",
+  "الزلفي",
+  " أبو العريش",
+  "الصفوى",
+  "رابغ",
+  "رحيمة",
+  "الطريف",
+  "عفيف",
+  "طبرجل",
+  "الدلم",
+  "أملج",
+  "العلا",
+  "بقيق",
+  " بدر حنين",
+  "صامطة",
+  "الوجه",
+  "البكيرية",
+  "نماص",
+  "السليل",
+  "تربة",
+  "الجموم",
+  "ضباء",
+  "الطريف",
+  "القيصومة",
+  "البطالية",
+  "المنيزلة",
+  "المجاردة",
+  "تنومة",
+  "تنومة"
+];
+
 class _FoodPostScreenState extends State<FoodPostScreen> {
+  bool arrow = false;
+
+  String Uid = FirebaseAuth.instance.currentUser!.uid;
+  initState() {
+    getData();
+  }
+
+  Future<String?> getData() async {
+    var a = await FirebaseFirestore.instance.collection("users").doc(Uid).get();
+
+    final myrole = a['role'];
+    if (myrole == "فرد") {
+      setState(() {
+        arrow = true;
+      });
+    }
+  }
+
   @override
   String id = FirebaseAuth.instance.currentUser!.uid;
+
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
         .collection('foodPost')
@@ -33,12 +123,32 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
     return Scaffold(
       backgroundColor: Colors.green[100],
-      appBar: AppBar(
-        elevation: 2.0,
-        centerTitle: true,
-        backgroundColor: const Color(0xFF1A4D2E),
-        title: const Text("إعلاناتي"),
-      ),
+      appBar: arrow
+          ? AppBar(
+              elevation: 2.0,
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              backgroundColor: const Color(0xFF1A4D2E),
+              title: const Text(" اعلانات المتبرعين"),
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Color.fromARGB(225, 255, 255, 255),
+                  ),
+                )
+              ],
+            )
+          : AppBar(
+              elevation: 2.0,
+              centerTitle: false,
+              automaticallyImplyLeading: false,
+              backgroundColor: const Color(0xFF1A4D2E),
+              title: const Center(child: Text('اعلاناتي')),
+            ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodPostStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -53,7 +163,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
           return Directionality(
             textDirection: TextDirection.rtl,
             child: ListView(
-              // reverse: false,
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
@@ -65,19 +174,17 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                     ),
                     elevation: 4.0,
                     child: Container(
-                      // height: MediaQuery.of(context).size.height * 0.2,
                       child: Column(
                         children: [
                           const Padding(
                             padding: EdgeInsets.all(12.0),
-                          ), // so?
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
                                 "نوع الطعام:  ${data['postTitle'].toString()}",
-                                //data['postTitle'],
                                 style: const TextStyle(
                                   color: Color(0xFF1A4D2E),
                                   fontWeight: FontWeight.bold,
@@ -93,7 +200,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               alignment: Alignment.centerRight,
                               child: Text(
                                 "موقع الإستلام:  ${data['postAdress'].toString()}",
-                                // data['postAdress'],
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 144, 177, 135),
                                   fontSize: 10,
@@ -109,7 +215,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               alignment: Alignment.centerRight,
                               child: Text(
                                 "كمية الطعام:  ${data['food_cont'].toString()}",
-                                //data['food_cont'],
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 144, 177, 135),
                                   fontSize: 10,
@@ -131,7 +236,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               ),
                             ),
                           ),
-                          // const SizedBox(height: 5),
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Image.network(
@@ -175,7 +279,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               ),
                             ],
                           ),
-
                           Padding(
                             padding: const EdgeInsets.all(16),
                             child: Row(
@@ -226,7 +329,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                                 TextButton(
                                                   child: const Text("إلغاء"),
                                                   onPressed: () {
-                                                    // callback function for on click event of Cancel button
                                                     Navigator.of(context).pop();
                                                   },
                                                 ),
@@ -267,16 +369,15 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           mySheet(context);
+          setState(() {
+            selectedValue = null;
+          });
         },
         backgroundColor: const Color(0xFF1A4D2E),
         child: const Icon(Icons.add),
       ),
     );
   }
-
-  ///
-
-  // bottom sheett code
 
   mySheet(BuildContext context) {
     return showModalBottomSheet(
@@ -292,7 +393,7 @@ class MyStateFullForSheet extends StatefulWidget {
   const MyStateFullForSheet({
     super.key,
   });
-// problem is fixed
+
   @override
   State<MyStateFullForSheet> createState() => _MyStateFullForSheetState();
 }
@@ -302,14 +403,11 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   UploadTask? taskImage;
   String? urlDownloadImage;
 
-  /// selectFileImage code
   Future selectFileImage() async {
     final results = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       type: FileType.image,
-    ); // sorry? yes ofcouese
-    // no no
-    // this package is alllow to picker every type of file but here i have apply just images
+    );
 
     if (results == null) return;
     final paths = results.files.single.path!;
@@ -319,8 +417,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
     uploadFileImage();
   }
 
-  // problem is this our bottomsheet is not loading after data geting...
-  ///uploadfileImage code
   Future uploadFileImage() async {
     if (fileImage == null) return;
 
@@ -340,7 +436,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  String _date = "تاريخ انتهاء الطعام";
+  String _date = "";
   TextEditingController postTitleTextEditingController =
       TextEditingController();
   TextEditingController descriptionTextEditingController =
@@ -348,6 +444,8 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
   TextEditingController foodCountEditingController = TextEditingController();
 
   TextEditingController addressEditingController = TextEditingController();
+  TextEditingController nigbehoodEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     User? user = FirebaseAuth.instance.currentUser;
@@ -414,26 +512,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
               const SizedBox(
                 height: 8,
               ),
-              TextFormField(
-                textAlign: TextAlign.right,
-                controller: addressEditingController,
-                decoration: const InputDecoration(
-                  hintText: "موقع الإستلام",
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(width: 2, color: Color(0xFF1A4D2E)),
-                  ),
-                ),
-                maxLength: 60,
-                validator: (value) {
-                  if (value == null || value.isEmpty || value.length >= 60) {
-                    return 'الحد الأقصى للكتابة هو 60 حرف';
-                  }
-
-                  return null;
-                },
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-              ),
               const SizedBox(
                 height: 8,
               ),
@@ -457,7 +535,102 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
               ),
+              const SizedBox(
+                height: 8,
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 4),
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: DropdownButtonFormField<String>(
+                        alignment: Alignment.centerRight,
+                        value: selectedValue,
+                        icon: const Align(
+                          alignment: Alignment.centerRight,
+                        ),
+                        elevation: 16,
+                        borderRadius: BorderRadius.circular(40),
+                        decoration: InputDecoration(
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
+                            ),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(
+                              color: Color(0xffd6ecd0),
+                              width: 1.0,
+                            ),
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          label: const Align(
+                              alignment: Alignment.centerRight,
+                              child: Text('المدينه')),
+                        ),
+                        items: myList
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'الرجاء اختيار المدينة';
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedValue = value.toString();
+                            if (kDebugMode) {
+                              print(
+                                  "selectedValue  onChanged:${selectedValue}");
+                            }
+                          });
+                        },
+                        onSaved: (value) {
+                          selectedValue = value.toString();
+                          if (kDebugMode) {
+                            print("selectedValue  onSaved:${selectedValue}");
+                          }
+                        },
+                      ))),
+              TextFormField(
+                textAlign: TextAlign.right,
+                controller: nigbehoodEditingController,
+                decoration: const InputDecoration(
+                  hintText: "الحي",
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(width: 2, color: Color(0xFF1A4D2E)),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'الرجاء إدخال إسم الحي';
+                  }
 
+                  return null;
+                },
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
               const SizedBox(
                 height: 8,
               ),
@@ -493,44 +666,35 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                     size: 18.0,
                                     color: Color(0xFF1A4D2E),
                                   ),
-                                  Text(
-                                    " $_date",
-                                    style: const TextStyle(
-                                        color: Color(0xFF1A4D2E),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14.0),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      " $_date",
+                                      style: const TextStyle(
+                                          color: Color(0xFF1A4D2E),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.0),
+                                    ),
                                   ),
                                 ],
                               ),
                             )
                           ],
                         ),
-                        const Text(
-                          "تعديل",
-                          style: TextStyle(
-                            color: Color(0xFF1A4D2E),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14.0,
-                          ),
-                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-
               const SizedBox(
                 height: 8,
               ),
               const SizedBox(
                 height: 20,
               ),
-              //اضبط لونها ومكاناها
-
               const SizedBox(
                 height: 10,
               ),
-
               fileImage == null
                   ? Align(
                       alignment: Alignment.center,
@@ -596,11 +760,9 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           ),
                         )
                       : Align(
-                          //
                           alignment: Alignment.center,
                           child: ElevatedButton(
                             onPressed: () {
-                              // Navigator.pop(context);
                               showDialog(
                                   context: context,
                                   builder: (_) => Directionality(
@@ -624,10 +786,16 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                         "dataurl: ${urlDownloadImage}");
                                                     print(
                                                         "useris:: ${user!.displayName}");
-                                                    if (_formKey.currentState!
+                                                    if (_date != "" &&
+                                                        _formKey.currentState!
                                                             .validate() &&
                                                         urlDownloadImage !=
                                                             null) {
+                                                      if (kDebugMode) {
+                                                        print(
+                                                            "selectedValue on final:${selectedValue}");
+                                                      }
+
                                                       Database.addFoodPostData(
                                                         context: context,
                                                         docId: DateTime.now()
@@ -645,8 +813,10 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             descriptionTextEditingController
                                                                 .text
                                                                 .toString(),
-                                                        postAdress:
-                                                            addressEditingController
+                                                        postAdress: selectedValue
+                                                                .toString() +
+                                                            ", " +
+                                                            nigbehoodEditingController
                                                                 .text
                                                                 .toString(),
                                                         postImage:
@@ -658,9 +828,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             foodCountEditingController
                                                                 .text
                                                                 .toString(),
-                                                      );
-                                                      Navigator.pop(context);
-                                                 }  else {
+                                                      ).whenComplete(() {
+                                                        Navigator.pop(context);
+                                                        setState(() {
+                                                          selectedValue = null;
+                                                        });
+                                                      });
+                                                    } else {
                                                       Fluttertoast.showToast(
                                                         msg:
                                                             "الرجاء تعبئة كافة الحقول",
@@ -680,7 +854,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF1A4D2E),
                             ),
-                            child: const Text('إضافة'),
+                            child: const Text(' إضافة الإعلان'),
                           ),
                         ),
                 ],
