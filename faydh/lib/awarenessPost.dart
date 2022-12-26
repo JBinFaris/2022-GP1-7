@@ -263,7 +263,15 @@ class _HomePageState extends State<awarenessPost>
                 ),
               );
             }
-
+            if (snaphot.hasData && snaphot.data?.size == 0) {
+              return const Center(
+                  child: Text("! لايوجد محتوى منشور في المنتدى بعد",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      )));
+            }
             if (!dataoaded) {
               return const Center(
                 child: CircularProgressIndicator(

@@ -80,6 +80,15 @@ class _viewAllFood extends State<viewAllFood> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: Text("Loading..."));
           }
+          if (snapshot.hasData && snapshot.data?.size == 0) {
+            return const Center(
+                child: Text("! لا توجد إعلانات منشورة",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    )));
+          }
 
           return Directionality(
             textDirection: TextDirection.rtl,

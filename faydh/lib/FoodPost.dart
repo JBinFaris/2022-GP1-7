@@ -14,6 +14,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 
+import 'ReservedListProvider.dart';
+
 class FoodPostScreen extends StatefulWidget {
   const FoodPostScreen({Key? key}) : super(key: key);
 
@@ -129,6 +131,35 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
+              leading: SizedBox(
+                  width: 200,
+                  height: 200,
+                  child: FittedBox(
+                    child: FloatingActionButton.extended(
+                      heroTag: "btn1",
+                      label: const Text(
+                        'الطلبات المحجوزة',
+                        style: TextStyle(
+                          color: Color(0xFF1A4D2E),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40,
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                      icon: const Icon(
+                        Icons.calendar_month_rounded,
+                        // size: 60.0,
+                        color: Color(0xFF1A4D2E),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return const ReservedProviderScreen();
+                          }),
+                        );
+                      },
+                    ),
+                  )),
               title: const Text(" اعلانات المتبرعين"),
               actions: [
                 GestureDetector(
@@ -159,7 +190,15 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: Text("Loading..."));
           }
-
+          if (snapshot.hasData && snapshot.data?.size == 0) {
+            return const Center(
+                child: Text("! لم تقم بنشر تبرعات بعد",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    )));
+          }
           return Directionality(
             textDirection: TextDirection.rtl,
             child: ListView(

@@ -14,7 +14,6 @@ class myAware extends StatefulWidget {
 class _myAwareState extends State<myAware> {
   TextEditingController awarPost = TextEditingController();
 
-
   String idddd = FirebaseAuth.instance.currentUser!.uid;
 
   @override
@@ -58,6 +57,15 @@ class _myAwareState extends State<myAware> {
                       color: Colors.green,
                     ),
                   );
+                }
+                if (snaphot.hasData && snaphot.data?.size == 0) {
+                  return const Center(
+                      child: Text("! لم تقم بنشر محتوى بعد",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          )));
                 }
 
                 return ListView.builder(

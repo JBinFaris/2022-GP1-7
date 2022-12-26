@@ -18,6 +18,8 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
+  bool _isObscure = true;
+
   @override
   String _finaldate = "";
   final _formKey = GlobalKey<FormState>();
@@ -184,7 +186,10 @@ class _SignupFormState extends State<SignupForm> {
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         label: const Align(
                           alignment: Alignment.centerRight,
-                          child: Text('البريد الإلكتروني'),
+                          child: Text('البريد الإلكتروني',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 18, 57, 20),
+                              )),
                         ),
 
                         // contentPadding: EdgeInsets.only(left:230),
@@ -239,7 +244,10 @@ class _SignupFormState extends State<SignupForm> {
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         label: const Align(
                           alignment: Alignment.centerRight,
-                          child: Text('اسم المستخدم'),
+                          child: Text('اسم المستخدم',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 18, 57, 20),
+                              )),
                         ),
 
                         // contentPadding: EdgeInsets.only(left:230),
@@ -262,20 +270,35 @@ class _SignupFormState extends State<SignupForm> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 4),
                     child: TextFormField(
+                      obscureText: _isObscure,
                       controller: _passwordController,
                       //field value
-                      obscureText: true,
+                      // obscureText: true,
                       enableSuggestions: false,
                       autocorrect: false,
                       textAlign: TextAlign.right,
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.password_rounded,
-                          size: 30,
-                          color: Color.fromARGB(255, 18, 57, 20),
-                        ),
+                        //  prefixIcon: const Icon(
+                        //  Icons.password_rounded,
+                        //    size: 30,
+                        // color: Color.fromARGB(255, 18, 57, 20),
+                        // ),
                         contentPadding:
-                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                            const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
+                        prefix: IconButton(
+                          icon: Icon(
+                            _isObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: const Color.fromARGB(255, 18, 57, 20),
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          },
+                        ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: const BorderSide(
@@ -301,7 +324,10 @@ class _SignupFormState extends State<SignupForm> {
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         label: const Align(
                           alignment: Alignment.centerRight,
-                          child: Text('كلمة المرور'),
+                          child: Text('كلمة المرور      ',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 18, 57, 20),
+                              )),
                         ),
 
                         // contentPadding: EdgeInsets.only(left:230),
@@ -391,7 +417,10 @@ class _SignupFormState extends State<SignupForm> {
                         hintStyle: TextStyle(color: Colors.grey[800]),
                         label: const Align(
                           alignment: Alignment.centerRight,
-                          child: Text('رقم الجوال'),
+                          child: Text('رقم الجوال',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 18, 57, 20),
+                              )),
                         ),
 
                         // contentPadding: EdgeInsets.only(left:230),
@@ -454,7 +483,10 @@ class _SignupFormState extends State<SignupForm> {
                               hintStyle: TextStyle(color: Colors.grey[800]),
                               label: const Align(
                                   alignment: Alignment.center,
-                                  child: Text('نوع المستخدم')),
+                                  child: Text('نوع المستخدم',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 18, 57, 20),
+                                      ))),
                               // contentPadding: EdgeInsets.only(left:230),
                             ),
                             items: userTypes
@@ -521,7 +553,10 @@ class _SignupFormState extends State<SignupForm> {
                           hintStyle: TextStyle(color: Colors.grey[800]),
                           label: const Align(
                             alignment: Alignment.centerRight,
-                            child: Text('رقم السجل التجاري'),
+                            child: Text('رقم السجل التجاري',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 18, 57, 20),
+                                )),
                           ),
 
                           // contentPadding: EdgeInsets.only(left:230),
@@ -577,7 +612,7 @@ class _SignupFormState extends State<SignupForm> {
                                             child: Text(
                                               " $_finaldate",
                                               style: const TextStyle(
-                                                  color: Color(0xFF1A4D2E),
+                                                  color: Color.fromRGBO(26, 77, 46, 1),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 14.0),
                                             ),
