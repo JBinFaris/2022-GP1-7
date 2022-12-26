@@ -131,48 +131,47 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              leading: SizedBox(
-                  width: 200,
-                  height: 200,
-                  child: FittedBox(
-                    child: FloatingActionButton.extended(
-                      heroTag: "btn1",
-                      label: const Text(
-                        'الطلبات المحجوزة',
-                        style: TextStyle(
-                          color: Color(0xFF1A4D2E),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
+              title: const Text(" اعلانات المتبرعين   "),
+              actions: <Widget>[
+                SizedBox(
+                    width: 130,
+                    height: 130,
+                    child: FittedBox(
+                      child: FloatingActionButton.extended(
+                        heroTag: "btn1",
+                        label: const Text(
+                          'الطلبات المحجوزة',
+                          style: TextStyle(
+                            color: Color(0xFF1A4D2E),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
                         ),
+                        backgroundColor: Colors.white,
+                        icon: const Icon(
+                          Icons.calendar_month_rounded,
+                          size: 45.0,
+                          color: Color(0xFF1A4D2E),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return const ReservedProviderScreen();
+                            }),
+                          );
+                        },
                       ),
-                      backgroundColor: Colors.white,
-                      icon: const Icon(
-                        Icons.calendar_month_rounded,
-                        // size: 60.0,
-                        color: Color(0xFF1A4D2E),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) {
-                            return const ReservedProviderScreen();
-                          }),
-                        );
-                      },
-                    ),
-                  )),
-              title: const Text(" اعلانات المتبرعين"),
-              actions: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Color.fromARGB(225, 255, 255, 255),
-                  ),
-                )
+                    ))
               ],
-            )
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Color.fromARGB(225, 255, 255, 255),
+                ),
+              ))
           : AppBar(
               elevation: 2.0,
               centerTitle: false,

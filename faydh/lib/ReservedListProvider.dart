@@ -23,11 +23,20 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
     return Scaffold(
       backgroundColor: Color(0xffd6ecd0),
       appBar: AppBar(
-        elevation: 2.0,
-        centerTitle: true,
-        backgroundColor: const Color(0xFF1A4D2E),
-        title: const Text("الطلبات المحجوزة"),
-      ),
+          elevation: 2.0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color(0xFF1A4D2E),
+          title: const Text("الطلبات المحجوزة"),
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: Color.fromARGB(225, 255, 255, 255),
+            ),
+          )),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
