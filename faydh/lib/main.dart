@@ -27,7 +27,10 @@ class MyApp extends StatelessWidget {
         title: 'Faydh',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: Colors.green,
+          ),
         ),
         home: const signInSreen(),
       ),
