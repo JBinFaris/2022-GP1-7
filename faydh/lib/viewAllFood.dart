@@ -10,6 +10,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 
+import 'ReservedFoodListConsumer.dart';
+
 class viewAllFood extends StatefulWidget {
   const viewAllFood({Key? key}) : super(key: key);
 
@@ -63,19 +65,47 @@ class _viewAllFood extends State<viewAllFood> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Text(" اعلانات المتبرعين"),
-              actions: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Color.fromARGB(225, 255, 255, 255),
-                  ),
-                )
+              title: const Text(" اعلانات المتبرعين   "),
+              actions: <Widget>[
+                SizedBox(
+                    width: 130,
+                    height: 130,
+                    child: FittedBox(
+                      child: FloatingActionButton.extended(
+                        heroTag: "btn1",
+                        label: const Text(
+                          'طلباتي المحجوزة',
+                          style: TextStyle(
+                            color: Color(0xFF1A4D2E),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
+                        ),
+                        backgroundColor: Colors.white,
+                        icon: const Icon(
+                          Icons.calendar_month_rounded,
+                          size: 45.0,
+                          color: Color(0xFF1A4D2E),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return const ReservedConsumerScreen();
+                            }),
+                          );
+                        },
+                      ),
+                    ))
               ],
-            )
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Color.fromARGB(225, 255, 255, 255),
+                ),
+              ))
           : AppBar(
               elevation: 2.0,
               centerTitle: false,
