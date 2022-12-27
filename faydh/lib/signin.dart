@@ -74,7 +74,7 @@ class _signInSreenState extends State<signInSreen> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(hours: 24);
+      var period = const Duration(seconds: 10);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: id, token: token!);
@@ -84,15 +84,13 @@ class _signInSreenState extends State<signInSreen> {
   }
 
   void saveToken({required String id, required String token}) async {
-    bool test = false;
     /* await FirebaseFirestore.instance
         .collection('users')
         .doc(id)
-        .update({'token': token});*/
+        .update({'token': token});}*/
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyy-MM-dd').format(now);
-    print('testttttt');
     DateTime dt1Now = DateTime.parse(formattedDate);
 
     FirebaseFirestore.instance
@@ -102,28 +100,37 @@ class _signInSreenState extends State<signInSreen> {
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         DateTime dt2Check = DateTime.parse(doc["postExp"]);
-        Future.delayed(const Duration(seconds: 2), () {
-          if (dt2Check.isAfter(dt1Now)) {
-// Here you can write your code
+        if (dt1Now.isAfter(dt2Check)) {
+          Future.delayed(const Duration(seconds: 2), () {
             print("expired");
             initInfo();
             sendPushMessage(
-                token: token,
-                title: doc["postTitle"],
-                text: "this food is expired");
+                token: token, title: "طعام منتهي", text: doc["postTitle"]);
 
             FirebaseFirestore.instance
                 .collection('foodPost')
                 .doc(doc["docId"])
                 .delete();
-          }
-        });
-        //print(doc["postDate"]);
+          });
+        } //end if
+        if (doc["reserve"] == '1' && doc["notify"] == '0') {
+          print('notify');
+          Future.delayed(const Duration(seconds: 5), () {
+            initInfo();
+            sendPushMessage(
+                token: token, title: " طعام محجوز ", text: doc["postTitle"]);
+          });
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'notify': '1'});
+        } else {}
       });
     });
   }
 
   void initInfo() async {
+    var id = 0;
     var androidInitialize =
         const AndroidInitializationSettings('@mipmap/ic_launcher');
     //var iosInitialize =const IOSInitializationSettings();
@@ -132,8 +139,6 @@ class _signInSreenState extends State<signInSreen> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      int id = 0;
-      print('on message');
       print(
           "onMessage: ${message.notification?.title}/${message.notification?.body}}");
 
@@ -166,7 +171,8 @@ class _signInSreenState extends State<signInSreen> {
       {required String token,
       required String title,
       required String text}) async {
-    print('hhhhh');
+    print(title + '.....' + text);
+
     try {
       await http.post(
         Uri.parse('https://fcm.googleapis.com/fcm/send'),

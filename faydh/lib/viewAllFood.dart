@@ -25,6 +25,17 @@ class _viewAllFood extends State<viewAllFood> {
     getData();
   }
 
+  void reserve({required String id}) async {
+    await FirebaseFirestore.instance
+        .collection('foodPost')
+        .doc(id)
+        .update({'reserve': '1'});
+    await FirebaseFirestore.instance
+        .collection('foodPost')
+        .doc(id)
+        .update({'reservedby': Uid});
+  }
+
   Future<String?> getData() async {
     var a = await FirebaseFirestore.instance.collection("users").doc(Uid).get();
 
@@ -38,8 +49,10 @@ class _viewAllFood extends State<viewAllFood> {
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> foodPostStream =
-        FirebaseFirestore.instance.collection('foodPost').snapshots();
+    final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
+        .collection('foodPost')
+        .where('reserve', isEqualTo: '0')
+        .snapshots();
     //getData();
     // var userDoc = FirebaseFirestore.instance.collection('users').doc(Uid).get();
     return Scaffold(
@@ -209,11 +222,34 @@ class _viewAllFood extends State<viewAllFood> {
                                     const EdgeInsets.fromLTRB(0, 0, 80, 10),
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
+                                    /* Navigator.of(context).push(
                                       MaterialPageRoute(builder: (context) {
                                         return const viewAllFood();
                                       }),
-                                    );
+                                    );*/
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                              title: const Text(
+                                                'لقد تم حجز الطعام',
+                                                textAlign: TextAlign.right,
+                                              ),
+                                              content: const Text(
+                                                "لمشاهدة الطعام المحجوز او لالغاء الحجز انتقل الى قائمة حجوزاتي",
+                                                textAlign: TextAlign.right,
+                                              ),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: const Text("حسنا"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                )
+                                              ]);
+                                        });
+                                    data['docId'].toString();
+                                    reserve(id: data['docId'].toString());
                                   },
                                   child: const Text('حجز'),
                                   style: ElevatedButton.styleFrom(

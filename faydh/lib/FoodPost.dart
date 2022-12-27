@@ -129,7 +129,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Text(" اعلانات المتبرعين"),
+              title: const Text(" اعلاناتي "),
               actions: [
                 GestureDetector(
                   onTap: () {
@@ -286,73 +286,145 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => EditPostNew(
-                                                  newID: document.id,
-                                                  title: "${data["postTitle"]}",
-                                                  address:
-                                                      "${data["postAdress"]}",
-                                                  text: "${data["postText"]}",
-                                                  count: "${data["food_cont"]}",
-                                                  expireDate:
-                                                      "${data["postExp"]}",
-                                                  imgUrl:
-                                                      "${data["postImage"]}",
-                                                  path: "${data["pathImage"]}",
-                                                  reference: document.reference
-                                                      as DocumentReference<
-                                                          Map<String, dynamic>>,
-                                                )),
-                                      );
+                                      if (data["reserve"] == '1') {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => EditPostNew(
+                                                    newID: document.id,
+                                                    title:
+                                                        "${data["postTitle"]}",
+                                                    address:
+                                                        "${data["postAdress"]}",
+                                                    text: "${data["postText"]}",
+                                                    count:
+                                                        "${data["food_cont"]}",
+                                                    expireDate:
+                                                        "${data["postExp"]}",
+                                                    imgUrl:
+                                                        "${data["postImage"]}",
+                                                    path:
+                                                        "${data["pathImage"]}",
+                                                    reference: document
+                                                            .reference
+                                                        as DocumentReference<
+                                                            Map<String,
+                                                                dynamic>>,
+                                                  )),
+                                        );
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                  title: const Text(
+                                                    ' الطعام محجوز',
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  content: const Text(
+                                                    " لا يمكن تعديل على الطعام المحجوز",
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: const Text("حسنا"),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    )
+                                                  ]);
+                                            });
+                                      }
                                     },
-                                    child: const Icon(
-                                      Icons.edit,
-                                      color: Color.fromARGB(226, 29, 92, 76),
-                                    )),
+                                    child: data["reserve"] == '1'
+                                        ? const Icon(
+                                            Icons.edit,
+                                            color:
+                                                Color.fromARGB(226, 29, 92, 76),
+                                          )
+                                        : const Icon(
+                                            Icons.edit,
+                                            color: Color.fromARGB(
+                                                225, 101, 109, 107),
+                                          )),
                                 GestureDetector(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                              title: const Text(
-                                                'تأكيد الحذف',
-                                                textAlign: TextAlign.right,
-                                              ),
-                                              content: const Text(
-                                                "هل أنت متأكد من حذف المحتوى ؟ ",
-                                                textAlign: TextAlign.right,
-                                              ),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  child: const Text("إلغاء"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: const Text("موافق"),
-                                                  onPressed: () async {
-                                                    print(
-                                                        document.id.toString());
+                                    onTap: () {
+                                      if (data["reserve"] == '1') {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                  title: const Text(
+                                                    'تأكيد الحذف',
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  content: const Text(
+                                                    "هل أنت متأكد من حذف المحتوى ؟ ",
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child:
+                                                          const Text("إلغاء"),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child:
+                                                          const Text("موافق"),
+                                                      onPressed: () async {
+                                                        print(document.id
+                                                            .toString());
 
-                                                    document.reference.delete();
+                                                        document.reference
+                                                            .delete();
 
-                                                    Navigator.pop(context);
+                                                        Navigator.pop(context);
 
-                                                    print("check");
-                                                  },
-                                                ),
-                                              ]);
-                                        });
-                                  },
-                                  child: const Icon(
-                                    Icons.delete,
-                                    color: Color.fromARGB(255, 172, 8, 8),
-                                  ),
-                                )
+                                                        print("check");
+                                                      },
+                                                    ),
+                                                  ]);
+                                            });
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                  title: const Text(
+                                                    ' الطعام محجوز',
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  content: const Text(
+                                                    " لا يمكن حذف الطعام المحجوز",
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: const Text("حسنا"),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    )
+                                                  ]);
+                                            });
+                                      }
+                                    },
+                                    child: data["reserve"] == '1'
+                                        ? const Icon(
+                                            Icons.delete,
+                                            color:
+                                                Color.fromARGB(255, 172, 8, 8),
+                                          )
+                                        : const Icon(
+                                            Icons.delete,
+                                            color: Color.fromARGB(
+                                                225, 101, 109, 107),
+                                          ))
                               ],
                             ),
                           )
@@ -828,6 +900,8 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             foodCountEditingController
                                                                 .text
                                                                 .toString(),
+                                                        reserve: '0',
+                                                        notify: '0',
                                                       ).whenComplete(() {
                                                         Navigator.pop(context);
                                                         setState(() {
