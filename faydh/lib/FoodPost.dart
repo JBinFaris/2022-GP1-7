@@ -296,7 +296,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               children: [
                                 GestureDetector(
                                     onTap: () {
-                                      if (data["reserve"] == '1') {
+                                      if (data["reserve"] == '0') {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -347,7 +347,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                             });
                                       }
                                     },
-                                    child: data["reserve"] == '1'
+                                    child: data["reserve"] == '0'
                                         ? const Icon(
                                             Icons.edit,
                                             color:
@@ -360,7 +360,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                           )),
                                 GestureDetector(
                                     onTap: () {
-                                      if (data["reserve"] == '1') {
+                                      if (data["reserve"] == '0') {
                                         showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
@@ -424,7 +424,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                             });
                                       }
                                     },
-                                    child: data["reserve"] == '1'
+                                    child: data["reserve"] == '0'
                                         ? const Icon(
                                             Icons.delete,
                                             color:
