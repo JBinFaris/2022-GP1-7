@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/widgets/ProviderRListCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +14,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 @override
 void initState() {
   String id = FirebaseAuth.instance.currentUser!.uid;
-
+  getData2(proId!);
   //getUser2();
   // TODO: implement initState
 }
@@ -20,40 +22,34 @@ void initState() {
 String? usrEmail;
 String? usrName;
 String? phoneNo;
-String? consId;
-
-//Future<String?> getData(String id) async{
-
-// var a = await FirebaseFirestore.instance
-//   .collection('users')
-//   .doc(id)
-//   .get();
-
-//    usrEmail = a['email'];
-//    usrName = a['username'];
-//    phoneNo = a['phoneNumber'];
-//}
-
-class ProviderRlistCard extends StatefulWidget {
-  final snap;
-  const ProviderRlistCard({this.snap, super.key});
-
-  @override
-  State<ProviderRlistCard> createState() => _ProviderRlistCardState();
+String? proId;
+Future<String?> getData2(String proId) async {
+  //print(proId);
+  // var a = await FirebaseFirestore.instance.collection('users').doc(proId).collection("phoneNumber").get();
+  // usrEmail = a['email'];
+//  usrName = a['username'];
+  // phoneNo = a['phoneNumber'];
 }
 
-class _ProviderRlistCardState extends State<ProviderRlistCard> {
-  String myUsername = "";
-  var seen = false;
+class ConsumerListCard extends StatefulWidget {
+  final snap;
+  const ConsumerListCard({this.snap, super.key});
 
   @override
+  State<ConsumerListCard> createState() => _ConsumerListCardState();
+}
+
+class _ConsumerListCardState extends State<ConsumerListCard> {
+  String myUsername = "";
+  var seen = false;
+  @override
   Widget build(BuildContext context) {
-    consId = ("${widget.snap["reservedby"].toString()}");
+    proId = ("${widget.snap["Cid"].toString()}");
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     //print(proId);
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(consId).get(),
+      future: users.doc(proId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -64,7 +60,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
           usrEmail = (" ${data['email']}");
           usrName = (" ${data['username']}");
         }
-        print(usrEmail);
+       // print(usrEmail);
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Card(
@@ -91,64 +87,6 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(boxShadow: [
-                            BoxShadow(
-                                color: Color.fromARGB(125, 158, 158, 158),
-                                spreadRadius: 0.01,
-                                blurRadius: 15)
-                          ]),
-                          child: GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: const Text(
-                                          "تأكيد الإستلام",
-                                          textAlign: TextAlign.right,
-                                        ),
-                                        content: const Text(
-                                          (" هل تم إستلام الطعام من قبل الحاجز ؟ "),
-                                          textAlign: TextAlign.right,
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Text("لا"),
-                                            onPressed: () {
-                                              // callback function for on click event of Cancel button
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          TextButton(
-                                            child: const Text("نعم"),
-                                            onPressed: () async {
-                                              _firestore
-                                                  .collection("foodPost")
-                                                  .doc(
-                                                      "${widget.snap["docId"].toString()}")
-                                                  .delete();
-
-                                              Navigator.pop(context);
-
-                                              print("check");
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    });
-                              },
-                              child: Wrap(
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  ),
-                                  Text("قبول"),
-                                ],
-                              )),
-                        ),
                         Container(
                           decoration: BoxDecoration(boxShadow: [
                             BoxShadow(
@@ -237,7 +175,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
   }
 
   Widget tweetBody() {
-    //var _dta = "${widget.snap["postImage"].toString()}";
+    // var _dta = "${widget.snap["postImage"].toString()}";
     return Expanded(
       child: Column(
         children: [
@@ -252,7 +190,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                 children: [
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text((" رقم الحاجز : ${phoneNo!}"),
+                    child: Text((" رقم المتبرع : ${phoneNo!}"),
                         // " رقم للحاجز ",
                         textAlign: TextAlign.right,
                         style: const TextStyle(
@@ -262,8 +200,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                   ),
                   Align(
                       alignment: Alignment.centerRight,
-                      child: Text((" البريد الإلكتروني للحاجز : ${usrEmail!}"),
-                          //   " البريد الإلكتروني للحاجز ",
+                      child: Text((" البريد الإلكتروني للمتبرع : ${usrEmail!}"),
+                          // " البريد الإلكتروني للحاجز ",
                           textAlign: TextAlign.right,
                           style: const TextStyle(
                             color: Colors.black,
@@ -339,8 +277,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
             child: Row(
               children: [
                 Text(
-                  //"me", 
-                   usrName!,
+                  usrName!,
+                  //  "me",
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
