@@ -178,6 +178,37 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
               title: const Center(child: Text('اعلاناتي')),
+              actions: <Widget>[
+                SizedBox(
+                    width: 130,
+                    height: 130,
+                    child: FittedBox(
+                      child: FloatingActionButton.extended(
+                        heroTag: "btn1",
+                        label: const Text(
+                          'الطلبات المحجوزة',
+                          style: TextStyle(
+                            color: Color(0xFF1A4D2E),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
+                        ),
+                        backgroundColor: Colors.white,
+                        icon: const Icon(
+                          Icons.calendar_month_rounded,
+                          size: 45.0,
+                          color: Color(0xFF1A4D2E),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return const ReservedProviderScreen();
+                            }),
+                          );
+                        },
+                      ),
+                    ))
+              ],
             ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodPostStream,
