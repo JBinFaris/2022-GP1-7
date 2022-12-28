@@ -289,6 +289,8 @@ class _viewAllFood extends State<viewAllFood> {
                                         });
                                     data['docId'].toString();
                                     reserve(id: data['docId'].toString());
+                                    data['docId'].update({'notify': '0'});
+                                    data['docId'].update({'reservedby': Uid});
                                   },
                                   child: const Text('حجز'),
                                   style: ElevatedButton.styleFrom(

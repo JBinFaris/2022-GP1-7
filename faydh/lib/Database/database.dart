@@ -21,6 +21,7 @@ class Database {
     required String food_cont,
     required String reserve,
     required String notify,
+    required String reservedby,
   }) async {
     DocumentReference documentReference = _foodPostCollection.doc(docId);
 
@@ -38,6 +39,7 @@ class Database {
       "postDate": DateTime.now().toString(),
       'reserve': reserve,
       'notify': notify,
+      'reservedby': reservedby,
     };
     await documentReference.set(data).whenComplete(() {
       print('Note item saved to the database');

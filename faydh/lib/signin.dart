@@ -74,7 +74,7 @@ class _signInSreenState extends State<signInSreen> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(seconds: 10);
+      var period = const Duration(hours: 1);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: id, token: token!);
@@ -428,7 +428,7 @@ class _signInSreenState extends State<signInSreen> {
                         setState(() {
                           _isObscure = !_isObscure;
                         });
-                      }, 
+                      },
                     ),
                     hintText: 'كلمة المرور',
                     enabledBorder: OutlineInputBorder(
