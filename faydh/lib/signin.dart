@@ -74,7 +74,7 @@ class _signInSreenState extends State<signInSreen> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(hours: 1);
+      var period = const Duration(seconds: 40);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: id, token: token!);
@@ -124,7 +124,41 @@ class _signInSreenState extends State<signInSreen> {
               .collection('foodPost')
               .doc(doc["docId"])
               .update({'notify': '1'});
-        } else {}
+        }
+
+        if (doc["notifyCancelP"] == '0') {
+          print('notifyCancelP');
+          Future.delayed(const Duration(seconds: 5), () {
+            initInfo();
+            sendPushMessage(
+                token: token, title: " طعام ملغى ", text: doc["postTitle"]);
+          });
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'notifyCancelP': '1'});
+        }
+      });
+    });
+
+    FirebaseFirestore.instance
+        .collection('foodPost')
+        .where('reservedby', isEqualTo: id)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (doc["notifyCancelC"] == '0') {
+          print('notifyCancelC');
+          Future.delayed(const Duration(seconds: 5), () {
+            initInfo();
+            sendPushMessage(
+                token: token, title: " طعام ملغى ", text: doc["postTitle"]);
+          });
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'notifyCancelC': '1'});
+        }
       });
     });
   }
