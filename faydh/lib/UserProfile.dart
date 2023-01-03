@@ -50,7 +50,8 @@ class _UserProfileState extends State<UserProfile> {
       if (element.data()['reserve'] == '1') {
         reserveCount = reserveCount + 1;
       }
-      if (exp.isBefore(DateTime.now()) == true) {
+      if (exp.isBefore(DateTime.now().subtract(const Duration(days: 1))) ==
+          true) {
         ExpCount = ExpCount + 1;
       }
     });
