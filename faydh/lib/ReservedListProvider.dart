@@ -18,28 +18,7 @@ class ReservedProviderScreen extends StatefulWidget {
 
 class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
   
-  List<UserData> usersList = [];
-
-  Future getAllUsers() async {
-    var collection = FirebaseFirestore.instance.collection('users');
-
-    QuerySnapshot querySnapshot = await collection.get();
-
-    List<dynamic> allData =
-        querySnapshot.docs.map((doc) => doc.data()).toList();
-    for (var element in allData) {
-      usersList.add(UserData(
-          email: element['email'] ?? '',
-          role: element['role'] ?? '',
-          uid: element['uid'] ?? '',
-          phoneNumber: element['phoneNumber'] ?? '',
-          username: element['username'] ?? ''));
-    }
-    setState(() {
-     
-    });
-  }
-
+  
   
   @override
   Widget build(BuildContext context) {
@@ -96,20 +75,8 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
                             fontSize: 18,
                             color: Color.fromARGB(255, 0, 0, 0),
                           )));
-                }else{
-              QuerySnapshot<Object?>? querySnapshot = snaphot.data;
-              List<dynamic>? allData =
-                  querySnapshot?.docs?.map((doc) => doc.data()).toList();
-                  for (var element in allData!){
-
-                  }
-              
-
-
-     
-
                 }
-
+              
                 return ListView.builder(
                   itemCount: snaphot.data?.docs.length,
                   itemBuilder: (context, index) => ProviderRlistCard(
