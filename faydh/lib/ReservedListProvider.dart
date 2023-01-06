@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
+import 'models/user_data_model.dart';
+
 class ReservedProviderScreen extends StatefulWidget {
   const ReservedProviderScreen({Key? key}) : super(key: key);
 
@@ -15,6 +17,30 @@ class ReservedProviderScreen extends StatefulWidget {
   String id = FirebaseAuth.instance.currentUser!.uid;
 
 class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
+  
+  List<UserData> usersList = [];
+
+  Future getAllUsers() async {
+    var collection = FirebaseFirestore.instance.collection('users');
+
+    QuerySnapshot querySnapshot = await collection.get();
+
+    List<dynamic> allData =
+        querySnapshot.docs.map((doc) => doc.data()).toList();
+    for (var element in allData) {
+      usersList.add(UserData(
+          email: element['email'] ?? '',
+          role: element['role'] ?? '',
+          uid: element['uid'] ?? '',
+          phoneNumber: element['phoneNumber'] ?? '',
+          username: element['username'] ?? ''));
+    }
+    setState(() {
+     
+    });
+  }
+
+  
   @override
   Widget build(BuildContext context) {
 
@@ -70,6 +96,18 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
                             fontSize: 18,
                             color: Color.fromARGB(255, 0, 0, 0),
                           )));
+                }else{
+              QuerySnapshot<Object?>? querySnapshot = snaphot.data;
+              List<dynamic>? allData =
+                  querySnapshot?.docs?.map((doc) => doc.data()).toList();
+                  for (var element in allData!){
+
+                  }
+              
+
+
+     
+
                 }
 
                 return ListView.builder(

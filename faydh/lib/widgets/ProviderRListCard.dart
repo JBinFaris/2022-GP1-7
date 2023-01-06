@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/user_data_model.dart';
+
 String id = FirebaseAuth.instance.currentUser!.uid;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -12,13 +14,13 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 @override
 void initState() {
   String id = FirebaseAuth.instance.currentUser!.uid;
-
+ _getUserData();
   //getUser2();
   // TODO: implement initState
 }
 
 String? usrEmail;
-String? usrName;
+String usrName = "d";
 String? phoneNo;
 String? consId;
 
@@ -28,15 +30,33 @@ String? consId;
 //   .collection('users')
 //   .doc(id)
 //   .get();
-
 //    usrEmail = a['email'];
 //    usrName = a['username'];
 //    phoneNo = a['phoneNumber'];
 //}
 
+  void _getUserData() async {
+   var snap = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(consId)
+        .get();
+
+        Map<String, dynamic>? data = snap.data();
+      if (snap != null) {
+        usrName = (snap.data() as Map<String, dynamic>)['username'];
+        usrEmail = (snap.data() as Map<String, dynamic>)['email'];
+        phoneNo = (snap.data() as Map<String, dynamic>)['phoneNumber'];
+      }
+  }
+
 class ProviderRlistCard extends StatefulWidget {
   final snap;
-  const ProviderRlistCard({this.snap, super.key});
+//  final UserData ConsData;
+  const ProviderRlistCard({
+  this.snap,
+   super.key,
+  // required this.ConsData, 
+  });
 
   @override
   State<ProviderRlistCard> createState() => _ProviderRlistCardState();
@@ -49,10 +69,10 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
   @override
   Widget build(BuildContext context) {
     consId = ("${widget.snap["reservedby"].toString()}");
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-
+   // CollectionReference users = FirebaseFirestore.instance.collection('users');
+_getUserData();
     //print(proId);
-    return FutureBuilder<DocumentSnapshot>(
+  /*  return FutureBuilder<DocumentSnapshot>(
       future: users.doc(consId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -63,7 +83,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
           phoneNo = (" ${data['phoneNumber']}");
           usrEmail = (" ${data['email']}");
           usrName = (" ${data['username']}");
-        }
+        }*/
         print(usrEmail);
         return Directionality(
           textDirection: TextDirection.rtl,
@@ -145,7 +165,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                     Icons.check,
                                     color: Colors.green,
                                   ),
-                                  Text("قبول"),
+                                  Text("تأكيد الإستلام"),
                                 ],
                               )),
                         ),
@@ -218,8 +238,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
             ),
           ),
         );
-      },
-    );
+     // },
+   // );
   }
 
   Widget tweetAvatar() {
@@ -252,7 +272,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                 children: [
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text((" رقم الحاجز : ${phoneNo!}"),
+                    child: Text((" رقم الحاجز : ${phoneNo}"),
                         // " رقم للحاجز ",
                         textAlign: TextAlign.right,
                         style: const TextStyle(
@@ -262,7 +282,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                   ),
                   Align(
                       alignment: Alignment.centerRight,
-                      child: Text((" البريد الإلكتروني للحاجز : ${usrEmail!}"),
+                      child: Text((" البريد الإلكتروني للحاجز : ${usrEmail}"),
                           //   " البريد الإلكتروني للحاجز ",
                           textAlign: TextAlign.right,
                           style: const TextStyle(
@@ -340,7 +360,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
               children: [
                 Text(
                   //"me",
-                  usrName!,
+                  usrName,
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
