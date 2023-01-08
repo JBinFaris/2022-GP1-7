@@ -53,7 +53,8 @@ class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('foodPost')
-                    .where('reservedby', isEqualTo: id)
+                    .where('reservedby',
+                        isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                     .where('reserve', isEqualTo: "1")
                     .snapshots(),
                 builder: (context,

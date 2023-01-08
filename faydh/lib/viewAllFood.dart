@@ -65,7 +65,7 @@ class _viewAllFood extends State<viewAllFood> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Text(" اعلانات المتبرعين   "),
+              title: const Text(" إعلانات المتبرعين     "),
               actions: <Widget>[
                 SizedBox(
                     width: 130,
@@ -111,7 +111,38 @@ class _viewAllFood extends State<viewAllFood> {
               centerTitle: false,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Center(child: Text('اعلانات المتبرعين ')),
+              title: const Center(child: Text('           إعلانات المتبرعين')),
+              actions: <Widget>[
+                SizedBox(
+                    width: 130,
+                    height: 130,
+                    child: FittedBox(
+                      child: FloatingActionButton.extended(
+                        heroTag: "btn1",
+                        label: const Text(
+                          'طلباتي المحجوزة',
+                          style: TextStyle(
+                            color: Color(0xFF1A4D2E),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
+                        ),
+                        backgroundColor: Colors.white,
+                        icon: const Icon(
+                          Icons.calendar_month_rounded,
+                          size: 45.0,
+                          color: Color(0xFF1A4D2E),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return const ReservedConsumerScreen();
+                            }),
+                          );
+                        },
+                      ),
+                    ))
+              ],
             ),
       body: StreamBuilder<QuerySnapshot>(
         stream: foodPostStream,
