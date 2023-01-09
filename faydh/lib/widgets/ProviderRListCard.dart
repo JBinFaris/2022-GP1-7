@@ -15,14 +15,13 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 @override
 void initState() {
   String id = FirebaseAuth.instance.currentUser!.uid;
-  _getUserData();
   //getUser2();
   // TODO: implement initState
 }
 
 String? usrEmail;
-String? usrName;
-String? phoneNo;
+String? usrNamee;
+String? phonee;
 String? consId;
 
 //Future<String?> getData(String id) async{
@@ -35,18 +34,6 @@ String? consId;
 //    usrName = a['username'];
 //    phoneNo = a['phoneNumber'];
 //}
-
-void _getUserData() async {
-  var snap =
-      await FirebaseFirestore.instance.collection("users").doc(consId).get();
-
-  Map<String, dynamic>? data = snap.data();
-  if (snap != null) {
-    usrName = (snap.data() as Map<String, dynamic>)['username'];
-    usrEmail = (snap.data() as Map<String, dynamic>)['email'];
-    phoneNo = (snap.data() as Map<String, dynamic>)['phoneNumber'];
-  }
-}
 
 class ProviderRlistCard extends StatefulWidget {
   final snap;
@@ -67,24 +54,31 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
 
   @override
   Widget build(BuildContext context) {
-    consId = ("${widget.snap["reservedby"].toString()}");
+    //consId = ("${widget.snap["reservedby"].toString()}");
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     // CollectionReference users = FirebaseFirestore.instance.collection('users');
     // _getUserData();
     //print(proId);
+
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(consId).get(),
+      future: users.doc("${widget.snap["reservedby"]}").get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasData && snapshot.data!.exists) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          //  return Text("Full Name: ${data['full_name']} ${data['last_name']}");
-          phoneNo = (" ${data['phoneNumber']}");
-          usrEmail = (" ${data['email']}");
-          usrName = (" ${data['username']}");
+        try {
+          if (snapshot.hasData && snapshot.data!.exists) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            //  return Text("Full Name: ${data['full_name']} ${data['last_name']}");
+            phonee = (" ${data['phoneNumber']}");
+            usrEmail = (" ${data['email']}");
+            usrNamee = (" ${data['username']}");
+          }
+        } catch (e) {
+          print(e.toString());
         }
+        ;
+
         print(usrEmail);
         return Directionality(
           textDirection: TextDirection.rtl,
@@ -269,7 +263,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
     return Expanded(
       child: Column(
         children: [
-          tweetHeader(),
+          tweetHeader(" ${phonee!}", " ${usrNamee!}"),
           Padding(
             padding:
                 const EdgeInsets.only(top: 8, right: 0, bottom: 2, left: 2),
@@ -280,7 +274,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                 children: [
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text((" رقم الحاجز : ${phoneNo}"),
+                    child: Text((" رقم الحاجز : ${phonee}"),
                         // " رقم للحاجز ",
                         textAlign: TextAlign.right,
                         style: const TextStyle(
@@ -361,7 +355,10 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
     );
   }
 
-  Widget tweetHeader() {
+  Widget tweetHeader(String pp, String nn) {
+    //final Uri whatsapp = Uri.parse("https://wa.me/${phone!}");
+    //final Uri call = Uri.parse("tel://${phone!}");
+
     return Column(
       children: [
         Container(
@@ -372,7 +369,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  usrName!,
+                  nn,
                   //  "me",
                   style: const TextStyle(
                     color: Colors.black,
@@ -388,7 +385,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                         child: GestureDetector(
                           onTap: (() {
                             // ignore: deprecated_member_use
-                            launch('https://wa.me/${phoneNo!}');
+                            launch('https://wa.me/' + pp);
                           }),
                           child: const Icon(
                             Icons.whatsapp,
@@ -403,7 +400,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                       GestureDetector(
                         onTap: () {
                           // ignore: deprecated_member_use
-                          launch("tel://${phoneNo!}");
+                          launch("tel://" + pp);
+                          print(phonee);
                         },
                         child: const Icon(
                           Icons.call,

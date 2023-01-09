@@ -22,7 +22,7 @@ void initState() {
 
 String? usrEmail;
 String? usrName;
-String? phoneNo;
+String? phone;
 String? proId;
 
 //Future<String?> getData2(String proId) async {
@@ -51,14 +51,14 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
 
     //print(proId);
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(proId).get(),
+      future: users.doc("${widget.snap["Cid"].toString()}").get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
           //  return Text("Full Name: ${data['full_name']} ${data['last_name']}");
-          phoneNo = (" ${data['phoneNumber']}");
+          phone = (" ${data['phoneNumber']}");
           usrEmail = (" ${data['email']}");
           usrName = (" ${data['username']}");
         }
@@ -191,9 +191,8 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
     return Expanded(
       child: Column(
         children: [
-          tweetHeader(),
           //  tweetLeft(),
-
+          tweetHeader(" ${phone!}", " ${usrName!}"),
           Padding(
             padding:
                 const EdgeInsets.only(top: 8, right: 0, bottom: 2, left: 2),
@@ -224,7 +223,8 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                           ))),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text((" رقم المتبرع : ${phoneNo!}"),
+                    child: Text((" رقم المتبرع : ${phone!}"),
+
                         // " رقم للحاجز ",
                         textAlign: TextAlign.right,
                         style: const TextStyle(
@@ -300,7 +300,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
     );
   }
 
-  Widget tweetHeader() {
+  Widget tweetHeader(String p, String n) {
     return Column(
       children: [
         Container(
@@ -311,7 +311,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  usrName!,
+                  n,
                   //  "me",
                   style: const TextStyle(
                     color: Colors.black,
@@ -327,7 +327,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                         child: GestureDetector(
                           onTap: (() {
                             // ignore: deprecated_member_use
-                            launch('https://wa.me/${phoneNo!}');
+                            launch('https://wa.me/' + p);
                           }),
                           child: const Icon(
                             Icons.whatsapp,
@@ -342,7 +342,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                       GestureDetector(
                         onTap: () {
                           // ignore: deprecated_member_use
-                          launch("tel://${phoneNo!}");
+                          launch("tel://" + p);
                         },
                         child: const Icon(
                           Icons.call,
