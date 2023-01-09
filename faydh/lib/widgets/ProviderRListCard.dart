@@ -21,7 +21,7 @@ void initState() {
 }
 
 String? usrEmail;
-String usrName = "d";
+String? usrName;
 String? phoneNo;
 String? consId;
 
@@ -68,186 +68,186 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
   @override
   Widget build(BuildContext context) {
     consId = ("${widget.snap["reservedby"].toString()}");
-    // CollectionReference users = FirebaseFirestore.instance.collection('users');
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     // CollectionReference users = FirebaseFirestore.instance.collection('users');
-    _getUserData();
+    // _getUserData();
     //print(proId);
-    /*return FutureBuilder<DocumentSnapshot>(
+    return FutureBuilder<DocumentSnapshot>(
       future: users.doc(consId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasData && snapshot.data!.exists) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
           //  return Text("Full Name: ${data['full_name']} ${data['last_name']}");
           phoneNo = (" ${data['phoneNumber']}");
           usrEmail = (" ${data['email']}");
           usrName = (" ${data['username']}");
-        } */
-    print(usrEmail);
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 0,
-            color: Colors.white,
-          ),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        /*  shape: RoundedRectangleBorder(
+        }
+        print(usrEmail);
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(
+                width: 0,
+                color: Colors.white,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            /*  shape: RoundedRectangleBorder(
           side: const BorderSide(
             width: 0,
             color: Colors.white,
           ),
         ),*/
-        margin: const EdgeInsets.all(8),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            margin: const EdgeInsets.all(8),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  tweetAvatar(),
-                  tweetBody(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      tweetAvatar(),
+                      tweetBody(),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(125, 158, 158, 158),
+                                spreadRadius: 0.01,
+                                blurRadius: 15)
+                          ]),
+                          child: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text(
+                                          "تأكيد الإستلام",
+                                          textAlign: TextAlign.right,
+                                        ),
+                                        content: const Text(
+                                          (" هل تم إستلام الطعام من قبل الحاجز ؟ "),
+                                          textAlign: TextAlign.right,
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text("لا"),
+                                            onPressed: () {
+                                              // callback function for on click event of Cancel button
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: const Text("نعم"),
+                                            onPressed: () async {
+                                              _firestore
+                                                  .collection("foodPost")
+                                                  .doc(
+                                                      "${widget.snap["docId"].toString()}")
+                                                  .delete();
+
+                                              Navigator.pop(context);
+
+                                              print("check");
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              },
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                  ),
+                                  Text("تأكيد الإستلام"),
+                                ],
+                              )),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(125, 158, 158, 158),
+                                spreadRadius: 0.3,
+                                blurRadius: 15)
+                          ]),
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text(
+                                        "تأكيد الغاء الحجز",
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      content: Text(
+                                        (" هل أنت متأكد من الغاء الحجز ؟ "),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text("لا"),
+                                          onPressed: () {
+                                            // callback function for on click event of Cancel button
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text("نعم"),
+                                          onPressed: () async {
+                                            _firestore
+                                                .collection("foodPost")
+                                                .doc(widget.snap["docId"]
+                                                    .toString())
+                                                .update({"reserve": "0"});
+
+                                            Navigator.pop(context);
+
+                                            print("check");
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Wrap(
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.disabled_by_default,
+                                      color: Colors.red,
+                                    ),
+                                    Text("الغاء الحجز"),
+                                  ],
+                                )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(boxShadow: [
-                        BoxShadow(
-                            color: Color.fromARGB(125, 158, 158, 158),
-                            spreadRadius: 0.01,
-                            blurRadius: 15)
-                      ]),
-                      child: GestureDetector(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text(
-                                      "تأكيد الإستلام",
-                                      textAlign: TextAlign.right,
-                                    ),
-                                    content: const Text(
-                                      (" هل تم إستلام الطعام من قبل الحاجز ؟ "),
-                                      textAlign: TextAlign.right,
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text("لا"),
-                                        onPressed: () {
-                                          // callback function for on click event of Cancel button
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      TextButton(
-                                        child: const Text("نعم"),
-                                        onPressed: () async {
-                                          _firestore
-                                              .collection("foodPost")
-                                              .doc(
-                                                  "${widget.snap["docId"].toString()}")
-                                              .delete();
-
-                                          Navigator.pop(context);
-
-                                          print("check");
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                });
-                          },
-                          child: Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.check,
-                                color: Colors.green,
-                              ),
-                              Text("تأكيد الإستلام"),
-                            ],
-                          )),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(boxShadow: [
-                        BoxShadow(
-                            color: Color.fromARGB(125, 158, 158, 158),
-                            spreadRadius: 0.3,
-                            blurRadius: 15)
-                      ]),
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text(
-                                    "تأكيد الغاء الحجز",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  content: Text(
-                                    (" هل أنت متأكد من الغاء الحجز ؟ "),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text("لا"),
-                                      onPressed: () {
-                                        // callback function for on click event of Cancel button
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: const Text("نعم"),
-                                      onPressed: () async {
-                                        _firestore
-                                            .collection("foodPost")
-                                            .doc(
-                                                widget.snap["docId"].toString())
-                                            .update({"reserve": "0"});
-
-                                        Navigator.pop(context);
-
-                                        print("check");
-                                      },
-                                    ),
-                                  ],
-                                );
-                              });
-                        },
-                        child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.disabled_by_default,
-                                  color: Colors.red,
-                                ),
-                                Text("الغاء الحجز"),
-                              ],
-                            )),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
-    //  },
-    //);
   }
 
   Widget tweetAvatar() {
@@ -372,7 +372,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  usrName,
+                  usrName!,
                   //  "me",
                   style: const TextStyle(
                     color: Colors.black,
