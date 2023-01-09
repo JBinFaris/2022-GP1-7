@@ -10,6 +10,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:charts_flutter_new/flutter.dart' as charts;
+
+import 'models/bar_chatmodel.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? Key}) : super(key: Key);
@@ -460,7 +463,11 @@ class _UserProfileState extends State<UserProfile> {
                                             context: context,
                                             builder: (context) => Container(
                                                   margin: EdgeInsets.symmetric(
-                                                      horizontal: 40,
+                                                      horizontal:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              10,
                                                       vertical:
                                                           MediaQuery.of(context)
                                                                   .size
@@ -493,55 +500,65 @@ class _UserProfileState extends State<UserProfile> {
                                                                           .done &&
                                                                   datasnap
                                                                       .hasData) {
+                                                                List<
+                                                                        charts.Series<
+                                                                            BarMmodel,
+                                                                            String>>
+                                                                    _createSampleData() {
+                                                                  final data = [
+                                                                    BarMmodel(
+                                                                      'عدد الإعلانات',
+                                                                      int.parse(
+                                                                          '${datasnap.data['post posted']}'),
+                                                                    ),
+                                                                    BarMmodel(
+                                                                        "الإعلانات المحجوزة",
+                                                                        int.parse(
+                                                                            '${datasnap.data['posts with expiry date']}')),
+                                                                    BarMmodel(
+                                                                        "الأطعمة منتهية\n الصلاحية",
+                                                                        int.parse(
+                                                                            '${datasnap.data['postesreserved']}')),
+                                                                  ];
+                                                                  return [
+                                                                    charts.Series<
+                                                                            BarMmodel,
+                                                                            String>(
+                                                                        data:
+                                                                            data,
+                                                                        id:
+                                                                            'Status',
+                                                                        colorFn: (_, __) => charts.Color(
+                                                                            r:
+                                                                                205,
+                                                                            g:
+                                                                                233,
+                                                                            b:
+                                                                                197),
+                                                                        domainFn:
+                                                                            (BarMmodel barModeel, _) =>
+                                                                                '${barModeel.x}',
+                                                                        measureFn:
+                                                                            (BarMmodel barModeel, _) =>
+                                                                                barModeel.y),
+                                                                  ];
+                                                                }
+
                                                                 log(datasnap
                                                                     .data
                                                                     .toString());
                                                                 return Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      top: 40,
-                                                                      bottom:
-                                                                          20),
-                                                                  child: Column(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceEvenly,
-                                                                      children: [
-                                                                        Align(
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceEvenly,
-                                                                            children: [
-                                                                              Text('${datasnap.data['post posted']}'),
-                                                                              Align(
-                                                                                child: Text(
-                                                                                  ':عدد الإعلانات',
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Divider(),
-                                                                        Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceEvenly,
-                                                                          children: [
-                                                                            Text('${datasnap.data['postesreserved']}'),
-                                                                            Text(': الإعلانات المحجوزة'),
-                                                                          ],
-                                                                        ),
-                                                                        Divider(),
-                                                                        Row(
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceEvenly,
-                                                                          children: [
-                                                                            Text('${datasnap.data['posts with expiry date']}'),
-                                                                            Text(': الأطعمة منتهية الصلاحية'),
-                                                                          ],
-                                                                        ),
-                                                                      ]),
-                                                                );
+                                                                    padding: const EdgeInsets
+                                                                            .only(
+                                                                        top: 40,
+                                                                        bottom:
+                                                                            20),
+                                                                    child: charts
+                                                                        .BarChart(
+                                                                      _createSampleData(),
+                                                                      animate:
+                                                                          false,
+                                                                    ));
                                                               } else {
                                                                 return CupertinoActivityIndicator();
                                                               }
@@ -765,7 +782,7 @@ class _UserProfileState extends State<UserProfile> {
     return const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide(
-          color: Color.fromARGB(226, 29, 92, 76),
+          color: Color(0xff1A4D2E),
           width: 3,
         ));
   }
