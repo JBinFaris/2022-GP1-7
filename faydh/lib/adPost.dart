@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 
 class adPost extends StatefulWidget {
   const adPost({super.key});
@@ -49,9 +48,9 @@ class _HomePageState extends State<adPost> with AutomaticKeepAliveClientMixin {
 
   @override
   void initState() {
+    super.initState();
     dataoaded = false;
     //getUser();
-    // TODO: implement initState
   }
 
   assignUserNamesToPosts(List<QuerySnapshot<Map<String, dynamic>>> docs) {}
@@ -94,6 +93,7 @@ class _HomePageState extends State<adPost> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     if (!dataoaded) getAllUsers();
 
     return Scaffold(
@@ -278,9 +278,9 @@ class _HomePageState extends State<adPost> with AutomaticKeepAliveClientMixin {
                                         textColor: Colors.white);
                                   } else {
                                     DateTime now = DateTime.now();
-                                    String formattedDate =
+                                   /* String formattedDate =
                                         DateFormat('kk:mm:ss EEE d MMM')
-                                            .format(now);
+                                            .format(now);*/
                                     FirestoreMethods()
                                         .uploadPost(
                                             //postUserName: myUsername,
@@ -397,7 +397,7 @@ class _HomePageState extends State<adPost> with AutomaticKeepAliveClientMixin {
   }
 
   @override
-  // TODO: implement wantKeepAlive
+  
   bool get wantKeepAlive => throw UnimplementedError();
 
   void _clearAll() {

@@ -95,7 +95,9 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
   bool arrow = false;
 
   String Uid = FirebaseAuth.instance.currentUser!.uid;
+  @override
   initState() {
+    super.initState();
     getData();
   }
 
@@ -108,11 +110,12 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         arrow = true;
       });
     }
+    return null;
   }
 
-  @override
   String id = FirebaseAuth.instance.currentUser!.uid;
 
+  @override
   Widget build(BuildContext context) {
     final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
         .collection('foodPost')
@@ -242,263 +245,260 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                       borderRadius: BorderRadius.circular(22),
                     ),
                     elevation: 4.0,
-                    child: Container(
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(12.0),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "نوع الطعام:  ${data['postTitle'].toString()}",
-                                style: const TextStyle(
-                                  color: Color(0xFF1A4D2E),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
+                    child: Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(12.0),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              "نوع الطعام:  ${data['postTitle'].toString()}",
+                              style: const TextStyle(
+                                color: Color(0xFF1A4D2E),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "موقع الإستلام:  ${data['postAdress'].toString()}",
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 144, 177, 135),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        ),
+                        const SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              "موقع الإستلام:  ${data['postAdress'].toString()}",
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 144, 177, 135),
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "كمية الطعام:  ${data['food_cont'].toString()}",
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 144, 177, 135),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        ),
+                        const SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              "كمية الطعام:  ${data['food_cont'].toString()}",
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 144, 177, 135),
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                data['postText'],
-                                style: const TextStyle(
-                                  letterSpacing: 0.5,
-                                ),
+                        ),
+                        const SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              data['postText'],
+                              style: const TextStyle(
+                                letterSpacing: 0.5,
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Image.network(
-                              data['postImage'],
-                              height: 200,
-                              width: 200,
-                              fit: BoxFit.contain,
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          child: Image.network(
+                            data['postImage'],
+                            height: 200,
+                            width: 200,
+                            fit: BoxFit.contain,
                           ),
-                          const SizedBox(height: 5),
-                          Row(
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 12, bottom: 8),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  "تاريخ الانتهاء : ${data['postExp'].toString()}",
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 144, 177, 135),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 12, bottom: 8),
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Text(
+                                  "تاريخ الإضافة:  ${data['postDate'].toString().split(" ").first}",
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 144, 177, 135),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12, bottom: 8),
-                                child: Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Text(
-                                    "تاريخ الانتهاء : ${data['postExp'].toString()}",
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 144, 177, 135),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12, bottom: 8),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Text(
-                                    "تاريخ الإضافة:  ${data['postDate'].toString().split(" ").first}",
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 144, 177, 135),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              GestureDetector(
+                                  onTap: () {
+                                    if (data["reserve"] == '0') {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => EditPostNew(
+                                                  newID: document.id,
+                                                  title:
+                                                      "${data["postTitle"]}",
+                                                  address:
+                                                      "${data["postAdress"]}",
+                                                  text: "${data["postText"]}",
+                                                  count:
+                                                      "${data["food_cont"]}",
+                                                  expireDate:
+                                                      "${data["postExp"]}",
+                                                  imgUrl:
+                                                      "${data["postImage"]}",
+                                                  path:
+                                                      "${data["pathImage"]}",
+                                                  reference: document
+                                                          .reference
+                                                      as DocumentReference<
+                                                          Map<String,
+                                                              dynamic>>,
+                                                )),
+                                      );
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: const Text(
+                                                  ' الطعام محجوز',
+                                                  textAlign: TextAlign.right,
+                                                ),
+                                                content: const Text(
+                                                  " لا يمكن تعديل على الطعام المحجوز",
+                                                  textAlign: TextAlign.right,
+                                                ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child: const Text("حسنا"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  )
+                                                ]);
+                                          });
+                                    }
+                                  },
+                                  child: data["reserve"] == '0'
+                                      ? const Icon(
+                                          Icons.edit,
+                                          color:
+                                              Color.fromARGB(226, 29, 92, 76),
+                                        )
+                                      : const Icon(
+                                          Icons.edit,
+                                          color: Color.fromARGB(
+                                              225, 101, 109, 107),
+                                        )),
+                              GestureDetector(
+                                  onTap: () {
+                                    if (data["reserve"] == '0') {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: const Text(
+                                                  'تأكيد الحذف',
+                                                  textAlign: TextAlign.right,
+                                                ),
+                                                content: const Text(
+                                                  "هل أنت متأكد من حذف المحتوى ؟ ",
+                                                  textAlign: TextAlign.right,
+                                                ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child:
+                                                        const Text("إلغاء"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child:
+                                                        const Text("موافق"),
+                                                    onPressed: () async {
+                                                      print(document.id
+                                                          .toString());
+
+                                                      document.reference
+                                                          .delete();
+
+                                                      Navigator.pop(context);
+
+                                                    },
+                                                  ),
+                                                ]);
+                                          });
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                                title: const Text(
+                                                  ' الطعام محجوز',
+                                                  textAlign: TextAlign.right,
+                                                ),
+                                                content: const Text(
+                                                  " لا يمكن حذف الطعام المحجوز",
+                                                  textAlign: TextAlign.right,
+                                                ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child: const Text("حسنا"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  )
+                                                ]);
+                                          });
+                                    }
+                                  },
+                                  child: data["reserve"] == '0'
+                                      ? const Icon(
+                                          Icons.delete,
+                                          color:
+                                              Color.fromARGB(255, 172, 8, 8),
+                                        )
+                                      : const Icon(
+                                          Icons.delete,
+                                          color: Color.fromARGB(
+                                              225, 101, 109, 107),
+                                        ))
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      if (data["reserve"] == '0') {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => EditPostNew(
-                                                    newID: document.id,
-                                                    title:
-                                                        "${data["postTitle"]}",
-                                                    address:
-                                                        "${data["postAdress"]}",
-                                                    text: "${data["postText"]}",
-                                                    count:
-                                                        "${data["food_cont"]}",
-                                                    expireDate:
-                                                        "${data["postExp"]}",
-                                                    imgUrl:
-                                                        "${data["postImage"]}",
-                                                    path:
-                                                        "${data["pathImage"]}",
-                                                    reference: document
-                                                            .reference
-                                                        as DocumentReference<
-                                                            Map<String,
-                                                                dynamic>>,
-                                                  )),
-                                        );
-                                      } else {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                  title: const Text(
-                                                    ' الطعام محجوز',
-                                                    textAlign: TextAlign.right,
-                                                  ),
-                                                  content: const Text(
-                                                    " لا يمكن تعديل على الطعام المحجوز",
-                                                    textAlign: TextAlign.right,
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      child: const Text("حسنا"),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    )
-                                                  ]);
-                                            });
-                                      }
-                                    },
-                                    child: data["reserve"] == '0'
-                                        ? const Icon(
-                                            Icons.edit,
-                                            color:
-                                                Color.fromARGB(226, 29, 92, 76),
-                                          )
-                                        : const Icon(
-                                            Icons.edit,
-                                            color: Color.fromARGB(
-                                                225, 101, 109, 107),
-                                          )),
-                                GestureDetector(
-                                    onTap: () {
-                                      if (data["reserve"] == '0') {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                  title: const Text(
-                                                    'تأكيد الحذف',
-                                                    textAlign: TextAlign.right,
-                                                  ),
-                                                  content: const Text(
-                                                    "هل أنت متأكد من حذف المحتوى ؟ ",
-                                                    textAlign: TextAlign.right,
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      child:
-                                                          const Text("إلغاء"),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    ),
-                                                    TextButton(
-                                                      child:
-                                                          const Text("موافق"),
-                                                      onPressed: () async {
-                                                        print(document.id
-                                                            .toString());
-
-                                                        document.reference
-                                                            .delete();
-
-                                                        Navigator.pop(context);
-
-                                                        print("check");
-                                                      },
-                                                    ),
-                                                  ]);
-                                            });
-                                      } else {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                  title: const Text(
-                                                    ' الطعام محجوز',
-                                                    textAlign: TextAlign.right,
-                                                  ),
-                                                  content: const Text(
-                                                    " لا يمكن حذف الطعام المحجوز",
-                                                    textAlign: TextAlign.right,
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      child: const Text("حسنا"),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    )
-                                                  ]);
-                                            });
-                                      }
-                                    },
-                                    child: data["reserve"] == '0'
-                                        ? const Icon(
-                                            Icons.delete,
-                                            color:
-                                                Color.fromARGB(255, 172, 8, 8),
-                                          )
-                                        : const Icon(
-                                            Icons.delete,
-                                            color: Color.fromARGB(
-                                                225, 101, 109, 107),
-                                          ))
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ),
                 );
@@ -739,14 +739,14 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                             selectedValue = value.toString();
                             if (kDebugMode) {
                               print(
-                                  "selectedValue  onChanged:${selectedValue}");
+                                  "selectedValue  onChanged:$selectedValue");
                             }
                           });
                         },
                         onSaved: (value) {
                           selectedValue = value.toString();
                           if (kDebugMode) {
-                            print("selectedValue  onSaved:${selectedValue}");
+                            print("selectedValue  onSaved:$selectedValue");
                           }
                         },
                       ))),
@@ -799,26 +799,24 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            Container(
-                              child: Row(
-                                children: <Widget>[
-                                  const Icon(
-                                    Icons.date_range,
-                                    size: 18.0,
-                                    color: Color(0xFF1A4D2E),
+                            Row(
+                              children: <Widget>[
+                                const Icon(
+                                  Icons.date_range,
+                                  size: 18.0,
+                                  color: Color(0xFF1A4D2E),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    " $_date",
+                                    style: const TextStyle(
+                                        color: Color(0xFF1A4D2E),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14.0),
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      " $_date",
-                                      style: const TextStyle(
-                                          color: Color(0xFF1A4D2E),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14.0),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             )
                           ],
                         ),
@@ -840,7 +838,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                   ? Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "$fileNameImage",
+                        fileNameImage,
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.red,
@@ -885,7 +883,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                     backgroundColor: const Color(0xFF1A4D2E),
                     onPressed: () {
                       selectFileImage();
-                      print("object");
                     },
                     child: const Icon(Icons.add_photo_alternate),
                   ),
@@ -924,7 +921,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                 TextButton(
                                                   onPressed: () {
                                                     print(
-                                                        "dataurl: ${urlDownloadImage}");
+                                                        "dataurl: $urlDownloadImage");
                                                     print(
                                                         "useris:: ${user!.displayName}");
                                                     if (_date != "" &&
@@ -934,7 +931,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             null) {
                                                       if (kDebugMode) {
                                                         print(
-                                                            "selectedValue on final:${selectedValue}");
+                                                            "selectedValue on final:$selectedValue");
                                                       }
 
                                                       Database.addFoodPostData(

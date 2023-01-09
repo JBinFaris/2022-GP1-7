@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/models/user_model.dart';
 import 'package:faydh/widgets/Approval_Card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class ApproveBusiness extends StatefulWidget {
   const ApproveBusiness({super.key});
@@ -26,9 +25,9 @@ class _ApproveBusinessState extends State<ApproveBusiness> {
 
   @override
   void initState() {
+    super.initState();
     dataloaded = false;
     //getUser();
-    // TODO: implement initState
   }
 
 
@@ -42,7 +41,7 @@ class _ApproveBusinessState extends State<ApproveBusiness> {
         
         automaticallyImplyLeading: false,
         title: const Center(child: Text('      التحقق من الشركات')),
-        backgroundColor: Color.fromARGB(151, 26, 77, 46),
+        backgroundColor: const Color.fromARGB(151, 26, 77, 46),
         actions: [
           GestureDetector(
             onTap: () {

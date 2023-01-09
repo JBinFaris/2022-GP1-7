@@ -1,8 +1,5 @@
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faydh/Database/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/widgets/ConsumerListCard.dart';
 
@@ -19,7 +16,7 @@ class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xffd6ecd0),
+        backgroundColor: const Color(0xffd6ecd0),
         appBar: AppBar(
             elevation: 2.0,
             centerTitle: true,

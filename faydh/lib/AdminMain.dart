@@ -16,7 +16,7 @@ State<AdminMain> createState() => _AdminMainPageState();
 class  _AdminMainPageState extends State<AdminMain> {
   @override 
   Widget build(BuildContext context){
-   Size size = MediaQuery.of(context).size;
+  // Size size = MediaQuery.of(context).size;
 
    return Scaffold(
     resizeToAvoidBottomInset: false,
