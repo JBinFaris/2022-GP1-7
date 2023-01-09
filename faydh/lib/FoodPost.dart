@@ -134,7 +134,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Text(" اعلاناتي   "),
+              title: const Text(" إعلاناتي     "),
               actions: <Widget>[
                 SizedBox(
                     width: 130,
@@ -180,7 +180,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               centerTitle: false,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Center(child: Text('اعلاناتي')),
+              title: const Center(child: Text('          إعلاناتي ')),
               actions: <Widget>[
                 SizedBox(
                     width: 130,

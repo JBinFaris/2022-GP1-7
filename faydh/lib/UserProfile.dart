@@ -425,21 +425,20 @@ class _UserProfileState extends State<UserProfile> {
                           const SizedBox(
                             height: 30,
                           ),
-                          ElevatedButton.icon(
+                          ElevatedButton(
                             onPressed: () {
                               Navigator.of(context)
                                   .push(MaterialPageRoute(builder: (context) {
                                 return const myAware();
                               }));
                             },
-                            label: const Text('محتواي التوعوي'),
-                            icon: const Icon(Icons.arrow_back_ios_new),
+                            child: const Text('محتواي التوعوي'),
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)),
                                 backgroundColor: const Color(0xFF1A4D2E),
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 90.0, vertical: 15.0),
+                                    horizontal: 80.0, vertical: 15.0),
                                 textStyle: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold)),
                           ),
@@ -456,129 +455,129 @@ class _UserProfileState extends State<UserProfile> {
                                   if (userdatasnap.data['role'].toString() !=
                                       'منظمة خيرية') {
                                     return ElevatedButton(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) => Container(
-                                                    margin: EdgeInsets.symmetric(
-                                                        horizontal: 40,
-                                                        vertical: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height /
-                                                            3.3),
-                                                    child: Stack(
-                                                      children: [
-                                                        Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  top: 50),
-                                                          height:
-                                                              double.maxFinite,
-                                                          width:
-                                                              double.maxFinite,
-                                                          decoration: BoxDecoration(
-                                                              color: Color(
-                                                                  0xFFf7f7f7),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10)),
-                                                          child: FutureBuilder(
-                                                              future:
-                                                                  getuserpostandotherdata(
-                                                                      userdatasnap
-                                                                          .data),
-                                                              builder: (context,
-                                                                  datasnap) {
-                                                                if (datasnap.connectionState ==
-                                                                        ConnectionState
-                                                                            .done &&
-                                                                    datasnap
-                                                                        .hasData) {
-                                                                  log(datasnap
-                                                                      .data
-                                                                      .toString());
-                                                                  return Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .only(
-                                                                        top: 40,
-                                                                        bottom:
-                                                                            20),
-                                                                    child: Column(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceEvenly,
-                                                                        children: [
-                                                                          Align(
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                              children: [
-                                                                                Text('${datasnap.data['post posted']}'),
-                                                                                Align(
-                                                                                  child: Text(
-                                                                                    ':عدد الإعلانات',
-                                                                                  ),
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => Container(
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 40,
+                                                      vertical:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              3.3),
+                                                  child: Stack(
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.only(
+                                                            top: 50),
+                                                        height:
+                                                            double.maxFinite,
+                                                        width: double.maxFinite,
+                                                        decoration: BoxDecoration(
+                                                            color: Color(
+                                                                0xFFf7f7f7),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10)),
+                                                        child: FutureBuilder(
+                                                            future:
+                                                                getuserpostandotherdata(
+                                                                    userdatasnap
+                                                                        .data),
+                                                            builder: (context,
+                                                                datasnap) {
+                                                              if (datasnap.connectionState ==
+                                                                      ConnectionState
+                                                                          .done &&
+                                                                  datasnap
+                                                                      .hasData) {
+                                                                log(datasnap
+                                                                    .data
+                                                                    .toString());
+                                                                return Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      top: 40,
+                                                                      bottom:
+                                                                          20),
+                                                                  child: Column(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceEvenly,
+                                                                      children: [
+                                                                        Align(
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceEvenly,
+                                                                            children: [
+                                                                              Text('${datasnap.data['post posted']}'),
+                                                                              Align(
+                                                                                child: Text(
+                                                                                  ':عدد الإعلانات',
                                                                                 ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                          Divider(),
-                                                                          Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceEvenly,
-                                                                            children: [
-                                                                              Text('${datasnap.data['postesreserved']}'),
-                                                                              Text(':عدد الإعلانات المحجوزة'),
+                                                                              ),
                                                                             ],
                                                                           ),
-                                                                          Divider(),
-                                                                          Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceEvenly,
-                                                                            children: [
-                                                                              Text('${datasnap.data['posts with expiry date']}'),
-                                                                              Text(':عدد الإعلانات المنتهية'),
-                                                                            ],
-                                                                          ),
-                                                                        ]),
-                                                                  );
-                                                                } else {
-                                                                  return CupertinoActivityIndicator();
-                                                                }
-                                                              }),
-                                                        ),
-                                                        Positioned(
-                                                            right: 0,
-                                                            left: 0,
-                                                            child: CircleAvatar(
-                                                              backgroundColor:
-                                                                  Color(
-                                                                      0xFFd6ecd0),
-                                                              radius: 40,
-                                                              child: Icon(
-                                                                Icons
-                                                                    .query_stats_outlined,
-                                                                size: 55,
-                                                              ),
-                                                            )),
-                                                      ],
-                                                    ),
-                                                  ));
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            backgroundColor:
-                                                const Color(0xFF1A4D2E),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 90.0,
-                                                vertical: 15.0),
-                                            textStyle: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold)),
-                                        child: Text('     إحصائياتي      '));
+                                                                        ),
+                                                                        Divider(),
+                                                                        Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceEvenly,
+                                                                          children: [
+                                                                            Text('${datasnap.data['postesreserved']}'),
+                                                                            Text(': الإعلانات المحجوزة'),
+                                                                          ],
+                                                                        ),
+                                                                        Divider(),
+                                                                        Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceEvenly,
+                                                                          children: [
+                                                                            Text('${datasnap.data['posts with expiry date']}'),
+                                                                            Text(': الأطعمة منتهية الصلاحية'),
+                                                                          ],
+                                                                        ),
+                                                                      ]),
+                                                                );
+                                                              } else {
+                                                                return CupertinoActivityIndicator();
+                                                              }
+                                                            }),
+                                                      ),
+                                                      Positioned(
+                                                          right: 0,
+                                                          left: 0,
+                                                          child: CircleAvatar(
+                                                            backgroundColor:
+                                                                Color(
+                                                                    0xFFd6ecd0),
+                                                            radius: 40,
+                                                            child: Icon(
+                                                              Icons
+                                                                  .query_stats_outlined,
+                                                              size: 55,
+                                                            ),
+                                                          )),
+                                                    ],
+                                                  ),
+                                                ));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          backgroundColor:
+                                              const Color(0xFF1A4D2E),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 90.0, vertical: 15.0),
+                                          textStyle: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold)),
+                                      child: Text('  إحصائياتي  '),
+                                    );
                                   } else {
                                     return Container();
                                   }
