@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:charts_flutter_new/flutter.dart' as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'models/bar_chatmodel.dart';
 
@@ -500,48 +501,69 @@ class _UserProfileState extends State<UserProfile> {
                                                                           .done &&
                                                                   datasnap
                                                                       .hasData) {
-                                                                List<
-                                                                        charts.Series<
-                                                                            BarMmodel,
-                                                                            String>>
-                                                                    _createSampleData() {
-                                                                  final data = [
-                                                                    BarMmodel(
-                                                                      'عدد الإعلانات',
-                                                                      int.parse(
-                                                                          '${datasnap.data['post posted']}'),
+                                                                _createSampleData() {
+                                                                  return SfCartesianChart(
+                                                                    palette: [
+                                                                      Color.fromRGBO(
+                                                                          26,
+                                                                          77,
+                                                                          46,
+                                                                          1),
+                                                                    ],
+                                                                    plotAreaBorderWidth:
+                                                                        0,
+                                                                    title:
+                                                                        ChartTitle(
+                                                                      text: ' ',
                                                                     ),
-                                                                    BarMmodel(
-                                                                        "الإعلانات المحجوزة",
-                                                                        int.parse(
-                                                                            '${datasnap.data['posts with expiry date']}')),
-                                                                    BarMmodel(
-                                                                        "الأطعمة منتهية\n الصلاحية",
-                                                                        int.parse(
-                                                                            '${datasnap.data['postesreserved']}')),
-                                                                  ];
-                                                                  return [
-                                                                    charts.Series<
+                                                                    primaryXAxis:
+                                                                        CategoryAxis(
+                                                                      majorGridLines:
+                                                                          const MajorGridLines(
+                                                                              width: 0),
+                                                                    ),
+                                                                    primaryYAxis: NumericAxis(
+                                                                        axisLine: const AxisLine(
+                                                                            width:
+                                                                                0),
+                                                                        labelFormat:
+                                                                            '{value}',
+                                                                        majorTickLines:
+                                                                            const MajorTickLines(size: 0)),
+                                                                    series: <
+                                                                        ColumnSeries<
                                                                             BarMmodel,
-                                                                            String>(
-                                                                        data:
-                                                                            data,
-                                                                        id:
-                                                                            'Status',
-                                                                        colorFn: (_, __) => charts.Color(
-                                                                            r:
-                                                                                205,
-                                                                            g:
-                                                                                233,
-                                                                            b:
-                                                                                197),
-                                                                        domainFn:
-                                                                            (BarMmodel barModeel, _) =>
-                                                                                '${barModeel.x}',
-                                                                        measureFn:
-                                                                            (BarMmodel barModeel, _) =>
-                                                                                barModeel.y),
-                                                                  ];
+                                                                            String>>[
+                                                                      ColumnSeries<
+                                                                          BarMmodel,
+                                                                          String>(
+                                                                        dataSource: <
+                                                                            BarMmodel>[
+                                                                          BarMmodel(
+                                                                              'عدد الإعلانات',
+                                                                              int.parse('${datasnap.data['post posted']}')),
+                                                                          BarMmodel(
+                                                                              "الإعلانات المحجوزة",
+                                                                              int.parse('${datasnap.data['posts with expiry date']}')),
+                                                                          BarMmodel(
+                                                                              "الأطعمة منتهية\n الصلاحية",
+                                                                              int.parse('${datasnap.data['postesreserved']}')),
+                                                                        ],
+                                                                        xValueMapper: (BarMmodel sales,
+                                                                                _) =>
+                                                                            sales.x
+                                                                                as String,
+                                                                        yValueMapper:
+                                                                            (BarMmodel sales, _) =>
+                                                                                sales.y,
+                                                                        dataLabelSettings: const DataLabelSettings(
+                                                                            isVisible:
+                                                                                true,
+                                                                            textStyle:
+                                                                                TextStyle(fontSize: 10)),
+                                                                      )
+                                                                    ],
+                                                                  );
                                                                 }
 
                                                                 log(datasnap
@@ -553,12 +575,8 @@ class _UserProfileState extends State<UserProfile> {
                                                                         top: 40,
                                                                         bottom:
                                                                             20),
-                                                                    child: charts
-                                                                        .BarChart(
-                                                                      _createSampleData(),
-                                                                      animate:
-                                                                          false,
-                                                                    ));
+                                                                    child:
+                                                                        _createSampleData());
                                                               } else {
                                                                 return CupertinoActivityIndicator();
                                                               }
@@ -593,7 +611,7 @@ class _UserProfileState extends State<UserProfile> {
                                           textStyle: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold)),
-                                      child: Text('  إحصائياتي  '),
+                                      child: Text('إحصائياتي'),
                                     );
                                   } else {
                                     return Container();
@@ -782,7 +800,7 @@ class _UserProfileState extends State<UserProfile> {
     return const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         borderSide: BorderSide(
-          color: Color(0xff1A4D2E),
+          color: Color.fromARGB(226, 29, 92, 76),
           width: 3,
         ));
   }
