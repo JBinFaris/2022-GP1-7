@@ -505,9 +505,9 @@ class _UserProfileState extends State<UserProfile> {
                                                                   return SfCartesianChart(
                                                                     palette: [
                                                                       Color.fromRGBO(
-                                                                          26,
-                                                                          77,
-                                                                          46,
+                                                                          205,
+                                                                          233,
+                                                                          197,
                                                                           1),
                                                                     ],
                                                                     plotAreaBorderWidth:
