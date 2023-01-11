@@ -120,10 +120,8 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
     final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
         .collection('foodPost')
         .where('Cid', isEqualTo: id)
-        .orderBy(
-          "docId",
-          descending: true,
-        )
+        .where('reserve', isEqualTo: '0')
+        // .orderBy("docId",descending: true,)
         .snapshots();
 
     return Scaffold(

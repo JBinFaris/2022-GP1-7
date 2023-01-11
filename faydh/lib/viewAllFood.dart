@@ -1,6 +1,8 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
+import 'package:faydh/ReservedFoodListConsumer.dart';
 import 'package:faydh/upload_api.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 
-import 'ReservedFoodListConsumer.dart';
+// import 'ReservedFoodListConsumer.dart';
+User? Uid = FirebaseAuth.instance.currentUser;
 
 class viewAllFood extends StatefulWidget {
   const viewAllFood({Key? key}) : super(key: key);
@@ -22,8 +25,9 @@ class viewAllFood extends StatefulWidget {
 class _viewAllFood extends State<viewAllFood> {
   bool arrow = false;
 
-  String Uid = FirebaseAuth.instance.currentUser!.uid;
+  @override
   initState() {
+    super.initState();
     getData();
   }
 
@@ -39,7 +43,10 @@ class _viewAllFood extends State<viewAllFood> {
   }
 
   Future<String?> getData() async {
-    var a = await FirebaseFirestore.instance.collection("users").doc(Uid).get();
+    var a = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(Uid!.uid)
+        .get();
 
     final myrole = a['role'];
     if (myrole == "فرد") {
@@ -49,14 +56,19 @@ class _viewAllFood extends State<viewAllFood> {
     }
   }
 
+  //Future sortData() async {}
+
+  final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
+      .collection('foodPost')
+      .where('reserve', isEqualTo: '0')
+      .where('Cid', isNotEqualTo: Uid!.uid.toString())
+      // .orderBy("docId",descending: true,)
+      .snapshots();
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
-        .collection('foodPost')
-        .where('reserve', isEqualTo: '0')
-        .snapshots();
-    //getData();
-    // var userDoc = FirebaseFirestore.instance.collection('users').doc(Uid).get();
+    // print("cehecl");
+
+    // print("collection lenG: ${foodPostStream.length}");
     return Scaffold(
       backgroundColor: Colors.green[100],
       appBar: arrow
@@ -170,6 +182,8 @@ class _viewAllFood extends State<viewAllFood> {
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                     document.data()! as Map<String, dynamic>;
+                //bool b = data['Cid'] != Uid;
+
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(

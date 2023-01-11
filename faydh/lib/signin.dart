@@ -74,7 +74,7 @@ class _signInSreenState extends State<signInSreen> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(seconds: 40);
+      var period = const Duration(hours: 6);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: id, token: token!);
@@ -90,17 +90,21 @@ class _signInSreenState extends State<signInSreen> {
         .update({'token': token});}*/
 
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyy-MM-dd').format(now);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     DateTime dt1Now = DateTime.parse(formattedDate);
-
+    //print(formattedDate);
     FirebaseFirestore.instance
         .collection('foodPost')
         .where('Cid', isEqualTo: id)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        DateTime dt2Check = DateTime.parse(doc["postExp"]);
-        if (dt1Now.isAfter(dt2Check)) {
+        String exp = doc["postExp"];
+
+        print(exp);
+        // DateTime dt2Check = DateTime.parse('1/1/2023');
+        DateTime dt2 = DateTime.parse('2024-01-01');
+        if (dt1Now.isAfter(dt2)) {
           Future.delayed(const Duration(seconds: 2), () {
             print("expired");
             initInfo();
