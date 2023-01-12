@@ -99,12 +99,13 @@ class _signInSreenState extends State<signInSreen> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
+        var raw_date = doc["postExp"].toString().split('-');
+        DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
+            int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
         String exp = doc["postExp"];
 
         print(exp);
-        // DateTime dt2Check = DateTime.parse('1/1/2023');
-        DateTime dt2 = DateTime.parse('2024-01-01');
-        if (dt1Now.isAfter(dt2)) {
+        if (dt1Now.isAfter(dt2check)) {
           Future.delayed(const Duration(seconds: 2), () {
             print("expired");
             initInfo();

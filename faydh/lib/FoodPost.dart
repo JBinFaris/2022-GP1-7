@@ -361,24 +361,19 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                         MaterialPageRoute(
                                             builder: (context) => EditPostNew(
                                                   newID: document.id,
-                                                  title:
-                                                      "${data["postTitle"]}",
+                                                  title: "${data["postTitle"]}",
                                                   address:
                                                       "${data["postAdress"]}",
                                                   text: "${data["postText"]}",
-                                                  count:
-                                                      "${data["food_cont"]}",
+                                                  count: "${data["food_cont"]}",
                                                   expireDate:
                                                       "${data["postExp"]}",
                                                   imgUrl:
                                                       "${data["postImage"]}",
-                                                  path:
-                                                      "${data["pathImage"]}",
-                                                  reference: document
-                                                          .reference
+                                                  path: "${data["pathImage"]}",
+                                                  reference: document.reference
                                                       as DocumentReference<
-                                                          Map<String,
-                                                              dynamic>>,
+                                                          Map<String, dynamic>>,
                                                 )),
                                       );
                                     } else {
@@ -434,16 +429,14 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                                 ),
                                                 actions: <Widget>[
                                                   TextButton(
-                                                    child:
-                                                        const Text("إلغاء"),
+                                                    child: const Text("إلغاء"),
                                                     onPressed: () {
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
                                                   ),
                                                   TextButton(
-                                                    child:
-                                                        const Text("موافق"),
+                                                    child: const Text("موافق"),
                                                     onPressed: () async {
                                                       print(document.id
                                                           .toString());
@@ -452,7 +445,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                                           .delete();
 
                                                       Navigator.pop(context);
-
                                                     },
                                                   ),
                                                 ]);
@@ -485,8 +477,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                   child: data["reserve"] == '0'
                                       ? const Icon(
                                           Icons.delete,
-                                          color:
-                                              Color.fromARGB(255, 172, 8, 8),
+                                          color: Color.fromARGB(255, 172, 8, 8),
                                         )
                                       : const Icon(
                                           Icons.delete,
@@ -736,8 +727,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           setState(() {
                             selectedValue = value.toString();
                             if (kDebugMode) {
-                              print(
-                                  "selectedValue  onChanged:$selectedValue");
+                              print("selectedValue  onChanged:$selectedValue");
                             }
                           });
                         },
@@ -784,8 +774,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                         showTitleActions: true,
                         minTime: DateTime.now(),
                         maxTime: DateTime(2050, 12, 31), onConfirm: (date) {
+                      var date_with_raw_format = date.toString().split(' ');
+                      var finalDate =
+                          date_with_raw_format[0].toString().split('-');
+
+                      _date = '${finalDate[2]}-${finalDate[1]}-${finalDate[0]}';
                       print('confirm $date');
-                      _date = '${date.year}-${date.month}-${date.day}';
+
                       setState(() {});
                     }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
