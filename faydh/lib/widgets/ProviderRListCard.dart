@@ -273,6 +273,26 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
               child: Column(
                 children: [
                   Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                          ("${/*" نوع الطعام: " + */ widget.snap["postTitle"].toString()}"),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ))),
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                          ("${/*" نوع الطعام: " + */ widget.snap["postText"].toString()}"),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            // fontWeight: FontWeight.bold,
+                            //fontSize: 18,
+                          ))),
+                  Align(
                     alignment: Alignment.centerRight,
                     child: Text((" رقم الحاجز : ${phonee}"),
                         // " رقم للحاجز ",
@@ -291,15 +311,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ))),*/
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                          ("${" نوع الطعام: " + widget.snap["postTitle"].toString()}"),
-                          textAlign: TextAlign.right,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ))),
+
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
