@@ -2,6 +2,7 @@ import 'package:faydh/FoodPost.dart';
 import 'package:faydh/viewAllFood.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/components/background.dart';
+import 'package:button_animations/button_animations.dart';
 
 class individual extends StatefulWidget {
   const individual({super.key});
@@ -46,14 +47,72 @@ class _individualPageState extends State<individual> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                // child: Text(
-                //   "انتظرونا قريباً",
-                //   style: TextStyle(color: Colors.red[900], fontSize: 30),
-                //   textAlign: TextAlign.center,
-                // ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: AnimatedButton(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                           // Icon(Icons.person, color: Colors.white),
+                            Text("متبرع",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18)),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return const FoodPostScreen();
+                          }));
+                        },
+                        type: null,
+                        height: 60,
+                        width: 260,
+                        borderRadius: 30,
+                        color: Color.fromARGB(255, 62, 112, 82),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: AnimatedButton(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                         //   const Icon(Icons.person, color: Colors.white),
+                            Text("مستفيد",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18)),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return const viewAllFood();
+                            }),
+                          );
+                        },
+                        type: null,
+                        height: 60,
+                        width: 260,
+                        borderRadius: 30,
+                        // isOutline: true,
+                        color: Color.fromARGB(255, 62, 112, 82),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Container(
+              // Container(
+              //  padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              // child: Text(
+              //   "انتظرونا قريباً",
+              //   style: TextStyle(color: Colors.red[900], fontSize: 30),
+              //   textAlign: TextAlign.center,
+              // ),
+              // ),
+              /*  Container(
                 padding:
                     const EdgeInsets.only(top: 3.0, left: 20.0, right: 20.0),
                 child: ElevatedButton(
@@ -73,11 +132,11 @@ class _individualPageState extends State<individual> {
                           fontSize: 30, fontWeight: FontWeight.bold)),
                   child: const Text("متبرع  "),
                 ),
-              ),
+              ), */
               const SizedBox(
                 height: 20.0,
               ),
-              ElevatedButton(
+              /*    ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) {
@@ -94,7 +153,7 @@ class _individualPageState extends State<individual> {
                     textStyle: const TextStyle(
                         fontSize: 30, fontWeight: FontWeight.bold)),
                 child: const Text('مستفيد'),
-              )
+              )*/
             ]),
           ),
         ),

@@ -56,11 +56,13 @@ class _MyCardState extends State<MyCard> {
   @override
   Widget build(BuildContext context) {
     var _dta = "${widget.snap["postImage"].toString()}";
-    
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
-        shape: RoundedRectangleBorder(
+        elevation: 0,
+        color: Colors.transparent,
+        /*  shape: RoundedRectangleBorder(
           side: const BorderSide(
             width: 0,
             color: Colors.white,
@@ -73,9 +75,22 @@ class _MyCardState extends State<MyCard> {
               color: Colors.white,
               borderRadius: BorderRadius.all(
                 Radius.circular(30.0),
-              )),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+              )), */
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
             child: Column(
               children: [
                 Row(
@@ -154,6 +169,7 @@ class _MyCardState extends State<MyCard> {
             ),
           ),
         ),
+        //   ),
       ),
     );
   }

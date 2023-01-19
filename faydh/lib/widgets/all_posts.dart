@@ -55,26 +55,36 @@ class _AllPostsCardState extends State<AllPostsCard> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 0,
-            color: Colors.white,
-          ),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        margin: const EdgeInsets.all(8),
+        elevation: 0,
+        color: Colors.transparent,
+
+        //  color: Colors.white.withOpacity(0.9),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  tweetAvatar(),
-                  tweetBody(),
-                ],
-              ),
-            ],
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    tweetAvatar(),
+                    tweetBody(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -110,8 +120,9 @@ class _AllPostsCardState extends State<AllPostsCard> {
             child: Padding(
               padding:
                   const EdgeInsets.only(top: 20, right: 0, bottom: 2, left: 50),
-              child: Text(//"${widget.snap["postText"].toString()}",
-                widget.postData.postText.toString(),
+              child: Text(
+                  //"${widget.snap["postText"].toString()}",
+                  widget.postData.postText.toString(),
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,

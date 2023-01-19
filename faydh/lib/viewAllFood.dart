@@ -187,11 +187,22 @@ class _viewAllFood extends State<viewAllFood> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(22),
-                    ),
-                    elevation: 4.0,
+                    elevation: 0,
+                    color: Colors.transparent,
                     child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 62, 112, 82)
+                                .withOpacity(0.9),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
                       child: Column(
                         children: [
                           Padding(

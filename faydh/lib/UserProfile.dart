@@ -12,6 +12,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:button_animations/button_animations.dart';
 
 import 'models/bar_chatmodel.dart';
 
@@ -426,10 +427,180 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                             ),
 
-                          const SizedBox(
-                            height: 30,
+                          Container(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: AnimatedButton(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        //  Icon(Icons.person, color: Colors.white),
+                                        Text("محتواي التوعوي",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18)),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return const myAware();
+                                      }));
+                                    },
+                                    type: null,
+                                    height: 60,
+                                    width: 260,
+                                    borderRadius: 30,
+                                    color: Color.fromARGB(255, 62, 112, 82),
+                                  ),
+                                ),
+                                //here
+
+                                FutureBuilder(
+                                    future: fetchUserData(),
+                                    builder:
+                                        (context, AsyncSnapshot userdatasnap) {
+                                      if (userdatasnap.hasData) {
+                                        log(userdatasnap.data['role']
+                                            .toString());
+
+                                        //if the user is not charity then this will show the button
+                                        if (userdatasnap.data['role']
+                                                .toString() !=
+                                            'منظمة خيرية') {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: AnimatedButton(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  //  const Icon(Icons.person,color: Colors.white),
+                                                  Text("إحصائياتي",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 18)),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (context) => Container(
+                                                              margin: EdgeInsets.symmetric(
+                                                                  horizontal: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width /
+                                                                      10,
+                                                                  vertical: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .height /
+                                                                      3.3),
+                                                              child: Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    margin: EdgeInsets
+                                                                        .only(
+                                                                            top:
+                                                                                50),
+                                                                    height: double
+                                                                        .maxFinite,
+                                                                    width: double
+                                                                        .maxFinite,
+                                                                    decoration: BoxDecoration(
+                                                                        color: Color(
+                                                                            0xFFf7f7f7),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(10)),
+                                                                    child: FutureBuilder(
+                                                                        future: getuserpostandotherdata(userdatasnap.data),
+                                                                        builder: (context, datasnap) {
+                                                                          if (datasnap.connectionState == ConnectionState.done &&
+                                                                              datasnap.hasData) {
+                                                                            _createSampleData() {
+                                                                              return SfCartesianChart(
+                                                                                palette: [
+                                                                                  Color.fromRGBO(205, 233, 197, 1),
+                                                                                ],
+                                                                                plotAreaBorderWidth: 0,
+                                                                                title: ChartTitle(
+                                                                                  text: ' ',
+                                                                                ),
+                                                                                primaryXAxis: CategoryAxis(
+                                                                                  majorGridLines: const MajorGridLines(width: 0),
+                                                                                ),
+                                                                                primaryYAxis: NumericAxis(axisLine: const AxisLine(width: 0), labelFormat: '{value}', majorTickLines: const MajorTickLines(size: 0)),
+                                                                                series: <ColumnSeries<BarMmodel, String>>[
+                                                                                  ColumnSeries<BarMmodel, String>(
+                                                                                    dataSource: <BarMmodel>[
+                                                                                      BarMmodel('عدد الإعلانات', int.parse('${datasnap.data['post posted']}')),
+                                                                                      BarMmodel("الإعلانات المحجوزة", int.parse('${datasnap.data['posts with expiry date']}')),
+                                                                                      BarMmodel("الأطعمة منتهية\n الصلاحية", int.parse('${datasnap.data['postesreserved']}')),
+                                                                                    ],
+                                                                                    xValueMapper: (BarMmodel sales, _) => sales.x as String,
+                                                                                    yValueMapper: (BarMmodel sales, _) => sales.y,
+                                                                                    dataLabelSettings: const DataLabelSettings(isVisible: true, textStyle: TextStyle(fontSize: 10)),
+                                                                                  )
+                                                                                ],
+                                                                              );
+                                                                            }
+
+                                                                            log(datasnap.data.toString());
+                                                                            return Padding(
+                                                                                padding: const EdgeInsets.only(top: 40, bottom: 20),
+                                                                                child: _createSampleData());
+                                                                          } else {
+                                                                            return CupertinoActivityIndicator();
+                                                                          }
+                                                                        }),
+                                                                  ),
+                                                                  Positioned(
+                                                                      right: 0,
+                                                                      left: 0,
+                                                                      child:
+                                                                          CircleAvatar(
+                                                                        backgroundColor:
+                                                                            Color(0xFFd6ecd0),
+                                                                        radius:
+                                                                            40,
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .query_stats_outlined,
+                                                                          size:
+                                                                              55,
+                                                                        ),
+                                                                      )),
+                                                                ],
+                                                              ),
+                                                            ));
+                                              },
+                                              type: null,
+                                              height: 60,
+                                              width: 260,
+                                              borderRadius: 30,
+                                              // isOutline: true,
+                                              color: Color.fromARGB(
+                                                  255, 62, 112, 82),
+                                            ),
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                              ],
+                            ),
                           ),
-                          ElevatedButton(
+                          /* ElevatedButton(
                             onPressed: () {
                               Navigator.of(context)
                                   .push(MaterialPageRoute(builder: (context) {
@@ -620,6 +791,7 @@ class _UserProfileState extends State<UserProfile> {
                                   return Container();
                                 }
                               }),
+                              */
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[

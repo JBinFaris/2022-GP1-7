@@ -94,6 +94,7 @@ class _HomePageState extends State<awarenessPost>
     if (!dataoaded) getAllUsers();
 
     return Scaffold(
+      //  backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
