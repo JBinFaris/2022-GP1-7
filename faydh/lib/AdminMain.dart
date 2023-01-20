@@ -1,5 +1,6 @@
 import 'package:faydh/ApproveBusiness.dart';
 import 'package:faydh/reportedContent.dart';
+import 'package:faydh/reports.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/signin.dart';
 import 'package:flutter/material.dart';
@@ -97,8 +98,7 @@ class _AdminMainPageState extends State<AdminMain> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const reportedContent()));
+                                  builder: (context) => const reportsScreen()));
                         },
                         child: const Text(
                           "البلاغات",

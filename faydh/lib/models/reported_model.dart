@@ -6,8 +6,8 @@ class reported {
   String postUserName = "";
 
   final String postText; //
-  final String postImage; //
-  final String pathImage; //
+  final String? postImage; //
+  final String? pathImage; //
   final String userId;
 
   //final DateTime postDate;
@@ -17,8 +17,8 @@ class reported {
     required this.postId,
     required this.postUserName,
     required this.postText,
-    required this.postImage, //
-    required this.pathImage, //
+    this.postImage, //
+    this.pathImage, //
     required this.userId,
     //required this.postDate,
   });
