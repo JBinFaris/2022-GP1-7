@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:faydh/services/firestore_methods.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -156,23 +157,100 @@ class _AllPostsCardState extends State<AllPostsCard> {
   }
 
   Widget tweetHeader() {
-    return Row(
+    var cardId = widget.postData.userId.toString();
+    return Column(
       children: [
         Container(
           margin: const EdgeInsets.only(right: 5.0),
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: Text(
-              //"${widget.snap["postUserName"].toString()}",
-              widget.postData.postUserName.toString(),
-              //myUsername,
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.postData.postUserName.toString(),
+
+                  //  "me",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: GestureDetector(
+                            onTap: (() {}),
+                            child: PopupMenuButton(
+                                itemBuilder: (ctx) => [
+                                      PopupMenuItem(
+                                        child: const Text(
+                                            'تبليغ محتوى غير لائق',
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                        onTap: () {
+                                          Future.delayed(
+                                            const Duration(seconds: 0),
+                                            () => showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                  title: const Text(
+                                                    'تأكيد البلاغ',
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  content: const Text(
+                                                    "هل أنت متأكد من التبليغ عن هذا المحتوى ؟ ",
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child:
+                                                          const Text("إلغاء"),
+                                                      onPressed: () {
+                                                        // callback function for on click event of Cancel button
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child:
+                                                          const Text("موافق"),
+                                                      onPressed: () async {
+                                                        /* FirestoreMethods()
+                                                            .uploadReport(
+                                                          //postUserName: myUsername,
+                                                          postText: widget
+                                                              .postData
+                                                              .postUserName
+                                                              .toString(),
+                                                          file: _image,
+                                                        );*/
+                                                        Navigator.pop(context);
+
+                                                        print("check");
+                                                      },
+                                                    ),
+                                                  ]),
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    ])),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
+
         //  Spacer(),
       ],
     );

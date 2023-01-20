@@ -55,7 +55,7 @@ class _individualPageState extends State<individual> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                           // Icon(Icons.person, color: Colors.white),
+                            // Icon(Icons.person, color: Colors.white),
                             Text("متبرع",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18)),
@@ -80,7 +80,7 @@ class _individualPageState extends State<individual> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                         //   const Icon(Icons.person, color: Colors.white),
+                            //   const Icon(Icons.person, color: Colors.white),
                             Text("مستفيد",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18)),

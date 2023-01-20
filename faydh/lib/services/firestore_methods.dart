@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/models/post_model.dart';
+import 'package:faydh/models/reported_model.dart';
 import 'package:faydh/services/storage_method.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -11,6 +12,8 @@ class FirestoreMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final DocumentReference ref =
       FirebaseFirestore.instance.collection("posts").doc();
+  final DocumentReference ref2 =
+      FirebaseFirestore.instance.collection("reportedContent").doc();
 
   // Uplaod the post::
   Future<String> uploadPost({
@@ -113,6 +116,41 @@ class FirestoreMethods {
       });
     } catch (e) {
       log(e.toString());
+    }
+    return res;
+  }
+
+  Future<String> uploadReport({
+    Rid,
+    //required String postUserName,
+    required String postText,
+    Uint8List? file, //
+  }) async {
+    String res = "Some error occured";
+
+    try {
+      Map<String, String> photoUrl = {};
+      if (file != null) {
+        photoUrl = await StorageMethods()
+            .uploadImageToStorage("postsImage", file, true);
+      }
+      String userId = _auth.currentUser!.uid;
+      String v = "h";
+
+      reported report = reported.ReportedConstructor(
+        v,
+        postText,
+        photoUrl['downloadUrl'] ?? '',
+        photoUrl['path'] ?? '',
+        userId,
+      );
+
+      _firestore.collection("reportedContent").add(report.toJson());
+
+      res = "succces";
+    } catch (err) {
+      res = err.toString();
+      log(res);
     }
     return res;
   }
