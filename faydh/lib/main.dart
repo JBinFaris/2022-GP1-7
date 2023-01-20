@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         title: 'Faydh',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: 'Tajawal',
           primarySwatch: Colors.green,
           textSelectionTheme: const TextSelectionThemeData(
             cursorColor: Colors.green,
