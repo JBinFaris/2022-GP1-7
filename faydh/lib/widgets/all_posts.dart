@@ -219,15 +219,27 @@ class _AllPostsCardState extends State<AllPostsCard> {
                                                       child:
                                                           const Text("موافق"),
                                                       onPressed: () async {
-                                                        /* FirestoreMethods()
+                                                        FirestoreMethods()
                                                             .uploadReport(
                                                           //postUserName: myUsername,
-                                                          postText: widget
-                                                              .postData
-                                                              .postUserName
+                                                          postId: widget
+                                                              .postData.Cid
                                                               .toString(),
-                                                          file: _image,
-                                                        );*/
+                                                          postText: widget
+                                                              .postData.postText
+                                                              .toString(),
+                                                          pathImage: widget
+                                                              .postData
+                                                              .pathImage
+                                                              .toString(),
+                                                          postImage: widget
+                                                              .postData
+                                                              .postImage
+                                                              .toString(),
+                                                          userId: widget
+                                                              .postData.userId
+                                                              .toString(),
+                                                        );
                                                         Navigator.pop(context);
 
                                                         print("check");

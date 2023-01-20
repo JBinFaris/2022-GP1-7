@@ -124,24 +124,22 @@ class FirestoreMethods {
     Rid,
     //required String postUserName,
     required String postText,
-    Uint8List? file, //
+    required String pathImage,
+    required String postImage,
+    required String userId,
+    required String postId,
+
+    //Uint8List? file, //
   }) async {
     String res = "Some error occured";
 
     try {
-      Map<String, String> photoUrl = {};
-      if (file != null) {
-        photoUrl = await StorageMethods()
-            .uploadImageToStorage("postsImage", file, true);
-      }
-      String userId = _auth.currentUser!.uid;
-      String v = "h";
-
       reported report = reported.ReportedConstructor(
-        v,
+        ref2.id,
+        postId,
         postText,
-        photoUrl['downloadUrl'] ?? '',
-        photoUrl['path'] ?? '',
+        pathImage,
+        postImage,
         userId,
       );
 
