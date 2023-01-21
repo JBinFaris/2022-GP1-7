@@ -122,6 +122,7 @@ class FirestoreMethods {
 
   Future<String> uploadReport({
     Rid,
+    ReportReason,
     //required String postUserName,
     required String postText,
     required String pathImage,
@@ -136,6 +137,7 @@ class FirestoreMethods {
     try {
       reported report = reported.ReportedConstructor(
         ref2.id,
+        ReportReason,
         postId,
         postText,
         pathImage,

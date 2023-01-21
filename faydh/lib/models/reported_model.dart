@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class reported {
   final String Rid;
+  final String ReportReason ;
   final String postId;
   String postUserName = "";
 
@@ -14,6 +15,7 @@ class reported {
 
   reported.allReportedConstructor({
     required this.Rid,
+    required this.ReportReason,
     required this.postId,
     required this.postUserName,
     required this.postText,
@@ -23,11 +25,12 @@ class reported {
     //required this.postDate,
   });
 
-  reported.ReportedConstructor(this.Rid, this.postId, this.postText,
+  reported.ReportedConstructor(this.Rid,this.ReportReason, this.postId, this.postText,
       this.postImage, this.pathImage, this.userId);
 
   Map<String, dynamic> toJson() => {
         "Rid": Rid,
+        "ReportReason": ReportReason,
         "postId": postId,
         "postText": postText,
         "postImage": postImage,
@@ -41,6 +44,7 @@ class reported {
 
     return reported.allReportedConstructor(
       Rid: snapshot["Rid"],
+      ReportReason: snapshot["ReportReason"],
       postId: snapshot["postId"],
       postUserName: snapshot["postUserName"],
       userId: snapshot["userId"],
