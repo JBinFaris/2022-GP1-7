@@ -58,7 +58,7 @@ class _individualPageState extends State<individual> {
                             // Icon(Icons.person, color: Colors.white),
                             Text("متبرع",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 18)),
+                                    color: Colors.white, fontSize: 24)),
                           ],
                         ),
                         onTap: () {
@@ -68,8 +68,8 @@ class _individualPageState extends State<individual> {
                           }));
                         },
                         type: null,
-                        height: 60,
-                        width: 260,
+                        height: 70,
+                        width: 300,
                         borderRadius: 30,
                         color: Color.fromARGB(255, 62, 112, 82),
                       ),
@@ -83,7 +83,7 @@ class _individualPageState extends State<individual> {
                             //   const Icon(Icons.person, color: Colors.white),
                             Text("مستفيد",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 18)),
+                                    color: Colors.white, fontSize: 24)),
                           ],
                         ),
                         onTap: () {
@@ -94,8 +94,8 @@ class _individualPageState extends State<individual> {
                           );
                         },
                         type: null,
-                        height: 60,
-                        width: 260,
+                        height: 70,
+                        width: 300,
                         borderRadius: 30,
                         // isOutline: true,
                         color: Color.fromARGB(255, 62, 112, 82),
