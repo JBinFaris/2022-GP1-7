@@ -21,7 +21,7 @@ class Database {
     required String food_cont,
     required String reserve,
     required String notify,
-    required String reservedby,
+    String? reservedby,
     required String notifyCancelP,
     required String notifyCancelC,
   }) async {

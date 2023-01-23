@@ -113,7 +113,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                         "تأكيد الغاء الحجز",
                                         textAlign: TextAlign.right,
                                       ),
-                                      content: Text(
+                                      content: const Text(
                                         (" هل أنت متأكد من الغاء الحجز ؟ "),
                                         textAlign: TextAlign.right,
                                       ),
@@ -128,13 +128,51 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                         TextButton(
                                           child: const Text("نعم"),
                                           onPressed: () async {
-                                            _firestore
+                                             _firestore
                                                 .collection("foodPost")
                                                 .doc(widget.snap["docId"]
                                                     .toString())
                                                 .update({"reserve": "0"});
 
                                             Navigator.pop(context);
+
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return  SimpleDialog(
+                                                    title: Text(
+                                                      ("سبب الغاء الحجز"),
+                                                      textAlign:
+                                                          TextAlign.right,
+                                                    ),
+                                                    children: <Widget>[
+                                                      SimpleDialogOption(
+                                                        onPressed: () {
+                                                        Navigator.pop(context);
+
+                                                        },
+                                                        child:  Text(
+                                                            'لا ارغب بالطعام'),
+                                                      ),
+                                                      SimpleDialogOption(
+                                                        onPressed: () {
+                                                          print(widget.snap["Cid"]);
+                                                           _firestore
+                                                .collection("users")
+                                                .doc(widget.snap["Cid"].toString())
+                                                .update({"ReportCount": FieldValue.increment(1)});
+                                                   Navigator.pop(context);
+ },
+                                                        child: const Text(
+                                                            'المتبرع لايستجيب'),
+                                                      ),
+                                                    ],
+                                                    
+                                                  );
+                                                });
+
+                                           
 
                                             print("check");
                                           },

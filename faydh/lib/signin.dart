@@ -407,7 +407,7 @@ class _signInSreenState extends State<signInSreen> {
         ),
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 55,
+          vertical: 120,
         ),
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(

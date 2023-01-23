@@ -926,12 +926,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                               children: [
                                                 TextButton(
                                                   onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text("إلغاء"),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
                                                     print(
                                                         "dataurl: $urlDownloadImage");
                                                     print(
@@ -980,7 +974,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                                 .toString(),
                                                         reserve: '0',
                                                         notify: '0',
-                                                        reservedby: '',
+                                                       
                                                         notifyCancelP: '1',
                                                         notifyCancelC: '1',
                                                       ).whenComplete(() {
@@ -1000,6 +994,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                   },
                                                   child: const Text("موافق"),
                                                 ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text("إلغاء"),
+                                                ),
+                                                
                                               ],
                                             ),
                                           ],
