@@ -92,7 +92,8 @@ class _signInSreenState extends State<signInSreen> {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     DateTime dt1Now = DateTime.parse(formattedDate);
-    //print(formattedDate);
+    print("formattttt");
+    print(formattedDate);
     FirebaseFirestore.instance
         .collection('foodPost')
         .where('Cid', isEqualTo: id)
@@ -103,7 +104,7 @@ class _signInSreenState extends State<signInSreen> {
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
         String exp = doc["postExp"];
-
+  print("expdateee");
         print(exp);
         if (dt1Now.isAfter(dt2check)) {
           Future.delayed(const Duration(seconds: 2), () {

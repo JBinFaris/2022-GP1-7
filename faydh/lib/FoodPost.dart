@@ -797,7 +797,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                       var finalDate =
                           date_with_raw_format[0].toString().split('-');
 
-                      _date = '${finalDate[2]}-${finalDate[1]}-${finalDate[0]}';
+                      _date = '${finalDate[0]}-${finalDate[1]}-${finalDate[2]}';
                       print('confirm $date');
 
                       setState(() {});
