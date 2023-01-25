@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/services/firestore_methods.dart';
 import 'package:faydh/widgets/ProviderRListCard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -162,7 +163,10 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                 .collection("users")
                                                 .doc(widget.snap["Cid"].toString())
                                                 .update({"ReportCount": FieldValue.increment(1)});
+
+                                                 CheckReportCount2(widget.snap["Cid"].toString());
                                                    Navigator.pop(context);
+
  },
                                                         child: const Text(
                                                             'المتبرع لايستجيب'),
@@ -399,6 +403,24 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
         //  Spacer(),
       ],
     );
+  }
+   void CheckReportCount2(String s) async{
+
+   var snapss = await FirebaseFirestore.instance.collection('users').doc(s).get();
+
+    if (snapss.exists) {
+      Map<String, dynamic>? data = snapss.data();
+
+      var count = data!["ReportCount"];
+
+      if(count >= 3){
+     FirestoreMethods().uploadReport(ReportReason:'عدم الاستجابه عدة مرات',userId: s,)  ; 
+     
+        }
+    }
+
+
+
   }
 }
 /*

@@ -124,11 +124,11 @@ class FirestoreMethods {
     Rid,
     ReportReason,
     //required String postUserName,
-    required String postText,
-    required String pathImage,
-    required String postImage,
+     String? postText,
+     String? pathImage,
+     String? postImage,
     required String userId,
-    required String postId,
+     String? postId,
 
     //Uint8List? file, //
   }) async {

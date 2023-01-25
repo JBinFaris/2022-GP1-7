@@ -37,6 +37,7 @@ class AuthMethods {
           role: role,
           username: username,
           email: email,
+         
           phoneNumber: phoneNumber,
           crNo: crNo,
           status: status, 

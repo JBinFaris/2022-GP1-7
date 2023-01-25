@@ -3,10 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class reported {
   final String Rid;
   final String ReportReason ;
-  final String postId;
+  final String? postId;
   String postUserName = "";
 
-  final String postText; //
+  final String? postText; //
   final String? postImage; //
   final String? pathImage; //
   final String userId;
@@ -16,9 +16,9 @@ class reported {
   reported.allReportedConstructor({
     required this.Rid,
     required this.ReportReason,
-    required this.postId,
-    required this.postUserName,
-    required this.postText,
+     this.postId,
+     required this.postUserName,
+     this.postText,
     this.postImage, //
     this.pathImage, //
     required this.userId,

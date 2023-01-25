@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/models/reported_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:faydh/services/firestore_methods.dart';
 
 import '../models/user_data_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -210,6 +212,48 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                 .update({"reserve": "0"});
 
                                             Navigator.pop(context);
+
+                                                 showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return  SimpleDialog(
+                                                    title: Text(
+                                                      ("سبب الغاء الحجز"),
+                                                      textAlign:
+                                                          TextAlign.right,
+                                                    ),
+                                                    children: <Widget>[
+                                                      SimpleDialogOption(
+                                                        onPressed: () {
+                                                        Navigator.pop(context);
+
+                                                        },
+                                                        child:  Text(
+                                                            'لا ارغب بالتبرع'),
+                                                      ),
+                                                      SimpleDialogOption(
+                                                        onPressed: () {
+                                                           _firestore
+                                                .collection("users")
+                                                .doc("${widget.snap["reservedby"]}")
+                                                .update({"ReportCount": FieldValue.increment(1)});
+
+                                                 CheckReportCount(widget.snap["reservedby"]);
+
+                                                   Navigator.pop(context);
+
+                                                  
+ },
+                                                        child: const Text(
+                                                            'المتبرع لايستجيب'),
+                                                      ),
+                                                    ],
+                                                    
+                                                  );
+                                                });
+
+                                           
 
                                             print("check");
                                           },
@@ -432,5 +476,24 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
         //  Spacer(),
       ],
     );
+  }
+  
+  void CheckReportCount(String s) async{
+
+   var snapss = await FirebaseFirestore.instance.collection('users').doc(s).get();
+
+    if (snapss.exists) {
+      Map<String, dynamic>? data = snapss.data();
+
+      var count = data!["ReportCount"];
+
+      if(count >= 3){
+     FirestoreMethods().uploadReport(ReportReason:'عدم الاستجابه عدة مرات',userId: s,)  ; 
+     
+        }
+    }
+
+
+
   }
 }
