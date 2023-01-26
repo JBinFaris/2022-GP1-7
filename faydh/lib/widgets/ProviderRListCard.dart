@@ -205,11 +205,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                         TextButton(
                                           child: const Text("نعم"),
                                           onPressed: () async {
-                                            _firestore
-                                                .collection("foodPost")
-                                                .doc(widget.snap["docId"]
-                                                    .toString())
-                                                .update({"reserve": "0"});
+                                           
 
                                             Navigator.pop(context);
 
@@ -226,6 +222,11 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                     children: <Widget>[
                                                       SimpleDialogOption(
                                                         onPressed: () {
+                                                           _firestore
+                                                .collection("foodPost")
+                                                .doc(widget.snap["docId"]
+                                                    .toString())
+                                                .update({"reserve": "0"});
                                                         Navigator.pop(context);
 
                                                         },
@@ -234,6 +235,11 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                       ),
                                                       SimpleDialogOption(
                                                         onPressed: () {
+                                                           _firestore
+                                                .collection("foodPost")
+                                                .doc(widget.snap["docId"]
+                                                    .toString())
+                                                .update({"reserve": "0"});
                                                            _firestore
                                                 .collection("users")
                                                 .doc("${widget.snap["reservedby"]}")
