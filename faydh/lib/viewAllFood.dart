@@ -25,12 +25,26 @@ class viewAllFood extends StatefulWidget {
 }
 
 class _viewAllFood extends State<viewAllFood> {
+  TextEditingController _searchTextController = new TextEditingController();
+  String filter = "";
+
   bool arrow = false;
 
   @override
   initState() {
     super.initState();
     getData();
+    _searchTextController.addListener(() {
+      print(_searchTextController.text);
+      filter = _searchTextController.text;
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchTextController.dispose();
+    super.dispose();
   }
 
   void reserve({required String id}) async {
@@ -66,6 +80,7 @@ class _viewAllFood extends State<viewAllFood> {
       .where('Cid', isNotEqualTo: Uid!.uid.toString())
       // .orderBy("docId",descending: true,)
       .snapshots();
+
   @override
   Widget build(BuildContext context) {
     // print("cehecl");
@@ -180,224 +195,278 @@ class _viewAllFood extends State<viewAllFood> {
 
           return Directionality(
             textDirection: TextDirection.rtl,
-            child: ListView(
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
-                //bool b = data['Cid'] != Uid;
-
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 0,
-                    color: Colors.transparent,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 62, 112, 82)
-                                .withOpacity(0.9),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          tweetHeader(
-                            "${data['postTitle'].toString()}",
-                            "${data['Cid'].toString()}",
-                            "${data['docId'].toString()}",
-                            "${data['postText'].toString()}",
-                            "${data['postImage'].toString()}",
-                          ), // so?
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "نوع الطعام:  ${data['postTitle'].toString()}",
-                                style: const TextStyle(
-                                  color: Color(0xFF1A4D2E),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "موقع الإستلام:  ${data['postAdress'].toString()}",
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 144, 177, 135),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "كمية الطعام:  ${data['food_cont'].toString()}",
-                                style: const TextStyle(
-                                  color: Color.fromARGB(255, 144, 177, 135),
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                data['postText'],
-                                style: const TextStyle(
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
-                          ),
-                          // const SizedBox(height: 5),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Image.network(
-                              data['postImage'],
-                              height: 200,
-                              width: 200,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12, bottom: 8),
-                                child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "تاريخ الانتهاء : ${data['postExp'].toString()}",
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 144, 177, 135),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12, bottom: 8),
-                                child: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  child: Text(
-                                    "تاريخ الإضافة:  ${data['postDate'].toString().split(" ").first}",
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 144, 177, 135),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 0, 80, 10),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    /* Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) {
-                                        return const viewAllFood();
-                                      }),
-                                    );*/
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                              title: const Text(
-                                                'لقد تم حجز الطعام',
-                                                textAlign: TextAlign.right,
-                                              ),
-                                              content: const Text(
-                                                "لمشاهدة الطعام المحجوز او لالغاء الحجز انتقل الى قائمة حجوزاتي",
-                                                textAlign: TextAlign.right,
-                                              ),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  child: const Text("حسنا"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                )
-                                              ]);
-                                        });
-
-                                    data['docId'].toString();
-                                    reserve(id: data['docId'].toString());
-                                    data['docId'].update({'notify': '0'});
-                                    data['docId'].update({'reservedby': FirebaseAuth.instance.currentUser?.uid});
-                                  },
-                                  child: const Text('حجز'),
-                                  style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      backgroundColor: const Color(0xFF1A4D2E),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 30.0,
-                                      ),
-                                      textStyle: const TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              )
-                            ],
-                          ),
-                          /* ElevatedButton(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) {
-                                  return const viewAllFood();
-                                }),
-                              );
-                            },
-                            child: const Text('حجز'),
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                backgroundColor: const Color(0xFF1A4D2E),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 30.0,
-                                ),
-                                textStyle: const TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold)),
-                          ),*/
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+            child: Column(
+              children: [
+                searchBar(),
+                showItemsList(snapshot),
+              ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget searchBar() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, bottom: 4),
+      child: Transform.translate(
+        offset: const Offset(0, -2),
+        child: Container(
+          height: 40.0,
+          padding: const EdgeInsets.only(left: 20, top: 2, right: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 20.0,
+                offset: Offset(0, 6.0),
+              ),
+            ],
+          ),
+          child: TextField(
+            controller: _searchTextController,
+            textAlign: TextAlign.start,
+            decoration: const InputDecoration(
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.black,
+                size: 20.0,
+              ),
+              border: InputBorder.none,
+              hintText: 'ابحث عن طعام ....',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget showItemsList(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return Expanded(
+      child: ListView(
+        children: snapshot.data!.docs.map((DocumentSnapshot document) {
+          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+          return filter == null || filter == ''
+              ? ItemDetails(data)
+              : data['postTitle']
+                      .toString()
+                      .toLowerCase()
+                      .contains(filter.toLowerCase())
+                  ? ItemDetails(data)
+                  : Container();
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget ItemDetails(Map<String, dynamic> data) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 0,
+        color: Colors.transparent,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              tweetHeader(
+                "${data['postTitle'].toString()}",
+                "${data['Cid'].toString()}",
+                "${data['docId'].toString()}",
+                "${data['postText'].toString()}",
+                "${data['postImage'].toString()}",
+              ), // so?
+              Padding(
+                padding: const EdgeInsets.only(left: 12, right: 12),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "نوع الطعام:  ${data['postTitle'].toString()}",
+                    style: const TextStyle(
+                      color: Color(0xFF1A4D2E),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.only(left: 12, right: 12),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "موقع الإستلام:  ${data['postAdress'].toString()}",
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 144, 177, 135),
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.only(left: 12, right: 12),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "كمية الطعام:  ${data['food_cont'].toString()}",
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 144, 177, 135),
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.only(left: 12, right: 12),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    data['postText'],
+                    style: const TextStyle(
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+              ),
+              // const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.only(left: 12, right: 12),
+                child: Image.network(
+                  data['postImage'],
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12, bottom: 8),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "تاريخ الانتهاء : ${data['postExp'].toString()}",
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 144, 177, 135),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12, bottom: 8),
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "تاريخ الإضافة:  ${data['postDate'].toString().split(" ").first}",
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 144, 177, 135),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 80, 10),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        /* Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                            return const viewAllFood();
+                                          }),
+                                        );*/
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  title: const Text(
+                                    'لقد تم حجز الطعام',
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  content: const Text(
+                                    "لمشاهدة الطعام المحجوز او لالغاء الحجز انتقل الى قائمة حجوزاتي",
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text("حسنا"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    )
+                                  ]);
+                            });
+
+                        data['docId'].toString();
+                        reserve(id: data['docId'].toString());
+                        data['docId'].update({'notify': '0'});
+                        data['docId'].update({
+                          'reservedby': FirebaseAuth.instance.currentUser?.uid
+                        });
+                      },
+                      child: const Text('حجز'),
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          backgroundColor: const Color(0xFF1A4D2E),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 30.0,
+                          ),
+                          textStyle: const TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold)),
+                    ),
+                  )
+                ],
+              ),
+              /* ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(builder: (context) {
+                                      return const viewAllFood();
+                                    }),
+                                  );
+                                },
+                                child: const Text('حجز'),
+                                style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20)),
+                                    backgroundColor: const Color(0xFF1A4D2E),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 30.0,
+                                    ),
+                                    textStyle: const TextStyle(
+                                        fontSize: 30, fontWeight: FontWeight.bold)),
+                              ),*/
+            ],
+          ),
+        ),
       ),
     );
   }
