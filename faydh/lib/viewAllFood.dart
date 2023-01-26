@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
 import 'package:faydh/ReservedFoodListConsumer.dart';
+import 'package:faydh/models/post_model.dart';
+import 'package:faydh/services/firestore_methods.dart';
 import 'package:faydh/upload_api.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:path/path.dart';
+//import 'package:path/path.dart';
 
 // import 'ReservedFoodListConsumer.dart';
 User? Uid = FirebaseAuth.instance.currentUser;
@@ -205,9 +207,12 @@ class _viewAllFood extends State<viewAllFood> {
                       ),
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(),
+                          tweetHeader(
+                            "${data['postTitle'].toString()}",
+                            "${data['Cid'].toString()}",
+                            "${data['docId'].toString()}",
+                            "${data['postText'].toString()}",
+                            "${data['postImage'].toString()}",
                           ), // so?
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
@@ -394,6 +399,113 @@ class _viewAllFood extends State<viewAllFood> {
           );
         },
       ),
+    );
+  }
+
+  tweetHeader(String u, String c, String doc, String t, String po) {
+    // ignore: non_constant_identifier_names
+
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 5.0),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  u,
+
+                  //  "me",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: GestureDetector(
+                            onTap: (() {}),
+                            child: PopupMenuButton(
+                                itemBuilder: (ctx) => [
+                                      PopupMenuItem(
+                                        child: const Text(
+                                            'تبليغ محتوى غير لائق',
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                        onTap: () {
+                                          Future.delayed(
+                                            const Duration(seconds: 0),
+                                            () => showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                  title: const Text(
+                                                    'تأكيد البلاغ',
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  content: const Text(
+                                                    "هل أنت متأكد من التبليغ عن هذا المحتوى ؟ ",
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child:
+                                                          const Text("إلغاء"),
+                                                      onPressed: () {
+                                                        // callback function for on click event of Cancel button
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child:
+                                                          const Text("موافق"),
+                                                      onPressed: () async {
+                                                        Database2
+                                                            .reportedContentData(
+                                                          context: context,
+                                                          postTitle:
+                                                              u.toString(),
+                                                          postText:
+                                                              t.toString(),
+                                                          ReportReason:
+                                                              "محتوى غير لائق (اعلان طعام)",
+                                                          Cid: c.toString(),
+                                                          docId: doc.toString(),
+                                                          postImage:
+                                                              po.toString(),
+                                                        );
+
+                                                        Navigator.pop(context);
+
+                                                        print("check");
+                                                      },
+                                                    ),
+                                                  ]),
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    ])),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        //  Spacer(),
+      ],
     );
   }
 }

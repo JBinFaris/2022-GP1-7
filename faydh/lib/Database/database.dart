@@ -4,8 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+final FirebaseFirestore _firestore2 = FirebaseFirestore.instance;
+
 final CollectionReference _foodPostCollection =
     _firestore.collection("foodPost");
+final CollectionReference _reportedContentCollection =
+    _firestore2.collection("reportedContent");
+final DocumentReference ref =
+    FirebaseFirestore.instance.collection("reportedContent").doc();
 
 class Database {
   static Future<void> addFoodPostData({
@@ -48,6 +54,40 @@ class Database {
     await documentReference.set(data).whenComplete(() {
       print('Note item saved to the database');
       Fluttertoast.showToast(msg: "تم نشر الاعلان بنجاح");
+      Navigator.pop(context);
+    }).catchError((e) {
+      print(e);
+    });
+  }
+}
+
+class Database2 {
+  static Future<void> reportedContentData({
+    required BuildContext context,
+    Rid,
+    required docId,
+    required ReportReason,
+    required postTitle,
+    required postText,
+    postImage, //
+    pathImage, //
+    required Cid,
+  }) async {
+    DocumentReference documentReference = _reportedContentCollection.doc(Rid);
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'Rid': ref.id,
+      'foodPostId': docId.toString().trim(),
+      'ReportReason': ReportReason.toString().trim(),
+      'postText': postText.toString().trim(),
+      'postTitle': postTitle.toString().trim(),
+      "postImage": postImage.toString().trim(),
+      "pathImage": "pathImage".toString().trim(),
+      'userId': Cid.toString().trim(),
+    };
+    await documentReference.set(data).whenComplete(() {
+      print('Note item saved to the database');
+      Fluttertoast.showToast(msg: "تم الإبلاغ");
       Navigator.pop(context);
     }).catchError((e) {
       print(e);

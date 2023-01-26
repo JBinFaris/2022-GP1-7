@@ -46,7 +46,63 @@ class _individualPageState extends State<individual> {
                   ),
                 ),
               ),
-              Container(
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                    width: 250,
+                    height: 70,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        backgroundColor: const Color.fromARGB(255, 18, 57, 20),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return const FoodPostScreen();
+                        }));
+                      },
+                      child: const Text(
+                        "متبرع",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 20),
+                      ),
+                    )),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                    width: 250,
+                    height: 70,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        backgroundColor: const Color.fromARGB(255, 18, 57, 20),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return const viewAllFood();
+                          }),
+                        );
+                      },
+                      child: const Text(
+                        "مستفيد",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 20),
+                      ),
+                    )),
+              ),
+              /*  Container(
                 child: Column(
                   children: [
                     Padding(
@@ -112,7 +168,7 @@ class _individualPageState extends State<individual> {
               //   textAlign: TextAlign.center,
               // ),
               // ),
-              /*  Container(
+               Container(
                 padding:
                     const EdgeInsets.only(top: 3.0, left: 20.0, right: 20.0),
                 child: ElevatedButton(

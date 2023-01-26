@@ -151,6 +151,9 @@ class _AllPostsCardState extends State<AllPostsCard> {
                 ),
               ),
             ),
+          const SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );

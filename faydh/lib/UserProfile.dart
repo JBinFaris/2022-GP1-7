@@ -430,7 +430,36 @@ class _UserProfileState extends State<UserProfile> {
                           Container(
                             child: Column(
                               children: [
-                                Padding(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                      width: 250,
+                                      height: 60,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20.0, 10.0, 20.0, 10.0),
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 18, 57, 20),
+                                          shape: const StadiumBorder(),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return const myAware();
+                                          }));
+                                        },
+                                        child: const Text(
+                                          "محتواي التوعوي",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 255, 255, 255),
+                                              fontSize: 20),
+                                        ),
+                                      )),
+                                ),
+                                /* Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: AnimatedButton(
                                     child: Column(
@@ -456,9 +485,11 @@ class _UserProfileState extends State<UserProfile> {
                                     borderRadius: 30,
                                     color: Color.fromARGB(255, 62, 112, 82),
                                   ),
-                                ),
+                                ), */
                                 //here
-
+                                const SizedBox(
+                                  height: 15,
+                                ),
                                 FutureBuilder(
                                     future: fetchUserData(),
                                     builder:
@@ -471,22 +502,11 @@ class _UserProfileState extends State<UserProfile> {
                                         if (userdatasnap.data['role']
                                                 .toString() !=
                                             'منظمة خيرية') {
-                                          return Padding(
-                                            padding: const EdgeInsets.all(2.0),
-                                            child: AnimatedButton(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  //  const Icon(Icons.person,color: Colors.white),
-                                                  Text("إحصائياتي",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 18)),
-                                                ],
-                                              ),
-                                              onTap: () {
+                                          return SizedBox(
+                                            width: 250,
+                                            height: 60,
+                                            child: ElevatedButton(
+                                              onPressed: () {
                                                 showDialog(
                                                     context: context,
                                                     builder:
@@ -560,7 +580,7 @@ class _UserProfileState extends State<UserProfile> {
                                                                           }
                                                                         }),
                                                                   ),
-                                                                  Positioned(
+                                                                  const Positioned(
                                                                       right: 0,
                                                                       left: 0,
                                                                       child:
@@ -581,13 +601,22 @@ class _UserProfileState extends State<UserProfile> {
                                                               ),
                                                             ));
                                               },
-                                              type: null,
-                                              height: 60,
-                                              width: 260,
-                                              borderRadius: 30,
-                                              // isOutline: true,
-                                              color: Color.fromARGB(
-                                                  255, 62, 112, 82),
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20.0, 10.0, 20.0, 10.0),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                        255, 18, 57, 20),
+                                                shape: const StadiumBorder(),
+                                              ),
+                                              child: const Text(
+                                                "إحصائياتي",
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    fontSize: 20),
+                                              ),
                                             ),
                                           );
                                         } else {
@@ -616,182 +645,8 @@ class _UserProfileState extends State<UserProfile> {
                                     horizontal: 80.0, vertical: 15.0),
                                 textStyle: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold)),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          FutureBuilder(
-                              future: fetchUserData(),
-                              builder: (context, AsyncSnapshot userdatasnap) {
-                                if (userdatasnap.hasData) {
-                                  log(userdatasnap.data['role'].toString());
+                          ), */
 
-                                  //if the user is not charity then this will show the button
-                                  if (userdatasnap.data['role'].toString() !=
-                                      'منظمة خيرية') {
-                                    return ElevatedButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => Container(
-                                                  margin: EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width /
-                                                              10,
-                                                      vertical:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              3.3),
-                                                  child: Stack(
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            top: 50),
-                                                        height:
-                                                            double.maxFinite,
-                                                        width: double.maxFinite,
-                                                        decoration: BoxDecoration(
-                                                            color: Color(
-                                                                0xFFf7f7f7),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10)),
-                                                        child: FutureBuilder(
-                                                            future:
-                                                                getuserpostandotherdata(
-                                                                    userdatasnap
-                                                                        .data),
-                                                            builder: (context,
-                                                                datasnap) {
-                                                              if (datasnap.connectionState ==
-                                                                      ConnectionState
-                                                                          .done &&
-                                                                  datasnap
-                                                                      .hasData) {
-                                                                _createSampleData() {
-                                                                  return SfCartesianChart(
-                                                                    palette: [
-                                                                      Color.fromRGBO(
-                                                                          205,
-                                                                          233,
-                                                                          197,
-                                                                          1),
-                                                                    ],
-                                                                    plotAreaBorderWidth:
-                                                                        0,
-                                                                    title:
-                                                                        ChartTitle(
-                                                                      text: ' ',
-                                                                    ),
-                                                                    primaryXAxis:
-                                                                        CategoryAxis(
-                                                                      majorGridLines:
-                                                                          const MajorGridLines(
-                                                                              width: 0),
-                                                                    ),
-                                                                    primaryYAxis: NumericAxis(
-                                                                        axisLine: const AxisLine(
-                                                                            width:
-                                                                                0),
-                                                                        labelFormat:
-                                                                            '{value}',
-                                                                        majorTickLines:
-                                                                            const MajorTickLines(size: 0)),
-                                                                    series: <
-                                                                        ColumnSeries<
-                                                                            BarMmodel,
-                                                                            String>>[
-                                                                      ColumnSeries<
-                                                                          BarMmodel,
-                                                                          String>(
-                                                                        dataSource: <
-                                                                            BarMmodel>[
-                                                                          BarMmodel(
-                                                                              'عدد الإعلانات',
-                                                                              int.parse('${datasnap.data['post posted']}')),
-                                                                          BarMmodel(
-                                                                              "الإعلانات المحجوزة",
-                                                                              int.parse('${datasnap.data['posts with expiry date']}')),
-                                                                          BarMmodel(
-                                                                              "الأطعمة منتهية\n الصلاحية",
-                                                                              int.parse('${datasnap.data['postesreserved']}')),
-                                                                        ],
-                                                                        xValueMapper: (BarMmodel sales,
-                                                                                _) =>
-                                                                            sales.x
-                                                                                as String,
-                                                                        yValueMapper:
-                                                                            (BarMmodel sales, _) =>
-                                                                                sales.y,
-                                                                        dataLabelSettings: const DataLabelSettings(
-                                                                            isVisible:
-                                                                                true,
-                                                                            textStyle:
-                                                                                TextStyle(fontSize: 10)),
-                                                                      )
-                                                                    ],
-                                                                  );
-                                                                }
-
-                                                                log(datasnap
-                                                                    .data
-                                                                    .toString());
-                                                                return Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .only(
-                                                                        top: 40,
-                                                                        bottom:
-                                                                            20),
-                                                                    child:
-                                                                        _createSampleData());
-                                                              } else {
-                                                                return CupertinoActivityIndicator();
-                                                              }
-                                                            }),
-                                                      ),
-                                                      Positioned(
-                                                          right: 0,
-                                                          left: 0,
-                                                          child: CircleAvatar(
-                                                            backgroundColor:
-                                                                Color(
-                                                                    0xFFd6ecd0),
-                                                            radius: 40,
-                                                            child: Icon(
-                                                              Icons
-                                                                  .query_stats_outlined,
-                                                              size: 55,
-                                                            ),
-                                                          )),
-                                                    ],
-                                                  ),
-                                                ));
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          backgroundColor:
-                                              const Color(0xFF1A4D2E),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 90.0, vertical: 15.0),
-                                          textStyle: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold)),
-                                      child: Text('إحصائياتي'),
-                                    );
-                                  } else {
-                                    return Container();
-                                  }
-                                } else {
-                                  return Container();
-                                }
-                              }),
-                              */
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -956,7 +811,7 @@ class _UserProfileState extends State<UserProfile> {
                     child: Text("الملف الشخصي",
                         style: TextStyle(
                           fontSize: 30.0,
-                          height: 7.0,
+                          height: 9.0,
                         )),
                   ),
                 ],

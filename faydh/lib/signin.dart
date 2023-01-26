@@ -104,7 +104,7 @@ class _signInSreenState extends State<signInSreen> {
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
         String exp = doc["postExp"];
-  print("expdateee");
+        print("expdateee");
         print(exp);
         if (dt1Now.isAfter(dt2check)) {
           Future.delayed(const Duration(seconds: 2), () {
@@ -417,13 +417,13 @@ class _signInSreenState extends State<signInSreen> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 30),
+                SizedBox(height: 1),
                 Image.asset(
                   'assets/imgs/logo.png',
                   width: 250,
                   height: 250,
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 0.1),
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -494,7 +494,7 @@ class _signInSreenState extends State<signInSreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 45),
                 MaterialButton(
                     elevation: 5.0,
                     color: const Color(0xff1a4d2e),
