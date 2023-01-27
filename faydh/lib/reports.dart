@@ -24,7 +24,6 @@ class _reportsScreenState extends State<reportsScreen> {
   @override
   void initState() {
     dataoaded = false;
-    _clearAll();
   }
 
   Future getAllUsers() async {
@@ -119,7 +118,7 @@ class _reportsScreenState extends State<reportsScreen> {
 
                     List<dynamic>? allData =
                         querySnapshot?.docs?.map((doc) => doc.data()).toList();
-
+                    _clearAll();
                     for (var element in allData!) {
                       postList.add(reported.allReportedConstructor(
                         Rid: element['Rid'],
