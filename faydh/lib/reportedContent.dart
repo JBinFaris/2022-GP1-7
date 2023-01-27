@@ -45,7 +45,7 @@ class _reportedContent extends State<reportedContent> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
+                  color: const Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
                   spreadRadius: 5,
                   blurRadius: 7,
                   offset: const Offset(0, 3),
@@ -116,13 +116,14 @@ class _reportedContent extends State<reportedContent> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                decoration: BoxDecoration(boxShadow: const [
+                decoration: const BoxDecoration(boxShadow: [
                   BoxShadow(
                       color: Color.fromARGB(125, 158, 158, 158),
                       spreadRadius: 0.01,
                       blurRadius: 15)
                 ]),
-                child: GestureDetector(
+                child: widget.postData.flag != 2?
+                 GestureDetector(
                     onTap: () {
                       showDialog(
                           context: context,
@@ -172,10 +173,66 @@ class _reportedContent extends State<reportedContent> {
                         ),
                         Text(' محتوى غير مخالف  '),
                       ],
-                    )),
+                    )):
+                    GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text(
+                                "تأكيد ",
+                                textAlign: TextAlign.right,
+                              ),
+                              content: const Text(
+                                "هل أنت متأكد من أن المستخدم غير مخالف ؟ ",
+                                textAlign: TextAlign.right,
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text("إلغاء"),
+                                  onPressed: () {
+                                    // callback function for on click event of Cancel button
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text("موافق"),
+                                  onPressed: () async {
+                                    //     widget.reference.delete();
+                                    print(widget.postData.Rid.toString());
+                                    FirebaseFirestore.instance
+                                        .collection('reportedContent')
+                                        .doc(widget.postData.Rid.toString())
+                                        .delete();
+
+                                         FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(widget.postData.userId.toString())
+                                        .update({'ReportCount': FieldValue.increment(-1)});
+
+                                    //   print(widget.id.toString());
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: const [
+                        Icon(
+                          size: 10,
+                          Icons.check_box_outlined,
+                          color: Colors.green,
+                        ),
+                        Text(' المستخدم غير مخالف  '),
+                      ],
+                    ))
               ),
               Container(
-                decoration: BoxDecoration(boxShadow: const [
+                decoration: const BoxDecoration(boxShadow: [
                   BoxShadow(
                       color: Color.fromARGB(124, 26, 25, 25),
                       spreadRadius: 0.01,
@@ -213,7 +270,7 @@ class _reportedContent extends State<reportedContent> {
                                         .update({'Active': false});
                                     Navigator.pop(context);
 
-                                    print("check");
+                                 
                                   },
                                 ),
                               ],
@@ -232,6 +289,7 @@ class _reportedContent extends State<reportedContent> {
                       ],
                     )),
               ),
+
               Container(
                 decoration: const BoxDecoration(boxShadow: [
                   BoxShadow(
@@ -239,7 +297,8 @@ class _reportedContent extends State<reportedContent> {
                       spreadRadius: 0.01,
                       blurRadius: 15)
                 ]),
-                child: GestureDetector(
+                child: widget.postData.flag != 2?
+                 GestureDetector(
                     onTap: () {
                       showDialog(
                           context: context,
@@ -300,7 +359,10 @@ class _reportedContent extends State<reportedContent> {
                         ),
                         Text('  حذف المحتوى    '),
                       ],
-                    )),
+                    )):
+                    const Text("")
+                  
+              
               ),
             ],
           ),

@@ -285,8 +285,10 @@ class _signInSreenState extends State<signInSreen> {
           if (snap != null) {
             final myrole = (snap.data() as Map<String, dynamic>)['role'];
             final uid = (snap.data() as Map<String, dynamic>)['uid'];
+            final Active = (snap.data() as Map<String, dynamic>)['Active'];
 
-            if (myrole == "فرد") {
+if(Active == true){
+      if (myrole == "فرد") {
               getToken(id: uid);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const HomePage()));
@@ -358,6 +360,35 @@ class _signInSreenState extends State<signInSreen> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AdminMain()));
             }
+}else if(Active == false){
+  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                          title: const Text(
+                            " حالة الحساب" + ": " + " محظور ",
+                            textAlign: TextAlign.right,
+                          ),
+                          content: const Text(
+                            " الحساب محظور نظراً لعدة من البلاغات " +
+                                "\n" +
+                                "يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم اي شكوى " +
+                                "\n" +
+                                "teamfaydh@gmail.com",
+                            textAlign: TextAlign.right,
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text("موافق"),
+                              onPressed: () async {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ]);
+                    });
+
+}
+        
           } /* else{  print("object");
                 snap2 = await FirebaseFirestore.instance
                  .collection("Admins")
