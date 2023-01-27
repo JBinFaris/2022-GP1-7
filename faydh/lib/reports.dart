@@ -16,11 +16,10 @@ class reportsScreen extends StatefulWidget {
 
 String id = FirebaseAuth.instance.currentUser!.uid;
 
- var dataoaded;
-  List<UserData> usersList = [];
-  List<reported> postList = [];
+var dataoaded;
+List<UserData> usersList = [];
+List<reported> postList = [];
 
-  
 class _reportsScreenState extends State<reportsScreen> {
   @override
   void initState() {
@@ -46,10 +45,10 @@ class _reportsScreenState extends State<reportsScreen> {
       dataoaded = true;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
-     if (!dataoaded) getAllUsers();
+    if (!dataoaded) getAllUsers();
 
     return Scaffold(
         backgroundColor: const Color(0xffd6ecd0),
@@ -60,7 +59,7 @@ class _reportsScreenState extends State<reportsScreen> {
           actions: [
             GestureDetector(
               onTap: () {
-                  _clearAll();
+                _clearAll();
                 Navigator.pop(context);
               },
               child: const Icon(
@@ -108,64 +107,57 @@ class _reportsScreenState extends State<reportsScreen> {
                               color: Color.fromARGB(255, 0, 0, 0),
                             )));
                   }
-                   if (!dataoaded) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.green,
-                ),
-              );
-            }else{
+                  if (!dataoaded) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.green,
+                      ),
+                    );
+                  } else {
+                    QuerySnapshot<Object?>? querySnapshot = snaphot.data;
 
-             QuerySnapshot<Object?>? querySnapshot = snaphot.data;
+                    List<dynamic>? allData =
+                        querySnapshot?.docs?.map((doc) => doc.data()).toList();
 
-             List<dynamic>? allData = querySnapshot?.docs?.map((doc) => doc.data()).toList();
+                    for (var element in allData!) {
+                      postList.add(reported.allReportedConstructor(
+                        Rid: element['Rid'],
+                        ReportReason: element['ReportReason'],
+                        userId: element['userId'],
+                        flag: element['flag'],
+                        postId: element['postId'] ?? '',
+                        postText: element['postText'] ?? '',
+                        postImage: element['postImage'] ?? '',
+                        pathImage: element['pathImage'] ?? '',
+                      ));
+                    }
+                    print(postList.length);
 
-             for(var element in allData!){
+                    for (var i = 0; i < usersList.length; i++) {
+                      for (var j = 0; j < postList.length; j++) {
+                        if (usersList[i].uid == postList[j].userId) {
+                          postList[j].postUserName = usersList[i].username;
+                          postList[j].postEmail = usersList[i].email;
+                        }
+                      }
+                    }
+                    print(postList.length);
 
-              postList.add(reported.allReportedConstructor(
-                Rid: element['Rid'],
-                ReportReason:element['ReportReason'],
-                userId: element['userId'],
-                flag: element['flag'],
-
-                postId: element['postId'] ?? '',
-                postText: element['postText'] ?? '',
-                postImage: element['postImage'] ?? '',
-                pathImage: element['pathImage'] ?? '',
-              ));
-             }
-               print(postList.length);
-
-             for(var i= 0 ; i< usersList.length ; i++){
-               for(var j=0 ; j< postList.length ; j++){
-                if(usersList[i].uid == postList[j].userId){
-                  postList[j].postUserName = usersList[i].username;
-                  postList[j].postEmail = usersList[i].email;
-                }
-               }
-             }
-print(postList.length);
-
-  return ListView.builder(
-                    itemCount: postList.length,
-                    itemBuilder: (context, index) => reportedContent(
-                     postData: postList[index],
-                   //  id: snaphot.data?.docs[index].id,
-                   // reference: snaphot.data!.docs[index].reference,
-                    ),
-                  );
-            }
-                        
-
-                
-                }
-                ),
+                    return ListView.builder(
+                      itemCount: postList.length,
+                      itemBuilder: (context, index) => reportedContent(
+                        postData: postList[index],
+                        //  id: snaphot.data?.docs[index].id,
+                        // reference: snaphot.data!.docs[index].reference,
+                      ),
+                    );
+                  }
+                }),
           ),
         ));
   }
+
   void _clearAll() {
-  
     postList.clear();
-   
   }
 }

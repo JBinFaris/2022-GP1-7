@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:faydh/components/background.dart';
 
 class reportedContent extends StatefulWidget {
-  final snap ; 
-  final reported postData; 
+  final snap;
+  final reported postData;
   //  var id;
- // DocumentReference<Map<String, dynamic>> reference;
+  // DocumentReference<Map<String, dynamic>> reference;
 
   reportedContent(
-      { this.snap,
-        required this.postData,
+      {this.snap,
+      required this.postData,
       //   required this.id,
-       //  required this.reference,
+      //  required this.reference,
       super.key});
 
   @override
@@ -27,11 +27,10 @@ class reportedContent extends StatefulWidget {
 @override
 class _reportedContent extends State<reportedContent> {
   String id = FirebaseAuth.instance.currentUser!.uid;
-  
+
   @override
   Widget build(BuildContext context) {
-
- return Directionality(
+    return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
         elevation: 0,
@@ -58,7 +57,6 @@ class _reportedContent extends State<reportedContent> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  
                     tweetBody(),
                   ],
                 ),
@@ -70,13 +68,11 @@ class _reportedContent extends State<reportedContent> {
     );
   }
 
-  
-
   Widget tweetBody() {
     //var _dta = "${widget.snap["postImage"].toString()}";
-   // var _dta = widget.postData.postImage.toString();
+    // var _dta = widget.postData.postImage.toString();
 
-    return Expanded( 
+    return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -87,227 +83,232 @@ class _reportedContent extends State<reportedContent> {
             child: Padding(
               padding:
                   const EdgeInsets.only(top: 20, right: 0, bottom: 2, left: 50),
-              child:
-               Text(
+              child: Text(
                   //"${widget.snap["postText"].toString()}",
-                " اسم المستخدم"+" : " +  widget.postData.postUserName.toString(),
+                  " اسم المستخدم" +
+                      " : " +
+                      widget.postData.postUserName.toString(),
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   )),
             ),
           ),
-           Padding(
+          Padding(
             padding:
                 const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
             child: Padding(
               padding:
                   const EdgeInsets.only(top: 2, right: 0, bottom: 2, left: 50),
-              child:
-             Text(
-                      //"${widget.snap["postText"].toString()}",
-                    " البريد الإلكتروني" + " : " +  widget.postData.postEmail.toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      )),
+              child: Text(
+                  //"${widget.snap["postText"].toString()}",
+                  " البريد الإلكتروني" +
+                      " : " +
+                      widget.postData.postEmail.toString(),
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  )),
             ),
           ),
           const SizedBox(height: 20),
-
-           Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                
-                     Container(
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                    color: Color.fromARGB(125, 158, 158, 158),
-                    spreadRadius: 0.01,
-                    blurRadius: 15
-                  )] 
-                ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                decoration: BoxDecoration(boxShadow: const [
+                  BoxShadow(
+                      color: Color.fromARGB(125, 158, 158, 158),
+                      spreadRadius: 0.01,
+                      blurRadius: 15)
+                ]),
                 child: GestureDetector(
-                  onTap:() {
-                   showDialog(context: context, 
-                  builder:  (BuildContext context){
-                    return AlertDialog(
-                      title: const Text(
-                        "تأكيد ",
-                          textAlign: TextAlign.right,
-                      ),
-                       content:  const Text(
-                                 "هل أنت متأكد من أن المحتوى غير مخالف ؟ ",
-                                    textAlign: TextAlign.right,
-                                  ),
-                        actions: <Widget>[
-                           TextButton(
-                                      child: const Text("إلغاء"),
-                                      onPressed: () {
-                                        // callback function for on click event of Cancel button
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: const Text("موافق"),
-                                      onPressed: () async {
-                                           //     widget.reference.delete();
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text(
+                                "تأكيد ",
+                                textAlign: TextAlign.right,
+                              ),
+                              content: const Text(
+                                "هل أنت متأكد من أن المحتوى غير مخالف ؟ ",
+                                textAlign: TextAlign.right,
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text("إلغاء"),
+                                  onPressed: () {
+                                    // callback function for on click event of Cancel button
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text("موافق"),
+                                  onPressed: () async {
+                                    //     widget.reference.delete();
 
-                               //  FirebaseFirestore.instance.collection('users').doc(id).delete();
+                                    FirebaseFirestore.instance
+                                        .collection('reportedContent')
+                                        .doc(widget.postData.Rid.toString())
+                                        .delete();
 
-                                 //   print(widget.id.toString());
+                                    //   print(widget.id.toString());
                                     Navigator.pop(context);
-
-                                      },
-                                    ),
-                        ],
-                    );
-                  });
-                  },
-                  child:  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: const [
-                       Icon(
-                        size: 20,
-                    Icons.check_box_outlined,
-                    color: Colors.green,
-                  ),
-                      Text(' محتوى غير مخالف  '),
-                     
-                    ],
-                  )
-                ),
-
-                
-              ),
-              
-                 Container(
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                    color: Color.fromARGB(124, 26, 25, 25),
-                    spreadRadius: 0.01,
-                    blurRadius: 30
-                  )] 
-                ),
-                child: GestureDetector(
-                  onTap:() {
-                   showDialog(context: context, 
-                  builder:  (BuildContext context){
-                    return AlertDialog(
-                      title: const Text(
-                        "تأكيد الحظر",
-                          textAlign: TextAlign.right,
-                      ),
-                       content:  const Text(
-                                "هل أنت متأكد من حظر المستخدم ؟ ",
-                                    textAlign: TextAlign.right,
-                                  ),
-                        actions: <Widget>[
-                           TextButton(
-                                      child: const Text("إلغاء"),
-                                      onPressed: () {
-                                        // callback function for on click event of Cancel button
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: const Text("موافق"),
-                                      onPressed: () async {
-                                    Navigator.pop(context);
-
-                                        print("check");
-                                      },
-                                    ),
-                        ],
-                    );
-                  });
-                  },
-                  child:  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: const [
-                       Icon(
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: const [
+                        Icon(
                           size: 20,
-                    Icons.block,
-                    color: Colors.red,
-                  ),
-                      Text(' حظر المستخدم   '),
-                     
-                    ],
-                  )
-                ),
-
-                
+                          Icons.check_box_outlined,
+                          color: Colors.green,
+                        ),
+                        Text(' محتوى غير مخالف  '),
+                      ],
+                    )),
               ),
-            
-                 Container(
-                decoration: const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                   color: Color.fromARGB(125, 158, 158, 158),
-                    spreadRadius: 0.01,
-                    blurRadius: 15
-                  )] 
-                ),
+              Container(
+                decoration: BoxDecoration(boxShadow: const [
+                  BoxShadow(
+                      color: Color.fromARGB(124, 26, 25, 25),
+                      spreadRadius: 0.01,
+                      blurRadius: 30)
+                ]),
                 child: GestureDetector(
-                  onTap:() {
-                   showDialog(context: context, 
-                  builder:  (BuildContext context){
-                    return AlertDialog(
-                      title: const Text(
-                        "تأكيد الحظر",
-                          textAlign: TextAlign.right,
-                      ),
-                       content:  const Text(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text(
+                                "تأكيد الحظر",
+                                textAlign: TextAlign.right,
+                              ),
+                              content: const Text(
                                 "هل أنت متأكد من حظر المستخدم ؟ ",
-                                    textAlign: TextAlign.right,
-                                  ),
-                        actions: <Widget>[
-                           TextButton(
-                                      child: const Text("إلغاء"),
-                                      onPressed: () {
-                                        // callback function for on click event of Cancel button
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: const Text("موافق"),
-                                      onPressed: () async {
+                                textAlign: TextAlign.right,
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text("إلغاء"),
+                                  onPressed: () {
+                                    // callback function for on click event of Cancel button
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text("موافق"),
+                                  onPressed: () async {
+                                    Navigator.pop(context);
+                                    FirebaseFirestore.instance
+                                        .collection('users')
+                                        .doc(widget.postData.userId.toString())
+                                        .update({'Active': false});
                                     Navigator.pop(context);
 
-                                        print("check");
-                                      },
-                                    ),
-                        ],
-                    );
-                  });
-                  },
-                  child:  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    children: const [
-                       Icon(
+                                    print("check");
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: const [
+                        Icon(
                           size: 20,
-                    Icons.delete_outline,
-                    color: Colors.red,
-                  ),
-                      Text('  حذف المحتوى    '),
-                     
-                    ],
-                  )
-                ),
-
-                
+                          Icons.block,
+                          color: Colors.red,
+                        ),
+                        Text(' حظر المستخدم   '),
+                      ],
+                    )),
               ),
-               
-              ],
-            ),
-            const SizedBox(height: 5),
-          ],
-        ),
-          
+              Container(
+                decoration: const BoxDecoration(boxShadow: [
+                  BoxShadow(
+                      color: Color.fromARGB(125, 158, 158, 158),
+                      spreadRadius: 0.01,
+                      blurRadius: 15)
+                ]),
+                child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text(
+                                "تأكيد حذف المحتوى من الجميع",
+                                textAlign: TextAlign.right,
+                              ),
+                              content: const Text(
+                                "هل أنت متأكد من حذف المحتوى من الجميع  ؟ ",
+                                textAlign: TextAlign.right,
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text("إلغاء"),
+                                  onPressed: () {
+                                    // callback function for on click event of Cancel button
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text("موافق"),
+                                  onPressed: () async {
+                                    if (widget.postData.flag == 0) {
+                                      FirebaseFirestore.instance
+                                          .collection('post')
+                                          .doc(
+                                              widget.postData.postId.toString())
+                                          .delete();
+                                    } else if (widget.postData.flag == 1) {
+                                      FirebaseFirestore.instance
+                                          .collection('foodPost')
+                                          .doc(
+                                              widget.postData.postId.toString())
+                                          .delete();
+                                    }
 
-         /* if (_dta.isNotEmpty)
+                                    FirebaseFirestore.instance
+                                        .collection('reportedContent')
+                                        .doc(widget.postData.Rid.toString())
+                                        .delete();
+
+                                    print("check");
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: const [
+                        Icon(
+                          size: 20,
+                          Icons.delete_outline,
+                          color: Colors.red,
+                        ),
+                        Text('  حذف المحتوى    '),
+                      ],
+                    )),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+        ],
+      ),
+
+      /* if (_dta.isNotEmpty)
             SizedBox(
               width: 250,
               child: Center(
@@ -325,9 +326,7 @@ class _reportedContent extends State<reportedContent> {
                 ),
               ),
             ),*/
-          
-        
-      );
+    );
   }
 
   Widget tweetHeader() {
@@ -350,7 +349,6 @@ class _reportedContent extends State<reportedContent> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
               ],
             ),
           ),
@@ -360,8 +358,7 @@ class _reportedContent extends State<reportedContent> {
       ],
     );
 
-  
-  /*
+    /*
    // var _dta = "${widget.snap["pathImage"].toString()}";
 
     return Directionality(
@@ -515,5 +512,4 @@ class _reportedContent extends State<reportedContent> {
       ), */
   }*/
   }
-
 }
