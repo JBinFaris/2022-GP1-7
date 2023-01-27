@@ -148,7 +148,7 @@ class _reportedContent extends State<reportedContent> {
                                   child: const Text("موافق"),
                                   onPressed: () async {
                                     //     widget.reference.delete();
-
+                                    print(widget.postData.Rid.toString());
                                     FirebaseFirestore.instance
                                         .collection('reportedContent')
                                         .doc(widget.postData.Rid.toString())
@@ -166,7 +166,7 @@ class _reportedContent extends State<reportedContent> {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: const [
                         Icon(
-                          size: 20,
+                          size: 10,
                           Icons.check_box_outlined,
                           color: Colors.green,
                         ),

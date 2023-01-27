@@ -24,6 +24,7 @@ class _reportsScreenState extends State<reportsScreen> {
   @override
   void initState() {
     dataoaded = false;
+    _clearAll();
   }
 
   Future getAllUsers() async {

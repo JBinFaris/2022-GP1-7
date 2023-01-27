@@ -74,7 +74,8 @@ class Database2 {
     required Cid,
     required int? flag,
   }) async {
-    DocumentReference documentReference = _reportedContentCollection.doc(Rid);
+    DocumentReference documentReference =
+        _reportedContentCollection.doc(ref.id);
 
     Map<String, dynamic> data = <String, dynamic>{
       'Rid': ref.id,

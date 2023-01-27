@@ -124,30 +124,28 @@ class FirestoreMethods {
     Rid,
     ReportReason,
     //required String postUserName,
-     String? postText,
-     String? pathImage,
-     String? postImage,
+    String? postText,
+    String? pathImage,
+    String? postImage,
     required String userId,
-     String? postId,
-     int? flag ,
+    String? postId,
+    int? flag,
 
     //Uint8List? file, //
   }) async {
     String res = "Some error occured";
 
     try {
-      reported report = reported.ReportedConstructor(
-        ref2.id,
-        ReportReason,
-        postId,
-        postText,
-        pathImage,
-        postImage,
-        userId,
-        flag
-      );
+      reported report = reported.ReportedConstructor(ref2.id, ReportReason,
+          postId, postText, pathImage, postImage, userId, flag);
 
-      _firestore.collection("reportedContent").add(report.toJson());
+      var a =
+          await _firestore.collection("reportedContent").add(report.toJson());
+      var docId = a.id;
+      FirebaseFirestore.instance
+          .collection('reportedContent')
+          .doc(docId)
+          .update({'Rid': docId});
 
       res = "succces";
     } catch (err) {
