@@ -129,6 +129,7 @@ class FirestoreMethods {
      String? postImage,
     required String userId,
      String? postId,
+     int? flag ,
 
     //Uint8List? file, //
   }) async {
@@ -143,6 +144,7 @@ class FirestoreMethods {
         pathImage,
         postImage,
         userId,
+        flag
       );
 
       _firestore.collection("reportedContent").add(report.toJson());

@@ -12,6 +12,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'models/reported_model.dart';
+
 //import 'package:path/path.dart';
 
 // import 'ReservedFoodListConsumer.dart';
@@ -535,7 +537,7 @@ class _viewAllFood extends State<viewAllFood> {
                                                       child:
                                                           const Text("موافق"),
                                                       onPressed: () async {
-                                                        Database2
+                                                       Database2
                                                             .reportedContentData(
                                                           context: context,
                                                           postTitle:
@@ -548,7 +550,10 @@ class _viewAllFood extends State<viewAllFood> {
                                                           docId: doc.toString(),
                                                           postImage:
                                                               po.toString(),
+                                                              flag: 1,
                                                         );
+
+                                                      
 
                                                         Navigator.pop(context);
 

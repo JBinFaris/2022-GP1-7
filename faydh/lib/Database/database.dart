@@ -72,6 +72,7 @@ class Database2 {
     postImage, //
     pathImage, //
     required Cid,
+    required int? flag,
   }) async {
     DocumentReference documentReference = _reportedContentCollection.doc(Rid);
 
@@ -84,6 +85,7 @@ class Database2 {
       "postImage": postImage.toString().trim(),
       "pathImage": "pathImage".toString().trim(),
       'userId': Cid.toString().trim(),
+      "flag": flag,
     };
     await documentReference.set(data).whenComplete(() {
       print('Note item saved to the database');

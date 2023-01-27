@@ -4,12 +4,14 @@ class reported {
   final String Rid;
   final String ReportReason ;
   final String? postId;
-  String postUserName = "";
-
   final String? postText; //
   final String? postImage; //
   final String? pathImage; //
   final String userId;
+  final int? flag ;
+
+    String? postUserName = "";
+   String? postEmail = "";
 
   //final DateTime postDate;
 
@@ -17,25 +19,32 @@ class reported {
     required this.Rid,
     required this.ReportReason,
      this.postId,
-     required this.postUserName,
      this.postText,
     this.postImage, //
     this.pathImage, //
     required this.userId,
+    required this.flag,
+
+    this.postUserName,
+    this.postEmail,
     //required this.postDate,
   });
 
   reported.ReportedConstructor(this.Rid,this.ReportReason, this.postId, this.postText,
-      this.postImage, this.pathImage, this.userId);
+      this.postImage, this.pathImage, this.userId, this.flag);
+
+
 
   Map<String, dynamic> toJson() => {
         "Rid": Rid,
         "ReportReason": ReportReason,
-        "postId": postId,
-        "postText": postText,
-        "postImage": postImage,
-        "pathImage": pathImage,
         "userId": userId,
+        "flag": flag,
+         if(flag != 2)  "postId": postId,
+         if(flag != 2 && postText != "")  "postText": postText,
+         if(flag != 2 && postImage != "")  "postImage": postImage,
+          if(flag != 2 && pathImage != "")  "pathImage": pathImage,
+
         // "postDate": postDate
       };
 
@@ -46,11 +55,11 @@ class reported {
       Rid: snapshot["Rid"],
       ReportReason: snapshot["ReportReason"],
       postId: snapshot["postId"],
-      postUserName: snapshot["postUserName"],
       userId: snapshot["userId"],
       postText: snapshot["postText"],
       pathImage: snapshot["pathImage"],
       postImage: snapshot["postImage"],
+      flag: snapshot["flag"]
       // postDate: snapshot["postDate"]
     );
   }

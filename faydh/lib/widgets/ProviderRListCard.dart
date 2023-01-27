@@ -494,7 +494,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
       var count = data!["ReportCount"];
 
       if(count >= 3){
-     FirestoreMethods().uploadReport(ReportReason:'عدم الاستجابه عدة مرات',userId: s,)  ; 
+     FirestoreMethods().uploadReport(ReportReason:'عدم الاستجابه عدة مرات',userId: s, flag: 2)  ; 
      
         }
     }

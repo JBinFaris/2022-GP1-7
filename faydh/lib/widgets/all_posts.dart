@@ -225,6 +225,7 @@ class _AllPostsCardState extends State<AllPostsCard> {
                                                         FirestoreMethods()
                                                             .uploadReport(
                                                           //postUserName: myUsername,
+                                                          ReportReason: "محتوى غير لائق (المنتدى)",
                                                           postId: widget
                                                               .postData.Cid
                                                               .toString(),
@@ -242,6 +243,7 @@ class _AllPostsCardState extends State<AllPostsCard> {
                                                           userId: widget
                                                               .postData.userId
                                                               .toString(),
+                                                          flag: 0,
                                                         );
                                                         Navigator.pop(context);
 

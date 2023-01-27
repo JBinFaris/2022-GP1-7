@@ -284,6 +284,7 @@ class _HomePageState extends State<awarenessPost>
 
               List<dynamic>? allData =
                   querySnapshot?.docs?.map((doc) => doc.data()).toList();
+
               for (var element in allData!) {
                 postList.add(Posts.allPostsConstructor(
                     Cid: element['Cid'],
@@ -309,6 +310,7 @@ class _HomePageState extends State<awarenessPost>
                 itemBuilder: (context, index) => AllPostsCard(
                   postData: postList[index],
                 ),
+                
               );
               // return ListView.builder(
               //   itemCount: snaphot.data?.docs.length,
