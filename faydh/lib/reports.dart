@@ -126,6 +126,7 @@ class _reportsScreenState extends State<reportsScreen> {
                         userId: element['userId'],
                         flag: element['flag'],
                         postId: element['postId'] ?? '',
+                        postTitle: element['postTitle'] ??'',
                         postText: element['postText'] ?? '',
                         postImage: element['postImage'] ?? '',
                         pathImage: element['pathImage'] ?? '',

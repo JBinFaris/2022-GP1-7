@@ -12,6 +12,8 @@ class reported {
 
   String? postUserName = "";
   String? postEmail = "";
+  
+  String? postTitle;
 
   //final DateTime postDate;
 
@@ -22,6 +24,7 @@ class reported {
     this.postText,
     this.postImage, //
     this.pathImage, //
+    this.postTitle,
     required this.userId,
     required this.flag,
     this.postUserName,
@@ -38,6 +41,7 @@ class reported {
         "userId": userId,
         "flag": flag,
         if (flag != 2) "postId": postId,
+        if(flag == 1) "postTitle": postTitle,
         if (flag != 2 && postText != "") "postText": postText,
         if (flag != 2 && postImage != "") "postImage": postImage,
         if (flag != 2 && pathImage != "") "pathImage": pathImage,
