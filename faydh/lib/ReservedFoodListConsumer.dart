@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/Database/database.dart';
+import 'package:faydh/models/user_data_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/widgets/ConsumerListCard.dart';
@@ -12,9 +14,41 @@ class ReservedConsumerScreen extends StatefulWidget {
 
 String id = FirebaseAuth.instance.currentUser!.uid;
 
+
 class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
+  var dataoaded;
+  List<UserData> usersList = [];
+List<Database> postList = [];
+
+ @override
+  void initState() {
+    dataoaded = false;
+  }
+
+
+Future getAllUsers() async {
+    var collection = FirebaseFirestore.instance.collection('users');
+
+    QuerySnapshot querySnapshot = await collection.get();
+
+    List<dynamic> allData =
+        querySnapshot.docs.map((doc) => doc.data()).toList();
+    for (var element in allData) {
+      usersList.add(UserData(
+          email: element['email'] ?? '',
+          role: element['role'] ?? '',
+          uid: element['uid'] ?? '',
+          phoneNumber: element['phoneNumber'] ?? '',
+          username: element['username'] ?? ''));
+    }
+    setState(() {
+      dataoaded = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+       if (!dataoaded) getAllUsers();
     return Scaffold(
         backgroundColor: const Color(0xffd6ecd0),
         appBar: AppBar(
@@ -25,6 +59,7 @@ class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
             title: const Text("طلباتي المحجوزة"),
             leading: GestureDetector(
               onTap: () {
+                 _clearAll();
                 Navigator.pop(context);
               },
               child: const Icon(
@@ -72,16 +107,60 @@ class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
                               fontSize: 18,
                               color: Color.fromARGB(255, 0, 0, 0),
                             )));
-                  }
+                  } if (!dataoaded) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.green,
+                      ),
+                    );
+                  } else {
+                     QuerySnapshot<Object?>? querySnapshot = snaphot.data;
+
+                    List<dynamic>? allData =
+                        querySnapshot?.docs?.map((doc) => doc.data()).toList();
+
+                          _clearAll();
+
+                           for (var element in allData!) {
+                      postList.add( Database.foodConstructor(
+                         docId: element['docId'],
+                          userUid:  element['Cid'],
+                            userPost: element['userPost'],
+                             postTitle:  element['postTitle'], 
+                             postText:  element['postText'],
+                              postAdress:  element['postAdress'],
+                               postImage:  element['postImage'], 
+                               postExp:  element['postExp'], 
+                               food_cont:  element['food_cont'],
+                               reservedby: element["reservedby"])
+
+                      );
+                    }
+
+                     for (var i = 0; i < usersList.length; i++) {
+                      for (var j = 0; j < postList.length; j++) {
+                        if (usersList[i].uid == postList[j].userUid) {
+                          postList[j].postUserName = usersList[i].username;
+                          postList[j].postEmail = usersList[i].email;
+                          postList[j].postPhone = usersList[i].phoneNumber;
+
+                        }
+                      }
+                    }
 
                   return ListView.builder(
                     itemCount: snaphot.data?.docs.length,
                     itemBuilder: (context, index) => ConsumerListCard(
-                      snap: snaphot.data?.docs[index].data(),
+                     // snap: snaphot.data?.docs[index].data(),
+                     postList: postList[index],
                     ),
                   );
-                }),
+                  }}
+                ),
           ),
         ));
+  }
+   void _clearAll() {
+    postList.clear();
   }
 }

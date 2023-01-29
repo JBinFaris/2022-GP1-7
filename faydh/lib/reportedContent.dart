@@ -1,5 +1,7 @@
 //import 'dart:html';
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/ApproveBusiness.dart';
 import 'package:faydh/models/reported_model.dart';
@@ -8,6 +10,7 @@ import 'package:faydh/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/components/background.dart';
+import 'package:http/http.dart' as http;
 
 class reportedContent extends StatefulWidget {
   final snap;
@@ -786,6 +789,8 @@ class _reportedContent extends State<reportedContent> {
                                                           .toString())
                                                       .update(
                                                           {'Active': false});
+
+                                                          sendEmail(name :widget.postData.postUserName.toString() , email: widget.postData.postEmail.toString(), );
                                                   Navigator.pop(context);
                                                 },
                                               ),
@@ -922,4 +927,33 @@ class _reportedContent extends State<reportedContent> {
       ],
     );
   }
+}
+
+Future sendEmail({
+  required String name,
+  required String email,
+})async{
+  const serviceId = 'service_xutbn8n';
+   var userId= '7hJUinnZHv07_0-Ae' ;
+
+ var templateId = 'template_4i58c5d';
+
+  final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+  var response = await http.post(
+    url,
+    headers: {
+      'origin': 'http:localhost',
+      'Content-Type': 'application/json',},
+    body: jsonEncode({
+      'service_id': serviceId ,
+      'user_id': userId,
+      'template_id': templateId,
+      'template_params':{
+        'to_name': name,
+         'sender_email': email,
+      }
+    }), );
+
+  print(response.body);
+
 }

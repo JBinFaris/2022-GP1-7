@@ -38,10 +38,12 @@ String? consId;
 //}
 
 class ProviderRlistCard extends StatefulWidget {
-  final snap;
+  final postList;
+  //final snap;
 //  final UserData ConsData;
   const ProviderRlistCard({
-    this.snap,
+    this.postList,
+    //this.snap,
     super.key,
     // required this.ConsData,
   });
@@ -56,6 +58,9 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
 
   @override
   Widget build(BuildContext context) {
+     usrEmail = widget.postList.postEmail.toString();
+usrNamee= widget.postList.postUserName.toString();
+ phonee= widget.postList.postPhone.toString();
     //consId = ("${widget.snap["reservedby"].toString()}");
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
@@ -63,7 +68,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
     // _getUserData();
     //print(proId);
 
-    return FutureBuilder<DocumentSnapshot>(
+    /*return FutureBuilder<DocumentSnapshot>(
       future: users.doc("${widget.snap["reservedby"]}").get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -78,10 +83,10 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
           }
         } catch (e) {
           print(e.toString());
-        }
-        ;
+        }*/
+        
 
-        print(usrEmail);
+    
         return Directionality(
           textDirection: TextDirection.rtl,
           child: Card(
@@ -116,7 +121,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          decoration: BoxDecoration(boxShadow: [
+                          decoration: const BoxDecoration(boxShadow: [
                             BoxShadow(
                                 color: Color.fromARGB(125, 158, 158, 158),
                                 spreadRadius: 0.01,
@@ -128,7 +133,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                          shape: RoundedRectangleBorder(
+                                          shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                         title: const Text(
                                           "تأكيد الإستلام",
@@ -152,7 +157,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                               _firestore
                                                   .collection("foodPost")
                                                   .doc(
-                                                      "${widget.snap["docId"].toString()}")
+                                                      "${widget.postList.docId.toString()}")
                                                   .delete();
 
                                               Navigator.pop(context);
@@ -176,7 +181,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                               )),
                         ),
                         Container(
-                          decoration: BoxDecoration(boxShadow: [
+                          decoration: const BoxDecoration(boxShadow: [
                             BoxShadow(
                                 color: Color.fromARGB(125, 158, 158, 158),
                                 spreadRadius: 0.3,
@@ -188,13 +193,13 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                        shape: RoundedRectangleBorder(
+                                        shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                       title: const Text(
                                         "تأكيد الغاء الحجز",
                                         textAlign: TextAlign.right,
                                       ),
-                                      content: Text(
+                                      content: const Text(
                                         (" هل أنت متأكد من الغاء الحجز ؟ "),
                                         textAlign: TextAlign.right,
                                       ),
@@ -218,7 +223,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                 builder:
                                                     (BuildContext context) {
                                                   return  SimpleDialog(
-                                                    title: Text(
+                                                    title: const Text(
                                                       ("سبب الغاء الحجز"),
                                                       textAlign:
                                                           TextAlign.right,
@@ -228,28 +233,27 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                         onPressed: () {
                                                            _firestore
                                                 .collection("foodPost")
-                                                .doc(widget.snap["docId"]
-                                                    .toString())
+                                                .doc(widget.postList.docId.toString())
                                                 .update({"reserve": "0"});
                                                         Navigator.pop(context);
 
                                                         },
-                                                        child:  Text(
+                                                        child:  const Text(
                                                             'لا ارغب بالتبرع'),
                                                       ),
                                                       SimpleDialogOption(
                                                         onPressed: () {
                                                            _firestore
                                                 .collection("foodPost")
-                                                .doc(widget.snap["docId"]
-                                                    .toString())
+                                                .doc(widget.postList.docId.toString()
+                                                    )
                                                 .update({"reserve": "0"});
                                                            _firestore
                                                 .collection("users")
-                                                .doc("${widget.snap["reservedby"]}")
+                                                .doc(widget.postList.reservedby.toString())
                                                 .update({"ReportCount": FieldValue.increment(1)});
 
-                                                 CheckReportCount(widget.snap["reservedby"]);
+                                                 CheckReportCount(widget.postList.reservedby.toString());
 
                                                    Navigator.pop(context);
 
@@ -276,8 +280,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                 alignment: Alignment.bottomLeft,
                                 child: Wrap(
                                   crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    const Icon(
+                                  children: const [
+                                    Icon(
                                       Icons.disabled_by_default,
                                       color: Colors.red,
                                     ),
@@ -294,8 +298,9 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
             ),
           ),
         );
-      },
-    );
+    //
+    //  },
+  //  );
   }
 
   Widget tweetAvatar() {
@@ -329,7 +334,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                          ("${/*" نوع الطعام: " + */ widget.snap["postTitle"].toString()}"),
+                          ("${/*" نوع الطعام: " + */ widget.postList.postTitle.toString()}"),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.black,
@@ -339,7 +344,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                          ("${/*" نوع الطعام: " + */ widget.snap["postText"].toString()}"),
+                          ("${/*" نوع الطعام: " + */ widget.postList.postText.toString()}"),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.black,
@@ -369,7 +374,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                          ("${" موقع الإستلام: " + widget.snap["postAdress"].toString()}"),
+                          ("${" موقع الإستلام: " +widget.postList.postAdress.toString()}"),
                           textAlign: TextAlign.right,
                           style: const TextStyle(
                             color: Colors.black,
@@ -378,7 +383,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                          ("${" كمية الطعام: " + widget.snap["food_cont"].toString()}"),
+                          ("${" كمية الطعام: " + widget.postList.food_cont.toString()}"),
                           textAlign: TextAlign.right,
                           style: const TextStyle(
                             color: Colors.black,
@@ -391,7 +396,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: Image.network(
-                          widget.snap['postImage'],
+                          widget.postList.postImage.toString(),
                           height: 250,
                           width: 170,
                           //   fit: BoxFit.contain,
@@ -403,7 +408,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                   Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "تاريخ الانتهاء : ${widget.snap['postExp'].toString()}",
+                        "تاريخ الانتهاء : ${widget.postList.postExp.toString()}",
                         style: const TextStyle(
                           color: Color.fromARGB(255, 144, 177, 135),
                           fontSize: 12,

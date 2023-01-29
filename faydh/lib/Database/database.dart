@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,6 +15,38 @@ final DocumentReference ref =
     FirebaseFirestore.instance.collection("reportedContent").doc();
 
 class Database {
+   final String docId;
+    final String userUid;
+    final String userPost;
+    final String postTitle;
+    final String postText;
+    final String postAdress;
+    final String postImage;
+    final String postExp;
+    final String food_cont;
+    String? reservedby;
+
+  String? postUserName;
+
+  String? postEmail;
+
+  String? postPhone;
+
+
+Database.foodConstructor({
+  required this.docId,
+   required this.userUid,
+   required this.userPost,
+   required this.postTitle,
+   required this.postText,
+   required this.postAdress,
+   required this.postImage,
+   required this.postExp,
+   required this.food_cont,
+   required this.reservedby,
+});
+
+
   static Future<void> addFoodPostData({
     required BuildContext context,
     required String docId,
@@ -25,13 +58,17 @@ class Database {
     required String postImage,
     required String postExp,
     required String food_cont,
-    required String reserve,
-    required String notify,
+     String? reserve,
+     String? notify,
     String? reservedby,
-    required String notifyCancelP,
-    required String notifyCancelC,
+     String? notifyCancelP,
+     String? notifyCancelC,
   }) async {
+
+  
+
     DocumentReference documentReference = _foodPostCollection.doc(docId);
+
 
     Map<String, dynamic> data = <String, dynamic>{
       'Cid': userUid.toString().trim(),

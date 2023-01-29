@@ -36,7 +36,11 @@ String? proId;
 
 class ConsumerListCard extends StatefulWidget {
   final snap;
-  const ConsumerListCard({this.snap, super.key});
+  final postList;
+  const ConsumerListCard({
+    this.snap,
+    this.postList,
+   super.key});
 
   @override
   State<ConsumerListCard> createState() => _ConsumerListCardState();
@@ -47,11 +51,14 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
   var seen = false;
   @override
   Widget build(BuildContext context) {
-    proId = ("${widget.snap["Cid"].toString()}");
+  usrEmail = widget.postList.postEmail.toString();
+usrName= widget.postList.postUserName.toString();
+ phone= widget.postList.postPhone.toString();
+  //  proId = ("${widget.snap["Cid"].toString()}");
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     //print(proId);
-    return FutureBuilder<DocumentSnapshot>(
+   /* return FutureBuilder<DocumentSnapshot>(
       future: users.doc("${widget.snap["Cid"].toString()}").get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -62,7 +69,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
           phone = (" ${data['phoneNumber']}");
           usrEmail = (" ${data['email']}");
           usrName = (" ${data['username']}");
-        }
+        }*/
         // print(usrEmail);
         return Directionality(
           textDirection: TextDirection.rtl,
@@ -149,8 +156,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                         onPressed: () {
                                                             _firestore
                                                 .collection("foodPost")
-                                                .doc(widget.snap["docId"]
-                                                    .toString())
+                                                .doc(widget.postList.docId.toString())
                                                 .update({"reserve": "0"});
 
                                                         Navigator.pop(context);
@@ -163,17 +169,16 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                         onPressed: () {
                                                             _firestore
                                                 .collection("foodPost")
-                                                .doc(widget.snap["docId"]
-                                                    .toString())
+                                                .doc(widget.postList.docId.toString())
                                                 .update({"reserve": "0"});
 
-                                                          print(widget.snap["Cid"]);
+                                                        //  print(widget.postList.userUid);
                                                            _firestore
                                                 .collection("users")
-                                                .doc(widget.snap["Cid"].toString())
+                                                .doc(widget.postList.userUid.toString())
                                                 .update({"ReportCount": FieldValue.increment(1)});
 
-                                                 CheckReportCount2(widget.snap["Cid"].toString());
+                                                 CheckReportCount2(widget.postList.userUid.toString());
                                                    Navigator.pop(context);
 
  },
@@ -216,9 +221,9 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
             ),
           ),
         );
-      },
-    );
-  }
+      }
+   // );
+  //}
 
   Widget tweetAvatar() {
     return Container(
@@ -255,7 +260,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                          ("${/*" نوع الطعام: " + */ widget.snap["postTitle"].toString()}"),
+                          ("${/*" نوع الطعام: " + */widget.postList.postTitle.toString()}"),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.black,
@@ -265,7 +270,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                          ("${/*" نوع الطعام: " + */ widget.snap["postText"].toString()}"),
+                          ("${/*" نوع الطعام: " + */ widget.postList.postText.toString()}"),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.black,
@@ -296,7 +301,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                          ("${" موقع الإستلام: " + widget.snap["postAdress"].toString()}"),
+                          ("${" موقع الإستلام: " + widget.postList.postAdress.toString()}"),
                           textAlign: TextAlign.right,
                           style: const TextStyle(
                             color: Colors.black,
@@ -305,7 +310,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                   Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                          ("${" كمية الطعام: " + widget.snap["food_cont"].toString()}"),
+                          ("${" كمية الطعام: " + widget.postList.food_cont.toString()}"),
                           textAlign: TextAlign.right,
                           style: const TextStyle(
                             color: Colors.black,
@@ -321,7 +326,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: Image.network(
-                          widget.snap['postImage'],
+                          widget.postList.postImage.toString(),
                           height: 250,
                           width: 170,
                           //   fit: BoxFit.contain,
@@ -333,7 +338,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                   Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "تاريخ الانتهاء : ${widget.snap['postExp'].toString()}",
+                        "تاريخ الانتهاء : ${widget.postList.postExp.toString()}",
                         style: const TextStyle(
                           color: Color.fromARGB(255, 144, 177, 135),
                           fontSize: 12,
@@ -431,6 +436,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
 
 
   }
+
 }
 /*
 tweetLeft() {
