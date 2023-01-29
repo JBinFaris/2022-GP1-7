@@ -89,6 +89,8 @@ void updateStatus(status, id) {
                    showDialog(context: context, 
                   builder:  (BuildContext context){
                     return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                       title: const Text(
                         "تأكيد الموافقة",
                           textAlign: TextAlign.right,
@@ -151,6 +153,8 @@ void updateStatus(status, id) {
                   showDialog(context: context, 
                   builder:  (BuildContext context){
                     return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                       title: const Text(
                         "تأكيد الرفض",
                           textAlign: TextAlign.right,

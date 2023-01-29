@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/ApproveBusiness.dart';
 import 'package:faydh/models/reported_model.dart';
@@ -126,6 +128,8 @@ class _reportedContent extends State<reportedContent> {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
+                                      shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                       title: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 2,
@@ -137,7 +141,7 @@ class _reportedContent extends State<reportedContent> {
                                               MainAxisAlignment.start,
                                           children: const [
                                             Text("تفاصيل المنشور"),
-                                            const SizedBox(
+                                            SizedBox(
                                               width: 10,
                                             ),
                                             Positioned(
@@ -306,7 +310,9 @@ class _reportedContent extends State<reportedContent> {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
-                                    
+                                    shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+ 
                                       title: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 2,
@@ -318,7 +324,7 @@ class _reportedContent extends State<reportedContent> {
                                               MainAxisAlignment.start,
                                           children: const [
                                             Text("تفاصيل الإعلان"),
-                                            const SizedBox(
+                                            SizedBox(
                                               width: 10,
                                             ),
                                             Positioned(
@@ -543,6 +549,8 @@ class _reportedContent extends State<reportedContent> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
+                                            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                           title: const Text(
                                             "تأكيد ",
                                             textAlign: TextAlign.right,
@@ -610,6 +618,8 @@ class _reportedContent extends State<reportedContent> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
+                                              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                             title: const Text(
                                               "تأكيد ",
                                               textAlign: TextAlign.right,
@@ -685,6 +695,8 @@ class _reportedContent extends State<reportedContent> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
+                                            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                           title: const Text(
                                             "تأكيد الحظر",
                                             textAlign: TextAlign.right,
@@ -746,6 +758,8 @@ class _reportedContent extends State<reportedContent> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
+                                              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                             title: const Text(
                                               "تأكيد الحظر",
                                               textAlign: TextAlign.right,
@@ -810,6 +824,8 @@ class _reportedContent extends State<reportedContent> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
+                                          shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                         title: const Text(
                                           "تأكيد حذف المحتوى من الجميع",
                                           textAlign: TextAlign.right,

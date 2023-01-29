@@ -128,6 +128,8 @@ class _AdminMainPageState extends State<AdminMain> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                     title: const Text(
                                       'تسجيل الخروج',
                                       textAlign: TextAlign.right,

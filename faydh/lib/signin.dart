@@ -302,6 +302,8 @@ if(Active == true){
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                           title: const Text(
                             "معلق " + ":" + " حالة الحساب",
                             textAlign: TextAlign.right,
@@ -325,6 +327,8 @@ if(Active == true){
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                           title: const Text(
                             " حالة الحساب" + ": " + " مرفوض ",
                             textAlign: TextAlign.right,
@@ -365,6 +369,8 @@ if(Active == true){
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                           title: const Text(
                             " حالة الحساب" + ": " + " محظور ",
                             textAlign: TextAlign.right,

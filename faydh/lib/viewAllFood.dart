@@ -408,6 +408,8 @@ class _viewAllFood extends State<viewAllFood> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                   title: const Text(
                                     'لقد تم حجز الطعام',
                                     textAlign: TextAlign.right,
@@ -515,6 +517,8 @@ class _viewAllFood extends State<viewAllFood> {
                                             () => showDialog(
                                               context: context,
                                               builder: (context) => AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                                   title: const Text(
                                                     'تأكيد البلاغ',
                                                     textAlign: TextAlign.right,

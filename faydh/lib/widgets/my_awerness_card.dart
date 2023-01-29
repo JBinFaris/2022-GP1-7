@@ -127,6 +127,8 @@ class _MyCardState extends State<MyCard> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                   title: const Text(
                                     'تأكيد الحذف',
                                     textAlign: TextAlign.right,

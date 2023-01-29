@@ -128,6 +128,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                         title: const Text(
                                           "تأكيد الإستلام",
                                           textAlign: TextAlign.right,
@@ -186,6 +188,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                       title: const Text(
                                         "تأكيد الغاء الحجز",
                                         textAlign: TextAlign.right,

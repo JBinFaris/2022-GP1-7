@@ -245,7 +245,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 62, 112, 82)
+                            color: const Color.fromARGB(255, 62, 112, 82)
                                 .withOpacity(0.9),
                             spreadRadius: 5,
                             blurRadius: 7,
@@ -396,6 +396,8 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
+                                                  shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                                   title: const Text(
                                                     ' الطعام محجوز',
                                                     textAlign: TextAlign.right,
@@ -434,6 +436,8 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
+                                                  shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                                   title: const Text(
                                                     'تأكيد الحذف',
                                                     textAlign: TextAlign.right,
@@ -471,6 +475,8 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
+                                                  shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                                   title: const Text(
                                                     ' الطعام محجوز',
                                                     textAlign: TextAlign.right,
@@ -914,10 +920,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           child: ElevatedButton(
                             onPressed: () {
                               showDialog(
+                                
                                   context: context,
                                   builder: (_) => Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: AlertDialog(
+                                            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                           title: const Text('تأكيد!'),
                                           content: const Text(
                                               'عند موافقتك لنشر الاعلان لن تتمكن من تعديل أو حذف الإعلان إذا تم حجزه. '),

@@ -599,7 +599,8 @@ class _UserProfileState extends State<UserProfile> {
                                                                       )),
                                                                 ],
                                                               ),
-                                                            ));
+                                                            )
+                                                            );
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 padding:
@@ -658,6 +659,8 @@ class _UserProfileState extends State<UserProfile> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                               title: const Text(
                                                 'تسجيل الخروج',
                                                 textAlign: TextAlign.right,
@@ -717,6 +720,8 @@ class _UserProfileState extends State<UserProfile> {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                                 title: const Text(
                                                   'حفظ التغييرات',
                                                   textAlign: TextAlign.right,
