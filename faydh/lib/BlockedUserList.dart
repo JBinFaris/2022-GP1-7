@@ -1,47 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faydh/models/user_model.dart';
-import 'package:faydh/widgets/Approval_Card.dart';
+import 'package:faydh/widgets/BListCards.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ApproveBusiness extends StatefulWidget {
-  const ApproveBusiness({super.key});
+class BlockedUserList extends StatefulWidget {
+  const BlockedUserList({super.key});
 
   @override
-  State<ApproveBusiness> createState() => _ApproveBusinessState();
+  State<BlockedUserList> createState() => _BlockedUserListState();
 }
 
-class _ApproveBusinessState extends State<ApproveBusiness> {
-
-  var dataloaded;
-  List<User> usersList = [];
-
-
-
-  @override
-  void dispose() {
-    dataloaded = false;
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    dataloaded = false;
-    //getUser();
-  }
-
-
-
-   
-
+class _BlockedUserListState extends State<BlockedUserList> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+   return Scaffold(
       appBar: AppBar(
         
         automaticallyImplyLeading: false,
-        title: const Center(child: Text('      التحقق من الشركات')),
-        backgroundColor: const Color(0xFF1A4D2E),
+        title: const Center(child: Text('  قائمة المستخدمين المحظورين ')),
+        backgroundColor:  const Color(0xFF1A4D2E),
         actions: [
           GestureDetector(
             onTap: () {
@@ -66,7 +43,7 @@ class _ApproveBusinessState extends State<ApproveBusiness> {
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection("users")
-                  .where('status', isEqualTo: "0")
+                  .where('Active', isEqualTo: false)
                   .snapshots(),
              builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snaphot) {
@@ -80,7 +57,7 @@ class _ApproveBusinessState extends State<ApproveBusiness> {
 
                 return ListView.builder(
                   itemCount: snaphot.data?.docs.length,
-                  itemBuilder: (context, index) => ApprovalCard(
+                  itemBuilder: (context, index) => bListCards(
                    snap: snaphot.data?.docs[index].data(),
                   ),
                 );
@@ -92,5 +69,6 @@ class _ApproveBusinessState extends State<ApproveBusiness> {
         // backgroundColor:Color.fromARGB(255, 235, 241, 233),
       ),
      );
+  
   }
 }

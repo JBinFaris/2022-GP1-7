@@ -50,14 +50,25 @@ void updateStatus(status, id) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Card(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(
-            width: 0,
-            color: Colors.white,
-          ),),
-          margin :const EdgeInsets.all(8),
-          child: Padding(
+          elevation: 0,
+        color: Colors.transparent,
+
+           child: Padding(
           padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      const Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
           child: Column(
             children: [
               Row(
@@ -76,7 +87,7 @@ void updateStatus(status, id) {
          
             Container(
               
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
                     color: Color.fromARGB(125, 158, 158, 158),
@@ -89,7 +100,7 @@ void updateStatus(status, id) {
                    showDialog(context: context, 
                   builder:  (BuildContext context){
                     return AlertDialog(
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
                       title: const Text(
                         "تأكيد الموافقة",
@@ -125,7 +136,7 @@ void updateStatus(status, id) {
                   },
                   child:  Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
+                    children: const [
                        Icon(
                     Icons.check,
                     color: Colors.green,
@@ -140,7 +151,7 @@ void updateStatus(status, id) {
               ),
             
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
                     color: Color.fromARGB(125, 158, 158, 158),
@@ -153,13 +164,13 @@ void updateStatus(status, id) {
                   showDialog(context: context, 
                   builder:  (BuildContext context){
                     return AlertDialog(
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
                       title: const Text(
                         "تأكيد الرفض",
                           textAlign: TextAlign.right,
                       ),
-                       content:  Text(
+                       content:  const Text(
                                     ( " هل أنت متأكد من رفض الشركة ؟ ") ,
                                     textAlign: TextAlign.right,
                                   ),
@@ -201,8 +212,8 @@ void updateStatus(status, id) {
                     alignment: Alignment.bottomLeft,
                     child: Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                       Icons.disabled_by_default,
                       color: Colors.red,
                     ),
@@ -226,7 +237,7 @@ void updateStatus(status, id) {
           ),
         ),
       ),
-    );
+    ));
   }
 
   Widget tweetAvatar() {

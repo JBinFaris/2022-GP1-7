@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/BlockedUserList.dart';
 import 'package:faydh/models/post_model.dart';
 import 'package:faydh/models/user_data_model.dart';
 import 'package:faydh/reportedContent.dart';
@@ -53,22 +54,51 @@ class _reportsScreenState extends State<reportsScreen> {
     return Scaffold(
         backgroundColor: const Color(0xffd6ecd0),
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Center(child: Text('      البلاغات')),
-          backgroundColor: const Color.fromARGB(151, 26, 77, 46),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                _clearAll();
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Color.fromARGB(225, 255, 255, 255),
-              ),
-            )
-          ],
-        ),
+              elevation: 2.0,
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              backgroundColor: const Color(0xFF1A4D2E),
+              title: const Text(" البلاغات  "),
+              actions: <Widget>[
+                SizedBox(
+                    width: 160,
+                    height: 130,
+                    child: FittedBox(
+                      child: FloatingActionButton.extended(
+                        heroTag: "btn1",
+                        label: const Text(
+                         "قائمة المحظورين ",
+                          style: TextStyle(
+                            color: Color(0xFF1A4D2E),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),
+                        ),
+                        backgroundColor: Colors.white,
+                        icon: const Icon(
+                          Icons.calendar_month_rounded,
+                          size: 45.0,
+                          color: Color(0xFF1A4D2E),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return const BlockedUserList();
+                            }),
+                          );
+                        },
+                      ),
+                    ))
+              ],
+              leading: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Color.fromARGB(225, 255, 255, 255),
+                ),
+              )),
         body: SafeArea(
           child: Container(
             decoration: const BoxDecoration(
