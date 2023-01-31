@@ -728,6 +728,12 @@ class _reportedContent extends State<reportedContent> {
                                                     .doc(widget.postData.userId
                                                         .toString())
                                                     .update({'Active': false});
+                                                FirebaseFirestore.instance
+                                                    .collection(
+                                                        'reportedContent')
+                                                    .doc(widget.postData.Rid
+                                                        .toString())
+                                                    .delete();
 
                                                 FirebaseFirestore.instance
                                                     .collection('posts')
@@ -762,6 +768,34 @@ class _reportedContent extends State<reportedContent> {
                                                         .delete();
                                                   });
                                                 });
+
+                                                FirebaseFirestore.instance
+                                                    .collection(
+                                                        'reportedContent')
+                                                    .where('userId',
+                                                        isEqualTo: widget
+                                                            .postData.userId)
+                                                    .get()
+                                                    .then((QuerySnapshot
+                                                        querySnapshot) {
+                                                  querySnapshot.docs
+                                                      .forEach((doc) {
+                                                    FirebaseFirestore.instance
+                                                        .collection(
+                                                            'reportedContent')
+                                                        .doc(doc["Rid"])
+                                                        .delete();
+                                                  });
+                                                });
+
+                                                sendEmail(
+                                                  name: widget
+                                                      .postData.postUserName
+                                                      .toString(),
+                                                  email: widget
+                                                      .postData.postEmail
+                                                      .toString(),
+                                                );
 
                                                 Navigator.pop(context);
                                               },
@@ -829,6 +863,67 @@ class _reportedContent extends State<reportedContent> {
                                                           .toString())
                                                       .update(
                                                           {'Active': false});
+
+                                                  FirebaseFirestore.instance
+                                                      .collection(
+                                                          'reportedContent')
+                                                      .doc(widget.postData.Rid
+                                                          .toString())
+                                                      .delete();
+
+                                                  FirebaseFirestore.instance
+                                                      .collection('posts')
+                                                      .where('userId',
+                                                          isEqualTo: widget
+                                                              .postData.userId)
+                                                      .get()
+                                                      .then((QuerySnapshot
+                                                          querySnapshot) {
+                                                    querySnapshot.docs
+                                                        .forEach((doc) {
+                                                      FirebaseFirestore.instance
+                                                          .collection('posts')
+                                                          .doc(doc["Cid"])
+                                                          .delete();
+                                                    });
+                                                  });
+
+                                                  FirebaseFirestore.instance
+                                                      .collection('foodPost')
+                                                      .where('Cid',
+                                                          isEqualTo: widget
+                                                              .postData.userId)
+                                                      .get()
+                                                      .then((QuerySnapshot
+                                                          querySnapshot) {
+                                                    querySnapshot.docs
+                                                        .forEach((doc) {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'foodPost')
+                                                          .doc(doc["docId"])
+                                                          .delete();
+                                                    });
+                                                  });
+
+                                                  FirebaseFirestore.instance
+                                                      .collection(
+                                                          'reportedContent')
+                                                      .where('userId',
+                                                          isEqualTo: widget
+                                                              .postData.userId)
+                                                      .get()
+                                                      .then((QuerySnapshot
+                                                          querySnapshot) {
+                                                    querySnapshot.docs
+                                                        .forEach((doc) {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'reportedContent')
+                                                          .doc(doc["Rid"])
+                                                          .delete();
+                                                    });
+                                                  });
 
                                                   sendEmail(
                                                     name: widget
