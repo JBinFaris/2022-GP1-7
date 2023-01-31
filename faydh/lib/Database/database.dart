@@ -106,10 +106,10 @@ class Database2 {
     required int? flag,
   }) async {
     DocumentReference documentReference =
-        _reportedContentCollection.doc(ref.id);
+        _reportedContentCollection.doc(Rid);
 
     Map<String, dynamic> data = <String, dynamic>{
-      'Rid': ref.id,
+      'Rid': documentReference.id,
       'postId': docId.toString().trim(),
       'ReportReason': ReportReason.toString().trim(),
       'postText': postText.toString().trim(),

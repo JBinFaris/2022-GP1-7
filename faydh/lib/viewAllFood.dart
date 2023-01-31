@@ -278,7 +278,7 @@ class _viewAllFood extends State<viewAllFood> {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
+                color: const Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
                 spreadRadius: 5,
                 blurRadius: 7,
                 offset: const Offset(0, 3),
@@ -408,7 +408,7 @@ class _viewAllFood extends State<viewAllFood> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                   title: const Text(
                                     'لقد تم حجز الطعام',
@@ -517,7 +517,7 @@ class _viewAllFood extends State<viewAllFood> {
                                             () => showDialog(
                                               context: context,
                                               builder: (context) => AlertDialog(
-                                                  shape: RoundedRectangleBorder(
+                                                  shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                                   title: const Text(
                                                     'تأكيد البلاغ',

@@ -33,16 +33,6 @@ class FirestoreMethods {
       }
       String userId = _auth.currentUser!.uid;
 
-      Posts posts = Posts.postConstructor(
-          ref.id,
-          postText,
-          photoUrl['downloadUrl'] ?? '',
-          photoUrl['path'] ?? '',
-          userId,
-          postDate);
-
-      _firestore.collection("posts").add(posts.toJson());
-
       Posts post = Posts.postConstructor(
           ref.id,
           postText,
