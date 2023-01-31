@@ -76,7 +76,7 @@ class _reportedContent extends State<reportedContent> {
 
   Widget tweetBody() {
     var _dta = "${widget.postData.pathImage.toString()}";
-     var _dta2 = widget.postData.postImage.toString();
+    var _dta2 = widget.postData.postImage.toString();
 
     return Expanded(
       child: Column(
@@ -132,7 +132,8 @@ class _reportedContent extends State<reportedContent> {
                                 builder: (context) {
                                   return AlertDialog(
                                       shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0))),
                                       title: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 2,
@@ -175,10 +176,10 @@ class _reportedContent extends State<reportedContent> {
                                             child: Align(
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                   textAlign: TextAlign.right,
+                                                  textAlign: TextAlign.right,
                                                   //"${widget.snap["postText"].toString()}",
-                                                 " المحتوى: " + "${widget.postData.postText.toString()}" ,
-                                                     
+                                                  " المحتوى: " +
+                                                      "${widget.postData.postText.toString()}",
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,
@@ -313,9 +314,9 @@ class _reportedContent extends State<reportedContent> {
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
-                                    shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
- 
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0))),
                                       title: Padding(
                                         padding: const EdgeInsets.only(
                                             top: 2,
@@ -349,7 +350,7 @@ class _reportedContent extends State<reportedContent> {
                                           const SizedBox(
                                             height: 5,
                                           ),
-                                           Padding(
+                                          Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 2,
                                                 right: 20,
@@ -358,17 +359,17 @@ class _reportedContent extends State<reportedContent> {
                                             child: Align(
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                   textAlign: TextAlign.right,
+                                                  textAlign: TextAlign.right,
                                                   //"${widget.snap["postText"].toString()}",
-                                                   "  عنوان الطعام: "  +  "${widget.postData.postTitle.toString()}" 
-                                                     ,
+                                                  "  عنوان الطعام: " +
+                                                      "${widget.postData.postTitle.toString()}",
                                                   style: const TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,
                                                   )),
                                             ),
                                           ),
-                                           const SizedBox(
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                           Padding(
@@ -380,13 +381,12 @@ class _reportedContent extends State<reportedContent> {
                                             child: Align(
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                textAlign: TextAlign.right,
-                                                
+                                                  textAlign: TextAlign.right,
+
                                                   //"${widget.snap["postText"].toString()}",
-                                              "  وصف الطعام: "  +  "${widget.postData.postText.toString()}" 
-                                                    ,
+                                                  "  وصف الطعام: " +
+                                                      "${widget.postData.postText.toString()}",
                                                   style: const TextStyle(
-                                                    
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,
                                                   )),
@@ -405,7 +405,8 @@ class _reportedContent extends State<reportedContent> {
                                                   child: Container(
                                                     color: Colors.grey,
                                                     child: Image(
-                                                      image: NetworkImage(_dta2),
+                                                      image:
+                                                          NetworkImage(_dta2),
                                                       fit: BoxFit.cover,
                                                       height: 150,
                                                       width: 250,
@@ -552,8 +553,9 @@ class _reportedContent extends State<reportedContent> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0))),
                                           title: const Text(
                                             "تأكيد ",
                                             textAlign: TextAlign.right,
@@ -621,8 +623,9 @@ class _reportedContent extends State<reportedContent> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(15.0))),
                                             title: const Text(
                                               "تأكيد ",
                                               textAlign: TextAlign.right,
@@ -698,8 +701,9 @@ class _reportedContent extends State<reportedContent> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0))),
                                           title: const Text(
                                             "تأكيد الحظر",
                                             textAlign: TextAlign.right,
@@ -724,6 +728,41 @@ class _reportedContent extends State<reportedContent> {
                                                     .doc(widget.postData.userId
                                                         .toString())
                                                     .update({'Active': false});
+
+                                                FirebaseFirestore.instance
+                                                    .collection('posts')
+                                                    .where('userId',
+                                                        isEqualTo: widget
+                                                            .postData.userId)
+                                                    .get()
+                                                    .then((QuerySnapshot
+                                                        querySnapshot) {
+                                                  querySnapshot.docs
+                                                      .forEach((doc) {
+                                                    FirebaseFirestore.instance
+                                                        .collection('posts')
+                                                        .doc(doc["Cid"])
+                                                        .delete();
+                                                  });
+                                                });
+
+                                                FirebaseFirestore.instance
+                                                    .collection('foodPost')
+                                                    .where('Cid',
+                                                        isEqualTo: widget
+                                                            .postData.userId)
+                                                    .get()
+                                                    .then((QuerySnapshot
+                                                        querySnapshot) {
+                                                  querySnapshot.docs
+                                                      .forEach((doc) {
+                                                    FirebaseFirestore.instance
+                                                        .collection('foodPost')
+                                                        .doc(doc["docId"])
+                                                        .delete();
+                                                  });
+                                                });
+
                                                 Navigator.pop(context);
                                               },
                                             ),
@@ -761,8 +800,9 @@ class _reportedContent extends State<reportedContent> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(15.0))),
                                             title: const Text(
                                               "تأكيد الحظر",
                                               textAlign: TextAlign.right,
@@ -790,7 +830,14 @@ class _reportedContent extends State<reportedContent> {
                                                       .update(
                                                           {'Active': false});
 
-                                                          sendEmail(name :widget.postData.postUserName.toString() , email: widget.postData.postEmail.toString(), );
+                                                  sendEmail(
+                                                    name: widget
+                                                        .postData.postUserName
+                                                        .toString(),
+                                                    email: widget
+                                                        .postData.postEmail
+                                                        .toString(),
+                                                  );
                                                   Navigator.pop(context);
                                                 },
                                               ),
@@ -829,8 +876,9 @@ class _reportedContent extends State<reportedContent> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
-                                          shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0))),
                                         title: const Text(
                                           "تأكيد حذف المحتوى من الجميع",
                                           textAlign: TextAlign.right,
@@ -932,28 +980,29 @@ class _reportedContent extends State<reportedContent> {
 Future sendEmail({
   required String name,
   required String email,
-})async{
+}) async {
   const serviceId = 'service_xutbn8n';
-   var userId= '7hJUinnZHv07_0-Ae' ;
+  var userId = '7hJUinnZHv07_0-Ae';
 
- var templateId = 'template_4i58c5d';
+  var templateId = 'template_4i58c5d';
 
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
   var response = await http.post(
     url,
     headers: {
       'origin': 'http:localhost',
-      'Content-Type': 'application/json',},
+      'Content-Type': 'application/json',
+    },
     body: jsonEncode({
-      'service_id': serviceId ,
+      'service_id': serviceId,
       'user_id': userId,
       'template_id': templateId,
-      'template_params':{
+      'template_params': {
         'to_name': name,
-         'sender_email': email,
+        'sender_email': email,
       }
-    }), );
+    }),
+  );
 
   print(response.body);
-
 }

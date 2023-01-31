@@ -12,7 +12,7 @@ class reported {
 
   String? postUserName = "";
   String? postEmail = "";
-  
+
   String? postTitle;
 
   //final DateTime postDate;
@@ -41,7 +41,7 @@ class reported {
         "userId": userId,
         "flag": flag,
         if (flag != 2) "postId": postId,
-        if(flag == 1) "postTitle": postTitle,
+        if (flag == 1) "postTitle": postTitle,
         if (flag != 2 && postText != "") "postText": postText,
         if (flag != 2 && postImage != "") "postImage": postImage,
         if (flag != 2 && pathImage != "") "pathImage": pathImage,

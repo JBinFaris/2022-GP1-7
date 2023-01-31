@@ -43,6 +43,22 @@ class FirestoreMethods {
 
       _firestore.collection("posts").add(posts.toJson());
 
+      Posts post = Posts.postConstructor(
+          ref.id,
+          postText,
+          photoUrl['downloadUrl'] ?? '',
+          photoUrl['path'] ?? '',
+          userId,
+          postDate);
+
+      var a = await _firestore.collection("posts").add(post.toJson());
+      var docId = a.id;
+      FirebaseFirestore.instance
+          .collection('posts')
+          .doc(docId)
+          .update({'Cid': docId});
+      print(docId);
+
       res = "succces";
     } catch (err) {
       res = err.toString();
