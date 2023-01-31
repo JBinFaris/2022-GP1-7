@@ -12,7 +12,6 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:button_animations/button_animations.dart';
 
 import 'models/bar_chatmodel.dart';
 

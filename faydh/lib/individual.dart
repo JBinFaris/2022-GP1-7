@@ -2,7 +2,6 @@ import 'package:faydh/FoodPost.dart';
 import 'package:faydh/viewAllFood.dart';
 import 'package:flutter/material.dart';
 import 'package:faydh/components/background.dart';
-import 'package:button_animations/button_animations.dart';
 
 class individual extends StatefulWidget {
   const individual({super.key});
