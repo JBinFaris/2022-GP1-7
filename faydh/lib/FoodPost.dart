@@ -263,16 +263,31 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                                "نوع الطعام:  ${data['postTitle'].toString()}",
+                               "  ${data['postTitle'].toString()}",
                                 style: const TextStyle(
                                   color: Color(0xFF1A4D2E),
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                  fontSize: 20,
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 5),
+                          SizedBox(height: 10,),
+                           Padding(
+                            padding: const EdgeInsets.only(left: 12, right: 12),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                data['postText'],
+                                style: const TextStyle(
+                                  letterSpacing: 0.2,
+                                  fontSize: 15,
+                                   color: Color(0xFF1A4D2E),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Align(
@@ -280,7 +295,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               child: Text(
                                 "موقع الإستلام:  ${data['postAdress'].toString()}",
                                 style: const TextStyle(
-                                  color: Color.fromARGB(255, 144, 177, 135),
+                                  color: Color.fromARGB(255, 92, 133, 82),
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -295,7 +310,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               child: Text(
                                 "كمية الطعام:  ${data['food_cont'].toString()}",
                                 style: const TextStyle(
-                                  color: Color.fromARGB(255, 144, 177, 135),
+                                  color: Color.fromARGB(255, 92, 133, 82),
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -303,40 +318,40 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                             ),
                           ),
                           const SizedBox(height: 5),
+                         
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                data['postText'],
-                                style: const TextStyle(
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
+                          child: SizedBox(
+              width: 250,
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    color: Colors.grey,
+                    child:Image.network(
+                  data['postImage'],
+                  height: 180,
+                  width: 250,
+                  fit: BoxFit.fill,
+                ),
+                  ),
+                ),
+              ),
+            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 12),
-                            child: Image.network(
-                              data['postImage'],
-                              height: 200,
-                              width: 200,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
+                          const SizedBox(height: 15),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(right: 12, bottom: 8),
+                                    const EdgeInsets.only(right: 10, bottom: 8),
                                 child: Align(
                                   alignment: Alignment.bottomRight,
                                   child: Text(
                                     "تاريخ الانتهاء : ${data['postExp'].toString()}",
                                     style: const TextStyle(
-                                      color: Color.fromARGB(255, 144, 177, 135),
+                                      color: Color.fromARGB(255, 92, 133, 82),
                                       fontSize: 12,
                                     ),
                                   ),
@@ -344,13 +359,13 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(right: 12, bottom: 8),
+                                    const EdgeInsets.only(right: 0, bottom: 8, left: 10),
                                 child: Align(
                                   alignment: Alignment.bottomLeft,
                                   child: Text(
                                     "تاريخ الإضافة:  ${data['postDate'].toString().split(" ").first}",
                                     style: const TextStyle(
-                                      color: Color.fromARGB(255, 144, 177, 135),
+                                      color: Color.fromARGB(255, 92, 133, 82),
                                       fontSize: 12,
                                     ),
                                   ),

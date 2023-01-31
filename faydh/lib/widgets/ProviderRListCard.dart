@@ -26,16 +26,6 @@ String? usrNamee;
 String? phonee;
 String? consId;
 
-//Future<String?> getData(String id) async{
-
-// var a = await FirebaseFirestore.instance
-//   .collection('users')
-//   .doc(id)
-//   .get();
-//    usrEmail = a['email'];
-//    usrName = a['username'];
-//    phoneNo = a['phoneNumber'];
-//}
 
 class ProviderRlistCard extends StatefulWidget {
   final postList;

@@ -100,24 +100,19 @@ usrName= widget.postList.postUserName.toString();
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(boxShadow: [
-                            BoxShadow(
-                                color: Color.fromARGB(125, 158, 158, 158),
-                                spreadRadius: 0.3,
-                                blurRadius: 15)
-                          ]),
-                          child: GestureDetector(
-                            onTap: () {
+                         Padding(
+                    padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+                    child: ElevatedButton(
+                      onPressed: () {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                        shape: RoundedRectangleBorder(
+                                        shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                       title: const Text(
                                         "تأكيد الغاء الحجز",
@@ -146,7 +141,7 @@ usrName= widget.postList.postUserName.toString();
                                                 builder:
                                                     (BuildContext context) {
                                                   return  SimpleDialog(
-                                                    title: Text(
+                                                    title: const Text(
                                                       ("سبب الغاء الحجز"),
                                                       textAlign:
                                                           TextAlign.right,
@@ -162,7 +157,7 @@ usrName= widget.postList.postUserName.toString();
                                                         Navigator.pop(context);
 
                                                         },
-                                                        child:  Text(
+                                                        child:  const Text(
                                                             'لا ارغب بالطعام'),
                                                       ),
                                                       SimpleDialogOption(
@@ -190,8 +185,7 @@ usrName= widget.postList.postUserName.toString();
                                                   );
                                                 });
 
-                                           
-
+ 
                                             print("check");
                                           },
                                         ),
@@ -199,20 +193,32 @@ usrName= widget.postList.postUserName.toString();
                                     );
                                   });
                             },
-                            child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Wrap(
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.disabled_by_default,
-                                      color: Colors.red,
-                                    ),
-                                    Text("الغاء الحجز"),
-                                  ],
-                                )),
-                          ),
-                        ),
+                       style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        45.0, 8.0, 45.0, 8.0),
+                                    backgroundColor:
+                                       Color.fromARGB(255, 194, 5, 5),
+                                    shape: const StadiumBorder(),
+                                    
+                                  ),
+                      child: Row(
+                        children: const [
+                         // Icon(),
+                          Text("الغاء الحجز",
+                       style: TextStyle(
+                        
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                        fontSize:18,
+                                        fontWeight: FontWeight.bold),
+                    ),
+
+                        ],
+
+                      )
+                    
+                    ),
+                  )
                       ],
                     ),
                   ),
@@ -263,7 +269,7 @@ usrName= widget.postList.postUserName.toString();
                           ("${/*" نوع الطعام: " + */widget.postList.postTitle.toString()}"),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            color: Colors.black,
+                            color: Color(0xFF1A4D2E),
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ))),
@@ -273,7 +279,7 @@ usrName= widget.postList.postUserName.toString();
                           ("${/*" نوع الطعام: " + */ widget.postList.postText.toString()}"),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            color: Colors.black,
+                            color: Color(0xFF1A4D2E),
                             // fontWeight: FontWeight.bold,
                             //fontSize: 18,
                           ))),
@@ -284,19 +290,11 @@ usrName= widget.postList.postUserName.toString();
                         // " رقم للحاجز ",
                         textAlign: TextAlign.right,
                         style: const TextStyle(
-                          color: Colors.black,
+                          color: Color.fromARGB(255, 92, 133, 82),
                           // fontWeight: FontWeight.bold,
                         )),
                   ),
-                  /*  Align(
-                      alignment: Alignment.centerRight,
-                      child: Text((" البريد الإلكتروني للمتبرع : ${usrEmail!}"),
-                          // " البريد الإلكتروني للحاجز ",
-                          textAlign: TextAlign.right,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ))), */
+               
 
                   Align(
                       alignment: Alignment.centerRight,
@@ -304,7 +302,7 @@ usrName= widget.postList.postUserName.toString();
                           ("${" موقع الإستلام: " + widget.postList.postAdress.toString()}"),
                           textAlign: TextAlign.right,
                           style: const TextStyle(
-                            color: Colors.black,
+                            color: Color.fromARGB(255, 92, 133, 82),
                             //  fontWeight: FontWeight.bold,
                           ))),
                   Align(
@@ -313,34 +311,40 @@ usrName= widget.postList.postUserName.toString();
                           ("${" كمية الطعام: " + widget.postList.food_cont.toString()}"),
                           textAlign: TextAlign.right,
                           style: const TextStyle(
-                            color: Colors.black,
+                            color: Color.fromARGB(255, 92, 133, 82),
                             //  fontWeight: FontWeight.bold,
                           ))),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 12, right: 12),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: Image.network(
-                          widget.postList.postImage.toString(),
-                          height: 250,
-                          width: 170,
-                          //   fit: BoxFit.contain,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
+                   child: SizedBox(
+              width: 250,
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    color: Colors.grey,
+                    child:Image.network(
+                  widget.postList.postImage.toString(),
+                  height: 180,
+                  width: 250,
+                  fit: BoxFit.fill,
+                ),
                   ),
+                ),
+              ),
+            ),
+            
+                  ),
+                   const SizedBox(height: 15),
                   Align(
                       alignment: Alignment.center,
                       child: Text(
                         "تاريخ الانتهاء : ${widget.postList.postExp.toString()}",
                         style: const TextStyle(
-                          color: Color.fromARGB(255, 144, 177, 135),
+                          color: Color.fromARGB(255, 92, 133, 82),
                           fontSize: 12,
                         ),
                       )),
@@ -438,41 +442,3 @@ usrName= widget.postList.postUserName.toString();
   }
 
 }
-/*
-tweetLeft() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.end,
-    children: [
-      Align(
-        alignment: Alignment.topLeft,
-        child: GestureDetector(
-          onTap: (() async {
-            launchUrl(whatsApp);
-          }),
-          child: const Icon(
-            Icons.whatsapp,
-            size: 35,
-            color: Colors.green,
-          ),
-        ),
-      ),
-      const SizedBox(
-        width: 15,
-      ),
-      Align(
-        alignment: Alignment.topLeft,
-        child: GestureDetector(
-          onTap: (() async {
-            print(await canLaunchUrl(phone));
-          }),
-          child: const Icon(
-            Icons.call,
-            size: 35,
-            color: Colors.green,
-          ),
-        ),
-      )
-    ],
-  );
-}
-*/

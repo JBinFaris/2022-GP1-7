@@ -52,7 +52,6 @@ void updateStatus(status, id) {
       child: Card(
           elevation: 0,
         color: Colors.transparent,
-
            child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
