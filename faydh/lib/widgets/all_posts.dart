@@ -222,29 +222,51 @@ class _AllPostsCardState extends State<AllPostsCard> {
                                                       child:
                                                           const Text("موافق"),
                                                       onPressed: () async {
-                                                        FirestoreMethods()
-                                                            .uploadReport(
-                                                          //postUserName: myUsername,
-                                                          ReportReason: "محتوى غير لائق (المنتدى)",
-                                                          postId: widget
-                                                              .postData.Cid
-                                                              .toString(),
-                                                          postText: widget
-                                                              .postData.postText
-                                                              .toString(),
-                                                          pathImage: widget
-                                                              .postData
-                                                              .pathImage
-                                                              .toString(),
-                                                          postImage: widget
-                                                              .postData
-                                                              .postImage
-                                                              .toString(),
-                                                          userId: widget
-                                                              .postData.userId
-                                                              .toString(),
-                                                          flag: 0,
-                                                        );
+                                                        var snapss2 = await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'reportedContent')
+                                                            .where('userId',
+                                                                isEqualTo: widget
+                                                                    .postData
+                                                                    .userId
+                                                                    .toString())
+                                                            .where('flag',
+                                                                isEqualTo: 0)
+                                                            .where('postId',
+                                                                isEqualTo: widget
+                                                                    .postData
+                                                                    .Cid
+                                                                    .toString())
+                                                            .get();
+
+                                                        if (snapss2.size == 0) {
+                                                          FirestoreMethods()
+                                                              .uploadReport(
+                                                            //postUserName: myUsername,
+                                                            ReportReason:
+                                                                "محتوى غير لائق (المنتدى)",
+                                                            postId: widget
+                                                                .postData.Cid
+                                                                .toString(),
+                                                            postText: widget
+                                                                .postData
+                                                                .postText
+                                                                .toString(),
+                                                            pathImage: widget
+                                                                .postData
+                                                                .pathImage
+                                                                .toString(),
+                                                            postImage: widget
+                                                                .postData
+                                                                .postImage
+                                                                .toString(),
+                                                            userId: widget
+                                                                .postData.userId
+                                                                .toString(),
+                                                            flag: 0,
+                                                          );
+                                                        }
                                                         Navigator.pop(context);
 
                                                         print("check");
