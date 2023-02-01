@@ -151,7 +151,16 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                                 .postList.docId
                                                                 .toString())
                                                             .update({
-                                                          "reserve": "0"
+                                                          "reservedby": "",
+                                                        });
+                                                        _firestore
+                                                            .collection(
+                                                                "foodPost")
+                                                            .doc(widget
+                                                                .postList.docId
+                                                                .toString())
+                                                            .update({
+                                                          "reserve": "0",
                                                         });
 
                                                         Navigator.pop(context);
@@ -448,5 +457,16 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
             ReportReason: 'عدم الاستجابه عدة مرات', userId: s, flag: 2);
       }
     }
+  }
+
+  void unreserve({required String id}) async {
+    await FirebaseFirestore.instance
+        .collection('foodPost')
+        .doc(id)
+        .update({'reserve': '0'});
+    await FirebaseFirestore.instance
+        .collection('foodPost')
+        .doc(id)
+        .update({'reservedby': ""});
   }
 }
