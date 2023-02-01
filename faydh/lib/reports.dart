@@ -54,12 +54,12 @@ class _reportsScreenState extends State<reportsScreen> {
     return Scaffold(
         backgroundColor: const Color(0xffd6ecd0),
         appBar: AppBar(
-              elevation: 2.0,
-              centerTitle: true,
-              automaticallyImplyLeading: false,
-              backgroundColor: const Color(0xFF1A4D2E),
-              title: const Text(" البلاغات  "),
-              actions: <Widget>[
+            elevation: 2.0,
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            backgroundColor: const Color(0xFF1A4D2E),
+            title: const Text(" البلاغات  "),
+            /*  actions: <Widget>[
                 SizedBox(
                     width: 160,
                     height: 130,
@@ -89,16 +89,16 @@ class _reportsScreenState extends State<reportsScreen> {
                         },
                       ),
                     ))
-              ],
-              leading: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: Color.fromARGB(225, 255, 255, 255),
-                ),
-              )),
+              ],*/
+            leading: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_rounded,
+                color: Color.fromARGB(225, 255, 255, 255),
+              ),
+            )),
         body: SafeArea(
           child: Container(
             decoration: const BoxDecoration(
@@ -156,7 +156,7 @@ class _reportsScreenState extends State<reportsScreen> {
                         userId: element['userId'],
                         flag: element['flag'],
                         postId: element['postId'] ?? '',
-                        postTitle: element['postTitle'] ??'',
+                        postTitle: element['postTitle'] ?? '',
                         postText: element['postText'] ?? '',
                         postImage: element['postImage'] ?? '',
                         pathImage: element['pathImage'] ?? '',

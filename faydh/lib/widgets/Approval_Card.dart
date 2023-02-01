@@ -89,11 +89,11 @@ class _ApprovalCardState extends State<ApprovalCard> {
                                   ]),
                                   child: SizedBox(
                                     width: 120,
-                                    height: 30,
+                                    height: 40,
                                     child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           padding: const EdgeInsets.fromLTRB(
-                                              20.0, 8.0, 20.0, 8.0),
+                                              20.0, 10.0, 20.0, 10.0),
                                           backgroundColor: Color(0xFF1A4D2E),
                                           shape: const StadiumBorder(),
                                         ),
@@ -182,98 +182,95 @@ class _ApprovalCardState extends State<ApprovalCard> {
                         ),
                         SizedBox(
                           width: 120,
-                          height: 30,
+                          height: 40,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.fromLTRB(
-                                  20.0, 8.0, 20.0, 8.0),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 194, 5, 5),
-                              shape: const StadiumBorder(),
-                            ),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15.0))),
-                                      title: const Text(
-                                        "تأكيد الرفض",
-                                        textAlign: TextAlign.right,
-                                      ),
-                                      content: const Text(
-                                        (" هل أنت متأكد من رفض الشركة ؟ "),
-                                        textAlign: TextAlign.right,
-                                      ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: const Text("إلغاء"),
-                                          onPressed: () {
-                                            // callback function for on click event of Cancel button
-                                            Navigator.of(context).pop();
-                                          },
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.fromLTRB(
+                                    20.0, 10.0, 20.0, 10.0),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 194, 5, 5),
+                                shape: const StadiumBorder(),
+                              ),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0))),
+                                        title: const Text(
+                                          "تأكيد الرفض",
+                                          textAlign: TextAlign.right,
                                         ),
-                                        TextButton(
-                                          child: const Text("موافق"),
-                                          onPressed: () async {
-                                            updateStatus("2",
-                                                "${widget.snap["uid"].toString()}");
-                                            var email =
-                                                "${widget.snap["email"].toString()}";
-                                            print(email);
-
-                                            sendApproval(
-                                                name:
-                                                    "${widget.snap["username"].toString()}",
-                                                email: email,
-                                                st: "2");
-                                            var user = _auth.currentUser;
-
-                                            final User = _firestore
-                                                .collection("users")
-                                                .doc(
-                                                    "${widget.snap["uid"].toString()}")
-                                                .delete();
-
-                                            Navigator.pop(context);
-
-                                            print("check");
-                                          },
+                                        content: const Text(
+                                          (" هل أنت متأكد من رفض الشركة ؟ "),
+                                          textAlign: TextAlign.right,
                                         ),
-                                      ],
-                                    );
-                                  });
-                            },
-                            child: Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Wrap(
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: const [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                                      child: Icon(
-                                        // <-- Icon
-                                        Icons.disabled_by_default,
-                                        size: 18.0,
-                                        color: Colors.white,
-                                      ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text("إلغاء"),
+                                            onPressed: () {
+                                              // callback function for on click event of Cancel button
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            child: const Text("موافق"),
+                                            onPressed: () async {
+                                              updateStatus("2",
+                                                  "${widget.snap["uid"].toString()}");
+                                              var email =
+                                                  "${widget.snap["email"].toString()}";
+                                              print(email);
+
+                                              sendApproval(
+                                                  name:
+                                                      "${widget.snap["username"].toString()}",
+                                                  email: email,
+                                                  st: "2");
+                                              var user = _auth.currentUser;
+
+                                              final User = _firestore
+                                                  .collection("users")
+                                                  .doc(
+                                                      "${widget.snap["uid"].toString()}")
+                                                  .delete();
+
+                                              Navigator.pop(context);
+
+                                              print("check");
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              },
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: const [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                                    child: Icon(
+                                      // <-- Icon
+                                      Icons.disabled_by_default,
+                                      size: 18.0,
+                                      color: Colors.white,
                                     ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      "رفض",
-                                      style: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255),
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                )),
-                          ),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "رفض",
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              )),
                         ),
                       ],
                     ),
