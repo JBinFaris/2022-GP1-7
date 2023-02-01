@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class bListCards extends StatefulWidget {
@@ -74,7 +75,7 @@ class _bListCardsState extends State<bListCards> {
     //var _dta = "${widget.snap["postImage"].toString()}";
     return Expanded(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+   //     crossAxisAlignment: CrossAxisAlignment.start,
         children: [
       //    tweetHeader(),
           Padding(
@@ -110,7 +111,7 @@ class _bListCardsState extends State<bListCards> {
                 )),
               ),
                 Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 3, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(28, 3, 0, 0),
                   child: Text(
               //"${widget.snap["postText"].toString()}",
                ( "${" نوع المستخدم : " + widget.snap["role"].toString()}"),
@@ -121,7 +122,7 @@ class _bListCardsState extends State<bListCards> {
               )),
                 ),
                Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 3, 35, 0),
+                    padding: const EdgeInsets.fromLTRB(13, 3, 35, 0),
                  child: Text(
               //"${widget.snap["postText"].toString()}",
                  ( "${" رقم المستخدم : " + widget.snap["phoneNumber"].toString()}"),
@@ -139,6 +140,72 @@ class _bListCardsState extends State<bListCards> {
           const SizedBox(
             height: 20,
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(75, 0, 0, 10),
+            child: Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                                width: 150,
+                                height: 30,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        25.0, 10.0, 25.0, 10.0),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 18, 57, 20),
+                                    shape: const StadiumBorder(),
+                                  ),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(15.0))),
+                                            title: const Text(
+                                              "تأكيد الغاء الحظر",
+                                              textAlign: TextAlign.right,
+                                            ),
+                                            content: const Text(
+                                              "هل أنت متأكد من الغاء حظر المستخدم ؟ ",
+                                              textAlign: TextAlign.right,
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text("إلغاء"),
+                                                onPressed: () {
+                                                  // callback function for on click event of Cancel button
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: const Text("موافق"),
+                                                onPressed: () async {
+                                                  FirebaseFirestore.instance
+                                                      .collection('users')
+                                                      .doc(widget.snap["uid"]
+                                                          .toString())
+                                                      .update({'Active': true});
+                                              
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  child: const Text(
+                                    ' الغاء  حظر  المستخدم  ',
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 255, 255, 255),
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )),
+                          ),
+          )
+                   
 
         ],
       ),
@@ -146,35 +213,7 @@ class _bListCardsState extends State<bListCards> {
   }
 
 
-  Widget tweetHeader() {
-    return Row(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(right: 5.0),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Row(
-              children: [
-                Text(
-                  //"${widget.snap["postUserName"].toString()}",
-                   ( "${widget.snap["username"].toString()}"),
-                  //myUsername,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                
-              ],
-            ),
-          ),
-        ),
-        //  Spacer(),
-      ],
-    );
-  }
-
-
+  
 
 
 
