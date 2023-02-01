@@ -102,7 +102,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(100, 0, 100, 0),
+                      padding: const EdgeInsets.fromLTRB(80, 0, 80, 0),
                       child: ElevatedButton(
                           onPressed: () {
                             showDialog(
@@ -170,6 +170,15 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                     ),
                                                     SimpleDialogOption(
                                                       onPressed: () {
+                                                           _firestore
+                                                            .collection(
+                                                                "foodPost")
+                                                            .doc(widget
+                                                                .postList.docId
+                                                                .toString())
+                                                            .update({
+                                                          "reservedby": "",
+                                                        });
                                                         _firestore
                                                             .collection(
                                                                 "foodPost")
@@ -466,14 +475,5 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
     }
   }
 
-  void unreserve({required String id}) async {
-    await FirebaseFirestore.instance
-        .collection('foodPost')
-        .doc(id)
-        .update({'reserve': '0'});
-    await FirebaseFirestore.instance
-        .collection('foodPost')
-        .doc(id)
-        .update({'reservedby': ""});
-  }
+ 
 }

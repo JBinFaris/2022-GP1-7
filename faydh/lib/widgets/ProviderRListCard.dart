@@ -224,6 +224,16 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                               .toString())
                                                           .update(
                                                               {"reserve": "0"});
+
+                                                                 _firestore
+                                                            .collection(
+                                                                "foodPost")
+                                                            .doc(widget
+                                                                .postList.docId
+                                                                .toString())
+                                                            .update({
+                                                          "reservedby": "",
+                                                        });
                                                       Navigator.pop(context);
                                                     },
                                                     child: const Text(
@@ -239,6 +249,17 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                               .toString())
                                                           .update(
                                                               {"reserve": "0"});
+
+                                                                 _firestore
+                                                            .collection(
+                                                                "foodPost")
+                                                            .doc(widget
+                                                                .postList.docId
+                                                                .toString())
+                                                            .update({
+                                                          "reservedby": "",
+                                                        });
+
                                                       _firestore
                                                           .collection("users")
                                                           .doc(widget.postList
@@ -357,15 +378,6 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                           //fontWeight: FontWeight.bold,
                         )),
                   ),
-                  /*    Align(
-                      alignment: Alignment.centerRight,
-                      child: Text((" البريد الإلكتروني للحاجز : ${usrEmail}"),
-                          //   " البريد الإلكتروني للحاجز ",
-                          textAlign: TextAlign.right,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ))),*/
 
                   Align(
                       alignment: Alignment.centerRight,
