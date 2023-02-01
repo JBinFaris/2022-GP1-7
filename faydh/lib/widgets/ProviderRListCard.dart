@@ -107,15 +107,15 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      decoration: const BoxDecoration(boxShadow: [
-                        BoxShadow(
-                            color: Color.fromARGB(125, 158, 158, 158),
-                            spreadRadius: 0.01,
-                            blurRadius: 15)
-                      ]),
-                      child: GestureDetector(
-                          onTap: () {
+                       Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      child: ElevatedButton(
+                          onPressed: () {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -124,7 +124,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15.0))),
                                     title: const Text(
-                                      "تأكيد الإستلام",
+                                       "تأكيد الإستلام",
                                       textAlign: TextAlign.right,
                                     ),
                                     content: const Text(
@@ -142,106 +142,108 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                       TextButton(
                                         child: const Text("نعم"),
                                         onPressed: () async {
-                                          _firestore
+
+                                              _firestore
                                               .collection("foodPost")
                                               .doc(
                                                   "${widget.postList.docId.toString()}")
                                               .delete();
 
                                           Navigator.pop(context);
+                                         
 
-                                          print("check");
+                                         
                                         },
                                       ),
                                     ],
                                   );
                                 });
                           },
-                          child: Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
+                          style: ElevatedButton.styleFrom(
+                            padding:
+                                const EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
+                            backgroundColor: Color(0xFF1A4D2E),
+                            shape: const StadiumBorder(),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: const [
-                              Icon(
-                                Icons.check,
-                                color: Colors.green,
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                                child: Icon(
+                                  // <-- Icon
+                                  Icons.check_box,
+                                  size: 18.0,
+                                  color: Colors.white,
+                                ),
                               ),
-                              Text("تأكيد الإستلام"),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                               "تأكيد الإستلام",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ],
                           )),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(boxShadow: [
-                        BoxShadow(
-                            color: Color.fromARGB(125, 158, 158, 158),
-                            spreadRadius: 0.3,
-                            blurRadius: 15)
-                      ]),
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0))),
-                                  title: const Text(
-                                    "تأكيد الغاء الحجز",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  content: const Text(
-                                    (" هل أنت متأكد من الغاء الحجز ؟ "),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text("لا"),
-                                      onPressed: () {
-                                        // callback function for on click event of Cancel button
-                                        Navigator.of(context).pop();
-                                      },
+                    )
+                  ],
+                ),
+              ),
+          
+
+                       Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.0))),
+                                    title: const Text(
+                                      "تأكيد الغاء الحجز",
+                                      textAlign: TextAlign.right,
                                     ),
-                                    TextButton(
-                                      child: const Text("نعم"),
-                                      onPressed: () async {
-                                        Navigator.pop(context);
+                                    content: const Text(
+                                      (" هل أنت متأكد من الغاء الحجز ؟ "),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text("لا"),
+                                        onPressed: () {
+                                          // callback function for on click event of Cancel button
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text("نعم"),
+                                        onPressed: () async {
+                                          Navigator.pop(context);
 
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return SimpleDialog(
-                                                title: const Text(
-                                                  ("سبب الغاء الحجز"),
-                                                  textAlign: TextAlign.right,
-                                                ),
-                                                children: <Widget>[
-                                                  SimpleDialogOption(
-                                                    onPressed: () {
-                                                      _firestore
-                                                          .collection(
-                                                              "foodPost")
-                                                          .doc(widget
-                                                              .postList.docId
-                                                              .toString())
-                                                          .update(
-                                                              {"reserve": "0"});
-
-                                                                 _firestore
-                                                            .collection(
-                                                                "foodPost")
-                                                            .doc(widget
-                                                                .postList.docId
-                                                                .toString())
-                                                            .update({
-                                                          "reservedby": "",
-                                                        });
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text(
-                                                        'لا ارغب بالتبرع'),
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return SimpleDialog(
+                                                  title: const Text(
+                                                    ("سبب الغاء الحجز"),
+                                                    textAlign: TextAlign.right,
                                                   ),
-                                                  SimpleDialogOption(
-                                                    onPressed: () {
-                                                      _firestore
+                                                  children: <Widget>[
+                                                    SimpleDialogOption(
+                                                      onPressed: () {
+                                                        _firestore
                                                           .collection(
                                                               "foodPost")
                                                           .doc(widget
@@ -257,7 +259,33 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                                 .postList.docId
                                                                 .toString())
                                                             .update({
-                                                          "reservedby": "",
+                                                          "reservedby": null,
+                                                        });
+
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                          'لا ارغب بالتبرع'),
+                                                    ),
+                                                    SimpleDialogOption(
+                                                      onPressed: () {
+                                                           _firestore
+                                                          .collection(
+                                                              "foodPost")
+                                                          .doc(widget
+                                                              .postList.docId
+                                                              .toString())
+                                                          .update(
+                                                              {"reserve": "0"});
+
+                                                                 _firestore
+                                                            .collection(
+                                                                "foodPost")
+                                                            .doc(widget
+                                                                .postList.docId
+                                                                .toString())
+                                                            .update({
+                                                          "reservedby": null,
                                                         });
 
                                                       _firestore
@@ -276,35 +304,57 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                           .toString());
 
                                                       Navigator.pop(context);
-                                                    },
-                                                    child: const Text(
-                                                        'المتبرع لايستجيب'),
-                                                  ),
-                                                ],
-                                              );
-                                            });
+                                                      },
+                                                      child: const Text(
+                                                          'المتبرع لايستجيب'),
+                                                    ),
+                                                  ],
+                                                );
+                                              });
 
-                                        print("check");
-                                      },
-                                    ),
-                                  ],
-                                );
-                              });
-                        },
-                        child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: const [
-                                Icon(
+                                          print("check");
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding:
+                                const EdgeInsets.fromLTRB(29, 8.2, 29, 8),
+                          //  backgroundColor: Color.fromARGB(255, 194, 5, 5),
+                            backgroundColor: Color(0xFF1A4D2E),
+                            shape: const StadiumBorder(),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                                child: Icon(
+                                  // <-- Icon
                                   Icons.disabled_by_default,
-                                  color: Colors.red,
+                                  size: 18.0,
+                                  color: Colors.white,
                                 ),
-                                Text("الغاء الحجز"),
-                              ],
-                            )),
-                      ),
-                    ),
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                "الغاء الحجز",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )),
+                    )
+                  ],
+                ),
+              ),
+          
                   ],
                 ),
               ),
