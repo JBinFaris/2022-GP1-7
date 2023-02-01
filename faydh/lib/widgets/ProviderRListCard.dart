@@ -188,7 +188,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
-                          )),
+                          )
+                          ),
                     )
                   ],
                 ),

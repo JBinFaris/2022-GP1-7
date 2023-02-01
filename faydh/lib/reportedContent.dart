@@ -605,7 +605,7 @@ class _reportedContent extends State<reportedContent> {
                       : Padding(
                           //88
                           padding: const EdgeInsets.fromLTRB(75, 0, 25, 0),
-                          child: Align(
+                          child: Align( 
                             alignment: Alignment.center,
                             child: SizedBox(
                                 width: 120,
