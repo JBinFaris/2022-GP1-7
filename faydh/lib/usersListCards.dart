@@ -98,13 +98,30 @@ class _UsersListCardsState extends State<UsersListCards> {
             ),
           )),
       backgroundColor: Colors.green[100],
-      body: StreamBuilder<QuerySnapshot<Object?>>(
+      body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('users')
             .where('Active', isEqualTo: true)
             // .orderBy("docId",descending: true,)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('حدث خطأ ما');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: Text("Loading..."));
+          }
+          if (snapshot.hasData && snapshot.data?.size == 0) {
+            return const Center(
+                child: Text("! لا يوجد مستخدمين",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    )));
+          }
+
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Column(
