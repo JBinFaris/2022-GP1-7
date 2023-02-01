@@ -505,9 +505,17 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
 
       var count = data!["ReportCount"];
 
+      var snapss2 = await FirebaseFirestore.instance
+          .collection('reportedContent')
+          .where('userId', isEqualTo: s)
+          .where('flag', isEqualTo: 2)
+          .get();
+
       if (count >= 3) {
-        FirestoreMethods().uploadReport(
-            ReportReason: 'عدم الاستجابه عدة مرات', userId: s, flag: 2);
+        if (snapss2.size == 0) {
+          FirestoreMethods().uploadReport(
+              ReportReason: 'عدم الاستجابه عدة مرات', userId: s, flag: 2);
+        }
       }
     }
   }

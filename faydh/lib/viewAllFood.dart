@@ -295,7 +295,7 @@ class _viewAllFood extends State<viewAllFood> {
                 "${data['postText'].toString()}",
                 "${data['postImage'].toString()}",
               ), // so?
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(left: 12, right: 12),
                 child: Align(
                   alignment: Alignment.centerRight,
@@ -304,12 +304,12 @@ class _viewAllFood extends State<viewAllFood> {
                     style: const TextStyle(
                       letterSpacing: 0.2,
                       fontSize: 15,
-                        color: Color(0xFF1A4D2E),
+                      color: Color(0xFF1A4D2E),
                     ),
                   ),
                 ),
               ),
-           
+
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.only(left: 12, right: 12),
@@ -341,28 +341,27 @@ class _viewAllFood extends State<viewAllFood> {
                 ),
               ),
               const SizedBox(height: 5),
-             
+
               // const SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.only(left: 12, right: 12),
-                 child: SizedBox(
-              width: 250,
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    color: Colors.grey,
-                    child:Image.network(
-                  data['postImage'],
-                  height: 180,
+                child: SizedBox(
                   width: 250,
-                  fit: BoxFit.fill,
-                ),
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        color: Colors.grey,
+                        child: Image.network(
+                          data['postImage'],
+                          height: 180,
+                          width: 250,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-                
               ),
               const SizedBox(height: 20),
               Row(
@@ -381,7 +380,7 @@ class _viewAllFood extends State<viewAllFood> {
                       ),
                     ),
                   ),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.only(left: 12, bottom: 0),
                     child: Align(
                       alignment: Alignment.bottomLeft,
@@ -398,8 +397,9 @@ class _viewAllFood extends State<viewAllFood> {
               ),
               Row(
                 children: [
-                  SizedBox(height: 70,),
-                 
+                  SizedBox(
+                    height: 70,
+                  ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(55, 0, 130, 0),
                     child: ElevatedButton(
@@ -409,7 +409,8 @@ class _viewAllFood extends State<viewAllFood> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                   shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0))),
                                   title: const Text(
                                     'لقد تم حجز الطعام',
                                     textAlign: TextAlign.right,
@@ -435,25 +436,23 @@ class _viewAllFood extends State<viewAllFood> {
                           'reservedby': FirebaseAuth.instance.currentUser?.uid
                         });
                       },
-                       style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        45.0, 8.0, 45.0, 8.0),
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 18, 57, 20),
-                                    shape: const StadiumBorder(),
-                                  ),
-                      child: const Text('حــجــز',
-                       style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        fontSize:18,
-                                        fontWeight: FontWeight.bold),
-                    ),
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            const EdgeInsets.fromLTRB(45.0, 8.0, 45.0, 8.0),
+                        backgroundColor: const Color.fromARGB(255, 18, 57, 20),
+                        shape: const StadiumBorder(),
+                      ),
+                      child: const Text(
+                        'حــجــز',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   )
                 ],
               ),
-           
             ],
           ),
         ),
@@ -478,11 +477,9 @@ class _viewAllFood extends State<viewAllFood> {
 
                   //  "me",
                   style: const TextStyle(
-                   color: Color(0xFF1A4D2E),
-
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20
-                  ),
+                      color: Color(0xFF1A4D2E),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -505,8 +502,12 @@ class _viewAllFood extends State<viewAllFood> {
                                             () => showDialog(
                                               context: context,
                                               builder: (context) => AlertDialog(
-                                                  shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      15.0))),
                                                   title: const Text(
                                                     'تأكيد البلاغ',
                                                     textAlign: TextAlign.right,
@@ -529,23 +530,38 @@ class _viewAllFood extends State<viewAllFood> {
                                                       child:
                                                           const Text("موافق"),
                                                       onPressed: () async {
-                                                       Database2
-                                                            .reportedContentData(
-                                                          context: context,
-                                                          postTitle:
-                                                              u.toString(),
-                                                          postText:
-                                                              t.toString(),
-                                                          ReportReason:
-                                                              "محتوى غير لائق (اعلان طعام)",
-                                                          Cid: c.toString(),
-                                                          docId: doc.toString(),
-                                                          postImage:
-                                                              po.toString(),
-                                                              flag: 1,
-                                                        );
+                                                        var snapss2 = await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'reportedContent')
+                                                            .where('userId',
+                                                                isEqualTo: c
+                                                                    .toString())
+                                                            .where('flag',
+                                                                isEqualTo: 1)
+                                                            .where('postId',
+                                                                isEqualTo: doc
+                                                                    .toString())
+                                                            .get();
 
-                                                      
+                                                        if (snapss2.size == 0) {
+                                                          Database2
+                                                              .reportedContentData(
+                                                            context: context,
+                                                            postTitle:
+                                                                u.toString(),
+                                                            postText:
+                                                                t.toString(),
+                                                            ReportReason:
+                                                                "محتوى غير لائق (اعلان طعام)",
+                                                            Cid: c.toString(),
+                                                            docId:
+                                                                doc.toString(),
+                                                            postImage:
+                                                                po.toString(),
+                                                            flag: 1,
+                                                          );
+                                                        }
 
                                                         Navigator.pop(context);
 
