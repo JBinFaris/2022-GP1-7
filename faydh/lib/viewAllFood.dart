@@ -177,7 +177,13 @@ class _viewAllFood extends State<viewAllFood> {
               ],
             ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: foodPostStream,
+        stream:  FirebaseFirestore.instance
+      .collection('foodPost')
+      .where('reserve', isEqualTo: '0')
+      .where('Cid', isNotEqualTo:  FirebaseAuth.instance.currentUser?.uid)
+      // .orderBy("docId",descending: true,)
+      .snapshots()
+,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('حدث خطأ ما');

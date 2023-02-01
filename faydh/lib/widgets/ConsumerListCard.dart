@@ -151,7 +151,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                                 .postList.docId
                                                                 .toString())
                                                             .update({
-                                                          "reservedby": "",
+                                                          "reservedby": null,
                                                         });
                                                         _firestore
                                                             .collection(
@@ -177,7 +177,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                                 .postList.docId
                                                                 .toString())
                                                             .update({
-                                                          "reservedby": "",
+                                                          "reservedby": null,
                                                         });
                                                         _firestore
                                                             .collection(
