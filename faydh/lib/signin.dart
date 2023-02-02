@@ -167,6 +167,29 @@ class _signInSreenState extends State<signInSreen> {
         }
       });
     });
+
+    FirebaseFirestore.instance
+        .collection('foodPost')
+        .where('reservedby', isEqualTo: id)
+        .where('providerblocked', isEqualTo: true)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        String title = doc["postTitle"].toString();
+        // String send = title + '';
+
+        Future.delayed(const Duration(seconds: 5), () {
+          initInfo();
+          sendPushMessage(
+              token: token, title: "  مقدم الطعام تم حضره ", text: title);
+        });
+
+        FirebaseFirestore.instance
+            .collection('foodPost')
+            .doc(doc["docId"])
+            .delete();
+      });
+    });
   }
 
   void initInfo() async {
@@ -287,113 +310,114 @@ class _signInSreenState extends State<signInSreen> {
             final uid = (snap.data() as Map<String, dynamic>)['uid'];
             final Active = (snap.data() as Map<String, dynamic>)['Active'];
 
-if(Active == true){
-      if (myrole == "فرد") {
-              getToken(id: uid);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const HomePage()));
-            } else if (myrole == "منظمة تجارية") {
-              getToken(id: uid);
-              final status = (snap.data() as Map<String, dynamic>)['status'];
-              if (status == "0") {
-                res = "حصل خطأ ما";
+            if (Active == true) {
+              if (myrole == "فرد") {
+                getToken(id: uid);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const HomePage()));
+              } else if (myrole == "منظمة تجارية") {
+                getToken(id: uid);
+                final status = (snap.data() as Map<String, dynamic>)['status'];
+                if (status == "0") {
+                  res = "حصل خطأ ما";
 
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                          title: const Text(
-                            "معلق " + ":" + " حالة الحساب",
-                            textAlign: TextAlign.right,
-                          ),
-                          content: const Text(
-                            "الحساب معلق، بإنتظار موافقة المشرف على السجل التجاري\n يرجى معاودة تسجيل الدخول لاحقاً",
-                            textAlign: TextAlign.right,
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text("موافق"),
-                              onPressed: () async {
-                                Navigator.pop(context);
-                              },
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            title: const Text(
+                              "معلق " + ":" + " حالة الحساب",
+                              textAlign: TextAlign.right,
                             ),
-                          ]);
-                    });
-              } else if (status == "2") {
-                res = "حصل خطأ ما";
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                          title: const Text(
-                            " حالة الحساب" + ": " + " مرفوض ",
-                            textAlign: TextAlign.right,
-                          ),
-                          content: const Text(
-                            " الحساب مرفوض نظراً لعدم صحة السجل التجاري" +
-                                "\n" +
-                                "يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم اي شكوى " +
-                                "\n" +
-                                "teamfaydh@gmail.com",
-                            textAlign: TextAlign.right,
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text("موافق"),
-                              onPressed: () async {
-                                Navigator.pop(context);
-                              },
+                            content: const Text(
+                              "الحساب معلق، بإنتظار موافقة المشرف على السجل التجاري\n يرجى معاودة تسجيل الدخول لاحقاً",
+                              textAlign: TextAlign.right,
                             ),
-                          ]);
-                    });
-              } else if (status == "1") {
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text("موافق"),
+                                onPressed: () async {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ]);
+                      });
+                } else if (status == "2") {
+                  res = "حصل خطأ ما";
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            title: const Text(
+                              " حالة الحساب" + ": " + " مرفوض ",
+                              textAlign: TextAlign.right,
+                            ),
+                            content: const Text(
+                              " الحساب مرفوض نظراً لعدم صحة السجل التجاري" +
+                                  "\n" +
+                                  "يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم اي شكوى " +
+                                  "\n" +
+                                  "teamfaydh@gmail.com",
+                              textAlign: TextAlign.right,
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text("موافق"),
+                                onPressed: () async {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ]);
+                      });
+                } else if (status == "1") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const businessHome()));
+                }
+              } else if (myrole == "منظمة خيرية") {
+                getToken(id: uid);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const businessHome()));
+                        builder: (context) => const charityHome()));
+              } else if (myrole == "Admin") {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const AdminMain()));
               }
-            } else if (myrole == "منظمة خيرية") {
-              getToken(id: uid);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const charityHome()));
-            } else if (myrole == "Admin") {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AdminMain()));
+            } else if (Active == false) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                        title: const Text(
+                          " حالة الحساب" + ": " + " محظور ",
+                          textAlign: TextAlign.right,
+                        ),
+                        content: const Text(
+                          " الحساب محظور نظراً لعدة من البلاغات " +
+                              "\n" +
+                              "يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم اي شكوى " +
+                              "\n" +
+                              "teamfaydh@gmail.com",
+                          textAlign: TextAlign.right,
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text("موافق"),
+                            onPressed: () async {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ]);
+                  });
             }
-}else if(Active == false){
-  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        
-                          title: const Text(
-                            " حالة الحساب" + ": " + " محظور ",
-                            textAlign: TextAlign.right,
-                          ),
-                          content: const Text(
-                            " الحساب محظور نظراً لعدة من البلاغات " +
-                                "\n" +
-                                "يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم اي شكوى " +
-                                "\n" +
-                                "teamfaydh@gmail.com",
-                            textAlign: TextAlign.right,
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text("موافق"),
-                              onPressed: () async {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ]);
-                    });
-
-}
-        
           } /* else{  print("object");
                 snap2 = await FirebaseFirestore.instance
                  .collection("Admins")

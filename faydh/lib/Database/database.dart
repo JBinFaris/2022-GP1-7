@@ -24,6 +24,7 @@ class Database {
   final String postImage;
   final String postExp;
   final String food_cont;
+  final bool providerblocked;
   String? reservedby;
 
   String? postUserName;
@@ -43,6 +44,7 @@ class Database {
     required this.postExp,
     required this.food_cont,
     required this.reservedby,
+    required this.providerblocked,
   });
 
   static Future<void> addFoodPostData({
@@ -56,6 +58,7 @@ class Database {
     required String postImage,
     required String postExp,
     required String food_cont,
+    required bool providerblocked,
     String? reserve,
     String? notify,
     String? reservedby,
@@ -75,6 +78,7 @@ class Database {
       "pathImage": "pathImage".toString().trim(),
       "postExp": postExp.toString().trim(),
       "food_cont": food_cont.toString().trim(),
+      "providerblocked": providerblocked,
       "postDate": DateTime.now().toString(),
       'reserve': reserve,
       'notify': notify,
@@ -105,8 +109,7 @@ class Database2 {
     required Cid,
     required int? flag,
   }) async {
-    DocumentReference documentReference =
-        _reportedContentCollection.doc(Rid);
+    DocumentReference documentReference = _reportedContentCollection.doc(Rid);
 
     Map<String, dynamic> data = <String, dynamic>{
       'Rid': documentReference.id,

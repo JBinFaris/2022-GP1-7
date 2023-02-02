@@ -605,7 +605,7 @@ class _reportedContent extends State<reportedContent> {
                       : Padding(
                           //88
                           padding: const EdgeInsets.fromLTRB(75, 0, 25, 0),
-                          child: Align( 
+                          child: Align(
                             alignment: Alignment.center,
                             child: SizedBox(
                                 width: 120,
@@ -728,12 +728,6 @@ class _reportedContent extends State<reportedContent> {
                                                     .doc(widget.postData.userId
                                                         .toString())
                                                     .update({'Active': false});
-                                                FirebaseFirestore.instance
-                                                    .collection(
-                                                        'reportedContent')
-                                                    .doc(widget.postData.Rid
-                                                        .toString())
-                                                    .delete();
 
                                                 FirebaseFirestore.instance
                                                     .collection('posts')
@@ -752,41 +746,85 @@ class _reportedContent extends State<reportedContent> {
                                                   });
                                                 });
 
+                                                /*  FirebaseFirestore.instance
+                                                      .collection('foodPost')
+                                                      .where('Cid',
+                                                          isEqualTo: widget
+                                                              .postData.userId)
+                                                      .get()
+                                                      .then((QuerySnapshot
+                                                          querySnapshot) {
+                                                    querySnapshot.docs
+                                                        .forEach((doc) {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'foodPost')
+                                                          .doc(doc["docId"])
+                                                          .delete();
+                                                    });
+                                                  });*/
+
+                                                /*  FirebaseFirestore.instance
+                                                      .collection(
+                                                          'reportedContent')
+                                                      .where('userId',
+                                                          isEqualTo: widget
+                                                              .postData.userId)
+                                                      .get()
+                                                      .then((QuerySnapshot
+                                                          querySnapshot) {
+                                                    querySnapshot.docs
+                                                        .forEach((doc) {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'reportedContent')
+                                                          .doc(doc["Rid"])
+                                                          .delete();
+                                                    });
+                                                  });*/
+
                                                 FirebaseFirestore.instance
                                                     .collection('foodPost')
-                                                    .where('Cid',
-                                                        isEqualTo: widget
-                                                            .postData.userId)
-                                                    .get()
-                                                    .then((QuerySnapshot
-                                                        querySnapshot) {
-                                                  querySnapshot.docs
-                                                      .forEach((doc) {
+                                                    .doc(widget.postData.postId
+                                                        .toString())
+                                                    .update({
+                                                  'providerblocked': true
+                                                });
+
+                                                var snapp =
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('foodPost')
+                                                        .doc(widget
+                                                            .postData.postId)
+                                                        .get();
+                                                print('not enter');
+                                                if (snapp.exists) {
+                                                  print(' enter');
+                                                  Map<String, dynamic>? data =
+                                                      snapp.data();
+
+                                                  var reservedby =
+                                                      data!["reservedby"];
+
+                                                  if (reservedby == null) {
+                                                    print('trueee');
                                                     FirebaseFirestore.instance
                                                         .collection('foodPost')
-                                                        .doc(doc["docId"])
+                                                        .doc(widget
+                                                            .postData.postId)
                                                         .delete();
-                                                  });
-                                                });
+                                                  } else {
+                                                    print('no');
+                                                  }
+                                                }
 
                                                 FirebaseFirestore.instance
                                                     .collection(
                                                         'reportedContent')
-                                                    .where('userId',
-                                                        isEqualTo: widget
-                                                            .postData.userId)
-                                                    .get()
-                                                    .then((QuerySnapshot
-                                                        querySnapshot) {
-                                                  querySnapshot.docs
-                                                      .forEach((doc) {
-                                                    FirebaseFirestore.instance
-                                                        .collection(
-                                                            'reportedContent')
-                                                        .doc(doc["Rid"])
-                                                        .delete();
-                                                  });
-                                                });
+                                                    .doc(widget.postData.Rid
+                                                        .toString())
+                                                    .delete();
 
                                                 sendEmail(
                                                   name: widget
@@ -865,13 +903,6 @@ class _reportedContent extends State<reportedContent> {
                                                           {'Active': false});
 
                                                   FirebaseFirestore.instance
-                                                      .collection(
-                                                          'reportedContent')
-                                                      .doc(widget.postData.Rid
-                                                          .toString())
-                                                      .delete();
-
-                                                  FirebaseFirestore.instance
                                                       .collection('posts')
                                                       .where('userId',
                                                           isEqualTo: widget
@@ -888,7 +919,7 @@ class _reportedContent extends State<reportedContent> {
                                                     });
                                                   });
 
-                                                  FirebaseFirestore.instance
+                                                  /*  FirebaseFirestore.instance
                                                       .collection('foodPost')
                                                       .where('Cid',
                                                           isEqualTo: widget
@@ -904,9 +935,9 @@ class _reportedContent extends State<reportedContent> {
                                                           .doc(doc["docId"])
                                                           .delete();
                                                     });
-                                                  });
+                                                  });*/
 
-                                                  FirebaseFirestore.instance
+                                                  /*  FirebaseFirestore.instance
                                                       .collection(
                                                           'reportedContent')
                                                       .where('userId',
@@ -923,7 +954,53 @@ class _reportedContent extends State<reportedContent> {
                                                           .doc(doc["Rid"])
                                                           .delete();
                                                     });
+                                                  });*/
+
+                                                  FirebaseFirestore.instance
+                                                      .collection('foodPost')
+                                                      .doc(widget
+                                                          .postData.postId
+                                                          .toString())
+                                                      .update({
+                                                    'providerblocked': true
                                                   });
+
+                                                  var snapp =
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection(
+                                                              'foodPost')
+                                                          .doc(widget
+                                                              .postData.postId)
+                                                          .get();
+                                                  print('not enter');
+                                                  if (snapp.exists) {
+                                                    print(' enter');
+                                                    Map<String, dynamic>? data =
+                                                        snapp.data();
+
+                                                    var reservedby =
+                                                        data!["reservedby"];
+
+                                                    if (reservedby == null) {
+                                                      print('trueee');
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'foodPost')
+                                                          .doc(widget
+                                                              .postData.postId)
+                                                          .delete();
+                                                    } else {
+                                                      print('no');
+                                                    }
+                                                  }
+
+                                                  FirebaseFirestore.instance
+                                                      .collection(
+                                                          'reportedContent')
+                                                      .doc(widget.postData.Rid
+                                                          .toString())
+                                                      .delete();
 
                                                   sendEmail(
                                                     name: widget
@@ -995,7 +1072,7 @@ class _reportedContent extends State<reportedContent> {
                                             onPressed: () async {
                                               if (widget.postData.flag == 0) {
                                                 FirebaseFirestore.instance
-                                                    .collection('post')
+                                                    .collection('posts')
                                                     .doc(widget.postData.postId
                                                         .toString())
                                                     .delete();
@@ -1005,7 +1082,37 @@ class _reportedContent extends State<reportedContent> {
                                                     .collection('foodPost')
                                                     .doc(widget.postData.postId
                                                         .toString())
-                                                    .delete();
+                                                    .update({
+                                                  'providerblocked': true
+                                                });
+
+                                                var snapp =
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('foodPost')
+                                                        .doc(widget
+                                                            .postData.postId)
+                                                        .get();
+                                                print('not enter');
+                                                if (snapp.exists) {
+                                                  print(' enter');
+                                                  Map<String, dynamic>? data =
+                                                      snapp.data();
+
+                                                  var reservedby =
+                                                      data!["reservedby"];
+
+                                                  if (reservedby == null) {
+                                                    print('trueee');
+                                                    FirebaseFirestore.instance
+                                                        .collection('foodPost')
+                                                        .doc(widget
+                                                            .postData.postId)
+                                                        .delete();
+                                                  } else {
+                                                    print('no');
+                                                  }
+                                                }
                                               }
 
                                               FirebaseFirestore.instance

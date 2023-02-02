@@ -119,6 +119,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         .collection('foodPost')
         .where('Cid', isEqualTo: id)
         .where('reserve', isEqualTo: '0')
+        .where('providerblocked', isEqualTo: false)
         // .orderBy("docId",descending: true,)
         .snapshots();
 
@@ -263,7 +264,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Text(
-                               "  ${data['postTitle'].toString()}",
+                                "  ${data['postTitle'].toString()}",
                                 style: const TextStyle(
                                   color: Color(0xFF1A4D2E),
                                   fontWeight: FontWeight.bold,
@@ -272,8 +273,10 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 10,),
-                           Padding(
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Align(
                               alignment: Alignment.centerRight,
@@ -282,7 +285,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                 style: const TextStyle(
                                   letterSpacing: 0.2,
                                   fontSize: 15,
-                                   color: Color(0xFF1A4D2E),
+                                  color: Color(0xFF1A4D2E),
                                 ),
                               ),
                             ),
@@ -318,26 +321,25 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                             ),
                           ),
                           const SizedBox(height: 5),
-                         
                           Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
-                          child: SizedBox(
-              width: 250,
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    color: Colors.grey,
-                    child:Image.network(
-                  data['postImage'],
-                  height: 180,
-                  width: 250,
-                  fit: BoxFit.fill,
-                ),
-                  ),
-                ),
-              ),
-            ),
+                            child: SizedBox(
+                              width: 250,
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    color: Colors.grey,
+                                    child: Image.network(
+                                      data['postImage'],
+                                      height: 180,
+                                      width: 250,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           const SizedBox(height: 15),
                           Row(
@@ -358,8 +360,8 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 0, bottom: 8, left: 10),
+                                padding: const EdgeInsets.only(
+                                    right: 0, bottom: 8, left: 10),
                                 child: Align(
                                   alignment: Alignment.bottomLeft,
                                   child: Text(
@@ -411,8 +413,12 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
-                                                  shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      15.0))),
                                                   title: const Text(
                                                     ' الطعام محجوز',
                                                     textAlign: TextAlign.right,
@@ -451,8 +457,12 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
-                                                  shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      15.0))),
                                                   title: const Text(
                                                     'تأكيد الحذف',
                                                     textAlign: TextAlign.right,
@@ -490,8 +500,12 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
-                                                  shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      15.0))),
                                                   title: const Text(
                                                     ' الطعام محجوز',
                                                     textAlign: TextAlign.right,
@@ -935,13 +949,13 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           child: ElevatedButton(
                             onPressed: () {
                               showDialog(
-                                
                                   context: context,
                                   builder: (_) => Directionality(
                                         textDirection: TextDirection.rtl,
                                         child: AlertDialog(
-                                            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0))),
                                           title: const Text('تأكيد!'),
                                           content: const Text(
                                               'عند موافقتك لنشر الاعلان لن تتمكن من تعديل أو حذف الإعلان إذا تم حجزه. '),
@@ -996,9 +1010,9 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                             foodCountEditingController
                                                                 .text
                                                                 .toString(),
+                                                        providerblocked: false,
                                                         reserve: '0',
                                                         notify: '0',
-                                                       
                                                         notifyCancelP: '1',
                                                         notifyCancelC: '1',
                                                       ).whenComplete(() {
@@ -1024,7 +1038,6 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                   },
                                                   child: const Text("إلغاء"),
                                                 ),
-                                                
                                               ],
                                             ),
                                           ],

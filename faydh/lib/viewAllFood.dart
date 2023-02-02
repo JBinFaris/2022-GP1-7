@@ -16,7 +16,6 @@ import 'models/reported_model.dart';
 
 //import 'package:path/path.dart';
 
-
 // import 'ReservedFoodListConsumer.dart';
 User? Uid = FirebaseAuth.instance.currentUser;
 
@@ -81,6 +80,7 @@ class _viewAllFood extends State<viewAllFood> {
       .collection('foodPost')
       .where('reserve', isEqualTo: '0')
       .where('Cid', isNotEqualTo: Uid!.uid.toString())
+      //.where('providerblocked', isEqualTo: 'false')
       // .orderBy("docId",descending: true,)
       .snapshots();
 
@@ -177,13 +177,13 @@ class _viewAllFood extends State<viewAllFood> {
               ],
             ),
       body: StreamBuilder<QuerySnapshot>(
-        stream:  FirebaseFirestore.instance
-      .collection('foodPost')
-      .where('reserve', isEqualTo: '0')
-      .where('Cid', isNotEqualTo:  FirebaseAuth.instance.currentUser?.uid)
-      // .orderBy("docId",descending: true,)
-      .snapshots()
-,
+        stream: FirebaseFirestore.instance
+            .collection('foodPost')
+            .where('reserve', isEqualTo: '0')
+            .where('providerblocked', isEqualTo: false)
+            .where('Cid', isNotEqualTo: FirebaseAuth.instance.currentUser?.uid)
+            // .orderBy("docId",descending: true,)
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('حدث خطأ ما');
