@@ -91,6 +91,7 @@ class _viewAllFood extends State<viewAllFood> {
 
     // print("collection lenG: ${foodPostStream.length}");
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.green[100],
       appBar: arrow
           ? AppBar(
