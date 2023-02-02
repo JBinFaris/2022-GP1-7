@@ -153,13 +153,16 @@ class _reportsScreenState extends State<reportsScreen> {
                       postList.add(reported.allReportedConstructor(
                         Rid: element['Rid'],
                         ReportReason: element['ReportReason'],
-                        userId: element['userId'],
-                        flag: element['flag'],
                         postId: element['postId'] ?? '',
-                        postTitle: element['postTitle'] ?? '',
-                        postText: element['postText'] ?? '',
+                          postText: element['postText'] ?? '',
                         postImage: element['postImage'] ?? '',
                         pathImage: element['pathImage'] ?? '',
+                         postTitle: element['postTitle'] ??'',
+                        Reporters: List<String>.from(element["Reporters"]),
+                        reportCount: element["reportCount"],
+                        userId: element['userId'],
+                        flag: element['flag'],
+
                       ));
                     }
                     print(postList.length);

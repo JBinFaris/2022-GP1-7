@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/models/user_model.dart';
 
 class reported {
   final String Rid;
@@ -9,6 +10,8 @@ class reported {
   final String? pathImage; //
   final String userId;
   final int? flag;
+  final List<String> Reporters ;
+  final int reportCount ;
 
   String? postUserName = "";
   String? postEmail = "";
@@ -25,6 +28,8 @@ class reported {
     this.postImage, //
     this.pathImage, //
     this.postTitle,
+    required this.Reporters,
+    required this.reportCount,
     required this.userId,
     required this.flag,
     this.postUserName,
@@ -32,14 +37,16 @@ class reported {
     //required this.postDate,
   });
 
-  reported.ReportedConstructor(this.Rid, this.ReportReason, this.postId,
-      this.postText, this.postImage, this.pathImage, this.userId, this.flag);
+  reported.ReportedConstructor(this.Rid, this.ReportReason, this.postId,this.Reporters,
+      this.reportCount, this.postText, this.postImage, this.pathImage, this.userId, this.flag);
 
   Map<String, dynamic> toJson() => {
         "Rid": Rid,
         "ReportReason": ReportReason,
         "userId": userId,
         "flag": flag,
+        "Reporters": Reporters ,
+        "reportCount": reportCount,
         if (flag != 2) "postId": postId,
         if (flag == 1) "postTitle": postTitle,
         if (flag != 2 && postText != "") "postText": postText,
@@ -56,11 +63,13 @@ class reported {
         Rid: snapshot["Rid"],
         ReportReason: snapshot["ReportReason"],
         postId: snapshot["postId"],
+        Reporters: snapshot["Reporters"],
         userId: snapshot["userId"],
         postText: snapshot["postText"],
         pathImage: snapshot["pathImage"],
         postImage: snapshot["postImage"],
-        flag: snapshot["flag"]
+        flag: snapshot["flag"],
+        reportCount: snapshot["reportCount"],
         // postDate: snapshot["postDate"]
         );
   }

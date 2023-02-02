@@ -240,6 +240,30 @@ class _AllPostsCardState extends State<AllPostsCard> {
                                                                     .toString())
                                                             .get();
 
+                                                              var userinfosnap =
+                                                            await FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'users')
+                                                                .doc(FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser
+                                                                    ?.uid)
+                                                                .get();
+
+                                                        Map<String, dynamic>?
+                                                            uinfo =
+                                                            userinfosnap.data();
+
+                                                               String username =
+                                                            uinfo!["username"];
+
+                                                        var user = 
+                                                         username
+                                                        ;
+
+
+
                                                         if (snapss2.size == 0) {
                                                           FirestoreMethods()
                                                               .uploadReport(
@@ -265,7 +289,39 @@ class _AllPostsCardState extends State<AllPostsCard> {
                                                                 .postData.userId
                                                                 .toString(),
                                                             flag: 0,
+                                                            reportCount: 1,
+                                                          Reporters : [user],
                                                           );
+                                                        }else {
+                                                          var alldocs =
+                                                            snapss2.docs;
+                                                          for (var i = 0;
+                                                              i < snapss2.size;
+                                                              i++) {
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'reportedContent')
+                                                                .doc(alldocs[i]
+                                                                    ["Rid"])
+                                                                .update({
+                                                              "Reporters":
+                                                                  FieldValue
+                                                                      .arrayUnion(
+                                                                          [user])
+                                                            });
+                                                                 FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'reportedContent')
+                                                                .doc(alldocs[i]
+                                                                    ["Rid"])
+                                                                .update({
+                                                              "reportCount":
+                                                                   FieldValue.increment(1)
+                                                            });
+                                                          }
+                                                          
                                                         }
                                                         Navigator.pop(context);
 

@@ -452,7 +452,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
     );
   }
 
-  void CheckReportCount2(String s) async {
+   void CheckReportCount2(String s) async {
     var snapss =
         await FirebaseFirestore.instance.collection('users').doc(s).get();
 
@@ -461,19 +461,57 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
 
       var count = data!["ReportCount"];
 
+     
+      if (count >= 3) {
 
-      var snapss2 = await FirebaseFirestore.instance.collection('reportedContent').where('userId', isEqualTo: s ).where('flag' , isEqualTo: 2).get();
-     
-       
- 
-      if(count >= 3){
-        if(snapss2.size == 0){
-     FirestoreMethods().uploadReport(ReportReason:'عدم الاستجابه عدة مرات',userId: s, flag: 2)  ; 
-     
-        }
-        }
-    }
+         var snapss2 = await FirebaseFirestore.instance
+          .collection('reportedContent')
+          .where('userId', isEqualTo: s)
+          .where('flag', isEqualTo: 2)
+          .get();
+
+          var userinfosnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc( FirebaseAuth.instance.currentUser?.uid)
+          .get();
+
+             Map<String, dynamic>? uinfo = userinfosnap.data();
+
+      var username = uinfo!["username"];
+      
+
+          var alldocs = snapss2.docs ;
+
+         var user =username;
+
+        if (snapss2.size == 0) {
+          FirestoreMethods().uploadReport(
+            ReportReason: 'عدم الاستجابه عدة مرات',
+            userId: s,
+            flag: 2,
+            reportCount: 1,
+            Reporters: [user],
+            
+          );
+         
+        }else{
+for(var i= 0 ; i < snapss2.size ;i++){
+     FirebaseFirestore.instance.collection('reportedContent').doc(alldocs[i]["Rid"] )
+     .update({"Reporters": FieldValue.arrayUnion([user])});
+          FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'reportedContent')
+                                                                .doc(alldocs[i]
+                                                                    ["Rid"])
+                                                                .update({
+                                                              "reportCount":
+                                                                   FieldValue.increment(1)
+                                                            });
+
+}}}}
   }
+
 
  
 }

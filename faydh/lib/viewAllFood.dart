@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'models/reported_model.dart';
+import 'package:faydh/models/user_model.dart' as user1;
 
 //import 'package:path/path.dart';
 
@@ -550,6 +551,32 @@ class _viewAllFood extends State<viewAllFood> {
                                                                     .toString())
                                                             .get();
 
+                                                      var userinfosnap =
+                                                            await FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'users')
+                                                                .doc(FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser
+                                                                    ?.uid)
+                                                                .get();
+
+                                                        Map<String, dynamic>?
+                                                            uinfo =
+                                                            userinfosnap.data();
+
+                                                        String username =
+                                                            uinfo!["username"];
+
+                                                            print(username);
+
+                                                        var user = 
+                                                         username
+                                                        ;
+
+                                                       // print(user);
+
                                                         if (snapss2.size == 0) {
                                                           Database2
                                                               .reportedContentData(
@@ -566,10 +593,46 @@ class _viewAllFood extends State<viewAllFood> {
                                                             postImage:
                                                                 po.toString(),
                                                             flag: 1,
+                                                            reportCount: 1,
+                                                            Reporters: [user],
                                                           );
+                                                          
+                                                          // Navigator.pop(context);
+                                                        } else {
+                                                          var alldocs =
+                                                            snapss2.docs;
+                                                            print(alldocs);
+                                                          for (var i = 0;
+                                                              i < snapss2.size;
+                                                              i++) {
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'reportedContent')
+                                                                .doc(alldocs[i]
+                                                                    ["Rid"])
+                                                                .update({
+                                                              "Reporters":
+                                                                  FieldValue
+                                                                      .arrayUnion(
+                                                                          [user])
+                                                            });
+                                                              FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'reportedContent')
+                                                                .doc(alldocs[i]
+                                                                    ["Rid"])
+                                                                .update({
+                                                              "reportCount":
+                                                                   FieldValue.increment(1)
+                                                            });
+                                                          }
+                                                          
                                                         }
 
-                                                        Navigator.pop(context);
+                                                       
+                                                           Navigator.pop(context);
 
                                                         print("check");
                                                       },
