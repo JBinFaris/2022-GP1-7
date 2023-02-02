@@ -178,13 +178,7 @@ class _viewAllFood extends State<viewAllFood> {
               ],
             ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('foodPost')
-            .where('reserve', isEqualTo: '0')
-            .where('providerblocked', isEqualTo: false)
-            .where('Cid', isNotEqualTo: FirebaseAuth.instance.currentUser?.uid)
-            // .orderBy("docId",descending: true,)
-            .snapshots(),
+        stream: foodPostStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('حدث خطأ ما');
@@ -551,7 +545,7 @@ class _viewAllFood extends State<viewAllFood> {
                                                                     .toString())
                                                             .get();
 
-                                                      var userinfosnap =
+                                                        var userinfosnap =
                                                             await FirebaseFirestore
                                                                 .instance
                                                                 .collection(
@@ -569,13 +563,11 @@ class _viewAllFood extends State<viewAllFood> {
                                                         String username =
                                                             uinfo!["username"];
 
-                                                            print(username);
+                                                        print(username);
 
-                                                        var user = 
-                                                         username
-                                                        ;
+                                                        var user = username;
 
-                                                       // print(user);
+                                                        // print(user);
 
                                                         if (snapss2.size == 0) {
                                                           Database2
@@ -596,12 +588,12 @@ class _viewAllFood extends State<viewAllFood> {
                                                             reportCount: 1,
                                                             Reporters: [user],
                                                           );
-                                                          
+
                                                           // Navigator.pop(context);
                                                         } else {
                                                           var alldocs =
-                                                            snapss2.docs;
-                                                            print(alldocs);
+                                                              snapss2.docs;
+                                                          print(alldocs);
                                                           for (var i = 0;
                                                               i < snapss2.size;
                                                               i++) {
@@ -617,7 +609,7 @@ class _viewAllFood extends State<viewAllFood> {
                                                                       .arrayUnion(
                                                                           [user])
                                                             });
-                                                              FirebaseFirestore
+                                                            FirebaseFirestore
                                                                 .instance
                                                                 .collection(
                                                                     'reportedContent')
@@ -625,14 +617,14 @@ class _viewAllFood extends State<viewAllFood> {
                                                                     ["Rid"])
                                                                 .update({
                                                               "reportCount":
-                                                                   FieldValue.increment(1)
+                                                                  FieldValue
+                                                                      .increment(
+                                                                          1)
                                                             });
                                                           }
-                                                          
                                                         }
 
-                                                       
-                                                           Navigator.pop(context);
+                                                        Navigator.pop(context);
 
                                                         print("check");
                                                       },
