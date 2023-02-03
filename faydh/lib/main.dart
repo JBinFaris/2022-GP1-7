@@ -1,4 +1,5 @@
 import 'package:faydh/Database/drop_down_provider.dart';
+import 'package:faydh/screen/animated/aplashAnimated.dart';
 import 'package:faydh/signin.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +29,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Tajawal',
-          primarySwatch: Colors.green,
           textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Colors.green,
-          ),
+              //cursorColor: Colors.green,
+              ),
         ),
-        home: const signInSreen(),
+        home: Splash_Animated(),
       ),
     );
   }
