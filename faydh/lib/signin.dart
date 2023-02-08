@@ -104,7 +104,7 @@ class _signInSreenState extends State<signInSreen> {
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
         String exp = doc["postExp"];
-        print("expdateee");
+
         print(exp);
         if (dt1Now.isAfter(dt2check)) {
           Future.delayed(const Duration(seconds: 2), () {
@@ -130,6 +130,21 @@ class _signInSreenState extends State<signInSreen> {
               .collection('foodPost')
               .doc(doc["docId"])
               .update({'notify': '1'});
+        }
+
+        if (doc["reserve"] == '1' && doc["providerblocked"] == true) {
+          print('notify');
+          Future.delayed(const Duration(seconds: 7), () {
+            initInfo();
+            sendPushMessage(
+                token: token,
+                title: " حاجز الطعام محظور ",
+                text: doc["postTitle"]);
+          });
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'reserve': '0'});
         }
 
         if (doc["notifyCancelP"] == '0') {

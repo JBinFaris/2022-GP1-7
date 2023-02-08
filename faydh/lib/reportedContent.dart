@@ -919,43 +919,6 @@ class _reportedContent extends State<reportedContent> {
                                                     });
                                                   });
 
-                                                  /*  FirebaseFirestore.instance
-                                                      .collection('foodPost')
-                                                      .where('Cid',
-                                                          isEqualTo: widget
-                                                              .postData.userId)
-                                                      .get()
-                                                      .then((QuerySnapshot
-                                                          querySnapshot) {
-                                                    querySnapshot.docs
-                                                        .forEach((doc) {
-                                                      FirebaseFirestore.instance
-                                                          .collection(
-                                                              'foodPost')
-                                                          .doc(doc["docId"])
-                                                          .delete();
-                                                    });
-                                                  });*/
-
-                                                  /*  FirebaseFirestore.instance
-                                                      .collection(
-                                                          'reportedContent')
-                                                      .where('userId',
-                                                          isEqualTo: widget
-                                                              .postData.userId)
-                                                      .get()
-                                                      .then((QuerySnapshot
-                                                          querySnapshot) {
-                                                    querySnapshot.docs
-                                                        .forEach((doc) {
-                                                      FirebaseFirestore.instance
-                                                          .collection(
-                                                              'reportedContent')
-                                                          .doc(doc["Rid"])
-                                                          .delete();
-                                                    });
-                                                  });*/
-
                                                   FirebaseFirestore.instance
                                                       .collection('foodPost')
                                                       .doc(widget
@@ -973,9 +936,8 @@ class _reportedContent extends State<reportedContent> {
                                                           .doc(widget
                                                               .postData.postId)
                                                           .get();
-                                                  print('not enter');
+
                                                   if (snapp.exists) {
-                                                    print(' enter');
                                                     Map<String, dynamic>? data =
                                                         snapp.data();
 
