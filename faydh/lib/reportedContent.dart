@@ -793,7 +793,7 @@ class _reportedContent extends State<reportedContent> {
                                               var reservedby =
                                                   data!["reservedby"];
 
-                                              if (reservedby == null) {
+                                              if (data["reservedby"] == null) {
                                                 print('trueee');
                                                 FirebaseFirestore.instance
                                                     .collection('foodPost')
@@ -960,7 +960,8 @@ class _reportedContent extends State<reportedContent> {
                                                 var reservedby =
                                                     data!["reservedby"];
 
-                                                if (reservedby == null) {
+                                                if (data["reservedby"] ==
+                                                    null) {
                                                   print('trueee');
                                                   FirebaseFirestore.instance
                                                       .collection('foodPost')
@@ -1073,7 +1074,7 @@ class _reportedContent extends State<reportedContent> {
                                               var reservedby =
                                                   data!["reservedby"];
 
-                                              if (reservedby == null) {
+                                              if (data["reservedby"] == null) {
                                                 print('trueee');
                                                 FirebaseFirestore.instance
                                                     .collection('foodPost')

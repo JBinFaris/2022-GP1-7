@@ -128,7 +128,8 @@ class _MyCardState extends State<MyCard> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                   shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0))),
                                   title: const Text(
                                     'تأكيد الحذف',
                                     textAlign: TextAlign.right,
@@ -149,7 +150,20 @@ class _MyCardState extends State<MyCard> {
                                       child: const Text("موافق"),
                                       onPressed: () async {
                                         widget.reference.delete();
-
+                                        FirebaseFirestore.instance
+                                            .collection('reportedContent')
+                                            .where('postId',
+                                                isEqualTo: widget.snap["Cid"])
+                                            .get()
+                                            .then(
+                                                (QuerySnapshot querySnapshot) {
+                                          querySnapshot.docs.forEach((doc) {
+                                            FirebaseFirestore.instance
+                                                .collection('reportedContent')
+                                                .doc(doc["Rid"])
+                                                .delete();
+                                          });
+                                        });
                                         print(widget.id.toString());
 
                                         Navigator.pop(context);

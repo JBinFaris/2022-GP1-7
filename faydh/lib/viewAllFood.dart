@@ -28,10 +28,10 @@ class viewAllFood extends StatefulWidget {
 }
 
 class _viewAllFood extends State<viewAllFood> {
+  bool arrow = false;
+
   TextEditingController _searchTextController = new TextEditingController();
   String filter = "";
-
-  bool arrow = false;
 
   List<Map<String, dynamic>> getMyListData(
       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -57,6 +57,22 @@ class _viewAllFood extends State<viewAllFood> {
     });
   }
 
+  Future<String?> getData() async {
+    var a = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    final myrole = a['role'];
+    if (myrole == "فرد") {
+      print(myrole);
+      setState(() {
+        arrow = true;
+      });
+    }
+    return null;
+  }
+
   @override
   void dispose() {
     _searchTextController.dispose();
@@ -74,26 +90,12 @@ class _viewAllFood extends State<viewAllFood> {
         .update({'reservedby': FirebaseAuth.instance.currentUser?.uid});
   }
 
-  Future<String?> getData() async {
-    var a = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(Uid!.uid)
-        .get();
-
-    final myrole = a['role'];
-    if (myrole == "فرد") {
-      setState(() {
-        arrow = true;
-      });
-    }
-  }
-
   //Future sortData() async {}
 
   final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
       .collection('foodPost')
       .where('reserve', isEqualTo: '0')
-      .where('Cid', isNotEqualTo: Uid!.uid.toString())
+      .where('Cid', isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
       //.where('providerblocked', isEqualTo: 'false')
       // .orderBy("docId",descending: true,)
       .snapshots();
@@ -101,7 +103,7 @@ class _viewAllFood extends State<viewAllFood> {
   @override
   Widget build(BuildContext context) {
     // print("cehecl");
-
+    print(arrow);
     // print("collection lenG: ${foodPostStream.length}");
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -155,10 +157,10 @@ class _viewAllFood extends State<viewAllFood> {
               ))
           : AppBar(
               elevation: 2.0,
-              centerTitle: false,
+              centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Center(child: Text('           إعلانات المتبرعين')),
+              title: const Center(child: Text('   إعلانات المتبرعين')),
               actions: <Widget>[
                 SizedBox(
                     width: 130,
