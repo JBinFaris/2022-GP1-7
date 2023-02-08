@@ -13,23 +13,21 @@ class BlockedUserList extends StatefulWidget {
 class _BlockedUserListState extends State<BlockedUserList> {
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        
         automaticallyImplyLeading: false,
-        title: const Center(child: Text('  قائمة المستخدمين المحظورين ')),
-        backgroundColor:  const Color(0xFF1A4D2E),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: Color.fromARGB(225, 255, 255, 255),
-            ),
-          )
-        ],
+        centerTitle: true,
+        title: Text('  قائمة المحظورين '),
+        backgroundColor: const Color(0xFF1A4D2E),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Color.fromARGB(225, 255, 255, 255),
+          ),
+        ),
       ),
       body: SafeArea(
         child: Container(
@@ -37,15 +35,21 @@ class _BlockedUserListState extends State<BlockedUserList> {
               gradient: LinearGradient(
                   begin: Alignment.bottomLeft,
                   end: Alignment.topRight,
-                  stops: [0.1, 0.9],
-                  colors: [Color.fromARGB(142, 47, 101, 69), Color(0xffd6ecd0)]),
+                  stops: [
+                    0.1,
+                    0.9
+                  ],
+                  colors: [
+                    Color.fromARGB(142, 47, 101, 69),
+                    Color(0xffd6ecd0)
+                  ]),
             ),
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection("users")
                   .where('Active', isEqualTo: false)
                   .snapshots(),
-             builder: (context,
+              builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snaphot) {
                 if (snaphot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -58,7 +62,7 @@ class _BlockedUserListState extends State<BlockedUserList> {
                 return ListView.builder(
                   itemCount: snaphot.data?.docs.length,
                   itemBuilder: (context, index) => bListCards(
-                   snap: snaphot.data?.docs[index].data(),
+                    snap: snaphot.data?.docs[index].data(),
                   ),
                 );
               },
@@ -68,7 +72,6 @@ class _BlockedUserListState extends State<BlockedUserList> {
 
         // backgroundColor:Color.fromARGB(255, 235, 241, 233),
       ),
-     );
-  
+    );
   }
 }

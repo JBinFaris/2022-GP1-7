@@ -19,21 +19,18 @@ class _myAwareState extends State<myAware> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Center(child: Text('      محتواي التوعوي ')),
-        backgroundColor: const Color(0xFF1A4D2E),
-        actions: [
-          GestureDetector(
+          automaticallyImplyLeading: false,
+          title: const Center(child: Text('      محتواي التوعوي ')),
+          backgroundColor: const Color(0xFF1A4D2E),
+          leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
             },
             child: const Icon(
-              Icons.arrow_forward_ios_rounded,
+              Icons.arrow_back_ios_rounded,
               color: Color.fromARGB(225, 255, 255, 255),
             ),
-          )
-        ],
-      ),
+          )),
       body: SafeArea(
         child: Container(
             decoration: const BoxDecoration(

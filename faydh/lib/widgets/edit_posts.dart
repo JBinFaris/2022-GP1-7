@@ -61,17 +61,15 @@ class _EditPostState extends State<EditPost> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white,
-              ),
-            )
-          ],
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: Colors.white,
+            ),
+          ),
           title: const Align(
             alignment: Alignment.center,
             child: Text(
@@ -171,14 +169,15 @@ class _EditPostState extends State<EditPost> {
                             : MaterialButton(
                                 color: const Color(0xFF1A4D2E),
                                 onPressed: () async {
-                                  if(_image == null && _title.text.trim() == ""){
+                                  if (_image == null &&
+                                      _title.text.trim() == "") {
                                     Fluttertoast.showToast(
                                         msg: "أدخل نصًا أو حدد صورة",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         backgroundColor: Colors.black54,
                                         textColor: Colors.white);
-                                  }else{
+                                  } else {
                                     if (_formKey.currentState!.validate()) {
                                       setState(() {
                                         _showProgress = true;
@@ -199,16 +198,13 @@ class _EditPostState extends State<EditPost> {
                                             _showProgress = false;
                                           });
 
-                                          showSnackBar(
-                                              "تم تحديث المحتوى بنجاح", context);
+                                          showSnackBar("تم تحديث المحتوى بنجاح",
+                                              context);
                                           Navigator.of(context).pop();
                                         }
                                       });
-
-
                                     }
                                   }
-
                                 },
                                 textColor: Colors.white,
                                 padding: const EdgeInsets.all(16.0),

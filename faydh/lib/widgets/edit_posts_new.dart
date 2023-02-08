@@ -129,7 +129,7 @@ class _EditPostNewState extends State<EditPostNew> {
   _clearThings() {
     _image = null;
     postTitleTextEditingController.text = "";
-    selectedValue = null ;
+    selectedValue = null;
     _date = "تاريخ انتهاء الطعام";
     setState(() {});
   }
@@ -165,17 +165,15 @@ class _EditPostNewState extends State<EditPostNew> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white,
-              ),
-            )
-          ],
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: Colors.white,
+            ),
+          ),
           title: const Align(
             alignment: Alignment.center,
             child: Text(

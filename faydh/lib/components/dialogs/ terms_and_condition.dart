@@ -1,7 +1,6 @@
 import 'package:faydh/SignUp_Form.dart';
 import 'package:flutter/material.dart';
 
-
 class TermsAndConditions extends StatefulWidget {
   const TermsAndConditions({Key? key}) : super(key: key);
 
@@ -10,7 +9,6 @@ class TermsAndConditions extends StatefulWidget {
 }
 
 class _TermsAndConditionsState extends State<TermsAndConditions> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +24,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
                   }));
                 },
                 icon: const Icon(
-                  Icons.arrow_forward_ios_rounded,
+                  Icons.arrow_back_ios_rounded,
                   color: Color.fromARGB(255, 18, 57, 20),
                 )),
           )),

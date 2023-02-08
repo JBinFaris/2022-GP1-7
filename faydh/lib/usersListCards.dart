@@ -57,18 +57,13 @@ class _UsersListCardsState extends State<UsersListCards> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFF1A4D2E),
-        title: const Text("المستخدمين"),
-        leading: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) {
-                return const AdminMain();
-              }),
-            );
+        title: const Text("قائمة المستخدمين     "),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
           },
-          backgroundColor: const Color(0xFF1A4D2E),
           child: const Icon(
-            Icons.arrow_forward_ios_rounded,
+            Icons.arrow_back_ios_rounded,
             color: Color.fromARGB(225, 255, 255, 255),
           ),
         ),
