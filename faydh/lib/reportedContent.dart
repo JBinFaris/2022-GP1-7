@@ -1,6 +1,7 @@
 //import 'dart:html';
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/ApproveBusiness.dart';
@@ -117,359 +118,207 @@ class _reportedContent extends State<reportedContent> {
                   )),
             ),
           ),
-          Padding(
-              padding:
-                  const EdgeInsets.only(top: 8, right: 10, bottom: 2, left: 2),
-              child: widget.postData.flag != 2
-                  ? Padding(
-                      padding: const EdgeInsets.only(
-                          top: 2, right: 0, bottom: 2, left: 50),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (widget.postData.flag == 0) {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                      shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15.0))),
-                                      title: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 2,
-                                            right: 0,
-                                            bottom: 2,
-                                            left: 50),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: const [
-                                            Text("تفاصيل المنشور"),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Positioned(
-                                                child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFd6ecd0),
-                                              radius: 40,
-                                              child: Icon(
-                                                Icons.file_copy_outlined,
-                                                size: 55,
-                                              ),
-                                            )),
-                                          ],
-                                        ),
-                                      ),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const SizedBox(
-                                            height: 15,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 2,
-                                                right: 20,
-                                                bottom: 2,
-                                                left: 50),
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                  textAlign: TextAlign.right,
-                                                  //"${widget.snap["postText"].toString()}",
-                                                  " المحتوى: " +
-                                                      "${widget.postData.postText.toString()}",
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          if (_dta.isNotEmpty)
-                                            SizedBox(
-                                              width: 250,
-                                              child: Center(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  child: Container(
-                                                    color: Colors.grey,
-                                                    child: Image(
-                                                      image: NetworkImage(_dta),
-                                                      fit: BoxFit.cover,
-                                                      height: 150,
-                                                      width: 250,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          if (_dta.isEmpty)
-                                            const SizedBox(
-                                              width: 0,
-                                              height: 0,
-                                            ),
-                                        ],
-                                      ));
-                                }
-                                /*Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal:
-                                            MediaQuery.of(context).size.width /
-                                                10,
-                                        vertical:
-                                            MediaQuery.of(context).size.height /
-                                                3.3),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(top: 50),
-                                          height: double.maxFinite,
-                                          width: double.maxFinite,
-                                          decoration: BoxDecoration(
-                                              color: Color(0xFFf7f7f7),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Column(
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 50,
-                                                          right: 30,
-                                                          bottom: 2,
-                                                          left: 2),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 2,
-                                                            right: 0,
-                                                            bottom: 2,
-                                                            left: 50),
-                                                    child: Text(
-                                                        //"${widget.snap["postText"].toString()}",
-                                                        "${widget.postData.postText.toString()}",
-                                                        style: const TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        )),
-                                                  ),
-                                                ),
-                                              ),
-                                              if (_dta.isNotEmpty)
-                                                SizedBox(
-                                                  width: 250,
-                                                  child: Center(
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      child: Container(
-                                                        color: Colors.grey,
-                                                        child: Image(
-                                                          image: NetworkImage(
-                                                              _dta),
-                                                          fit: BoxFit.cover,
-                                                          height: 150,
-                                                          width: 250,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              if (_dta.isEmpty)
-                                                SizedBox(
-                                                  width: 0,
-                                                  height: 0,
-                                                )
-                                            ],
-                                          ),
-                                        ),
-                                        const Positioned(
-                                            right: 0,
-                                            left: 0,
-                                            child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFd6ecd0),
-                                              radius: 40,
-                                              child: Icon(
-                                                Icons.file_copy_outlined,
-                                                size: 55,
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  )*/
-                                );
-                          } else if (widget.postData.flag == 1) {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                      shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15.0))),
-                                      title: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 2,
-                                            right: 0,
-                                            bottom: 2,
-                                            left: 50),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: const [
-                                            Text("تفاصيل الإعلان"),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Positioned(
-                                                child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFd6ecd0),
-                                              radius: 40,
-                                              child: Icon(
-                                                Icons.file_copy_outlined,
-                                                size: 55,
-                                              ),
-                                            )),
-                                          ],
-                                        ),
-                                      ),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 2,
-                                                right: 20,
-                                                bottom: 2,
-                                                left: 50),
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                  textAlign: TextAlign.right,
-                                                  //"${widget.snap["postText"].toString()}",
-                                                  "  عنوان الطعام: " +
-                                                      "${widget.postData.postTitle.toString()}",
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 2,
-                                                right: 20,
-                                                bottom: 2,
-                                                left: 5),
-                                            child: Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                  textAlign: TextAlign.right,
+      
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 8, right: 10, bottom: 2, left: 2),
+                child: Padding(
+                   padding: const EdgeInsets.only( top: 2, right: 0, bottom: 2, left: 50),
 
-                                                  //"${widget.snap["postText"].toString()}",
-                                                  "  وصف الطعام: " +
-                                                      "${widget.postData.postText.toString()}",
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
+                     child: GestureDetector(
+                      onTap:(){
+                        
+                         List<String> list = widget.postData.Reporters;
+                         List<String> strings = List<String>.from(widget.postData.Reporters);
+                         print(list);
+                         var listString ="" ;
+                         var num ;
+
+                         log('data: $strings');
+
+                         for(var i = 0 ; i<(widget.postData.reportCount) ; i++){
+                   num = i+1;
+               
+                          listString += list[i] +"   -$num " ;
+                         listString += "\n";
+
+
+                         }
+                             showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0))),
+                                          title: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 2,
+                                                right: 10,
+                                                bottom: 2,
+                                                left: 10),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: const [
+                                                Text(  " :اسماء المستخدمين المبلغين \n"
+                                                ,style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Positioned(
+                                                    child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Color(0xFFd6ecd0),
+                                                  radius: 20,
+                                                  child: Icon(
+                                                    Icons.person,
+                                                    size: 40,
+                                                  ),
+                                                )),
+                                              ],
                                             ),
                                           ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          if (_dta2.isNotEmpty)
-                                            SizedBox(
-                                              width: 250,
-                                              child: Center(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  child: Container(
-                                                    color: Colors.grey,
-                                                    child: Image(
-                                                      image:
-                                                          NetworkImage(_dta2),
-                                                      fit: BoxFit.cover,
-                                                      height: 150,
-                                                      width: 250,
-                                                    ),
-                                                  ),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const SizedBox(
+                                                height: 15,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 2,
+                                                    right: 10,
+                                                    bottom: 2,
+                                                    left: 50),
+                                                child: Align(
+                                                
+                                                  alignment: Alignment.centerRight,
+                                                  child:
+          
+                                                   Column(
+                                                     children: [
+                                                   
+                                                             Padding(
+                                                               padding: const EdgeInsets.fromLTRB(100, 3, 10, 0),
+                                                               child: Text(
+                                                          textAlign: TextAlign.right,
+                                                          //"${widget.snap["postText"].toString()}",
+                                                          "  ${listString} \n" 
+                                                            
+                                                        , style: const TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight: FontWeight.bold,
+                                                          )),
+                                                             ),
+
+                                                           
+                                                     ],
+                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          if (_dta2.isEmpty)
-                                            const SizedBox(
-                                              width: 0,
-                                              height: 0,
-                                            ),
-                                        ],
-                                      ));
-                                }
-                                /*Container(
-                                    margin: EdgeInsets.symmetric(
-                                        horizontal:
-                                            MediaQuery.of(context).size.width /
-                                                10,
-                                        vertical:
-                                            MediaQuery.of(context).size.height /
-                                                3.3),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(top: 50),
-                                          height: double.maxFinite,
-                                          width: double.maxFinite,
-                                          decoration: BoxDecoration(
-                                              color: Color(0xFFf7f7f7),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Column(
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 50,
-                                                          right: 30,
-                                                          bottom: 2,
-                                                          left: 2),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 2,
-                                                            right: 0,
-                                                            bottom: 2,
-                                                            left: 50),
-                                                    child: Text(
-                                                        //"${widget.snap["postText"].toString()}",
-                                                        "${widget.postData.postText.toString()}",
-                                                        style: const TextStyle(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        )),
-                                                  ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                            
+                                            ],
+                                          ));
+                                    }
+                                    );
+                           
+                      } , child: const Text('اسم المستخدم المبلغ',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 102, 204),
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline)),
+                     
+                      
+                                    ) ,
+                                   
+                                   
+                )
+                )
+                ]
+
+                     ),
+
+
+                
+              Padding(
+                  padding:
+                      const EdgeInsets.only(top: 8, right: 10, bottom: 2, left: 2),
+                  child: widget.postData.flag != 2
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              top: 2, right: 0, bottom: 2, left: 50),
+                          child: GestureDetector(
+                            onTap: () {
+                              if (widget.postData.flag == 0) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0))),
+                                          title: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 2,
+                                                right: 0,
+                                                bottom: 2,
+                                                left: 50),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: const [
+                                                Text("تفاصيل المنشور"),
+                                                SizedBox(
+                                                  width: 10,
                                                 ),
+                                                Positioned(
+                                                    child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Color(0xFFd6ecd0),
+                                                  radius: 40,
+                                                  child: Icon(
+                                                    Icons.file_copy_outlined,
+                                                    size: 55,
+                                                  ),
+                                                )),
+                                              ],
+                                            ),
+                                          ),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const SizedBox(
+                                                height: 15,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 2,
+                                                    right: 20,
+                                                    bottom: 2,
+                                                    left: 50),
+                                                child: Align(
+                                                  alignment: Alignment.centerRight,
+                                                  child: Text(
+                                                      textAlign: TextAlign.right,
+                                                      //"${widget.snap["postText"].toString()}",
+                                                      " المحتوى: " +
+                                                          "${widget.postData.postText.toString()}",
+                                                      style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.bold,
+                                                      )),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
                                               ),
                                               if (_dta.isNotEmpty)
                                                 SizedBox(
@@ -477,13 +326,11 @@ class _reportedContent extends State<reportedContent> {
                                                   child: Center(
                                                     child: ClipRRect(
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
+                                                          BorderRadius.circular(20),
                                                       child: Container(
                                                         color: Colors.grey,
                                                         child: Image(
-                                                          image: NetworkImage(
-                                                              _dta),
+                                                          image: NetworkImage(_dta),
                                                           fit: BoxFit.cover,
                                                           height: 150,
                                                           width: 250,
@@ -493,42 +340,237 @@ class _reportedContent extends State<reportedContent> {
                                                   ),
                                                 ),
                                               if (_dta.isEmpty)
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 0,
                                                   height: 0,
-                                                )
+                                                ),
                                             ],
-                                          ),
-                                        ),
-                                        const Positioned(
-                                            right: 0,
-                                            left: 0,
-                                            child: CircleAvatar(
-                                              backgroundColor:
-                                                  Color(0xFFd6ecd0),
-                                              radius: 40,
-                                              child: Icon(
-                                                Icons.file_copy_outlined,
-                                                size: 55,
+                                          ));
+                                    }
+                                    /*Container(
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal:
+                                                MediaQuery.of(context).size.width /
+                                                    10,
+                                            vertical:
+                                                MediaQuery.of(context).size.height /
+                                                    3.3),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(top: 50),
+                                              height: double.maxFinite,
+                                              width: double.maxFinite,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFf7f7f7),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10)),
+                                              child: Column(
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 50,
+                                                              right: 30,
+                                                              bottom: 2,
+                                                              left: 2),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                top: 2,
+                                                                right: 0,
+                                                                bottom: 2,
+                                                                left: 50),
+                                                        child: Text(
+                                                            //"${widget.snap["postText"].toString()}",
+                                                            "${widget.postData.postText.toString()}",
+                                                            style: const TextStyle(
+                                                              color: Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                            )),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  if (_dta.isNotEmpty)
+                                                    SizedBox(
+                                                      width: 250,
+                                                      child: Center(
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  20),
+                                                          child: Container(
+                                                            color: Colors.grey,
+                                                            child: Image(
+                                                              image: NetworkImage(
+                                                                  _dta),
+                                                              fit: BoxFit.cover,
+                                                              height: 150,
+                                                              width: 250,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  if (_dta.isEmpty)
+                                                    SizedBox(
+                                                      width: 0,
+                                                      height: 0,
+                                                    )
+                                                ],
                                               ),
-                                            )),
-                                      ],
-                                    ),
-                                  )*/
-                                );
-                          }
-                        },
-                        child: const Text('التفاصيل',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 0, 102, 204),
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline)),
-                      ),
-                    )
-                  : const SizedBox(
-                      width: 0,
-                      height: 0,
-                    )),
+                                            ),
+                                            const Positioned(
+                                                right: 0,
+                                                left: 0,
+                                                child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Color(0xFFd6ecd0),
+                                                  radius: 40,
+                                                  child: Icon(
+                                                    Icons.file_copy_outlined,
+                                                    size: 55,
+                                                  ),
+                                                )),
+                                          ],
+                                        ),
+                                      )*/
+                                    );
+                              } else if (widget.postData.flag == 1) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0))),
+                                          title: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 2,
+                                                right: 0,
+                                                bottom: 2,
+                                                left: 50),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: const [
+                                                Text("تفاصيل الإعلان"),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Positioned(
+                                                    child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Color(0xFFd6ecd0),
+                                                  radius: 40,
+                                                  child: Icon(
+                                                    Icons.file_copy_outlined,
+                                                    size: 55,
+                                                  ),
+                                                )),
+                                              ],
+                                            ),
+                                          ),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 2,
+                                                    right: 20,
+                                                    bottom: 2,
+                                                    left: 50),
+                                                child: Align(
+                                                  alignment: Alignment.centerRight,
+                                                  child: Text(
+                                                      textAlign: TextAlign.right,
+                                                      //"${widget.snap["postText"].toString()}",
+                                                      "  عنوان الطعام: " +
+                                                          "${widget.postData.postTitle.toString()}",
+                                                      style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.bold,
+                                                      )),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 2,
+                                                    right: 20,
+                                                    bottom: 2,
+                                                    left: 5),
+                                                child: Align(
+                                                  alignment: Alignment.centerRight,
+                                                  child: Text(
+                                                      textAlign: TextAlign.right,
+
+                                                      //"${widget.snap["postText"].toString()}",
+                                                      "  وصف الطعام: " +
+                                                          "${widget.postData.postText.toString()}",
+                                                      style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.bold,
+                                                      )),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              if (_dta2.isNotEmpty)
+                                                SizedBox(
+                                                  width: 250,
+                                                  child: Center(
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(20),
+                                                      child: Container(
+                                                        color: Colors.grey,
+                                                        child: Image(
+                                                          image:
+                                                              NetworkImage(_dta2),
+                                                          fit: BoxFit.cover,
+                                                          height: 150,
+                                                          width: 250,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              if (_dta2.isEmpty)
+                                                const SizedBox(
+                                                  width: 0,
+                                                  height: 0,
+                                                ),
+                                            ],
+                                          ));
+                                    }
+                                
+                                    );
+                              }
+                            },
+                            child: const Text('التفاصيل',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 102, 204),
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline)),
+                          ),
+                        )
+                      : const SizedBox(
+                          width: 0,
+                          height: 0,
+                        )),
+          
+          
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1107,9 +1149,10 @@ class _reportedContent extends State<reportedContent> {
             ],
           ),
           const SizedBox(height: 8),
-        ],
-      ),
-    );
+        
+     ] ) 
+       );
+    
   }
 
   Widget tweetHeader() {

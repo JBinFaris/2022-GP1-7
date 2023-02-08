@@ -1,3 +1,4 @@
+import 'package:faydh/AdminMain.dart';
 import 'package:faydh/BlockedUserList.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -41,7 +42,7 @@ class _UsersListCardsState extends State<UsersListCards> {
     super.dispose();
   }
 
-  final Stream<QuerySnapshot> foodPostStream = FirebaseFirestore.instance
+  final Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('users')
       .where('Active', isEqualTo: true)
       .snapshots();
@@ -52,15 +53,19 @@ class _UsersListCardsState extends State<UsersListCards> {
     // print("collection lenG: ${foodPostStream.length}");
     return Scaffold(
       appBar: AppBar(
-          elevation: 2.0,
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xFF1A4D2E),
-          title: const Text(" قائمة المستخدمين    "),
-          actions: <Widget>[
-            SizedBox(
-                width: 130,
-                height: 140,
+        elevation: 2.0,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xFF1A4D2E),
+        //title: const Text("  المستخدمين"),
+        actions: <Widget>[
+          // const Text(" قائمة المستخدمين    "),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(5, 10, 50, 5),
+            child: SizedBox(
+                width: 120,
+                height: 120,
                 child: FittedBox(
                   child: FloatingActionButton.extended(
                     heroTag: "btn1",
@@ -86,24 +91,46 @@ class _UsersListCardsState extends State<UsersListCards> {
                       );
                     },
                   ),
-                ))
-          ],
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Icon(
-              Icons.arrow_back_ios_rounded,
-              color: Color.fromARGB(225, 255, 255, 255),
+                )),
+          ),
+          //  const Padding(
+          //  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 23, 27, 5),
+            child: Flexible(
+              child: Text(
+                "قائمة المستخدمين ",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          )),
+          ),
+
+          //  ),
+          Padding(
+              padding: const EdgeInsets.fromLTRB(5, 5, 15, 5),
+              child: FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return const AdminMain();
+                    }),
+                  );
+                },
+                backgroundColor: const Color(0xFF1A4D2E),
+                child: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Color.fromARGB(225, 255, 255, 255),
+                ),
+              )),
+        ],
+      ),
       backgroundColor: Colors.green[100],
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('users')
-            .where('Active', isEqualTo: true)
-            // .orderBy("docId",descending: true,)
-            .snapshots(),
+        stream: usersStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('حدث خطأ ما');
@@ -234,7 +261,7 @@ class _UsersListCardsState extends State<UsersListCards> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(280, 1, 40, 0),
       child: Container(
-        margin: const EdgeInsets.fromLTRB(3, 5, 5, 1),
+        margin: const EdgeInsets.fromLTRB(3, 0, 5, 1),
         child: const CircleAvatar(
           backgroundColor: Colors.white,
           child: Icon(
@@ -258,7 +285,7 @@ class _UsersListCardsState extends State<UsersListCards> {
         //    tweetHeader(),
 
         Container(
-          margin: const EdgeInsets.fromLTRB(50, 3, 60, 5),
+          margin: const EdgeInsets.fromLTRB(50, 0, 60, 0),
           child: Column(
             children: [
               Padding(

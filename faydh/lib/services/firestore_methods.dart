@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/models/post_model.dart';
 import 'package:faydh/models/reported_model.dart';
+import 'package:faydh/models/user_model.dart' as user1;
 import 'package:faydh/services/storage_method.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -129,6 +130,7 @@ class FirestoreMethods {
   Future<String> uploadReport({
     Rid,
     ReportReason,
+
     //required String postUserName,
     String? postText,
     String? pathImage,
@@ -136,14 +138,15 @@ class FirestoreMethods {
     required String userId,
     String? postId,
     int? flag,
+     required List<String> Reporters ,
+      required final int reportCount ,
 
     //Uint8List? file, //
   }) async {
     String res = "Some error occured";
 
     try {
-      reported report = reported.ReportedConstructor(ref2.id, ReportReason,
-          postId, postText, pathImage, postImage, userId, flag);
+      reported report = reported.ReportedConstructor(ref2.id, ReportReason, postId, Reporters, reportCount,postText, pathImage, postImage, userId, flag);
 
       var a =
           await _firestore.collection("reportedContent").add(report.toJson());

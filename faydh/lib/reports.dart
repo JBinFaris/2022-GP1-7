@@ -54,13 +54,13 @@ class _reportsScreenState extends State<reportsScreen> {
     return Scaffold(
         backgroundColor: const Color(0xffd6ecd0),
         appBar: AppBar(
-            elevation: 2.0,
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            backgroundColor: const Color(0xFF1A4D2E),
-            title: const Text(" البلاغات  "),
-            /*  actions: <Widget>[
-                SizedBox(
+          elevation: 2.0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color(0xFF1A4D2E),
+          title: const Text(" البلاغات  "),
+          /*  actions: <Widget>[
+                SizedBox (
                     width: 160,
                     height: 130,
                     child: FittedBox(
@@ -90,15 +90,18 @@ class _reportsScreenState extends State<reportsScreen> {
                       ),
                     ))
               ],*/
-            leading: GestureDetector(
+          actions: [
+            GestureDetector(
               onTap: () {
                 Navigator.pop(context);
               },
               child: const Icon(
-                Icons.arrow_back_ios_rounded,
+                Icons.arrow_forward_ios_rounded,
                 color: Color.fromARGB(225, 255, 255, 255),
               ),
-            )),
+            )
+          ],
+        ),
         body: SafeArea(
           child: Container(
             decoration: const BoxDecoration(
@@ -153,13 +156,16 @@ class _reportsScreenState extends State<reportsScreen> {
                       postList.add(reported.allReportedConstructor(
                         Rid: element['Rid'],
                         ReportReason: element['ReportReason'],
-                        userId: element['userId'],
-                        flag: element['flag'],
                         postId: element['postId'] ?? '',
-                        postTitle: element['postTitle'] ?? '',
-                        postText: element['postText'] ?? '',
+                          postText: element['postText'] ?? '',
                         postImage: element['postImage'] ?? '',
                         pathImage: element['pathImage'] ?? '',
+                         postTitle: element['postTitle'] ??'',
+                        Reporters: List<String>.from(element["Reporters"]),
+                        reportCount: element["reportCount"],
+                        userId: element['userId'],
+                        flag: element['flag'],
+
                       ));
                     }
                     print(postList.length);

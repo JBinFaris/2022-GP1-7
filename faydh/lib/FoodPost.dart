@@ -273,7 +273,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
@@ -817,59 +817,87 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
               const SizedBox(
                 height: 8,
               ),
-              Align(
-                alignment: Alignment.center,
-                child: TextButton(
-                  onPressed: () {
-                    DatePicker.showDatePicker(context,
-                        theme: const DatePickerTheme(
-                          containerHeight: 210.0,
-                        ),
-                        showTitleActions: true,
-                        minTime: DateTime.now(),
-                        maxTime: DateTime(2050, 12, 31), onConfirm: (date) {
-                      var date_with_raw_format = date.toString().split(' ');
-                      var finalDate =
-                          date_with_raw_format[0].toString().split('-');
+              Padding(
+                padding: const EdgeInsets.fromLTRB(140, 0, 10, 0),
+                child: Row(
+                  children: [
+                  
+                  //  SizedBox(width: 100,),
+                
 
-                      _date = '${finalDate[0]}-${finalDate[1]}-${finalDate[2]}';
-                      print('confirm $date');
-
-                      setState(() {});
-                    }, currentTime: DateTime.now(), locale: LocaleType.en);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                const Icon(
-                                  Icons.date_range,
-                                  size: 18.0,
-                                  color: Color(0xFF1A4D2E),
+                     Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton(
+                          onPressed: () {
+                            DatePicker.showDatePicker(context,
+                                theme: const DatePickerTheme(
+                                  containerHeight: 210.0,
                                 ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    " $_date",
-                                    style: const TextStyle(
-                                        color: Color(0xFF1A4D2E),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14.0),
-                                  ),
+                                showTitleActions: true,
+                                minTime: DateTime.now(),
+                                maxTime: DateTime(2050, 12, 31), onConfirm: (date) {
+                              var date_with_raw_format = date.toString().split(' ');
+                              var finalDate =
+                                  date_with_raw_format[0].toString().split('-');
+
+                              _date =
+                                  '${finalDate[0]}-${finalDate[1]}-${finalDate[2]}';
+                              print('confirm $date');
+
+                              setState(() {});
+                            }, currentTime: DateTime.now(), locale: LocaleType.en);
+                          },
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            //height: 50.0,
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                
+                                            Container(
+                                              width: 80,
+                                              child: Text(
+                                              " $_date",
+                                              style: const TextStyle(
+                                                  color: Color(0xFF1A4D2E),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 14.0),
+                                          ),
+                                            ),
+                                        
+                                        
+                                                                   const Align(
+                      alignment: Alignment.centerRight,
+                      child: Text("  :تاريخ الإنتهاء   ",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xFF1A4D2E),
+                            fontWeight: FontWeight.bold
+                          )),
+                    ),
+                    const Icon(
+                                          Icons.date_range,
+                                          size: 18.0,
+                                          color: Color(0xFF1A4D2E),
+                                        ),
+                                   
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ],
-                            )
-                          ],
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    
+              
+                   
+                  ],
                 ),
               ),
               const SizedBox(

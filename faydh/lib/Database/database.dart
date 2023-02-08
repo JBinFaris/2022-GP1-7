@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'dart:core';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:faydh/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -108,6 +109,8 @@ class Database2 {
     pathImage, //
     required Cid,
     required int? flag,
+      required List<String> Reporters ,
+       final int? reportCount ,
   }) async {
     DocumentReference documentReference = _reportedContentCollection.doc(Rid);
 
@@ -121,6 +124,8 @@ class Database2 {
       "pathImage": "pathImage".toString().trim(),
       'userId': Cid.toString().trim(),
       "flag": flag,
+      "Reporters": Reporters ,
+      "reportCount": reportCount,
     };
     await documentReference.set(data).whenComplete(() {
       print('Note item saved to the database');

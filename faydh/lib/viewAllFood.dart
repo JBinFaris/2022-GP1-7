@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'models/reported_model.dart';
+import 'package:faydh/models/user_model.dart' as user1;
 
 //import 'package:path/path.dart';
 
@@ -31,6 +32,19 @@ class _viewAllFood extends State<viewAllFood> {
   String filter = "";
 
   bool arrow = false;
+
+  List<Map<String, dynamic>> getMyListData(
+      AsyncSnapshot<QuerySnapshot> snapshot) {
+    List<Map<String, dynamic>> newList = [];
+
+    var list = snapshot.data!.docs.toList();
+
+    for (var item in list) {
+      newList.add(item.data() as Map<String, dynamic>);
+    }
+
+    return newList;
+  }
 
   @override
   initState() {
@@ -90,6 +104,7 @@ class _viewAllFood extends State<viewAllFood> {
 
     // print("collection lenG: ${foodPostStream.length}");
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.green[100],
       appBar: arrow
           ? AppBar(
@@ -177,13 +192,7 @@ class _viewAllFood extends State<viewAllFood> {
               ],
             ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('foodPost')
-            .where('reserve', isEqualTo: '0')
-            .where('providerblocked', isEqualTo: false)
-            .where('Cid', isNotEqualTo: FirebaseAuth.instance.currentUser?.uid)
-            // .orderBy("docId",descending: true,)
-            .snapshots(),
+        stream: foodPostStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('حدث خطأ ما');
@@ -201,13 +210,13 @@ class _viewAllFood extends State<viewAllFood> {
                       color: Color.fromARGB(255, 0, 0, 0),
                     )));
           }
-
+          ;
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Column(
               children: [
                 searchBar(),
-                showItemsList(snapshot),
+                showItemsList(getMyListData(snapshot)),
               ],
             ),
           );
@@ -254,23 +263,41 @@ class _viewAllFood extends State<viewAllFood> {
     );
   }
 
-  Widget showItemsList(AsyncSnapshot<QuerySnapshot> snapshot) {
-    return Expanded(
-      child: ListView(
-        children: snapshot.data!.docs.map((DocumentSnapshot document) {
-          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+  List<Map<String, dynamic>> getFilterItemsList(
+      List<Map<String, dynamic>> list) {
+    List<Map<String, dynamic>> mlist = [];
+    if (filter == null || filter == '') return list;
+    for (var item in list) {
+      if (item['postTitle']
+          .toString()
+          .toLowerCase()
+          .contains(filter.toLowerCase())) {
+        mlist.add(item);
+      }
+    }
+    return mlist;
+  }
 
-          return filter == null || filter == ''
-              ? ItemDetails(data)
-              : data['postTitle']
-                      .toString()
-                      .toLowerCase()
-                      .contains(filter.toLowerCase())
-                  ? ItemDetails(data)
-                  : Container();
-        }).toList(),
-      ),
-    );
+  Widget getEmptyWidget() {
+    return const Center(
+        child: Padding(
+      padding: EdgeInsets.only(top: 300),
+      child: Text("لا يوجد طعام يطابق بحثك",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: Color.fromARGB(255, 0, 0, 0),
+          )),
+    ));
+  }
+
+  Widget showItemsList(List<Map<String, dynamic>> list) {
+    var finalList = getFilterItemsList(list);
+    return Expanded(
+        child: ListView(
+            children: finalList.isEmpty
+                ? [getEmptyWidget()]
+                : finalList.map((data) => ItemDetails(data)).toList()));
   }
 
   Widget ItemDetails(Map<String, dynamic> data) {
@@ -550,6 +577,30 @@ class _viewAllFood extends State<viewAllFood> {
                                                                     .toString())
                                                             .get();
 
+                                                        var userinfosnap =
+                                                            await FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'users')
+                                                                .doc(FirebaseAuth
+                                                                    .instance
+                                                                    .currentUser
+                                                                    ?.uid)
+                                                                .get();
+
+                                                        Map<String, dynamic>?
+                                                            uinfo =
+                                                            userinfosnap.data();
+
+                                                        String username =
+                                                            uinfo!["username"];
+
+                                                        print(username);
+
+                                                        var user = username;
+
+                                                        // print(user);
+
                                                         if (snapss2.size == 0) {
                                                           Database2
                                                               .reportedContentData(
@@ -566,7 +617,43 @@ class _viewAllFood extends State<viewAllFood> {
                                                             postImage:
                                                                 po.toString(),
                                                             flag: 1,
+                                                            reportCount: 1,
+                                                            Reporters: [user],
                                                           );
+
+                                                          // Navigator.pop(context);
+                                                        } else {
+                                                          var alldocs =
+                                                              snapss2.docs;
+                                                          print(alldocs);
+                                                          for (var i = 0;
+                                                              i < snapss2.size;
+                                                              i++) {
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'reportedContent')
+                                                                .doc(alldocs[i]
+                                                                    ["Rid"])
+                                                                .update({
+                                                              "Reporters":
+                                                                  FieldValue
+                                                                      .arrayUnion(
+                                                                          [user])
+                                                            });
+                                                            FirebaseFirestore
+                                                                .instance
+                                                                .collection(
+                                                                    'reportedContent')
+                                                                .doc(alldocs[i]
+                                                                    ["Rid"])
+                                                                .update({
+                                                              "reportCount":
+                                                                  FieldValue
+                                                                      .increment(
+                                                                          1)
+                                                            });
+                                                          }
                                                         }
 
                                                         Navigator.pop(context);
