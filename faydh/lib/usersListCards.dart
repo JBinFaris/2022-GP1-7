@@ -57,75 +57,58 @@ class _UsersListCardsState extends State<UsersListCards> {
         centerTitle: true,
         automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFF1A4D2E),
-        //title: const Text("  المستخدمين"),
+        title: const Text("المستخدمين"),
+        leading: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) {
+                return const AdminMain();
+              }),
+            );
+          },
+          backgroundColor: const Color(0xFF1A4D2E),
+          child: const Icon(
+            Icons.arrow_forward_ios_rounded,
+            color: Color.fromARGB(225, 255, 255, 255),
+          ),
+        ),
         actions: <Widget>[
           // const Text(" قائمة المستخدمين    "),
 
-          Padding(
-            padding: const EdgeInsets.fromLTRB(5, 10, 50, 5),
-            child: SizedBox(
-                width: 120,
-                height: 120,
-                child: FittedBox(
-                  child: FloatingActionButton.extended(
-                    heroTag: "btn1",
-                    label: const Text(
-                      "قائمة المحظورين ",
-                      style: TextStyle(
-                        color: Color(0xFF1A4D2E),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                      ),
-                    ),
-                    backgroundColor: Colors.white,
-                    icon: const Icon(
-                      Icons.calendar_month_rounded,
-                      size: 45.0,
+          SizedBox(
+              width: 120,
+              height: 120,
+              child: FittedBox(
+                child: FloatingActionButton.extended(
+                  heroTag: "btn1",
+                  label: const Text(
+                    "قائمة المحظورين ",
+                    style: TextStyle(
                       color: Color(0xFF1A4D2E),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) {
-                          return const BlockedUserList();
-                        }),
-                      );
-                    },
                   ),
-                )),
-          ),
+                  backgroundColor: Colors.white,
+                  icon: const Icon(
+                    Icons.calendar_month_rounded,
+                    size: 45.0,
+                    color: Color(0xFF1A4D2E),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return const BlockedUserList();
+                      }),
+                    );
+                  },
+                ),
+              )),
+
           //  const Padding(
           //  padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
 
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 23, 27, 5),
-            child: Flexible(
-              child: Text(
-                "قائمة المستخدمين ",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-
           //  ),
-          Padding(
-              padding: const EdgeInsets.fromLTRB(5, 5, 15, 5),
-              child: FloatingActionButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) {
-                      return const AdminMain();
-                    }),
-                  );
-                },
-                backgroundColor: const Color(0xFF1A4D2E),
-                child: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Color.fromARGB(225, 255, 255, 255),
-                ),
-              )),
         ],
       ),
       backgroundColor: Colors.green[100],
