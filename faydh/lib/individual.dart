@@ -32,76 +32,75 @@ class _individualPageState extends State<individual> {
           ),
           alignment: Alignment.center,
           padding: const EdgeInsets.only(top: 90.0, left: 20.0, right: 20.0),
-          child: Expanded(
-            child: Column(children: <Widget>[
-              Align(
-                alignment: Alignment.topCenter,
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/imgs/logo.png',
-                    width: 300,
-                    height: 300,
-                    fit: BoxFit.cover,
-                  ),
+          child: Column(children: <Widget>[
+            Align(
+              alignment: Alignment.topCenter,
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/imgs/logo.png',
+                  width: 300,
+                  height: 300,
+                  fit: BoxFit.cover,
                 ),
               ),
-              Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                    width: 250,
-                    height: 70,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding:
-                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                        backgroundColor: const Color.fromARGB(255, 18, 57, 20),
-                        shape: const StadiumBorder(),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return const FoodPostScreen();
-                        }));
-                      },
-                      child: const Text(
-                        "متبرع",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 20),
-                      ),
-                    )),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                    width: 250,
-                    height: 70,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding:
-                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                        backgroundColor: const Color.fromARGB(255, 18, 57, 20),
-                        shape: const StadiumBorder(),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) {
-                            return const viewAllFood();
-                          }),
-                        );
-                      },
-                      child: const Text(
-                        "مستفيد",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 20),
-                      ),
-                    )),
-              ),
-              /*  Container(
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                  width: 250,
+                  height: 70,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      backgroundColor: const Color.fromARGB(255, 18, 57, 20),
+                      shape: const StadiumBorder(),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const FoodPostScreen();
+                      }));
+                    },
+                    child: const Text(
+                      "متبرع",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20),
+                    ),
+                  )),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                  width: 250,
+                  height: 70,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      backgroundColor: const Color.fromARGB(255, 18, 57, 20),
+                      shape: const StadiumBorder(),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) {
+                          return const viewAllFood();
+                        }),
+                      );
+                    },
+                    child: const Text(
+                      "مستفيد",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 20),
+                    ),
+                  )),
+            ),
+            /*  Container(
                 child: Column(
                   children: [
                     Padding(
@@ -188,10 +187,10 @@ class _individualPageState extends State<individual> {
                   child: const Text("متبرع  "),
                 ),
               ), */
-              const SizedBox(
-                height: 20.0,
-              ),
-              /*    ElevatedButton(
+            const SizedBox(
+              height: 20.0,
+            ),
+            /*    ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) {
@@ -209,8 +208,7 @@ class _individualPageState extends State<individual> {
                         fontSize: 30, fontWeight: FontWeight.bold)),
                 child: const Text('مستفيد'),
               )*/
-            ]),
-          ),
+          ]),
         ),
       ),
     );

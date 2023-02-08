@@ -38,183 +38,168 @@ class _AdminMainPageState extends State<AdminMain> {
           alignment: Alignment.center,
           padding: const EdgeInsets.only(top: 80.0, left: 20.0, right: 20.0),
           child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/imgs/logo.png',
-                          width: 300,
-                          height: 300,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                          width: 200,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.fromLTRB(
-                                  20.0, 10.0, 20.0, 10.0),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 18, 57, 20),
-                              shape: const StadiumBorder(),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ApproveBusiness()));
-                            },
-                            child: const Text(
-                              "التحقق من الشركات",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontSize: 18),
-                            ),
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                          width: 200,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.fromLTRB(
-                                  20.0, 10.0, 20.0, 10.0),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 18, 57, 20),
-                              shape: const StadiumBorder(),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const reportsScreen()));
-                            },
-                            child: const Text(
-                              "البلاغات",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontSize: 18),
-                            ),
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                          width: 200,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.fromLTRB(
-                                  20.0, 10.0, 20.0, 10.0),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 18, 57, 20),
-                              shape: const StadiumBorder(),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const UsersListCards()));
-                            },
-                            child: const Text(
-                              "قائمة المستخدمين",
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontSize: 18),
-                            ),
-                          )),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                          width: 200,
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.fromLTRB(
-                                  20.0, 10.0, 20.0, 10.0),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 172, 8, 8),
-                              shape: const StadiumBorder(),
-                            ),
-                            onPressed: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                        shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15.0))),
-                                        title: const Text(
-                                          'تسجيل الخروج',
-                                          textAlign: TextAlign.right,
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        content: const Text(
-                                          "هل ترغب بتسجيل الخروج ؟ ",
-                                          textAlign: TextAlign.right,
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Text("إلغاء"),
-                                            onPressed: () {
-                                              // callback function for on click event of Cancel button
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          TextButton(
-                                            child: const Text("موافق"),
-                                            onPressed: () async {
-                                              AuthMethods()
-                                                  .signOut()
-                                                  .then((value) {
-                                                if (value == "success") {
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) {
-                                                    return const signInSreen();
-                                                  }));
-                                                }
-                                              });
-                                            },
-                                          ),
-                                        ]);
-                                  });
-                            },
-                            child: const Text(
-                              'تسجيل الخروج',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontSize: 20),
-                            ),
-                          )),
-                    ),
-                  ],
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topCenter,
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/imgs/logo.png',
+                    width: 300,
+                    height: 300,
+                    fit: BoxFit.cover,
+                  ),
                 ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        backgroundColor: const Color.fromARGB(255, 18, 57, 20),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ApproveBusiness()));
+                      },
+                      child: const Text(
+                        "التحقق من الشركات",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 18),
+                      ),
+                    )),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        backgroundColor: const Color.fromARGB(255, 18, 57, 20),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const reportsScreen()));
+                      },
+                      child: const Text(
+                        "البلاغات",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 18),
+                      ),
+                    )),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        backgroundColor: const Color.fromARGB(255, 18, 57, 20),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const UsersListCards()));
+                      },
+                      child: const Text(
+                        "قائمة المستخدمين",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 18),
+                      ),
+                    )),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                    width: 200,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                        backgroundColor: const Color.fromARGB(255, 172, 8, 8),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0))),
+                                  title: const Text(
+                                    'تسجيل الخروج',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  content: const Text(
+                                    "هل ترغب بتسجيل الخروج ؟ ",
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text("إلغاء"),
+                                      onPressed: () {
+                                        // callback function for on click event of Cancel button
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text("موافق"),
+                                      onPressed: () async {
+                                        AuthMethods().signOut().then((value) {
+                                          if (value == "success") {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return const signInSreen();
+                                            }));
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ]);
+                            });
+                      },
+                      child: const Text(
+                        'تسجيل الخروج',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 20),
+                      ),
+                    )),
               ),
             ],
           ),

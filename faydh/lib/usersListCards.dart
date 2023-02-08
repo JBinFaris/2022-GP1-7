@@ -412,6 +412,30 @@ class _UsersListCardsState extends State<UsersListCards> {
                                                     .delete();
                                               });
                                             });
+                                            FirebaseFirestore.instance
+                                                .collection('foodPost')
+                                                .where('Cid',
+                                                    isEqualTo:
+                                                        useridd.toString())
+                                                .get()
+                                                .then((QuerySnapshot
+                                                    querySnapshot) {
+                                              querySnapshot.docs.forEach((doc) {
+                                                if (doc["reservedby"] == null) {
+                                                  FirebaseFirestore.instance
+                                                      .collection('foodPost')
+                                                      .doc(doc["docId"])
+                                                      .delete();
+                                                } else {
+                                                  FirebaseFirestore.instance
+                                                      .collection('foodPost')
+                                                      .doc(doc["docId"])
+                                                      .update({
+                                                    'providerblocked': true
+                                                  });
+                                                }
+                                              });
+                                            });
 
                                             FirebaseFirestore.instance
                                                 .collection('reportedContent')

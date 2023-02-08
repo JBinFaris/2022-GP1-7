@@ -80,274 +80,235 @@ class _reportedContent extends State<reportedContent> {
     var _dta2 = widget.postData.postImage.toString();
 
     return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          tweetHeader(),
-          Padding(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      tweetHeader(),
+      Padding(
+        padding: const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 20, right: 0, bottom: 2, left: 50),
+          child: Text(
+              //"${widget.snap["postText"].toString()}",
+              " اسم المستخدم" + " : " + widget.postData.postUserName.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              )),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 2, right: 0, bottom: 2, left: 50),
+          child: Text(
+              //"${widget.snap["postText"].toString()}",
+              " البريد الإلكتروني" +
+                  " : " +
+                  widget.postData.postEmail.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              )),
+        ),
+      ),
+      Row(children: [
+        Padding(
             padding:
-                const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(top: 20, right: 0, bottom: 2, left: 50),
-              child: Text(
-                  //"${widget.snap["postText"].toString()}",
-                  " اسم المستخدم" +
-                      " : " +
-                      widget.postData.postUserName.toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  )),
-            ),
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 8, right: 2, bottom: 2, left: 2),
+                const EdgeInsets.only(top: 8, right: 10, bottom: 2, left: 2),
             child: Padding(
               padding:
                   const EdgeInsets.only(top: 2, right: 0, bottom: 2, left: 50),
-              child: Text(
-                  //"${widget.snap["postText"].toString()}",
-                  " البريد الإلكتروني" +
-                      " : " +
-                      widget.postData.postEmail.toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  )),
-            ),
-          ),
-      
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 8, right: 10, bottom: 2, left: 2),
-                child: Padding(
-                   padding: const EdgeInsets.only( top: 2, right: 0, bottom: 2, left: 50),
+              child: GestureDetector(
+                onTap: () {
+                  List<String> list = widget.postData.Reporters;
+                  List<String> strings =
+                      List<String>.from(widget.postData.Reporters);
+                  print(list);
+                  var listString = "";
+                  var num;
 
-                     child: GestureDetector(
-                      onTap:(){
-                        
-                         List<String> list = widget.postData.Reporters;
-                         List<String> strings = List<String>.from(widget.postData.Reporters);
-                         print(list);
-                         var listString ="" ;
-                         var num ;
+                  log('data: $strings');
 
-                         log('data: $strings');
+                  for (var i = 0; i < (widget.postData.reportCount); i++) {
+                    num = i + 1;
 
-                         for(var i = 0 ; i<(widget.postData.reportCount) ; i++){
-                   num = i+1;
-               
-                          listString += list[i] +"   -$num " ;
-                         listString += "\n";
-
-
-                         }
-                             showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          title: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 2,
-                                                right: 10,
-                                                bottom: 2,
-                                                left: 10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: const [
-                                                Text(  " :اسماء المستخدمين المبلغين \n"
-                                                ,style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                ),),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Positioned(
-                                                    child: CircleAvatar(
-                                                  backgroundColor:
-                                                      Color(0xFFd6ecd0),
-                                                  radius: 20,
-                                                  child: Icon(
-                                                    Icons.person,
-                                                    size: 40,
-                                                  ),
-                                                )),
-                                              ],
-                                            ),
+                    listString += list[i] + "   -$num ";
+                    listString += "\n";
+                  }
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            title: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 2, right: 10, bottom: 2, left: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    " :اسماء المستخدمين المبلغين \n",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                      child: CircleAvatar(
+                                    backgroundColor: Color(0xFFd6ecd0),
+                                    radius: 20,
+                                    child: Icon(
+                                      Icons.person,
+                                      size: 40,
+                                    ),
+                                  )),
+                                ],
+                              ),
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 2, right: 10, bottom: 2, left: 50),
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              100, 3, 10, 0),
+                                          child: Text(
+                                              textAlign: TextAlign.right,
+                                              //"${widget.snap["postText"].toString()}",
+                                              "  ${listString} \n",
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ));
+                      });
+                },
+                child: const Text('اسم المستخدم المبلغ',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 0, 102, 204),
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline)),
+              ),
+            ))
+      ]),
+      Padding(
+          padding: const EdgeInsets.only(top: 8, right: 10, bottom: 2, left: 2),
+          child: widget.postData.flag != 2
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                      top: 2, right: 0, bottom: 2, left: 50),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (widget.postData.flag == 0) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0))),
+                                  title: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 2, right: 0, bottom: 2, left: 50),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text("تفاصيل المنشور"),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                            child: CircleAvatar(
+                                          backgroundColor: Color(0xFFd6ecd0),
+                                          radius: 40,
+                                          child: Icon(
+                                            Icons.file_copy_outlined,
+                                            size: 55,
                                           ),
-                                          content: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              const SizedBox(
-                                                height: 15,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 2,
-                                                    right: 10,
-                                                    bottom: 2,
-                                                    left: 50),
-                                                child: Align(
-                                                
-                                                  alignment: Alignment.centerRight,
-                                                  child:
-          
-                                                   Column(
-                                                     children: [
-                                                   
-                                                             Padding(
-                                                               padding: const EdgeInsets.fromLTRB(100, 3, 10, 0),
-                                                               child: Text(
-                                                          textAlign: TextAlign.right,
-                                                          //"${widget.snap["postText"].toString()}",
-                                                          "  ${listString} \n" 
-                                                            
-                                                        , style: const TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight: FontWeight.bold,
-                                                          )),
-                                                             ),
-
-                                                           
-                                                     ],
-                                                   ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                            
-                                            ],
-                                          ));
-                                    }
-                                    );
-                           
-                      } , child: const Text('اسم المستخدم المبلغ',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 102, 204),
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline)),
-                     
-                      
-                                    ) ,
-                                   
-                                   
-                )
-                )
-                ]
-
-                     ),
-
-
-                
-              Padding(
-                  padding:
-                      const EdgeInsets.only(top: 8, right: 10, bottom: 2, left: 2),
-                  child: widget.postData.flag != 2
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              top: 2, right: 0, bottom: 2, left: 50),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (widget.postData.flag == 0) {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          title: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 2,
-                                                right: 0,
-                                                bottom: 2,
-                                                left: 50),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: const [
-                                                Text("تفاصيل المنشور"),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Positioned(
-                                                    child: CircleAvatar(
-                                                  backgroundColor:
-                                                      Color(0xFFd6ecd0),
-                                                  radius: 40,
-                                                  child: Icon(
-                                                    Icons.file_copy_outlined,
-                                                    size: 55,
-                                                  ),
-                                                )),
-                                              ],
-                                            ),
-                                          ),
-                                          content: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              const SizedBox(
-                                                height: 15,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 2,
-                                                    right: 20,
-                                                    bottom: 2,
-                                                    left: 50),
-                                                child: Align(
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text(
-                                                      textAlign: TextAlign.right,
-                                                      //"${widget.snap["postText"].toString()}",
-                                                      " المحتوى: " +
-                                                          "${widget.postData.postText.toString()}",
-                                                      style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight: FontWeight.bold,
-                                                      )),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              if (_dta.isNotEmpty)
-                                                SizedBox(
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 2,
+                                            right: 20,
+                                            bottom: 2,
+                                            left: 50),
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                              textAlign: TextAlign.right,
+                                              //"${widget.snap["postText"].toString()}",
+                                              " المحتوى: " +
+                                                  "${widget.postData.postText.toString()}",
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      if (_dta.isNotEmpty)
+                                        SizedBox(
+                                          width: 250,
+                                          child: Center(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: Container(
+                                                color: Colors.grey,
+                                                child: Image(
+                                                  image: NetworkImage(_dta),
+                                                  fit: BoxFit.cover,
+                                                  height: 150,
                                                   width: 250,
-                                                  child: Center(
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(20),
-                                                      child: Container(
-                                                        color: Colors.grey,
-                                                        child: Image(
-                                                          image: NetworkImage(_dta),
-                                                          fit: BoxFit.cover,
-                                                          height: 150,
-                                                          width: 250,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
                                                 ),
-                                              if (_dta.isEmpty)
-                                                const SizedBox(
-                                                  width: 0,
-                                                  height: 0,
-                                                ),
-                                            ],
-                                          ));
-                                    }
-                                    /*Container(
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      if (_dta.isEmpty)
+                                        const SizedBox(
+                                          width: 0,
+                                          height: 0,
+                                        ),
+                                    ],
+                                  ));
+                            }
+                            /*Container(
                                         margin: EdgeInsets.symmetric(
                                             horizontal:
                                                 MediaQuery.of(context).size.width /
@@ -439,356 +400,342 @@ class _reportedContent extends State<reportedContent> {
                                           ],
                                         ),
                                       )*/
+                            );
+                      } else if (widget.postData.flag == 1) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0))),
+                                  title: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 2, right: 0, bottom: 2, left: 50),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text("تفاصيل الإعلان"),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                            child: CircleAvatar(
+                                          backgroundColor: Color(0xFFd6ecd0),
+                                          radius: 40,
+                                          child: Icon(
+                                            Icons.file_copy_outlined,
+                                            size: 55,
+                                          ),
+                                        )),
+                                      ],
+                                    ),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 2,
+                                            right: 20,
+                                            bottom: 2,
+                                            left: 50),
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                              textAlign: TextAlign.right,
+                                              //"${widget.snap["postText"].toString()}",
+                                              "  عنوان الطعام: " +
+                                                  "${widget.postData.postTitle.toString()}",
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 2,
+                                            right: 20,
+                                            bottom: 2,
+                                            left: 5),
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                              textAlign: TextAlign.right,
+
+                                              //"${widget.snap["postText"].toString()}",
+                                              "  وصف الطعام: " +
+                                                  "${widget.postData.postText.toString()}",
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      if (_dta2.isNotEmpty)
+                                        SizedBox(
+                                          width: 250,
+                                          child: Center(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: Container(
+                                                color: Colors.grey,
+                                                child: Image(
+                                                  image: NetworkImage(_dta2),
+                                                  fit: BoxFit.cover,
+                                                  height: 150,
+                                                  width: 250,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      if (_dta2.isEmpty)
+                                        const SizedBox(
+                                          width: 0,
+                                          height: 0,
+                                        ),
+                                    ],
+                                  ));
+                            });
+                      }
+                    },
+                    child: const Text('التفاصيل',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 0, 102, 204),
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline)),
+                  ),
+                )
+              : const SizedBox(
+                  width: 0,
+                  height: 0,
+                )),
+      const SizedBox(height: 20),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+              child: widget.postData.flag != 2
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                          width: 120,
+                          height: 30,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.fromLTRB(
+                                  20.0, 10.0, 20.0, 10.0),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 18, 57, 20),
+                              shape: const StadiumBorder(),
+                            ),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0))),
+                                      title: const Text(
+                                        "تأكيد ",
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      content: const Text(
+                                        "هل أنت متأكد من أن المحتوى غير مخالف ؟ ",
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text("إلغاء"),
+                                          onPressed: () {
+                                            // callback function for on click event of Cancel button
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text("موافق"),
+                                          onPressed: () async {
+                                            //     widget.reference.delete();
+                                            print(
+                                                widget.postData.Rid.toString());
+                                            FirebaseFirestore.instance
+                                                .collection('reportedContent')
+                                                .doc(widget.postData.Rid
+                                                    .toString())
+                                                .delete();
+
+                                            //   print(widget.id.toString());
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
                                     );
-                              } else if (widget.postData.flag == 1) {
+                                  });
+                            },
+                            child: const Text(
+                              'محتوى غير مخالف',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
+                    )
+                  : Padding(
+                      //88
+                      padding: const EdgeInsets.fromLTRB(75, 0, 25, 0),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                            width: 120,
+                            height: 30,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.fromLTRB(
+                                    20.0, 10.0, 20.0, 10.0),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 18, 57, 20),
+                                shape: const StadiumBorder(),
+                              ),
+                              onPressed: () {
                                 showDialog(
                                     context: context,
-                                    builder: (context) {
+                                    builder: (BuildContext context) {
                                       return AlertDialog(
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          title: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 2,
-                                                right: 0,
-                                                bottom: 2,
-                                                left: 50),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: const [
-                                                Text("تفاصيل الإعلان"),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Positioned(
-                                                    child: CircleAvatar(
-                                                  backgroundColor:
-                                                      Color(0xFFd6ecd0),
-                                                  radius: 40,
-                                                  child: Icon(
-                                                    Icons.file_copy_outlined,
-                                                    size: 55,
-                                                  ),
-                                                )),
-                                              ],
-                                            ),
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0))),
+                                        title: const Text(
+                                          "تأكيد ",
+                                          textAlign: TextAlign.right,
+                                        ),
+                                        content: const Text(
+                                          "هل أنت متأكد من أن المستخدم غير مخالف ؟ ",
+                                          textAlign: TextAlign.right,
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Text("إلغاء"),
+                                            onPressed: () {
+                                              // callback function for on click event of Cancel button
+                                              Navigator.of(context).pop();
+                                            },
                                           ),
-                                          content: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 2,
-                                                    right: 20,
-                                                    bottom: 2,
-                                                    left: 50),
-                                                child: Align(
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text(
-                                                      textAlign: TextAlign.right,
-                                                      //"${widget.snap["postText"].toString()}",
-                                                      "  عنوان الطعام: " +
-                                                          "${widget.postData.postTitle.toString()}",
-                                                      style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight: FontWeight.bold,
-                                                      )),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 2,
-                                                    right: 20,
-                                                    bottom: 2,
-                                                    left: 5),
-                                                child: Align(
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text(
-                                                      textAlign: TextAlign.right,
+                                          TextButton(
+                                            child: const Text("موافق"),
+                                            onPressed: () async {
+                                              FirebaseFirestore.instance
+                                                  .collection('reportedContent')
+                                                  .doc(widget.postData.Rid
+                                                      .toString())
+                                                  .delete();
 
-                                                      //"${widget.snap["postText"].toString()}",
-                                                      "  وصف الطعام: " +
-                                                          "${widget.postData.postText.toString()}",
-                                                      style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontWeight: FontWeight.bold,
-                                                      )),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 20,
-                                              ),
-                                              if (_dta2.isNotEmpty)
-                                                SizedBox(
-                                                  width: 250,
-                                                  child: Center(
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(20),
-                                                      child: Container(
-                                                        color: Colors.grey,
-                                                        child: Image(
-                                                          image:
-                                                              NetworkImage(_dta2),
-                                                          fit: BoxFit.cover,
-                                                          height: 150,
-                                                          width: 250,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              if (_dta2.isEmpty)
-                                                const SizedBox(
-                                                  width: 0,
-                                                  height: 0,
-                                                ),
-                                            ],
-                                          ));
-                                    }
-                                
-                                    );
-                              }
-                            },
-                            child: const Text('التفاصيل',
+                                              FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(widget.postData.userId
+                                                      .toString())
+                                                  .update({
+                                                'ReportCount':
+                                                    FieldValue.increment(-1)
+                                              });
+
+                                              //   print(widget.id.toString());
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              },
+                              child: const Text(
+                                'مستخدم غير مخالف',
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 0, 102, 204),
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline)),
-                          ),
-                        )
-                      : const SizedBox(
-                          width: 0,
-                          height: 0,
-                        )),
-          
-          
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                  child: widget.postData.flag != 2
-                      ? Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                              width: 120,
-                              height: 30,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      20.0, 10.0, 20.0, 10.0),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 18, 57, 20),
-                                  shape: const StadiumBorder(),
-                                ),
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          title: const Text(
-                                            "تأكيد ",
-                                            textAlign: TextAlign.right,
-                                          ),
-                                          content: const Text(
-                                            "هل أنت متأكد من أن المحتوى غير مخالف ؟ ",
-                                            textAlign: TextAlign.right,
-                                          ),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text("إلغاء"),
-                                              onPressed: () {
-                                                // callback function for on click event of Cancel button
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                            TextButton(
-                                              child: const Text("موافق"),
-                                              onPressed: () async {
-                                                //     widget.reference.delete();
-                                                print(widget.postData.Rid
-                                                    .toString());
-                                                FirebaseFirestore.instance
-                                                    .collection(
-                                                        'reportedContent')
-                                                    .doc(widget.postData.Rid
-                                                        .toString())
-                                                    .delete();
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    fontSize: 9.8,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            )),
+                      ),
+                    )),
+          Container(
+              child: widget.postData.flag != 2
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                          width: 120,
+                          height: 30,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.fromLTRB(
+                                  20.0, 10.0, 20.0, 10.0),
+                              backgroundColor:
+                                  const Color.fromARGB(255, 194, 5, 5),
+                              shape: const StadiumBorder(),
+                            ),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0))),
+                                      title: const Text(
+                                        "تأكيد الحظر",
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      content: const Text(
+                                        "هل أنت متأكد من حظر المستخدم ؟ ",
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text("إلغاء"),
+                                          onPressed: () {
+                                            // callback function for on click event of Cancel button
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: const Text("موافق"),
+                                          onPressed: () async {
+                                            FirebaseFirestore.instance
+                                                .collection('users')
+                                                .doc(widget.postData.userId
+                                                    .toString())
+                                                .update({'Active': false});
 
-                                                //   print(widget.id.toString());
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: const Text(
-                                  'محتوى غير مخالف',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )),
-                        )
-                      : Padding(
-                          //88
-                          padding: const EdgeInsets.fromLTRB(75, 0, 25, 0),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: SizedBox(
-                                width: 120,
-                                height: 30,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20.0, 10.0, 20.0, 10.0),
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 18, 57, 20),
-                                    shape: const StadiumBorder(),
-                                  ),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15.0))),
-                                            title: const Text(
-                                              "تأكيد ",
-                                              textAlign: TextAlign.right,
-                                            ),
-                                            content: const Text(
-                                              "هل أنت متأكد من أن المستخدم غير مخالف ؟ ",
-                                              textAlign: TextAlign.right,
-                                            ),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Text("إلغاء"),
-                                                onPressed: () {
-                                                  // callback function for on click event of Cancel button
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: const Text("موافق"),
-                                                onPressed: () async {
-                                                  FirebaseFirestore.instance
-                                                      .collection(
-                                                          'reportedContent')
-                                                      .doc(widget.postData.Rid
-                                                          .toString())
-                                                      .delete();
-
-                                                  FirebaseFirestore.instance
-                                                      .collection('users')
-                                                      .doc(widget
-                                                          .postData.userId
-                                                          .toString())
-                                                      .update({
-                                                    'ReportCount':
-                                                        FieldValue.increment(-1)
-                                                  });
-
-                                                  //   print(widget.id.toString());
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  child: const Text(
-                                    'مستخدم غير مخالف',
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        fontSize: 9.8,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                )),
-                          ),
-                        )),
-              Container(
-                  child: widget.postData.flag != 2
-                      ? Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                              width: 120,
-                              height: 30,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      20.0, 10.0, 20.0, 10.0),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 194, 5, 5),
-                                  shape: const StadiumBorder(),
-                                ),
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          title: const Text(
-                                            "تأكيد الحظر",
-                                            textAlign: TextAlign.right,
-                                          ),
-                                          content: const Text(
-                                            "هل أنت متأكد من حظر المستخدم ؟ ",
-                                            textAlign: TextAlign.right,
-                                          ),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text("إلغاء"),
-                                              onPressed: () {
-                                                // callback function for on click event of Cancel button
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                            TextButton(
-                                              child: const Text("موافق"),
-                                              onPressed: () async {
-                                                FirebaseFirestore.instance
-                                                    .collection('users')
-                                                    .doc(widget.postData.userId
-                                                        .toString())
-                                                    .update({'Active': false});
-
+                                            FirebaseFirestore.instance
+                                                .collection('posts')
+                                                .where('userId',
+                                                    isEqualTo:
+                                                        widget.postData.userId)
+                                                .get()
+                                                .then((QuerySnapshot
+                                                    querySnapshot) {
+                                              querySnapshot.docs.forEach((doc) {
                                                 FirebaseFirestore.instance
                                                     .collection('posts')
-                                                    .where('userId',
-                                                        isEqualTo: widget
-                                                            .postData.userId)
-                                                    .get()
-                                                    .then((QuerySnapshot
-                                                        querySnapshot) {
-                                                  querySnapshot.docs
-                                                      .forEach((doc) {
-                                                    FirebaseFirestore.instance
-                                                        .collection('posts')
-                                                        .doc(doc["Cid"])
-                                                        .delete();
-                                                  });
-                                                });
+                                                    .doc(doc["Cid"])
+                                                    .delete();
+                                              });
+                                            });
 
-                                                /*  FirebaseFirestore.instance
+                                            /*  FirebaseFirestore.instance
                                                       .collection('foodPost')
                                                       .where('Cid',
                                                           isEqualTo: widget
@@ -806,7 +753,7 @@ class _reportedContent extends State<reportedContent> {
                                                     });
                                                   });*/
 
-                                                /*  FirebaseFirestore.instance
+                                            /*  FirebaseFirestore.instance
                                                       .collection(
                                                           'reportedContent')
                                                       .where('userId',
@@ -825,217 +772,72 @@ class _reportedContent extends State<reportedContent> {
                                                     });
                                                   });*/
 
+                                            FirebaseFirestore.instance
+                                                .collection('foodPost')
+                                                .doc(widget.postData.postId
+                                                    .toString())
+                                                .update(
+                                                    {'providerblocked': true});
+
+                                            var snapp = await FirebaseFirestore
+                                                .instance
+                                                .collection('foodPost')
+                                                .doc(widget.postData.postId)
+                                                .get();
+                                            print('not enter');
+                                            if (snapp.exists) {
+                                              print(' enter');
+                                              Map<String, dynamic>? data =
+                                                  snapp.data();
+
+                                              var reservedby =
+                                                  data!["reservedby"];
+
+                                              if (reservedby == null) {
+                                                print('trueee');
                                                 FirebaseFirestore.instance
                                                     .collection('foodPost')
-                                                    .doc(widget.postData.postId
-                                                        .toString())
-                                                    .update({
-                                                  'providerblocked': true
-                                                });
-
-                                                var snapp =
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection('foodPost')
-                                                        .doc(widget
-                                                            .postData.postId)
-                                                        .get();
-                                                print('not enter');
-                                                if (snapp.exists) {
-                                                  print(' enter');
-                                                  Map<String, dynamic>? data =
-                                                      snapp.data();
-
-                                                  var reservedby =
-                                                      data!["reservedby"];
-
-                                                  if (reservedby == null) {
-                                                    print('trueee');
-                                                    FirebaseFirestore.instance
-                                                        .collection('foodPost')
-                                                        .doc(widget
-                                                            .postData.postId)
-                                                        .delete();
-                                                  } else {
-                                                    print('no');
-                                                  }
-                                                }
-
-                                                FirebaseFirestore.instance
-                                                    .collection(
-                                                        'reportedContent')
-                                                    .doc(widget.postData.Rid
-                                                        .toString())
+                                                    .doc(widget.postData.postId)
                                                     .delete();
+                                              } else {
+                                                print('no');
+                                              }
+                                            }
 
-                                                sendEmail(
-                                                  name: widget
-                                                      .postData.postUserName
-                                                      .toString(),
-                                                  email: widget
-                                                      .postData.postEmail
-                                                      .toString(),
-                                                );
+                                            FirebaseFirestore.instance
+                                                .collection('reportedContent')
+                                                .doc(widget.postData.Rid
+                                                    .toString())
+                                                .delete();
 
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: const Text(
-                                  ' حظر المستخدم  ',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )),
-                        )
-                      : Padding(
-                          //was 50
-                          padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: SizedBox(
-                                width: 120,
-                                height: 30,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20.0, 10.0, 20.0, 10.0),
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 194, 5, 5),
-                                    shape: const StadiumBorder(),
-                                  ),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15.0))),
-                                            title: const Text(
-                                              "تأكيد الحظر",
-                                              textAlign: TextAlign.right,
-                                            ),
-                                            content: const Text(
-                                              "هل أنت متأكد من حظر المستخدم ؟ ",
-                                              textAlign: TextAlign.right,
-                                            ),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Text("إلغاء"),
-                                                onPressed: () {
-                                                  // callback function for on click event of Cancel button
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: const Text("موافق"),
-                                                onPressed: () async {
-                                                  FirebaseFirestore.instance
-                                                      .collection('users')
-                                                      .doc(widget
-                                                          .postData.userId
-                                                          .toString())
-                                                      .update(
-                                                          {'Active': false});
+                                            sendEmail(
+                                              name: widget.postData.postUserName
+                                                  .toString(),
+                                              email: widget.postData.postEmail
+                                                  .toString(),
+                                            );
 
-                                                  FirebaseFirestore.instance
-                                                      .collection('posts')
-                                                      .where('userId',
-                                                          isEqualTo: widget
-                                                              .postData.userId)
-                                                      .get()
-                                                      .then((QuerySnapshot
-                                                          querySnapshot) {
-                                                    querySnapshot.docs
-                                                        .forEach((doc) {
-                                                      FirebaseFirestore.instance
-                                                          .collection('posts')
-                                                          .doc(doc["Cid"])
-                                                          .delete();
-                                                    });
-                                                  });
-
-                                                  FirebaseFirestore.instance
-                                                      .collection('foodPost')
-                                                      .doc(widget
-                                                          .postData.postId
-                                                          .toString())
-                                                      .update({
-                                                    'providerblocked': true
-                                                  });
-
-                                                  var snapp =
-                                                      await FirebaseFirestore
-                                                          .instance
-                                                          .collection(
-                                                              'foodPost')
-                                                          .doc(widget
-                                                              .postData.postId)
-                                                          .get();
-
-                                                  if (snapp.exists) {
-                                                    Map<String, dynamic>? data =
-                                                        snapp.data();
-
-                                                    var reservedby =
-                                                        data!["reservedby"];
-
-                                                    if (reservedby == null) {
-                                                      print('trueee');
-                                                      FirebaseFirestore.instance
-                                                          .collection(
-                                                              'foodPost')
-                                                          .doc(widget
-                                                              .postData.postId)
-                                                          .delete();
-                                                    } else {
-                                                      print('no');
-                                                    }
-                                                  }
-
-                                                  FirebaseFirestore.instance
-                                                      .collection(
-                                                          'reportedContent')
-                                                      .doc(widget.postData.Rid
-                                                          .toString())
-                                                      .delete();
-
-                                                  sendEmail(
-                                                    name: widget
-                                                        .postData.postUserName
-                                                        .toString(),
-                                                    email: widget
-                                                        .postData.postEmail
-                                                        .toString(),
-                                                  );
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  child: const Text(
-                                    ' حظر المستخدم  ',
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                )),
-                          ),
-                        )),
-              Container(
-                child: widget.postData.flag != 2
-                    ? Align(
-                        alignment: Alignment.center,
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: const Text(
+                              ' حظر المستخدم  ',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )),
+                    )
+                  : Padding(
+                      //was 50
+                      padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
                         child: SizedBox(
                             width: 120,
                             height: 30,
@@ -1056,11 +858,11 @@ class _reportedContent extends State<reportedContent> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15.0))),
                                         title: const Text(
-                                          "تأكيد حذف المحتوى من الجميع",
+                                          "تأكيد الحظر",
                                           textAlign: TextAlign.right,
                                         ),
                                         content: const Text(
-                                          "هل أنت متأكد من حذف المحتوى من الجميع  ؟ ",
+                                          "هل أنت متأكد من حظر المستخدم ؟ ",
                                           textAlign: TextAlign.right,
                                         ),
                                         actions: <Widget>[
@@ -1074,48 +876,99 @@ class _reportedContent extends State<reportedContent> {
                                           TextButton(
                                             child: const Text("موافق"),
                                             onPressed: () async {
-                                              if (widget.postData.flag == 0) {
-                                                FirebaseFirestore.instance
-                                                    .collection('posts')
-                                                    .doc(widget.postData.postId
-                                                        .toString())
-                                                    .delete();
-                                              } else if (widget.postData.flag ==
-                                                  1) {
-                                                FirebaseFirestore.instance
-                                                    .collection('foodPost')
-                                                    .doc(widget.postData.postId
-                                                        .toString())
-                                                    .update({
-                                                  'providerblocked': true
+                                              FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(widget.postData.userId
+                                                      .toString())
+                                                  .update({'Active': false});
+
+                                              FirebaseFirestore.instance
+                                                  .collection('posts')
+                                                  .where('userId',
+                                                      isEqualTo: widget
+                                                          .postData.userId)
+                                                  .get()
+                                                  .then((QuerySnapshot
+                                                      querySnapshot) {
+                                                querySnapshot.docs
+                                                    .forEach((doc) {
+                                                  FirebaseFirestore.instance
+                                                      .collection('posts')
+                                                      .doc(doc["Cid"])
+                                                      .delete();
                                                 });
+                                              });
 
-                                                var snapp =
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection('foodPost')
-                                                        .doc(widget
-                                                            .postData.postId)
-                                                        .get();
-                                                print('not enter');
-                                                if (snapp.exists) {
-                                                  print(' enter');
-                                                  Map<String, dynamic>? data =
-                                                      snapp.data();
+                                              /*  FirebaseFirestore.instance
+                                                      .collection('foodPost')
+                                                      .where('Cid',
+                                                          isEqualTo: widget
+                                                              .postData.userId)
+                                                      .get()
+                                                      .then((QuerySnapshot
+                                                          querySnapshot) {
+                                                    querySnapshot.docs
+                                                        .forEach((doc) {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'foodPost')
+                                                          .doc(doc["docId"])
+                                                          .delete();
+                                                    });
+                                                  });*/
 
-                                                  var reservedby =
-                                                      data!["reservedby"];
+                                              /*  FirebaseFirestore.instance
+                                                      .collection(
+                                                          'reportedContent')
+                                                      .where('userId',
+                                                          isEqualTo: widget
+                                                              .postData.userId)
+                                                      .get()
+                                                      .then((QuerySnapshot
+                                                          querySnapshot) {
+                                                    querySnapshot.docs
+                                                        .forEach((doc) {
+                                                      FirebaseFirestore.instance
+                                                          .collection(
+                                                              'reportedContent')
+                                                          .doc(doc["Rid"])
+                                                          .delete();
+                                                    });
+                                                  });*/
 
-                                                  if (reservedby == null) {
-                                                    print('trueee');
-                                                    FirebaseFirestore.instance
-                                                        .collection('foodPost')
-                                                        .doc(widget
-                                                            .postData.postId)
-                                                        .delete();
-                                                  } else {
-                                                    print('no');
-                                                  }
+                                              FirebaseFirestore.instance
+                                                  .collection('foodPost')
+                                                  .doc(widget.postData.postId
+                                                      .toString())
+                                                  .update({
+                                                'providerblocked': true
+                                              });
+
+                                              var snapp =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('foodPost')
+                                                      .doc(widget
+                                                          .postData.postId)
+                                                      .get();
+                                              print('not enter');
+                                              if (snapp.exists) {
+                                                print(' enter');
+                                                Map<String, dynamic>? data =
+                                                    snapp.data();
+
+                                                var reservedby =
+                                                    data!["reservedby"];
+
+                                                if (reservedby == null) {
+                                                  print('trueee');
+                                                  FirebaseFirestore.instance
+                                                      .collection('foodPost')
+                                                      .doc(widget
+                                                          .postData.postId)
+                                                      .delete();
+                                                } else {
+                                                  print('no');
                                                 }
                                               }
 
@@ -1125,6 +978,13 @@ class _reportedContent extends State<reportedContent> {
                                                       .toString())
                                                   .delete();
 
+                                              sendEmail(
+                                                name: widget
+                                                    .postData.postUserName
+                                                    .toString(),
+                                                email: widget.postData.postEmail
+                                                    .toString(),
+                                              );
                                               Navigator.pop(context);
                                             },
                                           ),
@@ -1133,26 +993,129 @@ class _reportedContent extends State<reportedContent> {
                                     });
                               },
                               child: const Text(
-                                'حذف المحتوى ',
+                                ' حظر المستخدم  ',
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 255, 255, 255),
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold),
                               ),
                             )),
-                      )
-                    : const SizedBox(
-                        width: 0,
-                        height: 0,
                       ),
-              ),
-            ],
+                    )),
+          Container(
+            child: widget.postData.flag != 2
+                ? Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                        width: 120,
+                        height: 30,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.fromLTRB(
+                                20.0, 10.0, 20.0, 10.0),
+                            backgroundColor:
+                                const Color.fromARGB(255, 194, 5, 5),
+                            shape: const StadiumBorder(),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.0))),
+                                    title: const Text(
+                                      "تأكيد حذف المحتوى من الجميع",
+                                      textAlign: TextAlign.right,
+                                    ),
+                                    content: const Text(
+                                      "هل أنت متأكد من حذف المحتوى من الجميع  ؟ ",
+                                      textAlign: TextAlign.right,
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text("إلغاء"),
+                                        onPressed: () {
+                                          // callback function for on click event of Cancel button
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text("موافق"),
+                                        onPressed: () async {
+                                          if (widget.postData.flag == 0) {
+                                            FirebaseFirestore.instance
+                                                .collection('posts')
+                                                .doc(widget.postData.postId
+                                                    .toString())
+                                                .delete();
+                                          } else if (widget.postData.flag ==
+                                              1) {
+                                            FirebaseFirestore.instance
+                                                .collection('foodPost')
+                                                .doc(widget.postData.postId
+                                                    .toString())
+                                                .update(
+                                                    {'providerblocked': true});
+
+                                            var snapp = await FirebaseFirestore
+                                                .instance
+                                                .collection('foodPost')
+                                                .doc(widget.postData.postId)
+                                                .get();
+                                            print('not enter');
+                                            if (snapp.exists) {
+                                              print(' enter');
+                                              Map<String, dynamic>? data =
+                                                  snapp.data();
+
+                                              var reservedby =
+                                                  data!["reservedby"];
+
+                                              if (reservedby == null) {
+                                                print('trueee');
+                                                FirebaseFirestore.instance
+                                                    .collection('foodPost')
+                                                    .doc(widget.postData.postId)
+                                                    .delete();
+                                              } else {
+                                                print('no');
+                                              }
+                                            }
+                                          }
+
+                                          FirebaseFirestore.instance
+                                              .collection('reportedContent')
+                                              .doc(widget.postData.Rid
+                                                  .toString())
+                                              .delete();
+
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                          child: const Text(
+                            'حذف المحتوى ',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                  )
+                : const SizedBox(
+                    width: 0,
+                    height: 0,
+                  ),
           ),
-          const SizedBox(height: 8),
-        
-     ] ) 
-       );
-    
+        ],
+      ),
+      const SizedBox(height: 8),
+    ]));
   }
 
   Widget tweetHeader() {
