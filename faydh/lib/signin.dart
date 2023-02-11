@@ -74,7 +74,7 @@ class _signInSreenState extends State<signInSreen> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(hours: 6);
+      var period = const Duration(hours: 1);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: id, token: token!);
@@ -334,7 +334,7 @@ class _signInSreenState extends State<signInSreen> {
                 getToken(id: uid);
                 final status = (snap.data() as Map<String, dynamic>)['status'];
                 if (status == "0") {
-                  res = "حصل خطأ ما";
+                  res = " بإنتظار الموافقه ";
 
                   showDialog(
                       context: context,
@@ -361,7 +361,7 @@ class _signInSreenState extends State<signInSreen> {
                             ]);
                       });
                 } else if (status == "2") {
-                  res = "حصل خطأ ما";
+                  res = "  مرفوض";
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -407,6 +407,8 @@ class _signInSreenState extends State<signInSreen> {
                     MaterialPageRoute(builder: (context) => const AdminMain()));
               }
             } else if (Active == false) {
+                                res = "  محظور";
+
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -458,11 +460,14 @@ class _signInSreenState extends State<signInSreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         res = " البريد الإلكتروني او كلمة المرور خاطئة";
-      } else {
-        e.code == "wrong-password";
-        {
+      } else if(  e.code == "wrong-password") {
+      
+        
           res = "  البريد الإلكتروني او كلمة المرور خاطئة";
-        }
+        
+      }else{
+                res = "حصل خطأ ما";
+
       }
     } catch (error) {
       res = error.toString();
