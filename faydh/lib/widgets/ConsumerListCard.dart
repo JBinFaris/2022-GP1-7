@@ -131,6 +131,11 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                       TextButton(
                                         child: const Text("نعم"),
                                         onPressed: () async {
+                                          _firestore
+                                              .collection("foodPost")
+                                              .doc(widget.postList.docId
+                                                  .toString())
+                                              .update({"notifyCancelP": "0"});
                                           Navigator.pop(context);
 
                                           showDialog(
@@ -162,6 +167,15 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                             .update({
                                                           "reserve": "0",
                                                         });
+                                                        _firestore
+                                                            .collection(
+                                                                "foodPost")
+                                                            .doc(widget
+                                                                .postList.docId
+                                                                .toString())
+                                                            .update({
+                                                          "notifyCancelP": "0",
+                                                        });
 
                                                         Navigator.pop(context);
                                                       },
@@ -170,7 +184,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                     ),
                                                     SimpleDialogOption(
                                                       onPressed: () {
-                                                           _firestore
+                                                        _firestore
                                                             .collection(
                                                                 "foodPost")
                                                             .doc(widget
@@ -187,6 +201,15 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
                                                                 .toString())
                                                             .update({
                                                           "reserve": "0"
+                                                        });
+                                                        _firestore
+                                                            .collection(
+                                                                "foodPost")
+                                                            .doc(widget
+                                                                .postList.docId
+                                                                .toString())
+                                                            .update({
+                                                          "notifyCancelP": "0",
                                                         });
 
                                                         //  print(widget.postList.userUid);
@@ -452,7 +475,7 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
     );
   }
 
-   void CheckReportCount2(String s) async {
+  void CheckReportCount2(String s) async {
     var snapss =
         await FirebaseFirestore.instance.collection('users').doc(s).get();
 
@@ -461,28 +484,25 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
 
       var count = data!["ReportCount"];
 
-     
       if (count >= 3) {
+        var snapss2 = await FirebaseFirestore.instance
+            .collection('reportedContent')
+            .where('userId', isEqualTo: s)
+            .where('flag', isEqualTo: 2)
+            .get();
 
-         var snapss2 = await FirebaseFirestore.instance
-          .collection('reportedContent')
-          .where('userId', isEqualTo: s)
-          .where('flag', isEqualTo: 2)
-          .get();
+        var userinfosnap = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .get();
 
-          var userinfosnap = await FirebaseFirestore.instance
-          .collection('users')
-          .doc( FirebaseAuth.instance.currentUser?.uid)
-          .get();
+        Map<String, dynamic>? uinfo = userinfosnap.data();
 
-             Map<String, dynamic>? uinfo = userinfosnap.data();
+        var username = uinfo!["username"];
 
-      var username = uinfo!["username"];
-      
+        var alldocs = snapss2.docs;
 
-          var alldocs = snapss2.docs ;
-
-         var user =username;
+        var user = username;
 
         if (snapss2.size == 0) {
           FirestoreMethods().uploadReport(
@@ -491,27 +511,22 @@ class _ConsumerListCardState extends State<ConsumerListCard> {
             flag: 2,
             reportCount: 1,
             Reporters: [user],
-            
           );
-         
-        }else{
-for(var i= 0 ; i < snapss2.size ;i++){
-     FirebaseFirestore.instance.collection('reportedContent').doc(alldocs[i]["Rid"] )
-     .update({"Reporters": FieldValue.arrayUnion([user])});
-          FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'reportedContent')
-                                                                .doc(alldocs[i]
-                                                                    ["Rid"])
-                                                                .update({
-                                                              "reportCount":
-                                                                   FieldValue.increment(1)
-                                                            });
-
-}}}}
+        } else {
+          for (var i = 0; i < snapss2.size; i++) {
+            FirebaseFirestore.instance
+                .collection('reportedContent')
+                .doc(alldocs[i]["Rid"])
+                .update({
+              "Reporters": FieldValue.arrayUnion([user])
+            });
+            FirebaseFirestore.instance
+                .collection('reportedContent')
+                .doc(alldocs[i]["Rid"])
+                .update({"reportCount": FieldValue.increment(1)});
+          }
+        }
+      }
+    }
   }
-
-
- 
 }

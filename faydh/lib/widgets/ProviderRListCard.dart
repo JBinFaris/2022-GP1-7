@@ -262,6 +262,17 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                                 "reservedby":
                                                                     null,
                                                               });
+                                                              _firestore
+                                                                  .collection(
+                                                                      "foodPost")
+                                                                  .doc(widget
+                                                                      .postList
+                                                                      .docId
+                                                                      .toString())
+                                                                  .update({
+                                                                "notifyCancelC":
+                                                                    "0"
+                                                              });
 
                                                               Navigator.pop(
                                                                   context);
@@ -292,6 +303,18 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                                   .update({
                                                                 "reservedby":
                                                                     null,
+                                                              });
+
+                                                              _firestore
+                                                                  .collection(
+                                                                      "foodPost")
+                                                                  .doc(widget
+                                                                      .postList
+                                                                      .docId
+                                                                      .toString())
+                                                                  .update({
+                                                                "notifyCancelC":
+                                                                    "0"
                                                               });
 
                                                               _firestore
@@ -578,28 +601,25 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
 
       var count = data!["ReportCount"];
 
-     
       if (count >= 3) {
+        var snapss2 = await FirebaseFirestore.instance
+            .collection('reportedContent')
+            .where('userId', isEqualTo: s)
+            .where('flag', isEqualTo: 2)
+            .get();
 
-         var snapss2 = await FirebaseFirestore.instance
-          .collection('reportedContent')
-          .where('userId', isEqualTo: s)
-          .where('flag', isEqualTo: 2)
-          .get();
+        var userinfosnap = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .get();
 
-          var userinfosnap = await FirebaseFirestore.instance
-          .collection('users')
-          .doc( FirebaseAuth.instance.currentUser?.uid)
-          .get();
+        Map<String, dynamic>? uinfo = userinfosnap.data();
 
-             Map<String, dynamic>? uinfo = userinfosnap.data();
+        var username = uinfo!["username"];
 
-      var username = uinfo!["username"];
-      
+        var alldocs = snapss2.docs;
 
-          var alldocs = snapss2.docs ;
-
-         var user =  username;
+        var user = username;
 
         if (snapss2.size == 0) {
           FirestoreMethods().uploadReport(
@@ -608,24 +628,22 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
             flag: 2,
             reportCount: 1,
             Reporters: [user],
-            
           );
-         
-        }else{
-for(var i= 0 ; i < snapss2.size ;i++){
-     FirebaseFirestore.instance.collection('reportedContent').doc(alldocs[i]["Rid"] )
-     .update({"Reporters": FieldValue.arrayUnion([user])});
-          FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'reportedContent')
-                                                                .doc(alldocs[i]
-                                                                    ["Rid"])
-                                                                .update({
-                                                              "reportCount":
-                                                                   FieldValue.increment(1)
-                                                            });
-
-}}}}
+        } else {
+          for (var i = 0; i < snapss2.size; i++) {
+            FirebaseFirestore.instance
+                .collection('reportedContent')
+                .doc(alldocs[i]["Rid"])
+                .update({
+              "Reporters": FieldValue.arrayUnion([user])
+            });
+            FirebaseFirestore.instance
+                .collection('reportedContent')
+                .doc(alldocs[i]["Rid"])
+                .update({"reportCount": FieldValue.increment(1)});
+          }
+        }
+      }
+    }
   }
 }
