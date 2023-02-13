@@ -20,6 +20,7 @@ class AuthMethods {
     String? status,
     String ? crNoExpDate, 
     String? uid,
+   required bool Active,
   }) async {
     String res = "Success";
     try {
@@ -37,6 +38,7 @@ class AuthMethods {
           role: role,
           username: username,
           email: email,
+          Active: Active,
          
           phoneNumber: phoneNumber,
           crNo: crNo,
@@ -49,6 +51,8 @@ class AuthMethods {
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .set(user.toJson());
         return "success";
+      }else{
+         return "error";
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == "invalid-email") {
@@ -103,11 +107,15 @@ class AuthMethods {
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         res = " البريد الإلكتروني او كلمة المرور خاطئة";
-      } else {
-        e.code == "wrong-password";
-        {
+      } else if(e.code == "wrong-password"){
+       
+        
           res = "  البريد الإلكتروني او كلمة المرور خاطئة";
-        }
+        
+      }
+      else{
+        res = "حصل خطأ ما";
+     
       }
     } catch (error) {
       res = error.toString();
@@ -131,6 +139,7 @@ class AuthMethods {
           uid: FirebaseAuth.instance.currentUser!.uid,
           role: role,
           username: username,
+          Active: true,
           email: FirebaseAuth.instance.currentUser!.email.toString(),
           phoneNumber: phoneNumber,
         );

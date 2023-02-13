@@ -699,10 +699,10 @@ class _SignupFormState extends State<SignupForm> {
                             shape: const StadiumBorder(),
                           ),
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {}
+                            if (_formKey.currentState!.validate()) {
                             if (selectedValue != "" &&
                                     passwordStrength == 1 &&
-                                    _phonenumberController.text != "" &&
+                                    _phonenumberController.text.isNotEmpty &&
                                     _finaldate.toString() != "" &&
                                     selectedValue == "منظمة تجارية" &&
                                     _crNoController.text.length == 10 ||
@@ -718,6 +718,7 @@ class _SignupFormState extends State<SignupForm> {
                                 crNo: _crNoController.text,
                                 status: _statusController.text,
                                 crNoExpDate: _finaldate.toString(),
+                                Active: true,
                               )
                                   .then((value) {
                                 if (value == "success") {
@@ -731,16 +732,16 @@ class _SignupFormState extends State<SignupForm> {
                                         MaterialPageRoute(builder: (context) {
                                       return const charityHome();
                                     }));
-                                  } else {
-                                    Navigator.of(context).push(
+                                  } else{ Navigator.of(context).push(
                                         MaterialPageRoute(builder: (context) {
                                       return const HomePage();
-                                    }));
-                                  }
+                                    }));}
+                                   
+                                  
                                 }
                                 showSnackBar(value.toString(), context);
                               });
-                            } else {
+                            }} else {
                               Fluttertoast.showToast(
                                 msg: "الرجاء تعبئة كافة الحقول",
                                 backgroundColor: Colors.red,

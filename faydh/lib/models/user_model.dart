@@ -11,7 +11,7 @@ class User {
   final String? status;
   final String? crNoExpDate;
   int ReportCount; //= 0;
-  bool Active ;
+ bool Active ;
 
   User({
     required this.email,
@@ -23,7 +23,7 @@ class User {
     this.status,
     this.crNoExpDate,
     this.ReportCount = 0 ,
-    this.Active = true ,
+   required this.Active ,
 
   });
 
@@ -33,6 +33,7 @@ class User {
         "phoneNumber": phoneNumber,
         "email": email,
         "role": role,
+        "Active": Active,
         if (role == "منظمة تجارية") "crNo": crNo,
         if (role == "منظمة تجارية") "status": "0",
         if (role == "منظمة تجارية")

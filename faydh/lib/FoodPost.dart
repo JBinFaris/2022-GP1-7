@@ -92,7 +92,6 @@ final List<String> myList = [
 class _FoodPostScreenState extends State<FoodPostScreen> {
   bool arrow = false;
 
-  String Uid = FirebaseAuth.instance.currentUser!.uid;
   @override
   initState() {
     super.initState();
@@ -100,7 +99,10 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
   }
 
   Future<String?> getData() async {
-    var a = await FirebaseFirestore.instance.collection("users").doc(Uid).get();
+    var a = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
 
     final myrole = a['role'];
     if (myrole == "فرد") {
@@ -131,7 +133,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Text(" إعلاناتي     "),
+              title: Text("إعلاناتي      "),
               actions: <Widget>[
                 SizedBox(
                     width: 130,
@@ -174,10 +176,10 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               ))
           : AppBar(
               elevation: 2.0,
-              centerTitle: false,
+              centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: const Color(0xFF1A4D2E),
-              title: const Center(child: Text('          إعلاناتي ')),
+              title: Text('إعلاناتي           '),
               actions: <Widget>[
                 SizedBox(
                     width: 130,

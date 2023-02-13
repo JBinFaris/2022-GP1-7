@@ -20,7 +20,8 @@ class _myAwareState extends State<myAware> {
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Center(child: Text('      محتواي التوعوي ')),
+          centerTitle: true,
+          title: const Center(child: Text('محتواي التوعوي          ')),
           backgroundColor: const Color(0xFF1A4D2E),
           leading: GestureDetector(
             onTap: () {
