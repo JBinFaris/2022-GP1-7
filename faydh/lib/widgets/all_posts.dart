@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:faydh/reports.dart';
 import 'package:faydh/services/firestore_methods.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -179,168 +180,177 @@ class _AllPostsCardState extends State<AllPostsCard> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: GestureDetector(
-                            onTap: (() {}),
-                            child: PopupMenuButton(
-                                itemBuilder: (ctx) => [
-                                      PopupMenuItem(
-                                        child: const Text(
-                                            'تبليغ محتوى غير لائق',
-                                            style:
-                                                TextStyle(color: Colors.red)),
-                                        onTap: () {
-                                          Future.delayed(
-                                            const Duration(seconds: 0),
-                                            () => showDialog(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                  title: const Text(
-                                                    'تأكيد البلاغ',
-                                                    textAlign: TextAlign.right,
-                                                  ),
-                                                  content: const Text(
-                                                    "هل أنت متأكد من التبليغ عن هذا المحتوى ؟ ",
-                                                    textAlign: TextAlign.right,
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      child:
-                                                          const Text("إلغاء"),
-                                                      onPressed: () {
-                                                        // callback function for on click event of Cancel button
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    ),
-                                                    TextButton(
-                                                      child:
-                                                          const Text("موافق"),
-                                                      onPressed: () async {
-                                                        var snapss2 = await FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'reportedContent')
-                                                            .where('userId',
-                                                                isEqualTo: widget
-                                                                    .postData
-                                                                    .userId
-                                                                    .toString())
-                                                            .where('flag',
-                                                                isEqualTo: 0)
-                                                            .where('postId',
-                                                                isEqualTo: widget
-                                                                    .postData
-                                                                    .Cid
-                                                                    .toString())
-                                                            .get();
+                if (cardId != FirebaseAuth.instance.currentUser!.uid)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: GestureDetector(
+                              onTap: (() {}),
+                              child: PopupMenuButton(
+                                  itemBuilder: (ctx) => [
+                                        PopupMenuItem(
+                                          child: const Text(
+                                              'تبليغ محتوى غير لائق',
+                                              style:
+                                                  TextStyle(color: Colors.red)),
+                                          onTap: () {
+                                            Future.delayed(
+                                              const Duration(seconds: 0),
+                                              () => showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                        title: const Text(
+                                                          'تأكيد البلاغ',
+                                                          textAlign:
+                                                              TextAlign.right,
+                                                        ),
+                                                        content: const Text(
+                                                          "هل أنت متأكد من التبليغ عن هذا المحتوى ؟ ",
+                                                          textAlign:
+                                                              TextAlign.right,
+                                                        ),
+                                                        actions: <Widget>[
+                                                      TextButton(
+                                                        child:
+                                                            const Text("إلغاء"),
+                                                        onPressed: () {
+                                                          // callback function for on click event of Cancel button
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child:
+                                                            const Text("موافق"),
+                                                        onPressed: () async {
+                                                          var snapss2 = await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'reportedContent')
+                                                              .where('userId',
+                                                                  isEqualTo: widget
+                                                                      .postData
+                                                                      .userId
+                                                                      .toString())
+                                                              .where('flag',
+                                                                  isEqualTo: 0)
+                                                              .where('postId',
+                                                                  isEqualTo: widget
+                                                                      .postData
+                                                                      .Cid
+                                                                      .toString())
+                                                              .get();
 
-                                                              var userinfosnap =
-                                                            await FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'users')
-                                                                .doc(FirebaseAuth
-                                                                    .instance
-                                                                    .currentUser
-                                                                    ?.uid)
-                                                                .get();
+                                                          var userinfosnap =
+                                                              await FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      'users')
+                                                                  .doc(FirebaseAuth
+                                                                      .instance
+                                                                      .currentUser
+                                                                      ?.uid)
+                                                                  .get();
 
-                                                        Map<String, dynamic>?
-                                                            uinfo =
-                                                            userinfosnap.data();
+                                                          Map<String, dynamic>?
+                                                              uinfo =
+                                                              userinfosnap
+                                                                  .data();
 
-                                                               String username =
-                                                            uinfo!["username"];
+                                                          String username =
+                                                              uinfo![
+                                                                  "username"];
 
-                                                        var user = 
-                                                         username
-                                                        ;
+                                                          var user = username;
 
-
-
-                                                        if (snapss2.size == 0) {
-                                                          FirestoreMethods()
-                                                              .uploadReport(
-                                                            //postUserName: myUsername,
-                                                            ReportReason:
-                                                                "محتوى غير لائق (المنتدى)",
-                                                            postId: widget
-                                                                .postData.Cid
-                                                                .toString(),
-                                                            postText: widget
-                                                                .postData
-                                                                .postText
-                                                                .toString(),
-                                                            pathImage: widget
-                                                                .postData
-                                                                .pathImage
-                                                                .toString(),
-                                                            postImage: widget
-                                                                .postData
-                                                                .postImage
-                                                                .toString(),
-                                                            userId: widget
-                                                                .postData.userId
-                                                                .toString(),
-                                                            flag: 0,
-                                                            reportCount: 1,
-                                                          Reporters : [user],
-                                                          );
-                                                        }else {
-                                                          var alldocs =
-                                                            snapss2.docs;
-                                                          for (var i = 0;
-                                                              i < snapss2.size;
-                                                              i++) {
-                                                            FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'reportedContent')
-                                                                .doc(alldocs[i]
-                                                                    ["Rid"])
-                                                                .update({
-                                                              "Reporters":
-                                                                  FieldValue
-                                                                      .arrayUnion(
-                                                                          [user])
-                                                            });
-                                                                 FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'reportedContent')
-                                                                .doc(alldocs[i]
-                                                                    ["Rid"])
-                                                                .update({
-                                                              "reportCount":
-                                                                   FieldValue.increment(1)
-                                                            });
+                                                          if (snapss2.size ==
+                                                              0) {
+                                                            FirestoreMethods()
+                                                                .uploadReport(
+                                                              //postUserName: myUsername,
+                                                              ReportReason:
+                                                                  "محتوى غير لائق (المنتدى)",
+                                                              postId: widget
+                                                                  .postData.Cid
+                                                                  .toString(),
+                                                              postText: widget
+                                                                  .postData
+                                                                  .postText
+                                                                  .toString(),
+                                                              pathImage: widget
+                                                                  .postData
+                                                                  .pathImage
+                                                                  .toString(),
+                                                              postImage: widget
+                                                                  .postData
+                                                                  .postImage
+                                                                  .toString(),
+                                                              userId: widget
+                                                                  .postData
+                                                                  .userId
+                                                                  .toString(),
+                                                              flag: 0,
+                                                              reportCount: 1,
+                                                              Reporters: [user],
+                                                            );
+                                                          } else {
+                                                            var alldocs =
+                                                                snapss2.docs;
+                                                            for (var i = 0;
+                                                                i <
+                                                                    snapss2
+                                                                        .size;
+                                                                i++) {
+                                                              FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      'reportedContent')
+                                                                  .doc(alldocs[
+                                                                      i]["Rid"])
+                                                                  .update({
+                                                                "Reporters":
+                                                                    FieldValue
+                                                                        .arrayUnion([
+                                                                  user
+                                                                ])
+                                                              });
+                                                              FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      'reportedContent')
+                                                                  .doc(alldocs[
+                                                                      i]["Rid"])
+                                                                  .update({
+                                                                "reportCount":
+                                                                    FieldValue
+                                                                        .increment(
+                                                                            1)
+                                                              });
+                                                            }
                                                           }
-                                                          
-                                                        }
-                                                        Navigator.pop(context);
+                                                          Navigator.pop(
+                                                              context);
 
-                                                        print("check");
-                                                      },
-                                                    ),
-                                                  ]),
-                                            ),
-                                          );
-                                        },
-                                      )
-                                    ])),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                    ],
+                                                          print("check");
+                                                        },
+                                                      ),
+                                                    ]),
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      ])),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),
