@@ -26,6 +26,19 @@ class _UsersListCardsState extends State<UsersListCards> {
   TextEditingController _searchTextController = new TextEditingController();
   String filter = "";
 
+  List<Map<String, dynamic>> getMyListData(
+      AsyncSnapshot<QuerySnapshot> snapshot) {
+    List<Map<String, dynamic>> newList = [];
+
+    var list = snapshot.data!.docs.toList();
+
+    for (var item in list) {
+      newList.add(item.data() as Map<String, dynamic>);
+    }
+
+    return newList;
+  }
+
   @override
   initState() {
     super.initState();
@@ -132,7 +145,7 @@ class _UsersListCardsState extends State<UsersListCards> {
             child: Column(
               children: [
                 searchBar(),
-                showItemsList(snapshot),
+                showItemsList(getMyListData(snapshot)),
               ],
             ),
           );
@@ -179,23 +192,41 @@ class _UsersListCardsState extends State<UsersListCards> {
     );
   }
 
-  Widget showItemsList(AsyncSnapshot<QuerySnapshot> snapshot) {
-    return Expanded(
-      child: ListView(
-        children: snapshot.data!.docs.map((DocumentSnapshot document) {
-          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+  List<Map<String, dynamic>> getFilterItemsList(
+      List<Map<String, dynamic>> list) {
+    List<Map<String, dynamic>> mlist = [];
+    if (filter == null || filter == '') return list;
+    for (var item in list) {
+      if (item['username']
+          .toString()
+          .toLowerCase()
+          .contains(filter.toLowerCase())) {
+        mlist.add(item);
+      }
+    }
+    return mlist;
+  }
 
-          return filter == null || filter == ''
-              ? ItemDetails(data)
-              : data['username']
-                      .toString()
-                      .toLowerCase()
-                      .contains(filter.toLowerCase())
-                  ? ItemDetails(data)
-                  : Container();
-        }).toList(),
-      ),
-    );
+  Widget getEmptyWidget() {
+    return const Center(
+        child: Padding(
+      padding: EdgeInsets.only(top: 300),
+      child: Text("لا يوجد اسم مستخدم يطابق بحثك",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: Color.fromARGB(255, 0, 0, 0),
+          )),
+    ));
+  }
+
+  Widget showItemsList(List<Map<String, dynamic>> list) {
+    var finalList = getFilterItemsList(list);
+    return Expanded(
+        child: ListView(
+            children: finalList.isEmpty
+                ? [getEmptyWidget()]
+                : finalList.map((data) => ItemDetails(data)).toList()));
   }
 
   Widget ItemDetails(Map<String, dynamic> data) {
