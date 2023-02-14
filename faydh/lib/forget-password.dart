@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/signin.dart';
 import 'package:faydh/utilis/utilis.dart';
@@ -26,22 +27,22 @@ class _PasswordResetState extends State<PasswordReset> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       floatingActionButton: Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 70, right: 5, left: 5),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return const signInSreen();
-                    }));
-                  },
-                  icon: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Color.fromARGB(255, 18, 57, 20),
-                  )),
-            )),
+      floatingActionButton: Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 70, right: 5, left: 5),
+            child: IconButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return const signInSreen();
+                  }));
+                },
+                icon: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Color.fromARGB(255, 18, 57, 20),
+                )),
+          )),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -108,21 +109,7 @@ class _PasswordResetState extends State<PasswordReset> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        AuthMethods()
-                            .resetPassword(email: _emailController.text)
-                            .then((value) {
-                          if (value == "success") {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const signInSreen()),
-                            );
-
-                            showSnackBar(
-                                "يرجى التحقق من بريدك الإلكتروني واتباع الرابط لإعادة تعيين كلمة المرور ",
-                                context);
-                          }
-                        });
+                        checkExist();
                       }
                     },
                     child: const Text(
@@ -140,5 +127,29 @@ class _PasswordResetState extends State<PasswordReset> {
         ),
       ),
     );
+  }
+
+  void checkExist() async {
+    var snapp = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: _emailController.text)
+        .get();
+    print('not enter');
+    if (snapp.size > 0) {
+      AuthMethods().resetPassword(email: _emailController.text).then((value) {
+        if (value == "success") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const signInSreen()),
+          );
+
+          showSnackBar(
+              "يرجى التحقق من بريدك الإلكتروني واتباع الرابط لإعادة تعيين كلمة المرور ",
+              context);
+        }
+      });
+    } else {
+      showSnackBar("البريد الالكتروني غير مسجل مسبقا", context);
+    }
   }
 }

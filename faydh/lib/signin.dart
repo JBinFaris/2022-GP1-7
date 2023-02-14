@@ -196,7 +196,10 @@ class _signInSreenState extends State<signInSreen> {
         Future.delayed(const Duration(seconds: 5), () {
           initInfo();
           sendPushMessage(
-              token: token, title: "  مقدم الطعام تم حضره ", text: title);
+              token: token,
+              title:
+                  "  عذرا الطعام المحجوز تم حذفه من قبل المشرف لانتهاكه سياسة الاستخدام     ",
+              text: title);
         });
 
         FirebaseFirestore.instance
@@ -407,7 +410,7 @@ class _signInSreenState extends State<signInSreen> {
                     MaterialPageRoute(builder: (context) => const AdminMain()));
               }
             } else if (Active == false) {
-                                res = "  محظور";
+              res = "  محظور";
 
               showDialog(
                   context: context,
@@ -460,14 +463,10 @@ class _signInSreenState extends State<signInSreen> {
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         res = " البريد الإلكتروني او كلمة المرور خاطئة";
-      } else if(  e.code == "wrong-password") {
-      
-        
-          res = "  البريد الإلكتروني او كلمة المرور خاطئة";
-        
-      }else{
-                res = "حصل خطأ ما";
-
+      } else if (e.code == "wrong-password") {
+        res = "  البريد الإلكتروني او كلمة المرور خاطئة";
+      } else {
+        res = "حصل خطأ ما";
       }
     } catch (error) {
       res = error.toString();
@@ -501,7 +500,7 @@ class _signInSreenState extends State<signInSreen> {
                 Image.asset(
                   'assets/imgs/logo.png',
                   width: 250,
-                  height: 250,
+                  height: 200,
                 ),
                 SizedBox(height: 0.1),
                 TextFormField(

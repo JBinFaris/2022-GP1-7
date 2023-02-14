@@ -375,21 +375,7 @@ class _UsersListCardsState extends State<UsersListCards> {
                                                     .delete();
                                               });
                                             });
-                                            FirebaseFirestore.instance
-                                                .collection('foodPost')
-                                                .where('Cid',
-                                                    isEqualTo:
-                                                        useridd.toString())
-                                                .get()
-                                                .then((QuerySnapshot
-                                                    querySnapshot) {
-                                              querySnapshot.docs.forEach((doc) {
-                                                FirebaseFirestore.instance
-                                                    .collection('foodPost')
-                                                    .doc(doc["docId"])
-                                                    .delete();
-                                              });
-                                            });
+
                                             FirebaseFirestore.instance
                                                 .collection('foodPost')
                                                 .where('Cid',
