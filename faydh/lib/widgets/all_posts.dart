@@ -141,12 +141,12 @@ class _AllPostsCardState extends State<AllPostsCard> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
-                    color: Colors.grey,
+                    //  color: Colors.grey,
                     child: Image(
                       image: NetworkImage(_dta),
-                      fit: BoxFit.cover,
-                      height: 150,
-                      width: 250,
+                      fit: BoxFit.contain,
+                      // height: 150,
+                      //  width: 250,
                     ),
                   ),
                 ),

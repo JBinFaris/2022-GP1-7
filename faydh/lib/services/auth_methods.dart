@@ -2,12 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:faydh/models/user_model.dart' as model;
 
-
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
- 
 
 // Signup  method
   Future<String> signUpUser({
@@ -18,9 +15,9 @@ class AuthMethods {
     required String password,
     String? crNo,
     String? status,
-    String ? crNoExpDate, 
+    String? crNoExpDate,
     String? uid,
-   required bool Active,
+    required bool Active,
   }) async {
     String res = "Success";
     try {
@@ -39,11 +36,10 @@ class AuthMethods {
           username: username,
           email: email,
           Active: Active,
-         
           phoneNumber: phoneNumber,
           crNo: crNo,
-          status: status, 
-          crNoExpDate:crNoExpDate, 
+          status: status,
+          crNoExpDate: crNoExpDate,
         );
 
         await _firestore
@@ -51,17 +47,20 @@ class AuthMethods {
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .set(user.toJson());
         return "success";
-      }else{
-         return "error";
+      } else {
+        print("eeerrrooorrr");
+
+        res = "error";
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == "invalid-email") {
-        if (error.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-          res = " البريد الإلكتروني مستخدم سابقاً";
-        }
-      } else if (error.code == "weak-password") {
-        res = " الرجاء إدخال كلمة مرور صالحة";
+        res = "البريد الالكتروني غير صالح ";
+      } else if (error.code == 'email-already-in-use') {
+        res = " البريد الإلكتروني مستخدم سابقاً";
       }
+      // } else if (error.code == "weak-password") {
+      //   res = " الرجاء إدخال كلمة مرور صالحة";
+      // }
     } catch (err) {
       res = err.toString();
     }
@@ -107,15 +106,10 @@ class AuthMethods {
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         res = " البريد الإلكتروني او كلمة المرور خاطئة";
-      } else if(e.code == "wrong-password"){
-       
-        
-          res = "  البريد الإلكتروني او كلمة المرور خاطئة";
-        
-      }
-      else{
+      } else if (e.code == "wrong-password") {
+        res = "  البريد الإلكتروني او كلمة المرور خاطئة";
+      } else {
         res = "حصل خطأ ما";
-     
       }
     } catch (error) {
       res = error.toString();

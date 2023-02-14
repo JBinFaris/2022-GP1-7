@@ -612,7 +612,8 @@ class _SignupFormState extends State<SignupForm> {
                                             child: Text(
                                               " $_finaldate",
                                               style: const TextStyle(
-                                                  color: Color.fromRGBO(26, 77, 46, 1),
+                                                  color: Color.fromRGBO(
+                                                      26, 77, 46, 1),
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 14.0),
                                             ),
@@ -700,48 +701,50 @@ class _SignupFormState extends State<SignupForm> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                            if (selectedValue != "" &&
-                                    passwordStrength == 1 &&
-                                    _phonenumberController.text.isNotEmpty &&
-                                    _finaldate.toString() != "" &&
-                                    selectedValue == "منظمة تجارية" &&
-                                    _crNoController.text.length == 10 ||
-                                selectedValue == "منظمة خيرية" ||
-                                selectedValue == "فرد") {
-                              AuthMethods()
-                                  .signUpUser(
-                                role: selectedValue.toString(),
-                                username: _usernameController.text,
-                                email: _emailController.text,
-                                phoneNumber: _phonenumberController.text,
-                                password: _passwordController.text,
-                                crNo: _crNoController.text,
-                                status: _statusController.text,
-                                crNoExpDate: _finaldate.toString(),
-                                Active: true,
-                              )
-                                  .then((value) {
-                                if (value == "success") {
-                                  if (selectedValue == "منظمة تجارية") {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) {
-                                      return const signInSreen();
-                                    }));
-                                  } else if (selectedValue == "منظمة خيرية") {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) {
-                                      return const charityHome();
-                                    }));
-                                  } else{ Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) {
-                                      return const HomePage();
-                                    }));}
-                                   
-                                  
-                                }
-                                showSnackBar(value.toString(), context);
-                              });
-                            }} else {
+                              if (selectedValue != "" &&
+                                      passwordStrength == 1 &&
+                                      _phonenumberController.text.isNotEmpty &&
+                                      _finaldate.toString() != "" &&
+                                      selectedValue == "منظمة تجارية" &&
+                                      _crNoController.text.length == 10 ||
+                                  selectedValue == "منظمة خيرية" ||
+                                  selectedValue == "فرد") {
+                                AuthMethods()
+                                    .signUpUser(
+                                  role: selectedValue.toString(),
+                                  username: _usernameController.text,
+                                  email: _emailController.text,
+                                  phoneNumber: _phonenumberController.text,
+                                  password: _passwordController.text,
+                                  crNo: _crNoController.text,
+                                  status: _statusController.text,
+                                  crNoExpDate: _finaldate.toString(),
+                                  Active: true,
+                                )
+                                    .then((value) {
+                                  if (value == "success") {
+                                    if (selectedValue == "منظمة تجارية") {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return const signInSreen();
+                                      }));
+                                    } else if (selectedValue == "منظمة خيرية") {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return const charityHome();
+                                      }));
+                                    } else {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return const HomePage();
+                                      }));
+                                    }
+                                  }
+                                  showSnackBar(value.toString(), context);
+                                  print(value); 
+                                });
+                              }
+                            } else {
                               Fluttertoast.showToast(
                                 msg: "الرجاء تعبئة كافة الحقول",
                                 backgroundColor: Colors.red,

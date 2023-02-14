@@ -334,9 +334,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                                     color: Colors.grey,
                                     child: Image.network(
                                       data['postImage'],
-                                      height: 180,
-                                      width: 250,
-                                      fit: BoxFit.fill,
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                 ),

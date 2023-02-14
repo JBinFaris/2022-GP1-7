@@ -139,21 +139,24 @@ class _EditPostNewState extends State<EditPostNew> {
 
   @override
   void initState() {
+    selectedValue = null;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       postTitleTextEditingController.text = widget.title;
       addressEditingController.text = widget.text;
       foodCountEditingController.text = widget.count;
       _date = widget.expireDate;
 
-      var parsedAddress = widget.address.split(',');
       //Provider.of<DropDownProvider>(context, listen: false)
       // .setCity(parsedAddress[0]);
 
-      selectedValue = parsedAddress[0];
-
-      if (parsedAddress.length > 1) {
-        nigbehoodEditingController.text = parsedAddress[1];
-      }
+      setState(() {
+        var parsedAddress = widget.address.split(',');
+        selectedValue = parsedAddress[0];
+        print(selectedValue);
+        if (parsedAddress.length > 1) {
+          nigbehoodEditingController.text = parsedAddress[1];
+        }
+      });
     });
     super.initState();
   }

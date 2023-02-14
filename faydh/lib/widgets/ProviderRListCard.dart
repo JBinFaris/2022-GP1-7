@@ -494,9 +494,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                             color: Colors.grey,
                             child: Image.network(
                               widget.postList.postImage.toString(),
-                              height: 180,
-                              width: 250,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),
