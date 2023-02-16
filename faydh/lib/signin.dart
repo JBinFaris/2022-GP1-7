@@ -113,10 +113,17 @@ class _signInSreenState extends State<signInSreen> {
             sendPushMessage(
                 token: token, title: "طعام منتهي", text: doc["postTitle"]);
 
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .delete();
+            if (doc["expFlag"] == true) {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+            } else {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .update({'expFlag': true});
+            }
           });
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
@@ -170,7 +177,7 @@ class _signInSreenState extends State<signInSreen> {
             FirebaseFirestore.instance
                 .collection('foodPost')
                 .doc(doc["docId"])
-                .delete();
+                .update({'reservedby': null});
           });
         }
       });
@@ -215,11 +222,17 @@ class _signInSreenState extends State<signInSreen> {
                   "  عذرا الطعام المحجوز تم حذفه من قبل المشرف لانتهاكه سياسة الاستخدام     ",
               text: title);
         });
-
-        FirebaseFirestore.instance
-            .collection('foodPost')
-            .doc(doc["docId"])
-            .delete();
+        if (doc["expFlag"] == true) {
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .delete();
+        } else {
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'expFlag': true});
+        }
       });
     });
   }
