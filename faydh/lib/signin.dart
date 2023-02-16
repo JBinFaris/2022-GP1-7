@@ -74,12 +74,12 @@ class _signInSreenState extends State<signInSreen> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(seconds: 5);
+      var period = const Duration(hours: 1);
       Timer.periodic(period, (arg) {
         print('inside save token');
-        saveToken(id: id, token: token!);
+        saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
       });
-      saveToken(id: id, token: token!);
+      saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
     });
   }
 
@@ -112,11 +112,23 @@ class _signInSreenState extends State<signInSreen> {
             initInfo();
             sendPushMessage(
                 token: token, title: "طعام منتهي", text: doc["postTitle"]);
-
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .delete();
+            if (doc["expFlag"] != 2) {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .update({"expFlag": FieldValue.increment(1)});
+              print(doc["expFlag"] == 3);
+            } else if (doc["expFlag"] == 2) {
+              print('providerrrrrrrr');
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(doc["Cid"])
+                  .update({"ExpCount": FieldValue.increment(1)});
+            }
           });
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
@@ -159,20 +171,6 @@ class _signInSreenState extends State<signInSreen> {
               .doc(doc["docId"])
               .update({'notifyCancelP': '1'});
         }
-
-        if (dt1Now.isAfter(dt2check)) {
-          Future.delayed(const Duration(seconds: 2), () {
-            print("expired");
-            initInfo();
-            sendPushMessage(
-                token: token, title: "طعام منتهي", text: doc["postTitle"]);
-
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .delete();
-          });
-        }
       });
     });
 
@@ -193,6 +191,36 @@ class _signInSreenState extends State<signInSreen> {
               .collection('foodPost')
               .doc(doc["docId"])
               .update({'notifyCancelC': '1'});
+        }
+        var raw_date = doc["postExp"].toString().split('-');
+        DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
+            int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
+
+        if (dt1Now.isAfter(dt2check)) {
+          Future.delayed(const Duration(seconds: 2), () {
+            print("expired");
+            initInfo();
+            sendPushMessage(
+                token: token, title: "طعام منتهي", text: doc["postTitle"]);
+            if (doc["expFlag"] != 2) {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .update({"expFlag": FieldValue.increment(1)});
+              print(doc["expFlag"] == 3);
+              print(doc["expFlag"]);
+            } else if (doc["expFlag"] == 2) {
+              print('consumerrrrrrrr');
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(doc["Cid"])
+                  .update({"ExpCount": FieldValue.increment(1)});
+            }
+          });
         }
       });
     });

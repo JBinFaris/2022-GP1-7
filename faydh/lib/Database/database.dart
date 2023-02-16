@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:core';
+import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class Database {
   final String food_cont;
   final bool providerblocked;
   String? reservedby;
+  final int expFlag;
+
 
   String? postUserName;
 
@@ -46,6 +49,8 @@ class Database {
     required this.food_cont,
     required this.reservedby,
     required this.providerblocked,
+    required this.expFlag,
+
   });
 
   static Future<void> addFoodPostData({
@@ -60,6 +65,8 @@ class Database {
     required String postExp,
     required String food_cont,
     required bool providerblocked,
+    required int expFlag,
+
     String? reserve,
     String? notify,
     String? reservedby,
@@ -86,6 +93,7 @@ class Database {
       'reservedby': reservedby,
       'notifyCancelP': notifyCancelP,
       'notifyCancelC': notifyCancelC,
+      'expFlag': expFlag ,
     };
     await documentReference.set(data).whenComplete(() {
       print('Note item saved to the database');

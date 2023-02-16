@@ -132,7 +132,10 @@ class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
                           postExp: element['postExp'],
                           food_cont: element['food_cont'],
                           providerblocked: element['providerblocked'],
-                          reservedby: element["reservedby"]));
+                          reservedby: element["reservedby"],
+                          expFlag: element["expFlag"],
+      
+                          ));
                     }
 
                     for (var i = 0; i < usersList.length; i++) {

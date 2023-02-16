@@ -1058,6 +1058,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                         notify: '0',
                                                         notifyCancelP: '1',
                                                         notifyCancelC: '1',
+                                                        expFlag: 1, 
                                                       ).whenComplete(() {
                                                         Navigator.pop(context);
                                                         setState(() {
