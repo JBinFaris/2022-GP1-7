@@ -117,16 +117,17 @@ class _signInSreenState extends State<signInSreen> {
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .update({"expFlag": FieldValue.increment(1)});
-            }
-            if (doc["expFlag"] == 3) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-              FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(doc["Cid"])
-                  .update({"ExpCount": FieldValue.increment(1)});
+              if (doc["expFlag"] == 3) {
+                print('providerrrrrrrr');
+                FirebaseFirestore.instance
+                    .collection('foodPost')
+                    .doc(doc["docId"])
+                    .delete();
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(doc["Cid"])
+                    .update({"ExpCount": FieldValue.increment(1)});
+              }
             }
           });
         } //end if
@@ -206,16 +207,17 @@ class _signInSreenState extends State<signInSreen> {
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .update({"expFlag": FieldValue.increment(1)});
-            }
-            if (doc["expFlag"] == 3) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-              FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(doc["Cid"])
-                  .update({"ExpCount": FieldValue.increment(1)});
+              if (doc["expFlag"] == 3) {
+                print('consumerrrrrrrr');
+                FirebaseFirestore.instance
+                    .collection('foodPost')
+                    .doc(doc["docId"])
+                    .delete();
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(doc["Cid"])
+                    .update({"ExpCount": FieldValue.increment(1)});
+              }
             }
           });
         }
