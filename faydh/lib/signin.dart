@@ -77,9 +77,9 @@ class _signInSreenState extends State<signInSreen> {
       var period = const Duration(hours: 1);
       Timer.periodic(period, (arg) {
         print('inside save token');
-        saveToken(id: id, token: token!);
+        saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
       });
-      saveToken(id: id, token: token!);
+      saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
     });
   }
 
