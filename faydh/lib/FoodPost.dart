@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'dart:async';
+import 'dart:ui' as ui;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/Database/database.dart';
 import 'package:faydh/upload_api.dart';
@@ -13,6 +14,14 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'ReservedListProvider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
 
 class FoodPostScreen extends StatefulWidget {
   const FoodPostScreen({Key? key}) : super(key: key);
@@ -92,12 +101,6 @@ final List<String> myList = [
 class _FoodPostScreenState extends State<FoodPostScreen> {
   bool arrow = false;
 
-  @override
-  initState() {
-    super.initState();
-    getData();
-  }
-
   Future<String?> getData() async {
     var a = await FirebaseFirestore.instance
         .collection("users")
@@ -110,10 +113,285 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         arrow = true;
       });
     }
+    if (myrole == "منظمة تجارية") {
+      getToken(id: FirebaseAuth.instance.currentUser!.uid);
+    }
     return null;
   }
 
   String id = FirebaseAuth.instance.currentUser!.uid;
+//heeree
+  String? mtoken = "";
+
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  void getToken({required id}) async {
+    await FirebaseMessaging.instance.getToken().then((token) {
+      setState(() {
+        mtoken = token;
+        print('my token is $mtoken');
+      });
+      var period = const Duration(hours: 1);
+      Timer.periodic(period, (arg) {
+        print('inside save token');
+        saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+      });
+      saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+    });
+  }
+
+  void saveToken({required String id, required String token}) async {
+    /* await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .update({'token': token});}*/
+
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    DateTime dt1Now = DateTime.parse(formattedDate);
+    print("formattttt");
+    print(formattedDate);
+    FirebaseFirestore.instance
+        .collection('foodPost')
+        .where('Cid', isEqualTo: id)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        var raw_date = doc["postExp"].toString().split('-');
+        DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
+            int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
+        String exp = doc["postExp"];
+
+        print(exp);
+        if (dt1Now.isAfter(dt2check)) {
+          Future.delayed(const Duration(seconds: 2), () {
+            print("expired");
+            initInfo();
+            sendPushMessage(
+                token: token, title: "طعام منتهي", text: doc["postTitle"]);
+            if (doc["expFlag"] != 2) {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .update({"expFlag": FieldValue.increment(1)});
+              print(doc["expFlag"] == 3);
+            } else if (doc["expFlag"] == 2) {
+              print('providerrrrrrrr');
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(doc["Cid"])
+                  .update({"ExpCount": FieldValue.increment(1)});
+            }
+          });
+        } //end if
+        if (doc["reserve"] == '1' && doc["notify"] == '0') {
+          print('notify');
+          Future.delayed(const Duration(seconds: 5), () {
+            initInfo();
+            sendPushMessage(
+                token: token, title: " طعام محجوز ", text: doc["postTitle"]);
+          });
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'notify': '1'});
+        }
+
+        if (doc["reserve"] == '1' && doc["providerblocked"] == true) {
+          print('notify');
+          Future.delayed(const Duration(seconds: 7), () {
+            initInfo();
+            sendPushMessage(
+                token: token,
+                title: " حاجز الطعام محظور ",
+                text: doc["postTitle"]);
+          });
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'reserve': '0'});
+        }
+
+        if (doc["notifyCancelP"] == '0') {
+          print('notifyCancelP');
+          Future.delayed(const Duration(seconds: 5), () {
+            initInfo();
+            sendPushMessage(
+                token: token, title: " طعام ملغى ", text: doc["postTitle"]);
+          });
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'notifyCancelP': '1'});
+        }
+      });
+    });
+
+    FirebaseFirestore.instance
+        .collection('foodPost')
+        .where('reservedby', isEqualTo: id)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (doc["notifyCancelC"] == '0') {
+          print('notifyCancelC');
+          Future.delayed(const Duration(seconds: 5), () {
+            initInfo();
+            sendPushMessage(
+                token: token, title: " طعام ملغى ", text: doc["postTitle"]);
+          });
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'notifyCancelC': '1'});
+        }
+        var raw_date = doc["postExp"].toString().split('-');
+        DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
+            int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
+
+        if (dt1Now.isAfter(dt2check)) {
+          Future.delayed(const Duration(seconds: 2), () {
+            print("expired");
+            initInfo();
+            sendPushMessage(
+                token: token, title: "طعام منتهي", text: doc["postTitle"]);
+            if (doc["expFlag"] != 2) {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .update({"expFlag": FieldValue.increment(1)});
+              print(doc["expFlag"] == 3);
+              print(doc["expFlag"]);
+            } else if (doc["expFlag"] == 2) {
+              print('consumerrrrrrrr');
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(doc["Cid"])
+                  .update({"ExpCount": FieldValue.increment(1)});
+            }
+          });
+        }
+      });
+    });
+
+    FirebaseFirestore.instance
+        .collection('foodPost')
+        .where('reservedby', isEqualTo: id)
+        .where('providerblocked', isEqualTo: true)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        String title = doc["postTitle"].toString();
+        // String send = title + '';
+
+        Future.delayed(const Duration(seconds: 5), () {
+          initInfo();
+          sendPushMessage(
+              token: token,
+              title:
+                  "  عذرا الطعام المحجوز تم حذفه من قبل المشرف لانتهاكه سياسة الاستخدام     ",
+              text: title);
+        });
+
+        FirebaseFirestore.instance
+            .collection('foodPost')
+            .doc(doc["docId"])
+            .delete();
+      });
+    });
+  }
+
+  void initInfo() async {
+    var id = 0;
+    var androidInitialize =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    //var iosInitialize =const IOSInitializationSettings();
+    var initializationSettings =
+        InitializationSettings(android: androidInitialize);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print(
+          "onMessage: ${message.notification?.title}/${message.notification?.body}}");
+
+      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+        message.notification!.body.toString(),
+        htmlFormatContent: true,
+      );
+      AndroidNotificationDetails androidPlatformChanelSpecifics =
+          AndroidNotificationDetails(
+        'adfood',
+        'adfood',
+        importance: Importance.high,
+        styleInformation: bigTextStyleInformation,
+        priority: Priority.high,
+        playSound: true,
+      );
+
+      NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChanelSpecifics);
+
+      await flutterLocalNotificationsPlugin.show(
+          id++,
+          message.notification?.title,
+          message.notification?.body,
+          platformChannelSpecifics);
+    });
+  }
+
+  void sendPushMessage(
+      {required String token,
+      required String title,
+      required String text}) async {
+    print(title + '.....' + text);
+
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAA5LB0-7Q:APA91bGe0F1hMmg6Hh8MNQjGBTzyvxZyz-HInHqaWWg5MJ6LmKUNTAPPURXthsQfVxCNTUVhm90czUeMdUFcHCOlFr_XPqbKt7-Z7dRf3xXl3Bt6W7Cul94feW1ObmMoXnMEGw6_y0Hl',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'Flutter_Notification_Click',
+              'status': 'done',
+              'body': text,
+              'title': title,
+            },
+            "notification": <String, dynamic>{
+              "title": title,
+              "body": text,
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print('error notification');
+      }
+    }
+  }
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -232,7 +510,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                     )));
           }
           return Directionality(
-            textDirection: TextDirection.rtl,
+            textDirection: ui.TextDirection.ltr,
             child: ListView(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
@@ -994,7 +1272,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                               showDialog(
                                   context: context,
                                   builder: (_) => Directionality(
-                                        textDirection: TextDirection.rtl,
+                                        textDirection: ui.TextDirection.ltr,
                                         child: AlertDialog(
                                           shape: const RoundedRectangleBorder(
                                               borderRadius: BorderRadius.all(
@@ -1058,7 +1336,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                         notify: '0',
                                                         notifyCancelP: '1',
                                                         notifyCancelC: '1',
-                                                        expFlag: 1, 
+                                                        expFlag: 1,
                                                       ).whenComplete(() {
                                                         Navigator.pop(context);
                                                         setState(() {
