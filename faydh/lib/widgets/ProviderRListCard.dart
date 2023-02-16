@@ -1,24 +1,17 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:faydh/models/reported_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:faydh/services/firestore_methods.dart';
 
-import '../models/user_data_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 String id = FirebaseAuth.instance.currentUser!.uid;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 @override
 void initState() {
-  String id = FirebaseAuth.instance.currentUser!.uid;
   //getUser2();
-  // TODO: implement initState
 }
 
 String? usrEmail;
@@ -51,7 +44,6 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
     usrNamee = widget.postList.postUserName.toString();
     phonee = widget.postList.postPhone.toString();
     //consId = ("${widget.snap["reservedby"].toString()}");
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     // CollectionReference users = FirebaseFirestore.instance.collection('users');
     // _getUserData();
@@ -158,7 +150,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                 style: ElevatedButton.styleFrom(
                                   padding: const EdgeInsets.fromLTRB(
                                       20.0, 8.0, 20.0, 8.0),
-                                  backgroundColor: Color(0xFF1A4D2E),
+                                  backgroundColor: const Color(0xFF1A4D2E),
                                   shape: const StadiumBorder(),
                                 ),
                                 child: Row(

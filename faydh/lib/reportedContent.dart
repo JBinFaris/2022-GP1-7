@@ -148,18 +148,18 @@ class _reportedContent extends State<reportedContent> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     " :اسماء المستخدمين المبلغين \n",
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Container(
-                                      child: CircleAvatar(
+                                      child: const CircleAvatar(
                                     backgroundColor: Color(0xFFd6ecd0),
                                     radius: 20,
                                     child: Icon(
@@ -237,12 +237,12 @@ class _reportedContent extends State<reportedContent> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Text("تفاصيل المنشور"),
-                                        SizedBox(
+                                        const Text("تفاصيل المنشور"),
+                                        const SizedBox(
                                           width: 10,
                                         ),
                                         Container(
-                                            child: CircleAvatar(
+                                            child: const CircleAvatar(
                                           backgroundColor: Color(0xFFd6ecd0),
                                           radius: 40,
                                           child: Icon(
@@ -416,12 +416,12 @@ class _reportedContent extends State<reportedContent> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Text("تفاصيل الإعلان"),
-                                        SizedBox(
+                                        const Text("تفاصيل الإعلان"),
+                                        const SizedBox(
                                           width: 10,
                                         ),
                                         Container(
-                                            child: CircleAvatar(
+                                            child: const CircleAvatar(
                                           backgroundColor: Color(0xFFd6ecd0),
                                           radius: 40,
                                           child: Icon(

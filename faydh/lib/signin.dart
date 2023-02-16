@@ -402,7 +402,7 @@ class _signInSreenState extends State<signInSreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                            shape: RoundedRectangleBorder(
+                            shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
                             title: const Text(
@@ -428,7 +428,7 @@ class _signInSreenState extends State<signInSreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                            shape: RoundedRectangleBorder(
+                            shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
                             title: const Text(
@@ -460,7 +460,7 @@ class _signInSreenState extends State<signInSreen> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                            shape: RoundedRectangleBorder(
+                            shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
                             title: const Text(
@@ -590,13 +590,13 @@ class _signInSreenState extends State<signInSreen> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 1),
+                const SizedBox(height: 1),
                 Image.asset(
                   'assets/imgs/logo.png',
                   width: 250,
                   height: 200,
                 ),
-                SizedBox(height: 0.1),
+                const SizedBox(height: 0.1),
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -626,7 +626,7 @@ class _signInSreenState extends State<signInSreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 TextFormField(
                   obscureText: _isObscure,
                   controller: _passwordController,
@@ -709,7 +709,7 @@ class _signInSreenState extends State<signInSreen> {
                         });*/
                       }
                     }),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)

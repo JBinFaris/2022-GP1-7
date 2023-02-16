@@ -17,7 +17,7 @@ class _BlockedUserListState extends State<BlockedUserList> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text('  قائمة المحظورين '),
+        title: const Text('  قائمة المحظورين '),
         backgroundColor: const Color(0xFF1A4D2E),
         leading: GestureDetector(
           onTap: () {

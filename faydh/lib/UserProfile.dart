@@ -484,7 +484,7 @@ class _UserProfileState extends State<UserProfile> {
                                                               child: Stack(
                                                                 children: [
                                                                   Container(
-                                                                    margin: EdgeInsets
+                                                                    margin: const EdgeInsets
                                                                         .only(
                                                                             top:
                                                                                 50),
@@ -493,7 +493,7 @@ class _UserProfileState extends State<UserProfile> {
                                                                     width: double
                                                                         .maxFinite,
                                                                     decoration: BoxDecoration(
-                                                                        color: Color(
+                                                                        color: const Color(
                                                                             0xFFf7f7f7),
                                                                         borderRadius:
                                                                             BorderRadius.circular(10)),
@@ -505,7 +505,7 @@ class _UserProfileState extends State<UserProfile> {
                                                                             _createSampleData() {
                                                                               return SfCartesianChart(
                                                                                 palette: [
-                                                                                  Color.fromRGBO(205, 233, 197, 1),
+                                                                                  const Color.fromRGBO(205, 233, 197, 1),
                                                                                 ],
                                                                                 plotAreaBorderWidth: 0,
                                                                                 title: ChartTitle(
@@ -535,7 +535,7 @@ class _UserProfileState extends State<UserProfile> {
                                                                                 padding: const EdgeInsets.only(top: 40, bottom: 20),
                                                                                 child: _createSampleData());
                                                                           } else {
-                                                                            return CupertinoActivityIndicator();
+                                                                            return const CupertinoActivityIndicator();
                                                                           }
                                                                         }),
                                                                   ),
@@ -617,7 +617,7 @@ class _UserProfileState extends State<UserProfile> {
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                              shape: RoundedRectangleBorder(
+                                              shape: const RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(
@@ -681,7 +681,7 @@ class _UserProfileState extends State<UserProfile> {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                                shape: RoundedRectangleBorder(
+                                                shape: const RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.all(
                                                             Radius.circular(

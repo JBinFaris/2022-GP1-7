@@ -1,9 +1,6 @@
-import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:faydh/services/firestore_methods.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'edit_posts.dart';
@@ -34,7 +31,6 @@ class _MyCardState extends State<MyCard> {
   void initState() {
     myUsername = "";
     getUser2();
-    // TODO: implement initState
   }
 
   Future getUser2() async {
@@ -84,7 +80,7 @@ class _MyCardState extends State<MyCard> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
+                  color: const Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
                   spreadRadius: 5,
                   blurRadius: 7,
                   offset: const Offset(0, 3),
@@ -127,7 +123,7 @@ class _MyCardState extends State<MyCard> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(15.0))),
                                   title: const Text(

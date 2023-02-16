@@ -439,7 +439,7 @@ class _viewAllFood extends State<viewAllFood> {
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 70,
                   ),
                   Padding(

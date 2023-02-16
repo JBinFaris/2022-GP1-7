@@ -11,10 +11,10 @@ class Splash_Animated extends StatelessWidget {
     return AnimatedSplashScreen.withScreenFunction(
       splash: 'assets/imgs/faydh.png',
       screenFunction: () async {
-        return signInSreen();
+        return const signInSreen();
       },
       splashIconSize: 1000,
-      backgroundColor: Color(0xFFf7f7f7),
+      backgroundColor: const Color(0xFFf7f7f7),
       splashTransition: SplashTransition.fadeTransition,
       pageTransitionType: PageTransitionType.topToBottom,
     );

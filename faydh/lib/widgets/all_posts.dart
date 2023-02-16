@@ -69,7 +69,7 @@ class _AllPostsCardState extends State<AllPostsCard> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
+                  color: const Color.fromARGB(255, 62, 112, 82).withOpacity(0.9),
                   spreadRadius: 5,
                   blurRadius: 7,
                   offset: const Offset(0, 3),

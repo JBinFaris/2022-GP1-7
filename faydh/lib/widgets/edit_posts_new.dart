@@ -5,11 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:provider/provider.dart';
-import '../Database/drop_down_provider.dart';
 import '../services/firestore_methods.dart';
 import '../utilis/utilis.dart';
-import 'custom_drop_down.dart';
 
 class EditPostNew extends StatefulWidget {
   final String title;
@@ -408,23 +405,21 @@ class _EditPostNewState extends State<EditPostNew> {
                                 children: <Widget>[
                                   Row(
                                     children: <Widget>[
-                                      Container(
-                                        child: Row(
-                                          children: <Widget>[
-                                            const Icon(
-                                              Icons.date_range,
-                                              size: 18.0,
-                                              color: Color(0xFF1A4D2E),
-                                            ),
-                                            Text(
-                                              " $_date",
-                                              style: const TextStyle(
-                                                  color: Color(0xFF1A4D2E),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14.0),
-                                            ),
-                                          ],
-                                        ),
+                                      Row(
+                                        children: <Widget>[
+                                          const Icon(
+                                            Icons.date_range,
+                                            size: 18.0,
+                                            color: Color(0xFF1A4D2E),
+                                          ),
+                                          Text(
+                                            " $_date",
+                                            style: const TextStyle(
+                                                color: Color(0xFF1A4D2E),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14.0),
+                                          ),
+                                        ],
                                       )
                                     ],
                                   ),

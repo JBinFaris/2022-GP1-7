@@ -33,7 +33,7 @@ class _ApproveBusinessState extends State<ApproveBusiness> {
       appBar: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: true,
-          title: Text('التحقق من الشركات'),
+          title: const Text('التحقق من الشركات'),
           backgroundColor: const Color(0xFF1A4D2E),
           leading: GestureDetector(
             onTap: () {

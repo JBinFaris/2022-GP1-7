@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
               //cursorColor: Colors.green,
               ),
         ),
-        home: Splash_Animated(),
+        home: const Splash_Animated(),
       ),
     );
   }

@@ -654,7 +654,7 @@ class _SignupFormState extends State<SignupForm> {
                               return const TermsAndConditions();
                             }));
                           },
-                          child: Text.rich(
+                          child: const Text.rich(
                             TextSpan(
                               text: '*   تسجيل دخولك يعني موافقتك ',
                               style: TextStyle(

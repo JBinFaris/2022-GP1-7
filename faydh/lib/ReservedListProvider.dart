@@ -52,7 +52,7 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
   Widget build(BuildContext context) {
     if (!dataoaded) getAllUsers();
     return Scaffold(
-        backgroundColor: Color(0xffd6ecd0),
+        backgroundColor: const Color(0xffd6ecd0),
         appBar: AppBar(
             elevation: 2.0,
             centerTitle: true,

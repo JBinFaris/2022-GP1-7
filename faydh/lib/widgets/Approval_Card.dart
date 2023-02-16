@@ -94,7 +94,7 @@ class _ApprovalCardState extends State<ApprovalCard> {
                                         style: ElevatedButton.styleFrom(
                                           padding: const EdgeInsets.fromLTRB(
                                               20.0, 10.0, 20.0, 10.0),
-                                          backgroundColor: Color(0xFF1A4D2E),
+                                          backgroundColor: const Color(0xFF1A4D2E),
                                           shape: const StadiumBorder(),
                                         ),
                                         onPressed: () {
@@ -275,7 +275,7 @@ class _ApprovalCardState extends State<ApprovalCard> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 12,
                   )
                 ],
