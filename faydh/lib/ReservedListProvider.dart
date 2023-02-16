@@ -133,7 +133,9 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
                           postExp: element['postExp'],
                           food_cont: element['food_cont'],
                           providerblocked: element['providerblocked'],
-                          reservedby: element["reservedby"]));
+                          reservedby: element["reservedby"],
+                          expFlag: element["expFlag"]
+                          ));
                     }
                     for (var i = 0; i < usersList.length; i++) {
                       for (var j = 0; j < postList.length; j++) {

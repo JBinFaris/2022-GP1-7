@@ -27,6 +27,8 @@ class Database {
   final String food_cont;
   final bool providerblocked;
   String? reservedby;
+  final bool expFlag;
+
 
   String? postUserName;
 
@@ -46,6 +48,8 @@ class Database {
     required this.food_cont,
     required this.reservedby,
     required this.providerblocked,
+    required this.expFlag,
+
   });
 
   static Future<void> addFoodPostData({
@@ -60,6 +64,8 @@ class Database {
     required String postExp,
     required String food_cont,
     required bool providerblocked,
+    required bool expFlag,
+
     String? reserve,
     String? notify,
     String? reservedby,
@@ -86,6 +92,7 @@ class Database {
       'reservedby': reservedby,
       'notifyCancelP': notifyCancelP,
       'notifyCancelC': notifyCancelC,
+      'expFlag': expFlag ,
     };
     await documentReference.set(data).whenComplete(() {
       print('Note item saved to the database');
