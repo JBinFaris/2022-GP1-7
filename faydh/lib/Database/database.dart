@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:core';
+import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/models/user_model.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class Database {
   final String food_cont;
   final bool providerblocked;
   String? reservedby;
-  final bool expFlag;
+  final int expFlag;
 
 
   String? postUserName;
@@ -64,7 +65,7 @@ class Database {
     required String postExp,
     required String food_cont,
     required bool providerblocked,
-    required bool expFlag,
+    required int expFlag,
 
     String? reserve,
     String? notify,
