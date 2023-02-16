@@ -358,7 +358,8 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                   padding:
                                       const EdgeInsets.fromLTRB(29, 8.2, 29, 8),
                                   //  backgroundColor: Color.fromARGB(255, 194, 5, 5),
-                                  backgroundColor: Color(0xFF1A4D2E),
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 194, 5, 5),
                                   shape: const StadiumBorder(),
                                 ),
                                 child: Row(
