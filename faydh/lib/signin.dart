@@ -112,16 +112,16 @@ class _signInSreenState extends State<signInSreen> {
             initInfo();
             sendPushMessage(
                 token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            if (doc["expFlag"] == true) {
+            if (doc["expFlag"] != 3) {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
-                  .delete();
+                  .update({"expFlqag": FieldValue.increment(1)});
             } else {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
-                  .update({'expFlag': true});
+                  .delete();
             }
           });
           FirebaseFirestore.instance
@@ -200,16 +200,16 @@ class _signInSreenState extends State<signInSreen> {
             initInfo();
             sendPushMessage(
                 token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            if (doc["expFlag"] == true) {
+            if (doc["expFlag"] != 3) {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
-                  .delete();
+                  .update({"expFlqag": FieldValue.increment(1)});
             } else {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
-                  .update({'expFlag': true});
+                  .delete();
             }
           });
 
