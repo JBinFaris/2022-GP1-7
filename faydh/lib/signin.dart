@@ -117,7 +117,8 @@ class _signInSreenState extends State<signInSreen> {
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .update({"expFlag": FieldValue.increment(1)});
-            } else if (doc["expFlag"] == 3) {
+            }
+            if (doc["expFlag"] == 3) {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
@@ -205,7 +206,8 @@ class _signInSreenState extends State<signInSreen> {
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .update({"expFlag": FieldValue.increment(1)});
-            } else if (doc["expFlag"] == 3) {
+            }
+            if (doc["expFlag"] == 3) {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
