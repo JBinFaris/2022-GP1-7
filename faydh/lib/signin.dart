@@ -74,7 +74,7 @@ class _signInSreenState extends State<signInSreen> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(hours: 1);
+      var period = const Duration(seconds: 5);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: id, token: token!);
@@ -158,6 +158,20 @@ class _signInSreenState extends State<signInSreen> {
               .collection('foodPost')
               .doc(doc["docId"])
               .update({'notifyCancelP': '1'});
+        }
+
+        if (dt1Now.isAfter(dt2check)) {
+          Future.delayed(const Duration(seconds: 2), () {
+            print("expired");
+            initInfo();
+            sendPushMessage(
+                token: token, title: "طعام منتهي", text: doc["postTitle"]);
+
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .delete();
+          });
         }
       });
     });
