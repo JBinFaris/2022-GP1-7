@@ -112,26 +112,23 @@ class _signInSreenState extends State<signInSreen> {
             initInfo();
             sendPushMessage(
                 token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            if (doc["expFlag"] != 3) {
-
+            if (doc["expFlag"] != 2) {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .update({"expFlag": FieldValue.increment(1)});
-                
-        
+              print(doc["expFlag"] == 3);
+            } else if (doc["expFlag"] == 2) {
+              print('providerrrrrrrr');
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(doc["Cid"])
+                  .update({"ExpCount": FieldValue.increment(1)});
             }
-                 else if (doc["expFlag"] == 3) {
-                print('providerrrrrrrr');
-                FirebaseFirestore.instance
-                    .collection('foodPost')
-                    .doc(doc["docId"])
-                    .delete();
-                FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(doc["Cid"])
-                    .update({"ExpCount": FieldValue.increment(1)});
-              }
           });
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
@@ -205,24 +202,24 @@ class _signInSreenState extends State<signInSreen> {
             initInfo();
             sendPushMessage(
                 token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            if (doc["expFlag"] != 3) {
+            if (doc["expFlag"] != 2) {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .update({"expFlag": FieldValue.increment(1)});
-       
+              print(doc["expFlag"] == 3);
+              print(doc["expFlag"]);
+            } else if (doc["expFlag"] == 2) {
+              print('consumerrrrrrrr');
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(doc["Cid"])
+                  .update({"ExpCount": FieldValue.increment(1)});
             }
-                  else if (doc["expFlag"] == 3) {
-                print('consumerrrrrrrr');
-                FirebaseFirestore.instance
-                    .collection('foodPost')
-                    .doc(doc["docId"])
-                    .delete();
-                FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(doc["Cid"])
-                    .update({"ExpCount": FieldValue.increment(1)});
-              }
           });
         }
       });
