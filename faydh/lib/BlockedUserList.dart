@@ -58,6 +58,15 @@ class _BlockedUserListState extends State<BlockedUserList> {
                     ),
                   );
                 }
+                if (snaphot.hasData && snaphot.data?.size == 0) {
+                  return const Center(
+                      child: Text("! لا يوجد مستخدمين محظورين",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          )));
+                }
 
                 return ListView.builder(
                   itemCount: snaphot.data?.docs.length,
