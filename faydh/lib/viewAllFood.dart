@@ -88,6 +88,15 @@ class _viewAllFood extends State<viewAllFood> {
         .collection('foodPost')
         .doc(id)
         .update({'reservedby': FirebaseAuth.instance.currentUser?.uid});
+
+          await FirebaseFirestore.instance
+        .collection('foodPost')
+        .doc(id)
+        .update({'notify': '0'});
+
+
+
+        
   }
 
   //Future sortData() async {}
@@ -464,10 +473,10 @@ class _viewAllFood extends State<viewAllFood> {
 
                         data['docId'].toString();
                         reserve(id: data['docId'].toString());
-                        data['docId'].update({'notify': '0'});
-                        data['docId'].update({
-                          'reservedby': FirebaseAuth.instance.currentUser?.uid
-                        });
+                      //  data['docId'].update({'notify': '0'});
+                    //    data['docId'].update({
+                    //      'reservedby': FirebaseAuth.instance.currentUser?.uid
+                    //    });
 
                         FirebaseFirestore.instance
                             .collection('users')

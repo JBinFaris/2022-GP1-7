@@ -352,7 +352,7 @@ class _signInSreenState extends State<signInSreen> {
           res = "success";
 
           final User? user = await _auth.currentUser;
-          final userID = user!.uid;
+          final userID = FirebaseAuth.instance.currentUser!.uid;
 
           print(userID);
 
@@ -361,7 +361,7 @@ class _signInSreenState extends State<signInSreen> {
 
           snap = await FirebaseFirestore.instance
               .collection("users")
-              .doc(userID)
+              .doc(FirebaseAuth.instance.currentUser!.uid)
               .get();
           print("object2");
 
@@ -372,11 +372,11 @@ class _signInSreenState extends State<signInSreen> {
 
             if (Active == true) {
               if (myrole == "فرد") {
-                getToken(id: uid);
+                getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const HomePage()));
               } else if (myrole == "منظمة تجارية") {
-                getToken(id: uid);
+                getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 final status = (snap.data() as Map<String, dynamic>)['status'];
                 if (status == "0") {
                   res = " بإنتظار الموافقه ";
@@ -442,7 +442,7 @@ class _signInSreenState extends State<signInSreen> {
                           builder: (context) => const businessHome()));
                 }
               } else if (myrole == "منظمة خيرية") {
-                getToken(id: uid);
+                getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
