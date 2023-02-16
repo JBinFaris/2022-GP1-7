@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
@@ -11,7 +10,11 @@ class User {
   final String? status;
   final String? crNoExpDate;
   int ReportCount; //= 0;
- bool Active ;
+  bool Active;
+
+  int expCount = 0;
+  int postCount = 0;
+  int reserveCount = 0;
 
   User({
     required this.email,
@@ -22,9 +25,8 @@ class User {
     this.crNo,
     this.status,
     this.crNoExpDate,
-    this.ReportCount = 0 ,
-   required this.Active ,
-
+    this.ReportCount = 0,
+    required this.Active,
   });
 
   Map<String, dynamic> toJson() => {
@@ -38,7 +40,9 @@ class User {
         if (role == "منظمة تجارية") "status": "0",
         if (role == "منظمة تجارية")
           "crNoExpDate": crNoExpDate.toString().trim(),
-
+        if (role != 'منظمة خيرية') "ExpCount": expCount,
+        if (role != 'منظمة خيرية') "postCount": postCount,
+        if (role != 'منظمة خيرية') "reserveCount": reserveCount,
       };
 
   static User fromSnap(DocumentSnapshot snap) {

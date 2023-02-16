@@ -1064,6 +1064,17 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                           selectedValue = null;
                                                         });
                                                       });
+
+                                                      FirebaseFirestore.instance
+                                                          .collection('users')
+                                                          .doc(FirebaseAuth
+                                                              .instance
+                                                              .currentUser!
+                                                              .uid)
+                                                          .update({
+                                                        "postCount": FieldValue
+                                                            .increment(1)
+                                                      });
                                                     } else {
                                                       Fluttertoast.showToast(
                                                         msg:

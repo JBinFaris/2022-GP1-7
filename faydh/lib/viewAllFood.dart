@@ -468,6 +468,11 @@ class _viewAllFood extends State<viewAllFood> {
                         data['docId'].update({
                           'reservedby': FirebaseAuth.instance.currentUser?.uid
                         });
+
+                        FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(data["Cid"])
+                            .update({"reserveCount": FieldValue.increment(1)});
                       },
                       style: ElevatedButton.styleFrom(
                         padding:

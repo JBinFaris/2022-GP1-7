@@ -29,51 +29,11 @@ class _UserProfileState extends State<UserProfile> {
   String myrole = "";
   String myCr = "";
   String myStatus = "";
+
   @override
   void initState() {
     super.initState();
     _getUserData();
-  }
-
-  Future getuserpostandotherdata(rewrite) async {
-    var postCount = 0, reserveCount = 0, ExpCount = 0;
-    var date = DateTime.now();
-    var expdate;
-    DateTime exp;
-    var posted = await FirebaseFirestore.instance
-        .collection("foodPost")
-        .where('Cid', isEqualTo: '${FirebaseAuth.instance.currentUser!.uid}')
-        .get();
-    posted.docs.forEach((element) {
-      expdate = element.data()['postExp'].toString().split('-');
-      exp = DateTime(
-        int.parse(expdate[0]),
-        int.parse(expdate[1]),
-        int.parse(expdate[2]),
-      );
-      if (element.data()['reserve'] == '1') {
-        reserveCount = reserveCount + 1;
-      }
-      if (exp.isBefore(DateTime.now().subtract(const Duration(days: 1))) ==
-          true) {
-        ExpCount = ExpCount + 1;
-      }
-    });
-
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .update({
-      'postCount': '${posted.docs.length}',
-      'reserveCount': '$reserveCount',
-      'ExpCount': '$ExpCount'
-    });
-
-    return {
-      'post posted': posted.docs.length,
-      'posts with expiry date': '$ExpCount',
-      'postesreserved': '$reserveCount'
-    };
   }
 
   fetchUserData() async {
@@ -97,14 +57,14 @@ class _UserProfileState extends State<UserProfile> {
         userEmail = (snap.data() as Map<String, dynamic>)['email'];
         phoneNumber = (snap.data() as Map<String, dynamic>)['phoneNumber'];
         myrole = (snap.data() as Map<String, dynamic>)['role'];
-        {
-          if (myrole == "منظمة تجارية") {
-            myCr = (snap.data() as Map<String, dynamic>)['crNo'];
-            myStatus = (snap.data() as Map<String, dynamic>)['status'];
-          }
 
-          //  Map myReg = (snap.data() ?? {}) as Map;
+        if (myrole == "منظمة تجارية") {
+          myCr = (snap.data() as Map<String, dynamic>)['crNo'];
+          myStatus = (snap.data() as Map<String, dynamic>)['status'];
         }
+
+        //  Map myReg = (snap.data() ?? {}) as Map;
+
       }
     });
   }
@@ -538,7 +498,7 @@ class _UserProfileState extends State<UserProfile> {
                                                                         borderRadius:
                                                                             BorderRadius.circular(10)),
                                                                     child: FutureBuilder(
-                                                                        future: getuserpostandotherdata(userdatasnap.data),
+                                                                        future: fetchUserData(),
                                                                         builder: (context, datasnap) {
                                                                           if (datasnap.connectionState == ConnectionState.done &&
                                                                               datasnap.hasData) {
@@ -558,9 +518,9 @@ class _UserProfileState extends State<UserProfile> {
                                                                                 series: <ColumnSeries<BarMmodel, String>>[
                                                                                   ColumnSeries<BarMmodel, String>(
                                                                                     dataSource: <BarMmodel>[
-                                                                                      BarMmodel('عدد الإعلانات', int.parse('${datasnap.data['post posted']}')),
-                                                                                      BarMmodel("الإعلانات المحجوزة", int.parse('${datasnap.data['posts with expiry date']}')),
-                                                                                      BarMmodel("الأطعمة منتهية\n الصلاحية", int.parse('${datasnap.data['postesreserved']}')),
+                                                                                      BarMmodel('عدد الإعلانات', userdatasnap.data["postCount"]),
+                                                                                      BarMmodel("الإعلانات المحجوزة", userdatasnap.data["reserveCount"]),
+                                                                                      BarMmodel("الأطعمة منتهية\n الصلاحية", userdatasnap.data["ExpCount"]),
                                                                                     ],
                                                                                     xValueMapper: (BarMmodel sales, _) => sales.x as String,
                                                                                     yValueMapper: (BarMmodel sales, _) => sales.y,
@@ -598,8 +558,7 @@ class _UserProfileState extends State<UserProfile> {
                                                                       )),
                                                                 ],
                                                               ),
-                                                            )
-                                                            );
+                                                            ));
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 padding:
@@ -659,7 +618,10 @@ class _UserProfileState extends State<UserProfile> {
                                         builder: (BuildContext context) {
                                           return AlertDialog(
                                               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              15.0))),
                                               title: const Text(
                                                 'تسجيل الخروج',
                                                 textAlign: TextAlign.right,
@@ -720,7 +682,10 @@ class _UserProfileState extends State<UserProfile> {
                                           builder: (BuildContext context) {
                                             return AlertDialog(
                                                 shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15.0))),
                                                 title: const Text(
                                                   'حفظ التغييرات',
                                                   textAlign: TextAlign.right,
