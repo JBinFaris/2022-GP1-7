@@ -113,11 +113,15 @@ class _signInSreenState extends State<signInSreen> {
             sendPushMessage(
                 token: token, title: "طعام منتهي", text: doc["postTitle"]);
             if (doc["expFlag"] != 3) {
+
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .update({"expFlag": FieldValue.increment(1)});
-              if (doc["expFlag"] == 3) {
+                
+        
+            }
+                 else if (doc["expFlag"] == 3) {
                 print('providerrrrrrrr');
                 FirebaseFirestore.instance
                     .collection('foodPost')
@@ -128,7 +132,6 @@ class _signInSreenState extends State<signInSreen> {
                     .doc(doc["Cid"])
                     .update({"ExpCount": FieldValue.increment(1)});
               }
-            }
           });
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
@@ -207,7 +210,9 @@ class _signInSreenState extends State<signInSreen> {
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .update({"expFlag": FieldValue.increment(1)});
-              if (doc["expFlag"] == 3) {
+       
+            }
+                  else if (doc["expFlag"] == 3) {
                 print('consumerrrrrrrr');
                 FirebaseFirestore.instance
                     .collection('foodPost')
@@ -218,7 +223,6 @@ class _signInSreenState extends State<signInSreen> {
                     .doc(doc["Cid"])
                     .update({"ExpCount": FieldValue.increment(1)});
               }
-            }
           });
         }
       });
