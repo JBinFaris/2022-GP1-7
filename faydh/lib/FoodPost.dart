@@ -510,7 +510,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                     )));
           }
           return Directionality(
-            textDirection: ui.TextDirection.ltr,
+            textDirection: ui.TextDirection.rtl,
             child: ListView(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
