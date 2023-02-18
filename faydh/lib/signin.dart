@@ -68,7 +68,7 @@ class _signInSreenState extends State<signInSreen> {
     }
   }
 
-  /*void getToken({required id}) async {
+  void getToken({required id}) async {
     await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
         mtoken = token;
@@ -92,8 +92,6 @@ class _signInSreenState extends State<signInSreen> {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     DateTime dt1Now = DateTime.parse(formattedDate);
-
-
 
     print("formattttt");
     print(formattedDate);
@@ -330,7 +328,7 @@ class _signInSreenState extends State<signInSreen> {
         print('error notification');
       }
     }
-  }*/
+  }
 
   @override
   void dispose() {
@@ -372,28 +370,34 @@ class _signInSreenState extends State<signInSreen> {
             final myrole = (snap.data() as Map<String, dynamic>)['role'];
             final uid = (snap.data() as Map<String, dynamic>)['uid'];
             final Active = (snap.data() as Map<String, dynamic>)['Active'];
-            final crExpDate = snap["crNoExpDate"];
 
+            DateTime dt4check = DateTime.now();
+            ;
+            DateTime dt3Now = DateTime.now();
+            ;
+            if (myrole == "منظمة تجارية") {
+              final crExpDate = snap["crNoExpDate"];
 
-   DateTime now = DateTime.now();
-    String formattedDate = DateFormat('yyyy-MM-dd').format(now);
-    DateTime dt3Now = DateTime.parse(formattedDate);
+              DateTime now = DateTime.now();
+              String formattedDate = DateFormat('yyyy-MM-dd').format(now);
+              dt3Now = DateTime.parse(formattedDate);
 
-    print(dt3Now);
+              print(dt3Now);
 
-      var raw_date = snap["crNoExpDate"].toString().split('-');
-        DateTime dt4check = DateTime(int.parse('${raw_date[0]}'),
-            int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
-        
-         print("IM HEREE"+ "$dt4check");
-    
+              var raw_date = snap["crNoExpDate"].toString().split('-');
+              dt4check = DateTime(int.parse('${raw_date[0]}'),
+                  int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
+
+              print("IM HEREE" + "$dt4check");
+            }
+
             if (Active == true) {
               if (myrole == "فرد") {
-              //  getToken(id: FirebaseAuth.instance.currentUser!.uid);
+                getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const HomePage()));
               } else if (myrole == "منظمة تجارية") {
-              //  getToken(id: FirebaseAuth.instance.currentUser!.uid);
+                getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 final status = (snap.data() as Map<String, dynamic>)['status'];
                 if (status == "0") {
                   res = " بإنتظار الموافقه ";
@@ -453,48 +457,48 @@ class _signInSreenState extends State<signInSreen> {
                             ]);
                       });
                 } else if (status == "1") {
-                if ( dt3Now.isAfter(dt4check) ){
-                  res = "موقوف";
+                  // if (dt3Now.isAfter(dt4check)) {
+                  //   res = "موقوف";
 
-                   showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.0))),
-                            title: const Text(
-                              " حالة الحساب" + ": " + " منتهي تاريخ صالحية السجل التجاري ",
-                              textAlign: TextAlign.right,
-                            ),
-                            content: const Text(
-                              " الحساب موقوف نظراً لإنتهاء صلاحية السجل التجاري" +
-                                  "\n" +
-                                  " يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم شكوى او تجديد السجل التجاري " +
-                                  "\n" +
-                                  "teamfaydh@gmail.com",
-                              textAlign: TextAlign.right,
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text("موافق"),
-                                onPressed: () async {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ]);
-                      });
-
-                }else{
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const businessHome()));
-              
+                  //   showDialog(
+                  //       context: context,
+                  //       builder: (BuildContext context) {
+                  //         return AlertDialog(
+                  //             shape: const RoundedRectangleBorder(
+                  //                 borderRadius:
+                  //                     BorderRadius.all(Radius.circular(15.0))),
+                  //             title: const Text(
+                  //               " حالة الحساب" +
+                  //                   ": " +
+                  //                   " منتهي تاريخ صالحية السجل التجاري ",
+                  //               textAlign: TextAlign.right,
+                  //             ),
+                  //             content: const Text(
+                  //               " الحساب موقوف نظراً لإنتهاء صلاحية السجل التجاري" +
+                  //                   "\n" +
+                  //                   " يكنك التواصل مع فريق فيض عبر البريد الالكتروني لتقديم شكوى او تجديد السجل التجاري " +
+                  //                   "\n" +
+                  //                   "teamfaydh@gmail.com",
+                  //               textAlign: TextAlign.right,
+                  //             ),
+                  //             actions: <Widget>[
+                  //               TextButton(
+                  //                 child: const Text("موافق"),
+                  //                 onPressed: () async {
+                  //                   Navigator.pop(context);
+                  //                 },
+                  //               ),
+                  //             ]);
+                  //       });
+                  // } else {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => const businessHome()));
+                  // }
                 }
-                }       
               } else if (myrole == "منظمة خيرية") {
-             //   getToken(id: FirebaseAuth.instance.currentUser!.uid);
+                getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -580,8 +584,8 @@ class _signInSreenState extends State<signInSreen> {
               colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
         ),
         padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 120,
+          horizontal: 10,
+          vertical: 48,
         ),
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
