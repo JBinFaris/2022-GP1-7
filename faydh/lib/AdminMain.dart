@@ -1,11 +1,20 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faydh/ApproveBusiness.dart';
 import 'package:faydh/reportedContent.dart';
 import 'package:faydh/reports.dart';
 import 'package:faydh/services/auth_methods.dart';
 import 'package:faydh/signin.dart';
 import 'package:faydh/usersListCards.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:faydh/components/background.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class AdminMain extends StatefulWidget {
   const AdminMain({super.key});
@@ -15,6 +24,136 @@ class AdminMain extends StatefulWidget {
 
 @override
 class _AdminMainPageState extends State<AdminMain> {
+  String? mtoken = "";
+
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  void initInfo() async {
+    var id = 0;
+    var androidInitialize =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    //var iosInitialize =const IOSInitializationSettings();
+    var initializationSettings =
+        InitializationSettings(android: androidInitialize);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      print(
+          "onMessage: ${message.notification?.title}/${message.notification?.body}}");
+
+      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+        message.notification!.body.toString(),
+        htmlFormatContent: true,
+      );
+      AndroidNotificationDetails androidPlatformChanelSpecifics =
+          AndroidNotificationDetails(
+        'adfood',
+        'adfood',
+        importance: Importance.high,
+        styleInformation: bigTextStyleInformation,
+        priority: Priority.high,
+        playSound: true,
+      );
+
+      NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChanelSpecifics);
+
+      await flutterLocalNotificationsPlugin.show(
+          id++,
+          message.notification?.title,
+          message.notification?.body,
+          platformChannelSpecifics);
+    });
+  }
+
+  void sendPushMessage(
+      {required String token,
+      required String title,
+      required String text}) async {
+    print(title + '.....' + text);
+
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization':
+              'key=AAAA5LB0-7Q:APA91bGe0F1hMmg6Hh8MNQjGBTzyvxZyz-HInHqaWWg5MJ6LmKUNTAPPURXthsQfVxCNTUVhm90czUeMdUFcHCOlFr_XPqbKt7-Z7dRf3xXl3Bt6W7Cul94feW1ObmMoXnMEGw6_y0Hl',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'Flutter_Notification_Click',
+              'status': 'done',
+              'body': text,
+              'title': title,
+            },
+            "notification": <String, dynamic>{
+              "title": title,
+              "body": text,
+              "android_channel_id": "dbfood",
+            },
+            "to": token,
+          },
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print('error notification');
+      }
+    }
+  }
+
+  void saveToken({required String id, required String token}) async {
+    /* await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .update({'token': token});}*/
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .where('role', isEqualTo: 'منظمة تجارية')
+        .where('status', isEqualTo: '0')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (true) {
+          Future.delayed(const Duration(seconds: 2), () {
+            print("expired");
+            initInfo();
+            sendPushMessage(
+                token: token,
+                title: "منظمة تجارية تحتاج للتحقق",
+                text: doc["username"]);
+          });
+        } //end if
+      });
+    });
+  }
+
+  void getToken({required id}) async {
+    await FirebaseMessaging.instance.getToken().then((token) {
+      setState(() {
+        mtoken = token;
+        print('my token is $mtoken');
+      });
+      var period = const Duration(hours: 1);
+      Timer.periodic(period, (arg) {
+        print('inside save token');
+        saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+      });
+      saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+    });
+  }
+
+  @override
+  initState() {
+    super.initState();
+
+    getToken(id: FirebaseAuth.instance.currentUser!.uid);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
