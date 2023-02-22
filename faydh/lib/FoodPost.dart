@@ -187,6 +187,18 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                 .doc(doc["docId"])
                 .delete();
           }
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .where('reservedby', isEqualTo: null)
+              .get()
+              .then((QuerySnapshot querySnapshot) {
+            querySnapshot.docs.forEach((doc) {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+            });
+          });
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
           print('notify');
