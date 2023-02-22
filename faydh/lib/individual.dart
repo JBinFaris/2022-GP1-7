@@ -16,26 +16,19 @@ import 'forget-password.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 
-
-
 class individual extends StatefulWidget {
   const individual({super.key});
   @override
   State<individual> createState() => _individualPageState();
-
-
 }
-
-
 
 @override
 class _individualPageState extends State<individual> {
-   String? mtoken = "";
+  String? mtoken = "";
 
-   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-   
   void getToken({required id}) async {
     await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
@@ -50,7 +43,8 @@ class _individualPageState extends State<individual> {
       saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
     });
   }
-    void saveToken({required String id, required String token}) async {
+
+  void saveToken({required String id, required String token}) async {
     /* await FirebaseFirestore.instance
         .collection('users')
         .doc(id)
@@ -74,29 +68,26 @@ class _individualPageState extends State<individual> {
 
         print(exp);
         if (dt1Now.isAfter(dt2check)) {
-          Future.delayed(const Duration(seconds: 2), () {
-            print("expired");
-            initInfo();
-            sendPushMessage(
-                token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            if (doc["expFlag"] != 2) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .update({"expFlag": FieldValue.increment(1)});
-              print(doc["expFlag"] == 3);
-            } else if (doc["expFlag"] == 2) {
-              print('providerrrrrrrr');
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-              FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(doc["Cid"])
-                  .update({"ExpCount": FieldValue.increment(1)});
-            }
-          });
+          if (doc["sendExpProvider"] == false) {
+            print('bbbbbbbbbbbbbb');
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .update({'sendExpProvider': true});
+            Future.delayed(const Duration(seconds: 2), () {
+              print("expired");
+              initInfo();
+              sendPushMessage(
+                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
+            });
+          }
+          if (doc["sendExpConsumer"] == true &&
+              doc["sendExpProvider"] == true) {
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .delete();
+          }
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
           print('notify');
@@ -164,30 +155,26 @@ class _individualPageState extends State<individual> {
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
 
         if (dt1Now.isAfter(dt2check)) {
-          Future.delayed(const Duration(seconds: 2), () {
-            print("expired");
-            initInfo();
-            sendPushMessage(
-                token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            if (doc["expFlag"] != 2) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .update({"expFlag": FieldValue.increment(1)});
-              print(doc["expFlag"] == 3);
-              print(doc["expFlag"]);
-            } else if (doc["expFlag"] == 2) {
-              print('consumerrrrrrrr');
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-              FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(doc["Cid"])
-                  .update({"ExpCount": FieldValue.increment(1)});
-            }
-          });
+          if (doc["sendExpConsumer"] == false) {
+            print('bbbbbbbbbbbbbb');
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .update({'sendExpConsumer': true});
+            Future.delayed(const Duration(seconds: 2), () {
+              print("expired");
+              initInfo();
+              sendPushMessage(
+                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
+            });
+          }
+          if (doc["sendExpConsumer"] == true &&
+              doc["sendExpProvider"] == true) {
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .delete();
+          }
         }
       });
     });
@@ -300,8 +287,9 @@ class _individualPageState extends State<individual> {
     // TODO: implement initState
     super.initState();
 
-    getToken( id: FirebaseAuth.instance.currentUser!.uid);
+    getToken(id: FirebaseAuth.instance.currentUser!.uid);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

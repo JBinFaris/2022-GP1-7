@@ -168,6 +168,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         print(exp);
         if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpProvider"] == false) {
+            print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
                 .collection('foodPost')
                 .doc(doc["docId"])
@@ -254,6 +255,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
         if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpConsumer"] == false) {
+            print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
                 .collection('foodPost')
                 .doc(doc["docId"])
