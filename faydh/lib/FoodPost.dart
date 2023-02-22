@@ -166,7 +166,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         var send = false;
 
         print(exp);
-       if (dt1Now.isAfter(dt2check)) {
+        if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpProvider"] == false) {
             print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
@@ -275,7 +275,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
 
-           if (dt1Now.isAfter(dt2check)) {
+        if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpConsumer"] == false) {
             print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
@@ -1331,113 +1331,101 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                           child: ElevatedButton(
                             onPressed: () {
                               showDialog(
-                                  context: context,
-                                  builder: (_) => Directionality(
-                                        textDirection: ui.TextDirection.ltr,
-                                        child: AlertDialog(
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0))),
-                                          title: const Text('تأكيد!'),
-                                          content: const Text(
-                                              'عند موافقتك لنشر الاعلان لن تتمكن من تعديل أو حذف الإعلان إذا تم حجزه. '),
-                                          actions: [
-                                            Row(
-                                              children: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    print(
-                                                        "dataurl: $urlDownloadImage");
-                                                    print(
-                                                        "useris:: ${user!.displayName}");
-                                                    if (_date != "" &&
-                                                        _formKey.currentState!
-                                                            .validate() &&
-                                                        urlDownloadImage !=
-                                                            null) {
-                                                      if (kDebugMode) {
-                                                        print(
-                                                            "selectedValue on final:$selectedValue");
-                                                      }
-
-                                                      Database.addFoodPostData(
-                                                        context: context,
-                                                        docId: DateTime.now()
-                                                            .toString(),
-                                                        userUid:
-                                                            user.uid.toString(),
-                                                        userPost: user
-                                                            .displayName
-                                                            .toString(),
-                                                        postTitle:
-                                                            postTitleTextEditingController
-                                                                .text
-                                                                .toString(),
-                                                        postText:
-                                                            descriptionTextEditingController
-                                                                .text
-                                                                .toString(),
-                                                        postAdress: selectedValue
-                                                                .toString() +
-                                                            ", " +
-                                                            nigbehoodEditingController
-                                                                .text
-                                                                .toString(),
-                                                        postImage:
-                                                            urlDownloadImage
-                                                                .toString(),
-                                                        postExp:
-                                                            _date.toString(),
-                                                        food_cont:
-                                                            foodCountEditingController
-                                                                .text
-                                                                .toString(),
-                                                        providerblocked: false,
-                                                        reserve: '0',
-                                                        notify: '0',
-                                                        notifyCancelP: '1',
-                                                        notifyCancelC: '1',
-                                                        sendExpProvider: false,
-                                                        sendExpConsumer: false,
-                                                      ).whenComplete(() {
-                                                        Navigator.pop(context);
-                                                        setState(() {
-                                                          selectedValue = null;
-                                                        });
-                                                      });
-
-                                                      FirebaseFirestore.instance
-                                                          .collection('users')
-                                                          .doc(FirebaseAuth
-                                                              .instance
-                                                              .currentUser!
-                                                              .uid)
-                                                          .update({
-                                                        "postCount": FieldValue
-                                                            .increment(1)
-                                                      });
-                                                    } else {
-                                                      Fluttertoast.showToast(
-                                                        msg:
-                                                            "الرجاء تعبئة كافة الحقول",
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                      );
-                                                    }
-                                                  },
-                                                  child: const Text("موافق"),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text("إلغاء"),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0))),
+                                  title: const Text('تأكيد!'),
+                                  content: const Text(
+                                      'عند موافقتك لنشر الاعلان لن تتمكن من تعديل أو حذف الإعلان إذا تم حجزه. '),
+                                  actions: [
+                                    Row(
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("إلغاء"),
                                         ),
-                                      ));
+                                        TextButton(
+                                          onPressed: () {
+                                            print("dataurl: $urlDownloadImage");
+                                            print(
+                                                "useris:: ${user!.displayName}");
+                                            if (_date != "" &&
+                                                _formKey.currentState!
+                                                    .validate() &&
+                                                urlDownloadImage != null) {
+                                              if (kDebugMode) {
+                                                print(
+                                                    "selectedValue on final:$selectedValue");
+                                              }
+
+                                              Database.addFoodPostData(
+                                                context: context,
+                                                docId:
+                                                    DateTime.now().toString(),
+                                                userUid: user.uid.toString(),
+                                                userPost:
+                                                    user.displayName.toString(),
+                                                postTitle:
+                                                    postTitleTextEditingController
+                                                        .text
+                                                        .toString(),
+                                                postText:
+                                                    descriptionTextEditingController
+                                                        .text
+                                                        .toString(),
+                                                postAdress: selectedValue
+                                                        .toString() +
+                                                    ", " +
+                                                    nigbehoodEditingController
+                                                        .text
+                                                        .toString(),
+                                                postImage:
+                                                    urlDownloadImage.toString(),
+                                                postExp: _date.toString(),
+                                                food_cont:
+                                                    foodCountEditingController
+                                                        .text
+                                                        .toString(),
+                                                providerblocked: false,
+                                                reserve: '0',
+                                                notify: '0',
+                                                notifyCancelP: '1',
+                                                notifyCancelC: '1',
+                                                sendExpProvider: false,
+                                                sendExpConsumer: false,
+                                              ).whenComplete(() {
+                                                Navigator.pop(context);
+                                                setState(() {
+                                                  selectedValue = null;
+                                                });
+                                              });
+
+                                              FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(FirebaseAuth.instance
+                                                      .currentUser!.uid)
+                                                  .update({
+                                                "postCount":
+                                                    FieldValue.increment(1)
+                                              });
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                msg: "الرجاء تعبئة كافة الحقول",
+                                                backgroundColor: Colors.red,
+                                              );
+                                            }
+                                          },
+                                          child: const Text("موافق"),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF1A4D2E),

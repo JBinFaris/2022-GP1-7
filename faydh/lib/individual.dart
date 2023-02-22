@@ -98,7 +98,7 @@ class _individualPageState extends State<individual> {
                     .doc(doc["docId"])
                     .delete();
               }
-            } else if (doc['reserve'] == 0) {
+            } else {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
