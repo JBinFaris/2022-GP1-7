@@ -167,11 +167,11 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
         print(exp);
         if (dt1Now.isAfter(dt2check)) {
-          FirebaseFirestore.instance
-              .collection('foodPost')
-              .doc(doc["docId"])
-              .update({'sendExpProvider': true});
           if (doc["sendExpProvider"] == false) {
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .update({'sendExpProvider': true});
             Future.delayed(const Duration(seconds: 2), () {
               print("expired");
               initInfo();
