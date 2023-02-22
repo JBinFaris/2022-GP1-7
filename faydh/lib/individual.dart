@@ -91,7 +91,14 @@ class _individualPageState extends State<individual> {
 
             var sendExpConsumer = data!["sendExpConsumer"];
             var sendExpProvider = data!["sendExpProvider"];
-            if (sendExpProvider == true && sendExpConsumer == true) {
+            if (doc['reserve'] == 1) {
+              if (sendExpProvider == true && sendExpConsumer == true) {
+                FirebaseFirestore.instance
+                    .collection('foodPost')
+                    .doc(doc["docId"])
+                    .delete();
+              }
+            } else {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
