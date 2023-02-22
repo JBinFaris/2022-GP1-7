@@ -28,7 +28,8 @@ class Database {
   final String food_cont;
   final bool providerblocked;
   String? reservedby;
-  final int expFlag;
+  bool? sendExpProvider;
+  bool? sendExpConsumer;
 
   String? postUserName;
 
@@ -48,7 +49,8 @@ class Database {
     required this.food_cont,
     required this.reservedby,
     required this.providerblocked,
-    required this.expFlag,
+    this.sendExpProvider,
+    this.sendExpConsumer,
   });
 
   static Future<void> addFoodPostData({

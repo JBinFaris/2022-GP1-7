@@ -134,7 +134,7 @@ class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
                         food_cont: element['food_cont'],
                         providerblocked: element['providerblocked'],
                         reservedby: element["reservedby"],
-                        expFlag: element["expFlag"],
+                        sendExpConsumer: element["sendExpConsumer"],
                       ));
                     }
 

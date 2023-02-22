@@ -91,10 +91,6 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
                         isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                     .where('reserve', isEqualTo: "1")
                     .where('sendExpProvider', isEqualTo: false)
-                    .orderBy(
-                      "docId",
-                      descending: true,
-                    )
                     .snapshots(),
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -124,18 +120,19 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
 
                     for (var element in allData!) {
                       postList.add(Database.foodConstructor(
-                          docId: element['docId'],
-                          userUid: element['Cid'],
-                          userPost: element['userPost'],
-                          postTitle: element['postTitle'],
-                          postText: element['postText'],
-                          postAdress: element['postAdress'],
-                          postImage: element['postImage'],
-                          postExp: element['postExp'],
-                          food_cont: element['food_cont'],
-                          providerblocked: element['providerblocked'],
-                          reservedby: element["reservedby"],
-                          expFlag: element["expFlag"]));
+                        docId: element['docId'],
+                        userUid: element['Cid'],
+                        userPost: element['userPost'],
+                        postTitle: element['postTitle'],
+                        postText: element['postText'],
+                        postAdress: element['postAdress'],
+                        postImage: element['postImage'],
+                        postExp: element['postExp'],
+                        food_cont: element['food_cont'],
+                        providerblocked: element['providerblocked'],
+                        reservedby: element["reservedby"],
+                        sendExpProvider: element["sendExpProvider"],
+                      ));
                     }
                     for (var i = 0; i < usersList.length; i++) {
                       for (var j = 0; j < postList.length; j++) {
