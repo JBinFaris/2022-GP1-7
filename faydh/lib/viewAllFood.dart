@@ -223,7 +223,15 @@ class _viewAllFood extends State<viewAllFood> {
               .collection('foodPost')
               .doc(doc["docId"])
               .update({'notifyCancelC': '1'});
+
+               FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({ "reservedby": null});
+        
         }
+        
+        
         var raw_date = doc["postExp"].toString().split('-');
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));

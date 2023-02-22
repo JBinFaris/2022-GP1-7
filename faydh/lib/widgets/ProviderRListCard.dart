@@ -243,17 +243,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                                 "reserve": "0"
                                                               });
 
-                                                              _firestore
-                                                                  .collection(
-                                                                      "foodPost")
-                                                                  .doc(widget
-                                                                      .postList
-                                                                      .docId
-                                                                      .toString())
-                                                                  .update({
-                                                                "reservedby":
-                                                                    null,
-                                                              });
+                                                            
                                                               _firestore
                                                                   .collection(
                                                                       "foodPost")
