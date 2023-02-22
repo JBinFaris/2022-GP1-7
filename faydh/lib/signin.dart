@@ -584,8 +584,8 @@ class _signInSreenState extends State<signInSreen> {
               colors: [Color.fromARGB(142, 26, 77, 46), Color(0xffd6ecd0)]),
         ),
         padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 48,
+          horizontal: 20,
+          vertical: 130,
         ),
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
