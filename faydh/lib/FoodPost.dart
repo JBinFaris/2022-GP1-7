@@ -167,6 +167,10 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
         print(exp);
         if (dt1Now.isAfter(dt2check)) {
+          FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({'sendExpProvider': true});
           if (doc["sendExpProvider"] == false) {
             Future.delayed(const Duration(seconds: 2), () {
               print("expired");
@@ -174,10 +178,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               sendPushMessage(
                   token: token, title: "طعام منتهي", text: doc["postTitle"]);
             });
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .update({'sendExpProvider': true});
           }
           if (doc["sendExpConsumer"] == true &&
               doc["sendExpProvider"] == true) {
@@ -254,16 +254,16 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
         if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpConsumer"] == false) {
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .update({'sendExpConsumer': true});
             Future.delayed(const Duration(seconds: 2), () {
               print("expired");
               initInfo();
               sendPushMessage(
                   token: token, title: "طعام منتهي", text: doc["postTitle"]);
             });
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .update({'sendExpConsumer': true});
           }
           if (doc["sendExpConsumer"] == true &&
               doc["sendExpProvider"] == true) {
