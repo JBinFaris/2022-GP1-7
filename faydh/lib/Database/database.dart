@@ -30,7 +30,6 @@ class Database {
   String? reservedby;
   final int expFlag;
 
-
   String? postUserName;
 
   String? postEmail;
@@ -50,7 +49,6 @@ class Database {
     required this.reservedby,
     required this.providerblocked,
     required this.expFlag,
-
   });
 
   static Future<void> addFoodPostData({
@@ -65,13 +63,13 @@ class Database {
     required String postExp,
     required String food_cont,
     required bool providerblocked,
-    required int expFlag,
-
     String? reserve,
     String? notify,
     String? reservedby,
     String? notifyCancelP,
     String? notifyCancelC,
+    bool? sendExpProvider,
+    bool? sendExpConsumer,
   }) async {
     DocumentReference documentReference = _foodPostCollection.doc(docId);
 
@@ -93,7 +91,8 @@ class Database {
       'reservedby': reservedby,
       'notifyCancelP': notifyCancelP,
       'notifyCancelC': notifyCancelC,
-      'expFlag': expFlag ,
+      'sendExpProvider': sendExpProvider,
+      'sendExpConsumer': sendExpConsumer,
     };
     await documentReference.set(data).whenComplete(() {
       print('Note item saved to the database');
@@ -117,8 +116,8 @@ class Database2 {
     pathImage, //
     required Cid,
     required int? flag,
-      required List<String> Reporters ,
-       final int? reportCount ,
+    required List<String> Reporters,
+    final int? reportCount,
   }) async {
     DocumentReference documentReference = _reportedContentCollection.doc(Rid);
 
@@ -132,7 +131,7 @@ class Database2 {
       "pathImage": "pathImage".toString().trim(),
       'userId': Cid.toString().trim(),
       "flag": flag,
-      "Reporters": Reporters ,
+      "Reporters": Reporters,
       "reportCount": reportCount,
     };
     await documentReference.set(data).whenComplete(() {
