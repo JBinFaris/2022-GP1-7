@@ -1152,20 +1152,20 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                   Row(
                                     children: <Widget>[
                                       Container(
-                                        width: 80,
+                                        width: 69,
                                         child: Text(
                                           " $_date",
                                           style: const TextStyle(
                                               color: Color(0xFF1A4D2E),
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 14.0),
+                                              fontSize: 14),
                                         ),
                                       ),
                                       const Align(
                                         alignment: Alignment.centerRight,
-                                        child: Text("  :تاريخ الإنتهاء   ",
+                                        child: Text(":تاريخ الإنتهاء   ",
                                             style: TextStyle(
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: Color(0xFF1A4D2E),
                                                 fontWeight: FontWeight.bold)),
                                       ),
@@ -1191,6 +1191,31 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
               ),
               const SizedBox(
                 height: 20,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(left: 110),
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          selectFileImage();
+                        },
+                        icon: const Icon(
+                          Icons.add_photo_alternate,
+                          size: 25,
+                        ), //icon data for elevated button
+                        label: const Text(
+                          "إضافة صورة",
+                          textAlign: TextAlign.left,
+                        ), //label text
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF1A4D2E),
+                        ),
+                      )),
+                ],
               ),
               const SizedBox(
                 height: 10,
@@ -1230,7 +1255,7 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                       alignment: Alignment.center,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          // color: Colors.grey,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         height: 100,
@@ -1240,13 +1265,22 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  FloatingActionButton(
+                  /* const Icon(
+    Icons.train,
+    color: Colors.black,
+    size: 54,
+  ),
+  style: ElevatedButton.styleFrom(
+    shape: CircleBorder(), //<-- SEE HERE
+    padding: EdgeInsets.all(20),
+  ),*/
+                  /*   FloatingActionButton.large(
                     backgroundColor: const Color(0xFF1A4D2E),
                     onPressed: () {
                       selectFileImage();
                     },
                     child: const Icon(Icons.add_photo_alternate),
-                  ),
+                  ),*/
                   urlDownloadImage == null
                       ? Align(
                           alignment: Alignment.center,

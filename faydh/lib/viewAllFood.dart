@@ -730,34 +730,71 @@ class _viewAllFood extends State<viewAllFood> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(15.0))),
                                   title: const Text(
-                                    'لقد تم حجز الطعام',
+                                    'تأكيد الحجز',
                                     textAlign: TextAlign.right,
                                   ),
                                   content: const Text(
-                                    "لمشاهدة الطعام المحجوز او لالغاء الحجز انتقل الى قائمة حجوزاتي",
+                                    "هل أنت متأكد من حجز الطعام ؟ ",
                                     textAlign: TextAlign.right,
                                   ),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: const Text("حسنا"),
+                                      child: const Text("إلغاء"),
                                       onPressed: () {
+                                        // callback function for on click event of Cancel button
                                         Navigator.of(context).pop();
                                       },
-                                    )
+                                    ),
+                                    TextButton(
+                                      child: const Text("موافق"),
+                                      onPressed: () async {
+                                        data['docId'].toString();
+                                        reserve(id: data['docId'].toString());
+                                        //  data['docId'].update({'notify': '0'});
+                                        //    data['docId'].update({
+                                        //      'reservedby': FirebaseAuth.instance.currentUser?.uid
+                                        //    });
+
+                                        FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(data["Cid"])
+                                            .update({
+                                          "reserveCount":
+                                              FieldValue.increment(1)
+                                        });
+                                        Navigator.of(context).pop();
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                  shape:
+                                                      const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      15.0))),
+                                                  title: const Text(
+                                                    'لقد تم حجز الطعام',
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  content: const Text(
+                                                    "لمشاهدة الطعام المحجوز او لالغاء الحجز انتقل الى قائمة طلباتي المحجوزة",
+                                                    textAlign: TextAlign.right,
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: const Text("حسنا"),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    )
+                                                  ]);
+                                            });
+                                      },
+                                    ),
                                   ]);
                             });
-
-                        data['docId'].toString();
-                        reserve(id: data['docId'].toString());
-                        //  data['docId'].update({'notify': '0'});
-                        //    data['docId'].update({
-                        //      'reservedby': FirebaseAuth.instance.currentUser?.uid
-                        //    });
-
-                        FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(data["Cid"])
-                            .update({"reserveCount": FieldValue.increment(1)});
                       },
                       style: ElevatedButton.styleFrom(
                         padding:
