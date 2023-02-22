@@ -45,6 +45,6 @@ Password: Shaden@789
 # Jira Link
 https://2022-1s-gp100.atlassian.net/jira/software/projects/GP/boards/1/backlog
 
-# Github Link:
+# Github repository Link:
 https://github.com/JBinFaris/2022-GP1-7
 
