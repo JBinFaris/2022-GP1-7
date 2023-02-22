@@ -80,8 +80,7 @@ class _individualPageState extends State<individual> {
               sendPushMessage(
                   token: token, title: "طعام منتهي", text: doc["postTitle"]);
             });
-          }
-          if (doc["sendExpConsumer"] == true &&
+          } else if (doc["sendExpConsumer"] == true &&
               doc["sendExpProvider"] == true) {
             FirebaseFirestore.instance
                 .collection('foodPost')
@@ -167,8 +166,7 @@ class _individualPageState extends State<individual> {
               sendPushMessage(
                   token: token, title: "طعام منتهي", text: doc["postTitle"]);
             });
-          }
-          if (doc["sendExpConsumer"] == true &&
+          } else if (doc["sendExpConsumer"] == true &&
               doc["sendExpProvider"] == true) {
             FirebaseFirestore.instance
                 .collection('foodPost')
