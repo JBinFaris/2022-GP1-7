@@ -25,7 +25,7 @@ class AdminMain extends StatefulWidget {
 @override
 class _AdminMainPageState extends State<AdminMain> {
   String? mtoken = "";
-  bool first = true;
+
 
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -95,7 +95,7 @@ class _AdminMainPageState extends State<AdminMain> {
               "body": text,
               "android_channel_id": "dbfood",
             },
-            "to": token,
+           "to": token,
           },
         ),
       );
@@ -134,25 +134,17 @@ class _AdminMainPageState extends State<AdminMain> {
     });
   }
 
+
   void getToken({required id}) async {
     await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
         mtoken = token;
         print('my token is $mtoken');
       });
-      if(first == true){
+     
+    
         saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
-      }else{
-          var period = const Duration(seconds: 30);
-      Timer.periodic(period, (arg) {
-        print('inside save token');
-        saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
-      });
-      setState(() {
-        first = false ; 
-      });
-        
-      }
+     // period
      
    //  
     });
@@ -168,7 +160,7 @@ class _AdminMainPageState extends State<AdminMain> {
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
-
+   
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Background(

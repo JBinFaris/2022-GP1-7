@@ -365,7 +365,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               "body": text,
               "android_channel_id": "dbfood",
             },
-            // "to": token,
+             "to": token,
           },
         ),
       );
