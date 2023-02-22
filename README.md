@@ -19,3 +19,32 @@ Faydh is an android mobile application that helps reduce food waste by allowing 
 
 or you can install in your android phone the apk file provided in the Faydh_apk folder 
 
+
+# Login credentials
+
+-Admin account: 
+Email: Teamfaydh@gmail.com
+Password: Admin123@
+
+
+-Business account:
+Email: Businessfaydh@gmail.com
+Password: Business12345%
+
+
+-charity account:
+Email: charityfaydh@gmail.com
+Password: Charity.123123
+
+
+-Individual account:
+Email: ii.shaden.789@gmail.com
+Password: Shaden@789
+
+
+# Jira Link
+https://2022-1s-gp100.atlassian.net/jira/software/projects/GP/boards/1/backlog
+
+# Github repository Link:
+https://github.com/JBinFaris/2022-GP1-7
+
