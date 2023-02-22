@@ -25,6 +25,7 @@ class AdminMain extends StatefulWidget {
 @override
 class _AdminMainPageState extends State<AdminMain> {
   String? mtoken = "";
+  bool first = true;
 
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -119,7 +120,8 @@ class _AdminMainPageState extends State<AdminMain> {
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         if (true) {
-          Future.delayed(const Duration(seconds: 2), () {
+          
+          Future.delayed(const Duration(seconds: 5), () {
             print("expired");
             initInfo();
             sendPushMessage(
@@ -138,12 +140,21 @@ class _AdminMainPageState extends State<AdminMain> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(seconds: 10);
+      if(first == true){
+        saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+      }else{
+          var period = const Duration(seconds: 30);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
       });
-      saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+      setState(() {
+        first = false ; 
+      });
+        
+      }
+     
+   //  
     });
   }
 
