@@ -157,7 +157,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         .where('Cid', isEqualTo: id)
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      querySnapshot.docs.forEach((doc) async {
         var raw_date = doc["postExp"].toString().split('-');
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
@@ -166,7 +166,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         var send = false;
 
         print(exp);
-        if (dt1Now.isAfter(dt2check)) {
+       if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpProvider"] == false) {
             print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
@@ -180,12 +180,22 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                   token: token, title: "طعام منتهي", text: doc["postTitle"]);
             });
           }
-          if (doc["sendExpConsumer"] == true &&
-              doc["sendExpProvider"] == true) {
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .delete();
+          var snapp = await FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .get();
+
+          if (snapp.exists) {
+            Map<String, dynamic>? data = snapp.data();
+
+            var sendExpConsumer = data!["sendExpConsumer"];
+            var sendExpProvider = data!["sendExpProvider"];
+            if (sendExpProvider == true && sendExpConsumer == true) {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+            }
           }
           FirebaseFirestore.instance
               .collection('foodPost')
@@ -248,7 +258,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         .where('reservedby', isEqualTo: id)
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      querySnapshot.docs.forEach((doc) async {
         if (doc["notifyCancelC"] == '0') {
           print('notifyCancelC');
           Future.delayed(const Duration(seconds: 5), () {
@@ -265,7 +275,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
 
-        if (dt1Now.isAfter(dt2check)) {
+           if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpConsumer"] == false) {
             print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
@@ -279,12 +289,22 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                   token: token, title: "طعام منتهي", text: doc["postTitle"]);
             });
           }
-          if (doc["sendExpConsumer"] == true &&
-              doc["sendExpProvider"] == true) {
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .delete();
+          var snapp = await FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .get();
+
+          if (snapp.exists) {
+            Map<String, dynamic>? data = snapp.data();
+
+            var sendExpConsumer = data!["sendExpConsumer"];
+            var sendExpProvider = data!["sendExpProvider"];
+            if (sendExpProvider == true && sendExpConsumer == true) {
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+            }
           }
         }
       });
