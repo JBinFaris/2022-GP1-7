@@ -190,25 +190,20 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
 
             var sendExpConsumer = data!["sendExpConsumer"];
             var sendExpProvider = data!["sendExpProvider"];
-            if (sendExpProvider == true && sendExpConsumer == true) {
+            if (doc['reserve'] == 1) {
+              if (sendExpProvider == true && sendExpConsumer == true) {
+                FirebaseFirestore.instance
+                    .collection('foodPost')
+                    .doc(doc["docId"])
+                    .delete();
+              }
+            } else {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .delete();
             }
           }
-          FirebaseFirestore.instance
-              .collection('foodPost')
-              .where('reservedby', isEqualTo: null)
-              .get()
-              .then((QuerySnapshot querySnapshot) {
-            querySnapshot.docs.forEach((doc) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-            });
-          });
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
           print('notify');
@@ -274,39 +269,6 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
         var raw_date = doc["postExp"].toString().split('-');
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
-
-        if (dt1Now.isAfter(dt2check)) {
-          if (doc["sendExpConsumer"] == false) {
-            print('bbbbbbbbbbbbbb');
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .update({'sendExpConsumer': true});
-            Future.delayed(const Duration(seconds: 2), () {
-              print("expired");
-              initInfo();
-              sendPushMessage(
-                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            });
-          }
-          var snapp = await FirebaseFirestore.instance
-              .collection('foodPost')
-              .doc(doc["docId"])
-              .get();
-
-          if (snapp.exists) {
-            Map<String, dynamic>? data = snapp.data();
-
-            var sendExpConsumer = data!["sendExpConsumer"];
-            var sendExpProvider = data!["sendExpProvider"];
-            if (sendExpProvider == true && sendExpConsumer == true) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-            }
-          }
-        }
       });
     });
 

@@ -162,38 +162,7 @@ class _viewAllFood extends State<viewAllFood> {
         String exp = doc["postExp"];
 
         print(exp);
-        if (dt1Now.isAfter(dt2check)) {
-          if (doc["sendExpProvider"] == false) {
-            print('bbbbbbbbbbbbbb');
-            FirebaseFirestore.instance
-                .collection('foodPost')
-                .doc(doc["docId"])
-                .update({'sendExpProvider': true});
-            Future.delayed(const Duration(seconds: 2), () {
-              print("expired");
-              initInfo();
-              sendPushMessage(
-                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            });
-          }
-          var snapp = await FirebaseFirestore.instance
-              .collection('foodPost')
-              .doc(doc["docId"])
-              .get();
-
-          if (snapp.exists) {
-            Map<String, dynamic>? data = snapp.data();
-
-            var sendExpConsumer = data!["sendExpConsumer"];
-            var sendExpProvider = data!["sendExpProvider"];
-            if (sendExpProvider == true && sendExpConsumer == true) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-            }
-          }
-        } //end if
+ //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
           print('notify');
           Future.delayed(const Duration(seconds: 5), () {
@@ -259,7 +228,7 @@ class _viewAllFood extends State<viewAllFood> {
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
 
-        if (dt1Now.isAfter(dt2check)) {
+           if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpConsumer"] == false) {
             print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
