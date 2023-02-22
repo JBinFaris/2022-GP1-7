@@ -163,31 +163,29 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
         String exp = doc["postExp"];
 
+        var send = false;
+
         print(exp);
         if (dt1Now.isAfter(dt2check)) {
-          Future.delayed(const Duration(seconds: 2), () {
-            print("expired");
-            initInfo();
-            sendPushMessage(
-                token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            if (doc["expFlag"] != 2) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .update({"expFlag": FieldValue.increment(1)});
-              print(doc["expFlag"] == 3);
-            } else if (doc["expFlag"] == 2) {
-              print('providerrrrrrrr');
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-              FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(doc["Cid"])
-                  .update({"ExpCount": FieldValue.increment(1)});
-            }
-          });
+          if (doc["sendExpProvider"] == false) {
+            Future.delayed(const Duration(seconds: 2), () {
+              print("expired");
+              initInfo();
+              sendPushMessage(
+                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
+            });
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .update({'sendExpProvider': true});
+          }
+          if (doc["sendExpConsumer"] == true &&
+              doc["sendExpProvider"] == true) {
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .delete();
+          }
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
           print('notify');
@@ -202,7 +200,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               .update({'notify': '1'});
         }
 
-        if (doc["reserve"] == '1' && doc["providerblocked"] == true) {
+        if (doc["reserve"] == '1' && doc["consumerblocked"] == true) {
           print('notify');
           Future.delayed(const Duration(seconds: 7), () {
             initInfo();
@@ -255,30 +253,25 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
 
         if (dt1Now.isAfter(dt2check)) {
-          Future.delayed(const Duration(seconds: 2), () {
-            print("expired");
-            initInfo();
-            sendPushMessage(
-                token: token, title: "طعام منتهي", text: doc["postTitle"]);
-            if (doc["expFlag"] != 2) {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .update({"expFlag": FieldValue.increment(1)});
-              print(doc["expFlag"] == 3);
-              print(doc["expFlag"]);
-            } else if (doc["expFlag"] == 2) {
-              print('consumerrrrrrrr');
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
-              FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(doc["Cid"])
-                  .update({"ExpCount": FieldValue.increment(1)});
-            }
-          });
+          if (doc["sendExpConsumer"] == false) {
+            Future.delayed(const Duration(seconds: 2), () {
+              print("expired");
+              initInfo();
+              sendPushMessage(
+                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
+            });
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .update({'sendExpConsumer': true});
+          }
+          if (doc["sendExpConsumer"] == true &&
+              doc["sendExpProvider"] == true) {
+            FirebaseFirestore.instance
+                .collection('foodPost')
+                .doc(doc["docId"])
+                .delete();
+          }
         }
       });
     });
@@ -376,7 +369,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               "body": text,
               "android_channel_id": "dbfood",
             },
-            "to": token,
+            // "to": token,
           },
         ),
       );
@@ -1336,7 +1329,8 @@ class _MyStateFullForSheetState extends State<MyStateFullForSheet> {
                                                         notify: '0',
                                                         notifyCancelP: '1',
                                                         notifyCancelC: '1',
-                                                        expFlag: 1,
+                                                        sendExpProvider: false,
+                                                        sendExpConsumer: false,
                                                       ).whenComplete(() {
                                                         Navigator.pop(context);
                                                         setState(() {

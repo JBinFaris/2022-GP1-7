@@ -90,6 +90,7 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
                     .where('Cid',
                         isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                     .where('reserve', isEqualTo: "1")
+                    .where('sendExpProvider', isEqualTo: false)
                     .orderBy(
                       "docId",
                       descending: true,
@@ -134,8 +135,7 @@ class _ReservedProviderScreenState extends State<ReservedProviderScreen> {
                           food_cont: element['food_cont'],
                           providerblocked: element['providerblocked'],
                           reservedby: element["reservedby"],
-                          expFlag: element["expFlag"]
-                          ));
+                          expFlag: element["expFlag"]));
                     }
                     for (var i = 0; i < usersList.length; i++) {
                       for (var j = 0; j < postList.length; j++) {

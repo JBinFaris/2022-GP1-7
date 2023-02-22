@@ -138,7 +138,7 @@ class _AdminMainPageState extends State<AdminMain> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(hours: 1);
+      var period = const Duration(seconds: 10);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);

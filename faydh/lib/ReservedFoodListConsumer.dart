@@ -86,6 +86,7 @@ class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
                     .where('reservedby',
                         isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                     .where('reserve', isEqualTo: "1")
+                    .where('sendExpConsumer', isEqualTo: false)
                     .snapshots(),
                 builder: (context,
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -122,20 +123,19 @@ class _ReservedConsumerScreenState extends State<ReservedConsumerScreen> {
 
                     for (var element in allData!) {
                       postList.add(Database.foodConstructor(
-                          docId: element['docId'],
-                          userUid: element['Cid'],
-                          userPost: element['userPost'],
-                          postTitle: element['postTitle'],
-                          postText: element['postText'],
-                          postAdress: element['postAdress'],
-                          postImage: element['postImage'],
-                          postExp: element['postExp'],
-                          food_cont: element['food_cont'],
-                          providerblocked: element['providerblocked'],
-                          reservedby: element["reservedby"],
-                          expFlag: element["expFlag"],
-      
-                          ));
+                        docId: element['docId'],
+                        userUid: element['Cid'],
+                        userPost: element['userPost'],
+                        postTitle: element['postTitle'],
+                        postText: element['postText'],
+                        postAdress: element['postAdress'],
+                        postImage: element['postImage'],
+                        postExp: element['postExp'],
+                        food_cont: element['food_cont'],
+                        providerblocked: element['providerblocked'],
+                        reservedby: element["reservedby"],
+                        expFlag: element["expFlag"],
+                      ));
                     }
 
                     for (var i = 0; i < usersList.length; i++) {

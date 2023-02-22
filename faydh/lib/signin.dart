@@ -43,11 +43,11 @@ class _signInSreenState extends State<signInSreen> {
   @override
   void initState() {
     super.initState();
-    requestPermission();
+    //requestPermission();
     // getToken();
   }
 
-  void requestPermission() async {
+  /* void requestPermission() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
@@ -328,7 +328,7 @@ class _signInSreenState extends State<signInSreen> {
         print('error notification');
       }
     }
-  }
+  }*/
 
   @override
   void dispose() {
@@ -393,11 +393,11 @@ class _signInSreenState extends State<signInSreen> {
 
             if (Active == true) {
               if (myrole == "فرد") {
-                getToken(id: FirebaseAuth.instance.currentUser!.uid);
+                // getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const HomePage()));
               } else if (myrole == "منظمة تجارية") {
-                getToken(id: FirebaseAuth.instance.currentUser!.uid);
+                // getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 final status = (snap.data() as Map<String, dynamic>)['status'];
                 if (status == "0") {
                   res = " بإنتظار الموافقه ";
@@ -498,7 +498,7 @@ class _signInSreenState extends State<signInSreen> {
                   // }
                 }
               } else if (myrole == "منظمة خيرية") {
-                getToken(id: FirebaseAuth.instance.currentUser!.uid);
+                // getToken(id: FirebaseAuth.instance.currentUser!.uid);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
