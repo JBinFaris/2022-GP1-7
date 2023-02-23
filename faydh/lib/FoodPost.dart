@@ -183,28 +183,32 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
             var sendExpProvider = data!["sendExpProvider"];
             if (doc['reserve'] == 1) {
               if (sendExpProvider == true && sendExpConsumer == true) {
-                         FirebaseFirestore.instance
-                .collection('users')
-                .doc(doc["Cid"])
-                .update({"ExpCount": FieldValue.increment(1)});
+             
 
                 FirebaseFirestore.instance
                     .collection('foodPost')
                     .doc(doc["docId"])
                     .delete();
 
-            
-              }
-            } else {
-                   FirebaseFirestore.instance
+                                FirebaseFirestore.instance
                 .collection('users')
                 .doc(doc["Cid"])
                 .update({"ExpCount": FieldValue.increment(1)});
-                
+
+            
+              }
+            } else {
+            
+
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .delete();
+
+                         FirebaseFirestore.instance
+                .collection('users')
+                .doc(doc["Cid"])
+                .update({"ExpCount": FieldValue.increment(1)});
 
                 
             }
