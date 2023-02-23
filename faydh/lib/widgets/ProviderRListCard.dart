@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -140,6 +139,15 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                         "${widget.postList.docId.toString()}")
                                                     .delete();
 
+                                                FirebaseFirestore.instance
+                                                    .collection('users')
+                                                    .doc(FirebaseAuth.instance
+                                                        .currentUser?.uid)
+                                                    .update({
+                                                  "reserveCount":
+                                                      FieldValue.increment(1)
+                                                });
+
                                                 Navigator.pop(context);
                                               },
                                             ),
@@ -243,7 +251,6 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                                 "reserve": "0"
                                                               });
 
-                                                            
                                                               _firestore
                                                                   .collection(
                                                                       "foodPost")

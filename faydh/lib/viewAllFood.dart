@@ -727,13 +727,7 @@ class _viewAllFood extends State<viewAllFood> {
                                         //      'reservedby': FirebaseAuth.instance.currentUser?.uid
                                         //    });
 
-                                        FirebaseFirestore.instance
-                                            .collection('users')
-                                            .doc(data["Cid"])
-                                            .update({
-                                          "reserveCount":
-                                              FieldValue.increment(1)
-                                        });
+                                    
                                         Navigator.of(context).pop();
                                         showDialog(
                                             context: context,
