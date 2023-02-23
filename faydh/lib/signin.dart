@@ -581,7 +581,7 @@ class _signInSreenState extends State<signInSreen> {
         ),
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 170,
+          vertical: 165,
         ),
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
@@ -590,11 +590,10 @@ class _signInSreenState extends State<signInSreen> {
             key: _formKey,
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 1),
                 Image.asset(
                   'assets/imgs/logo.png',
                   width: 250,
-                  height: 200,
+                  height: 175,
                 ),
                 const SizedBox(height: 0.1),
                 TextFormField(
