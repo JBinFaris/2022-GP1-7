@@ -126,30 +126,27 @@ class _viewAllFood extends State<viewAllFood> {
 
   void getToken({required id}) async {
     await FirebaseMessaging.instance.getToken().then((token) {
+     
       setState(() {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(hours: 1);
+      var period = const Duration(seconds: 50);
       Timer.periodic(period, (arg) {
         print('inside save token');
         saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
       });
-      saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+    //  saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
     });
   }
 
   void saveToken({required String id, required String token}) async {
-    /* await FirebaseFirestore.instance
-        .collection('users')
-        .doc(id)
-        .update({'token': token});}*/
+     
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     DateTime dt1Now = DateTime.parse(formattedDate);
-    print("formattttt");
-    print(formattedDate);
+  
     FirebaseFirestore.instance
         .collection('foodPost')
         .where('Cid', isEqualTo: id)
@@ -160,21 +157,6 @@ class _viewAllFood extends State<viewAllFood> {
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
         String exp = doc["postExp"];
-
-        print(exp);
- //end if
-        if (doc["reserve"] == '1' && doc["notify"] == '0') {
-          print('notify');
-          Future.delayed(const Duration(seconds: 5), () {
-            initInfo();
-            sendPushMessage(
-                token: token, title: " طعام محجوز ", text: doc["postTitle"]);
-          });
-          FirebaseFirestore.instance
-              .collection('foodPost')
-              .doc(doc["docId"])
-              .update({'notify': '1'});
-        }
 
         if (doc["reserve"] == '1' && doc["providerblocked"] == true) {
           print('notify');
@@ -190,19 +172,7 @@ class _viewAllFood extends State<viewAllFood> {
               .doc(doc["docId"])
               .update({'reserve': '0'});
         }
-
-        if (doc["notifyCancelP"] == '0') {
-          print('notifyCancelP');
-          Future.delayed(const Duration(seconds: 5), () {
-            initInfo();
-            sendPushMessage(
-                token: token, title: " طعام ملغى ", text: doc["postTitle"]);
-          });
-          FirebaseFirestore.instance
-              .collection('foodPost')
-              .doc(doc["docId"])
-              .update({'notifyCancelP': '1'});
-        }
+   
       });
     });
 
@@ -211,14 +181,14 @@ class _viewAllFood extends State<viewAllFood> {
         .where('reservedby', isEqualTo: id)
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) async {
+      querySnapshot.docs.forEach((doc) async { 
         if (doc["notifyCancelC"] == '0') {
           print('notifyCancelC');
-          Future.delayed(const Duration(seconds: 5), () {
-            initInfo();
+         
+          initInfo();
             sendPushMessage(
                 token: token, title: " طعام ملغى ", text: doc["postTitle"]);
-          });
+          
           FirebaseFirestore.instance
               .collection('foodPost')
               .doc(doc["docId"])
@@ -230,6 +200,7 @@ class _viewAllFood extends State<viewAllFood> {
               .update({ "reservedby": null});
         
         }
+   
         
         
         var raw_date = doc["postExp"].toString().split('-');
@@ -247,7 +218,7 @@ class _viewAllFood extends State<viewAllFood> {
               print("expired");
               initInfo();
               sendPushMessage(
-                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
+                  token: token, title: "طعام منتهي الصلاحية", text: doc["postTitle"]);
             });
           }
           var snapp = await FirebaseFirestore.instance
@@ -323,6 +294,7 @@ class _viewAllFood extends State<viewAllFood> {
         styleInformation: bigTextStyleInformation,
         priority: Priority.high,
         playSound: true,
+        onlyAlertOnce: true ,
       );
 
       NotificationDetails platformChannelSpecifics =
@@ -353,16 +325,17 @@ class _viewAllFood extends State<viewAllFood> {
         body: jsonEncode(
           <String, dynamic>{
             'priority': 'high',
-            'data': <String, dynamic>{
-              'click_action': 'Flutter_Notification_Click',
-              'status': 'done',
-              'body': text,
-              'title': title,
-            },
+
             "notification": <String, dynamic>{
               "title": title,
               "body": text,
               "android_channel_id": "dbfood",
+            },
+             'data': <String, dynamic>{
+              'click_action': 'Flutter_Notification_Click',
+              'status': 'done',
+              'body': text,
+              'title': title,
             },
             "to": token,
           },

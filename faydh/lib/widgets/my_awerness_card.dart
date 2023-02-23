@@ -160,11 +160,9 @@ class _MyCardState extends State<MyCard> {
                                                 .delete();
                                           });
                                         });
-                                        print(widget.id.toString());
 
                                         Navigator.pop(context);
 
-                                        print("check");
                                       },
                                     ),
                                   ]);

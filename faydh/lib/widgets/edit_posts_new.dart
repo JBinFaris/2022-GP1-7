@@ -149,7 +149,6 @@ class _EditPostNewState extends State<EditPostNew> {
       setState(() {
         var parsedAddress = widget.address.split(',');
         selectedValue = parsedAddress[0];
-        print(selectedValue);
         if (parsedAddress.length > 1) {
           nigbehoodEditingController.text = parsedAddress[1];
         }

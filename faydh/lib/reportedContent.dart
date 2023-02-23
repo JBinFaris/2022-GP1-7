@@ -570,8 +570,6 @@ class _reportedContent extends State<reportedContent> {
                                           child: const Text("موافق"),
                                           onPressed: () async {
                                             //     widget.reference.delete();
-                                            print(
-                                                widget.postData.Rid.toString());
                                             FirebaseFirestore.instance
                                                 .collection('reportedContent')
                                                 .doc(widget.postData.Rid
@@ -718,14 +716,10 @@ class _reportedContent extends State<reportedContent> {
                                                 .collection('foodPost')
                                                 .doc(widget.postData.postId)
                                                 .get();
-                                            print('not enter');
                                             if (snapp.exists) {
-                                              print(' enter');
                                               Map<String, dynamic>? data =
                                                   snapp.data();
 
-                                              var reservedby =
-                                                  data!["reservedby"];
                                             }
 
                                             /*   FirebaseFirestore.instance
@@ -863,104 +857,96 @@ class _reportedContent extends State<reportedContent> {
                                           TextButton(
                                             child: const Text("موافق"),
                                             onPressed: () async {
-                                              var snapp =
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('foodPost')
-                                                      .doc(widget
-                                                          .postData.postId)
-                                                      .get();
-                                              print('not enter');
-                                              if (snapp.exists) {
-                                                print(' enter');
-                                                Map<String, dynamic>? data =
-                                                    snapp.data();
+                                            /*   var snapp = await FirebaseFirestore
+                                                .instance
+                                                .collection('foodPost')
+                                                .doc(widget.postData.postId)
+                                                .get();
+                                            print('not enter');
+                                            if (snapp.exists) {
+                                              print(' enter');
+                                              Map<String, dynamic>? data =
+                                                  snapp.data();
 
-                                                var reservedby =
-                                                    data!["reservedby"];
-                                              }
+                                            
+                                            }
 
-                                              /*   FirebaseFirestore.instance
+                                            FirebaseFirestore.instance
                                                 .collection('reportedContent')
                                                 .doc(widget.postData.Rid
                                                     .toString())
                                                 .delete();*/
 
-                                              FirebaseFirestore.instance
-                                                  .collection('users')
-                                                  .doc(widget.postData.userId
-                                                      .toString())
-                                                  .update({'Active': false});
-                                              FirebaseFirestore.instance
-                                                  .collection('posts')
-                                                  .where('userId',
-                                                      isEqualTo: widget
-                                                          .postData.userId)
-                                                  .get()
-                                                  .then((QuerySnapshot
-                                                      querySnapshot) {
-                                                querySnapshot.docs
-                                                    .forEach((doc) {
+                                            FirebaseFirestore.instance
+                                                .collection('users')
+                                                .doc(widget.postData.userId
+                                                    .toString())
+                                                .update({'Active': false});
+                                            FirebaseFirestore.instance
+                                                .collection('posts')
+                                                .where('userId',
+                                                    isEqualTo:
+                                                        widget.postData.userId)
+                                                .get()
+                                                .then((QuerySnapshot
+                                                    querySnapshot) {
+                                              querySnapshot.docs.forEach((doc) {
+                                                FirebaseFirestore.instance
+                                                    .collection('posts')
+                                                    .doc(doc["Cid"])
+                                                    .delete();
+                                              });
+                                            });
+                                            FirebaseFirestore.instance
+                                                .collection('foodPost')
+                                                .where('Cid',
+                                                    isEqualTo:
+                                                        widget.postData.userId)
+                                                .get()
+                                                .then((QuerySnapshot
+                                                    querySnapshot) {
+                                              querySnapshot.docs.forEach((doc) {
+                                                if (doc["reservedby"] == null) {
                                                   FirebaseFirestore.instance
-                                                      .collection('posts')
-                                                      .doc(doc["Cid"])
+                                                      .collection('foodPost')
+                                                      .doc(doc["docId"])
                                                       .delete();
-                                                });
-                                              });
-
-                                              FirebaseFirestore.instance
-                                                  .collection('foodPost')
-                                                  .where('Cid',
-                                                      isEqualTo: widget
-                                                          .postData.userId)
-                                                  .get()
-                                                  .then((QuerySnapshot
-                                                      querySnapshot) {
-                                                querySnapshot.docs
-                                                    .forEach((doc) {
-                                                  if (doc["reservedby"] ==
-                                                      null) {
-                                                    FirebaseFirestore.instance
-                                                        .collection('foodPost')
-                                                        .doc(doc["docId"])
-                                                        .delete();
-                                                  } else {
-                                                    FirebaseFirestore.instance
-                                                        .collection('foodPost')
-                                                        .doc(doc["docId"])
-                                                        .update({
-                                                      'providerblocked': true
-                                                    });
-                                                  }
-                                                });
-                                              });
-
-                                              FirebaseFirestore.instance
-                                                  .collection('reportedContent')
-                                                  .where('userId',
-                                                      isEqualTo: widget
-                                                          .postData.userId)
-                                                  .get()
-                                                  .then((QuerySnapshot
-                                                      querySnapshot) {
-                                                querySnapshot.docs
-                                                    .forEach((doc) {
+                                                } else {
                                                   FirebaseFirestore.instance
-                                                      .collection(
-                                                          'reportedContent')
-                                                      .doc(doc["Rid"])
-                                                      .delete();
-                                                });
+                                                      .collection('foodPost')
+                                                      .doc(doc["docId"])
+                                                      .update({
+                                                    'providerblocked': true
+                                                  });
+                                                }
                                               });
+                                            });
 
-                                              sendEmail(
-                                                name: widget
-                                                    .postData.postUserName
-                                                    .toString(),
-                                                email: widget.postData.postEmail
-                                                    .toString(),
-                                              );
-                                              Navigator.pop(context);
+                                            FirebaseFirestore.instance
+                                                .collection('reportedContent')
+                                                .where('userId',
+                                                    isEqualTo:
+                                                        widget.postData.userId)
+                                                .get()
+                                                .then((QuerySnapshot
+                                                    querySnapshot) {
+                                              querySnapshot.docs.forEach((doc) {
+                                                FirebaseFirestore.instance
+                                                    .collection(
+                                                        'reportedContent')
+                                                    .doc(doc["Rid"])
+                                                    .delete();
+                                              });
+                                            });
+
+                                            sendEmail(
+                                              name: widget.postData.postUserName
+                                                  .toString(),
+                                              email: widget.postData.postEmail
+                                                  .toString(),
+                                            );
+
+                                            Navigator.pop(context);
                                             },
                                           ),
                                         ],
@@ -1039,9 +1025,7 @@ class _reportedContent extends State<reportedContent> {
                                                 .collection('foodPost')
                                                 .doc(widget.postData.postId)
                                                 .get();
-                                            print('not enter');
                                             if (snapp.exists) {
-                                              print(' enter');
                                               Map<String, dynamic>? data =
                                                   snapp.data();
 
@@ -1049,7 +1033,6 @@ class _reportedContent extends State<reportedContent> {
                                                   data!["reservedby"];
 
                                               if (data["reservedby"] == null) {
-                                                print('trueee');
                                                 FirebaseFirestore.instance
                                                     .collection('foodPost')
                                                     .doc(widget.postData.postId)
@@ -1127,9 +1110,9 @@ Future sendEmail({
   required String email,
 }) async {
   const serviceId = 'service_xutbn8n';
-  var userId = '7hJUinnZHv07_0-Ae';
+  var userId = 'yu28ADkQLA2An3skZ';
 
-  var templateId = 'template_4i58c5d';
+  var templateId = 'template_7wo8xwf';
 
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
   var response = await http.post(

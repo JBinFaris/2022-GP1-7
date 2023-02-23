@@ -35,25 +35,20 @@ class _individualPageState extends State<individual> {
         mtoken = token;
         print('my token is $mtoken');
       });
-      var period = const Duration(hours: 1);
+      var period = const Duration(seconds: 50);
       Timer.periodic(period, (arg) {
-        print('inside save token');
         saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
       });
-      saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+     // saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
     });
   }
 
   void saveToken({required String id, required String token}) async {
-    /* await FirebaseFirestore.instance
-        .collection('users')
-        .doc(id)
-        .update({'token': token});}*/
+
 
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     DateTime dt1Now = DateTime.parse(formattedDate);
-    print("formattttt");
     print(formattedDate);
     FirebaseFirestore.instance
         .collection('foodPost')
@@ -66,19 +61,16 @@ class _individualPageState extends State<individual> {
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
         String exp = doc["postExp"];
 
-        print(exp);
         if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpProvider"] == false) {
-            print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
                 .collection('foodPost')
                 .doc(doc["docId"])
                 .update({'sendExpProvider': true});
             Future.delayed(const Duration(seconds: 2), () {
-              print("expired");
               initInfo();
               sendPushMessage(
-                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
+                  token: token, title: " طعام منتهي الصلاحية", text: doc["postTitle"]);
             });
           }
           var snapp = await FirebaseFirestore.instance
@@ -107,7 +99,6 @@ class _individualPageState extends State<individual> {
           }
         } //end if
         if (doc["reserve"] == '1' && doc["notify"] == '0') {
-          print('notify');
           Future.delayed(const Duration(seconds: 5), () {
             initInfo();
             sendPushMessage(
@@ -120,7 +111,6 @@ class _individualPageState extends State<individual> {
         }
 
         if (doc["reserve"] == '1' && doc["providerblocked"] == true) {
-          print('notify');
           Future.delayed(const Duration(seconds: 7), () {
             initInfo();
             sendPushMessage(
@@ -166,6 +156,11 @@ class _individualPageState extends State<individual> {
               .collection('foodPost')
               .doc(doc["docId"])
               .update({'notifyCancelC': '1'});
+
+                 FirebaseFirestore.instance
+              .collection('foodPost')
+              .doc(doc["docId"])
+              .update({ "reservedby": null});
         }
         var raw_date = doc["postExp"].toString().split('-');
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
@@ -173,16 +168,14 @@ class _individualPageState extends State<individual> {
 
         if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpConsumer"] == false) {
-            print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
                 .collection('foodPost')
                 .doc(doc["docId"])
                 .update({'sendExpConsumer': true});
             Future.delayed(const Duration(seconds: 2), () {
-              print("expired");
               initInfo();
               sendPushMessage(
-                  token: token, title: "طعام منتهي", text: doc["postTitle"]);
+                  token: token, title: "طعام منتهي الصلاحية", text: doc["postTitle"]);
             });
           }
           var snapp = await FirebaseFirestore.instance

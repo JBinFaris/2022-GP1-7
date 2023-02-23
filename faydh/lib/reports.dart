@@ -164,7 +164,6 @@ class _reportsScreenState extends State<reportsScreen> {
                         flag: element['flag'],
                       ));
                     }
-                    print(postList.length);
 
                     for (var i = 0; i < usersList.length; i++) {
                       for (var j = 0; j < postList.length; j++) {
@@ -174,7 +173,6 @@ class _reportsScreenState extends State<reportsScreen> {
                         }
                       }
                     }
-                    print(postList.length);
 
                     return ListView.builder(
                       itemCount: postList.length,

@@ -416,7 +416,7 @@ class _UsersListCardsState extends State<UsersListCards> {
                                                 .then((QuerySnapshot
                                                     querySnapshot) {
                                               querySnapshot.docs.forEach((doc) {
-                                                if (doc["reservedby"] == null) {
+                                                if (doc["reserve"] == 0) {
                                                   FirebaseFirestore.instance
                                                       .collection('foodPost')
                                                       .doc(doc["docId"])
@@ -449,8 +449,8 @@ class _UsersListCardsState extends State<UsersListCards> {
                                               });
                                             });
                                             sendEmail(
-                                              name: email.toString(),
-                                              email: username.toString(),
+                                              name:  username.toString(),
+                                              email:email.toString(),
                                             );
                                             Navigator.of(context).pop();
                                           },
@@ -487,9 +487,9 @@ class _UsersListCardsState extends State<UsersListCards> {
     required String email,
   }) async {
     const serviceId = 'service_xutbn8n';
-    var userId = '7hJUinnZHv07_0-Ae';
+  var userId = 'yu28ADkQLA2An3skZ';
 
-    var templateId = 'template_4i58c5d';
+  var templateId = 'template_7wo8xwf';
 
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
     var response = await http.post(

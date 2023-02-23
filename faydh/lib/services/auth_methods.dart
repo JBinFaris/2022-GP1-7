@@ -48,7 +48,6 @@ class AuthMethods {
             .set(user.toJson());
         return "success";
       } else {
-        print("eeerrrooorrr");
 
         res = "error";
       }

@@ -28,10 +28,8 @@ class _ApprovalCardState extends State<ApprovalCard> {
   var seen = false;
 
   void updateStatus(status, id) {
-    print(id);
 
     _firestore.collection("users").doc(id).update({"status": status});
-    print("done");
   }
 
   @override
@@ -140,7 +138,6 @@ class _ApprovalCardState extends State<ApprovalCard> {
                                                             st: "1");
                                                         Navigator.pop(context);
 
-                                                        print("check");
                                                       },
                                                     ),
                                                   ],
@@ -222,7 +219,6 @@ class _ApprovalCardState extends State<ApprovalCard> {
                                                   "${widget.snap["uid"].toString()}");
                                               var email =
                                                   "${widget.snap["email"].toString()}";
-                                              print(email);
 
                                               sendApproval(
                                                   name:
@@ -239,7 +235,6 @@ class _ApprovalCardState extends State<ApprovalCard> {
 
                                               Navigator.pop(context);
 
-                                              print("check");
                                             },
                                           ),
                                         ],

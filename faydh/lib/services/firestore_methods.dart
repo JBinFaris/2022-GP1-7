@@ -48,7 +48,6 @@ class FirestoreMethods {
           .collection('posts')
           .doc(docId)
           .update({'Cid': docId});
-      print(docId);
 
       res = "succces";
     } catch (err) {

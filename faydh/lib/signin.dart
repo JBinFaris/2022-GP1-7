@@ -355,7 +355,6 @@ class _signInSreenState extends State<signInSreen> {
           final User? user = await _auth.currentUser;
           final userID = FirebaseAuth.instance.currentUser!.uid;
 
-          print(userID);
 
           DocumentSnapshot snap;
           DocumentSnapshot snap2;
@@ -364,7 +363,6 @@ class _signInSreenState extends State<signInSreen> {
               .collection("users")
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .get();
-          print("object2");
 
           if (snap != null) {
             final myrole = (snap.data() as Map<String, dynamic>)['role'];
@@ -382,13 +380,11 @@ class _signInSreenState extends State<signInSreen> {
               String formattedDate = DateFormat('yyyy-MM-dd').format(now);
               dt3Now = DateTime.parse(formattedDate);
 
-              print(dt3Now);
 
               var raw_date = snap["crNoExpDate"].toString().split('-');
               dt4check = DateTime(int.parse('${raw_date[0]}'),
                   int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
 
-              print("IM HEREE" + "$dt4check");
             }
 
             if (Active == true) {
