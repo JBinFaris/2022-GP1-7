@@ -185,7 +185,7 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               if (sendExpProvider == true && sendExpConsumer == true) {
                          FirebaseFirestore.instance
                 .collection('users')
-                .doc(doc["docId"])
+                .doc(doc["Cid"])
                 .update({"ExpCount": FieldValue.increment(1)});
 
                 FirebaseFirestore.instance
@@ -196,15 +196,17 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
             
               }
             } else {
+                   FirebaseFirestore.instance
+                .collection('users')
+                .doc(doc["Cid"])
+                .update({"ExpCount": FieldValue.increment(1)});
+                
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .delete();
 
-                     FirebaseFirestore.instance
-                .collection('users')
-                .doc(doc["docId"])
-                .update({"ExpCount": FieldValue.increment(1)});
+                
             }
           }
         } //end if
@@ -365,11 +367,11 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
               'body': text,
               'title': title,
             },
-         /*  "notification": <String, dynamic>{
+           "notification": <String, dynamic>{
               "title": title,
               "body": text,
               "android_channel_id": "dbfood",
-            },*/
+            },
             "to": token,
           },
         ),

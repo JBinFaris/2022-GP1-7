@@ -234,9 +234,9 @@ class _viewAllFood extends State<viewAllFood> {
             if (sendExpProvider == true && sendExpConsumer == true) {
                 FirebaseFirestore.instance
                 .collection('users')
-                .doc(doc["docId"])
+                .doc(doc["Cid"])
                 .update({"ExpCount": FieldValue.increment(1)});
-                
+
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])

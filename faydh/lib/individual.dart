@@ -92,7 +92,7 @@ class _individualPageState extends State<individual> {
               if (sendExpProvider == true && sendExpConsumer == true) {
                       FirebaseFirestore.instance
                 .collection('users')
-                .doc(doc["docId"])
+                .doc(doc["Cid"])
                 .update({"ExpCount": FieldValue.increment(1)});
 
                 FirebaseFirestore.instance
@@ -104,7 +104,7 @@ class _individualPageState extends State<individual> {
             } else {
                      FirebaseFirestore.instance
                 .collection('users')
-                .doc(doc["docId"])
+                .doc(doc["Cid"])
                 .update({"ExpCount": FieldValue.increment(1)});
 
               FirebaseFirestore.instance
@@ -216,7 +216,7 @@ class _individualPageState extends State<individual> {
                 .collection('users')
                 .doc(doc["docId"])
                 .update({"ExpCount": FieldValue.increment(1)});
-                
+
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
