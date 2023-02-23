@@ -142,7 +142,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                 FirebaseFirestore.instance
                                                     .collection('users')
                                                     .doc(FirebaseAuth.instance
-                                                        .currentUser?.uid)
+                                                        .currentUser!.uid)
                                                     .update({
                                                   "reserveCount":
                                                       FieldValue.increment(1)
