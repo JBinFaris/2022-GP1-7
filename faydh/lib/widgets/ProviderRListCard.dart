@@ -133,13 +133,7 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                             TextButton(
                                               child: const Text("نعم"),
                                               onPressed: () async {
-                                                _firestore
-                                                    .collection("foodPost")
-                                                    .doc(
-                                                        "${widget.postList.docId.toString()}")
-                                                    .delete();
-
-                                                FirebaseFirestore.instance
+                                                      FirebaseFirestore.instance
                                                     .collection('users')
                                                     .doc(FirebaseAuth.instance
                                                         .currentUser!.uid)
@@ -147,6 +141,14 @@ class _ProviderRlistCardState extends State<ProviderRlistCard> {
                                                   "reserveCount":
                                                       FieldValue.increment(1)
                                                 });
+                                                
+                                                _firestore
+                                                    .collection("foodPost")
+                                                    .doc(
+                                                        "${widget.postList.docId.toString()}")
+                                                    .delete();
+
+                                          
 
                                                 Navigator.pop(context);
                                               },
