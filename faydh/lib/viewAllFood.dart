@@ -236,6 +236,11 @@ class _viewAllFood extends State<viewAllFood> {
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .delete();
+
+                     FirebaseFirestore.instance
+                .collection('users')
+                .doc(doc["docId"])
+                .update({"ExpCount": FieldValue.increment(1)});
             }
           }
         }

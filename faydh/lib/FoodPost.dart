@@ -187,12 +187,22 @@ class _FoodPostScreenState extends State<FoodPostScreen> {
                     .collection('foodPost')
                     .doc(doc["docId"])
                     .delete();
+
+                     FirebaseFirestore.instance
+                .collection('users')
+                .doc(doc["docId"])
+                .update({"ExpCount": FieldValue.increment(1)});
               }
             } else {
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .delete();
+
+                     FirebaseFirestore.instance
+                .collection('users')
+                .doc(doc["docId"])
+                .update({"ExpCount": FieldValue.increment(1)});
             }
           }
         } //end if
