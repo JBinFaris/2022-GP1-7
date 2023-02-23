@@ -232,15 +232,17 @@ class _viewAllFood extends State<viewAllFood> {
             var sendExpConsumer = data!["sendExpConsumer"];
             var sendExpProvider = data!["sendExpProvider"];
             if (sendExpProvider == true && sendExpConsumer == true) {
+                FirebaseFirestore.instance
+                .collection('users')
+                .doc(doc["docId"])
+                .update({"ExpCount": FieldValue.increment(1)});
+                
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .delete();
 
-                     FirebaseFirestore.instance
-                .collection('users')
-                .doc(doc["docId"])
-                .update({"ExpCount": FieldValue.increment(1)});
+                   
             }
           }
         }

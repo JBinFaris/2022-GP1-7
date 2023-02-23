@@ -90,24 +90,28 @@ class _individualPageState extends State<individual> {
             var sendExpProvider = data!["sendExpProvider"];
             if (doc['reserve'] == 1) {
               if (sendExpProvider == true && sendExpConsumer == true) {
+                      FirebaseFirestore.instance
+                .collection('users')
+                .doc(doc["docId"])
+                .update({"ExpCount": FieldValue.increment(1)});
+
                 FirebaseFirestore.instance
                     .collection('foodPost')
                     .doc(doc["docId"])
                     .delete();
-                       FirebaseFirestore.instance
-                .collection('users')
-                .doc(doc["docId"])
-                .update({"ExpCount": FieldValue.increment(1)});
+                 
               }
             } else {
-              FirebaseFirestore.instance
-                  .collection('foodPost')
-                  .doc(doc["docId"])
-                  .delete();
                      FirebaseFirestore.instance
                 .collection('users')
                 .doc(doc["docId"])
                 .update({"ExpCount": FieldValue.increment(1)});
+
+              FirebaseFirestore.instance
+                  .collection('foodPost')
+                  .doc(doc["docId"])
+                  .delete();
+              
             }
           }
         } //end if
@@ -208,14 +212,16 @@ class _individualPageState extends State<individual> {
             var sendExpConsumer = data!["sendExpConsumer"];
             var sendExpProvider = data!["sendExpProvider"];
             if (sendExpProvider == true && sendExpConsumer == true) {
+                 FirebaseFirestore.instance
+                .collection('users')
+                .doc(doc["docId"])
+                .update({"ExpCount": FieldValue.increment(1)});
+                
               FirebaseFirestore.instance
                   .collection('foodPost')
                   .doc(doc["docId"])
                   .delete();
-                     FirebaseFirestore.instance
-                .collection('users')
-                .doc(doc["docId"])
-                .update({"ExpCount": FieldValue.increment(1)});
+                  
             }
           }
         }
