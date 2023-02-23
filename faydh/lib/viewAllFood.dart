@@ -126,7 +126,6 @@ class _viewAllFood extends State<viewAllFood> {
 
   void getToken({required id}) async {
     await FirebaseMessaging.instance.getToken().then((token) {
-     
       setState(() {
         mtoken = token;
         print('my token is $mtoken');
@@ -136,17 +135,15 @@ class _viewAllFood extends State<viewAllFood> {
         print('inside save token');
         saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
       });
-    //  saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
+      //  saveToken(id: FirebaseAuth.instance.currentUser!.uid, token: token!);
     });
   }
 
   void saveToken({required String id, required String token}) async {
-     
-
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
     DateTime dt1Now = DateTime.parse(formattedDate);
-  
+
     FirebaseFirestore.instance
         .collection('foodPost')
         .where('Cid', isEqualTo: id)
@@ -163,16 +160,13 @@ class _viewAllFood extends State<viewAllFood> {
           Future.delayed(const Duration(seconds: 7), () {
             initInfo();
             sendPushMessage(
-                token: token,
-                title: " حاجز الطعام محظور ",
-                text: doc["postTitle"]);
+                token: token, title: "تم الغاء الحجز", text: doc["postTitle"]);
           });
           FirebaseFirestore.instance
               .collection('foodPost')
               .doc(doc["docId"])
               .update({'reserve': '0'});
         }
-   
       });
     });
 
@@ -181,33 +175,30 @@ class _viewAllFood extends State<viewAllFood> {
         .where('reservedby', isEqualTo: id)
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) async { 
+      querySnapshot.docs.forEach((doc) async {
         if (doc["notifyCancelC"] == '0') {
           print('notifyCancelC');
-         
+
           initInfo();
-            sendPushMessage(
-                token: token, title: " طعام ملغى ", text: doc["postTitle"]);
-          
+          sendPushMessage(
+              token: token, title: " تم الغاء الحجز  ", text: doc["postTitle"]);
+
           FirebaseFirestore.instance
               .collection('foodPost')
               .doc(doc["docId"])
               .update({'notifyCancelC': '1'});
 
-               FirebaseFirestore.instance
+          FirebaseFirestore.instance
               .collection('foodPost')
               .doc(doc["docId"])
-              .update({ "reservedby": null});
-        
+              .update({"reservedby": null});
         }
-   
-        
-        
+
         var raw_date = doc["postExp"].toString().split('-');
         DateTime dt2check = DateTime(int.parse('${raw_date[0]}'),
             int.parse('${raw_date[1]}'), int.parse('${raw_date[2]}'));
 
-           if (dt1Now.isAfter(dt2check)) {
+        if (dt1Now.isAfter(dt2check)) {
           if (doc["sendExpConsumer"] == false) {
             print('bbbbbbbbbbbbbb');
             FirebaseFirestore.instance
@@ -218,7 +209,9 @@ class _viewAllFood extends State<viewAllFood> {
               print("expired");
               initInfo();
               sendPushMessage(
-                  token: token, title: "طعام منتهي الصلاحية", text: doc["postTitle"]);
+                  token: token,
+                  title: "طعام منتهي الصلاحية",
+                  text: doc["postTitle"]);
             });
           }
           var snapp = await FirebaseFirestore.instance
@@ -303,7 +296,7 @@ class _viewAllFood extends State<viewAllFood> {
         styleInformation: bigTextStyleInformation,
         priority: Priority.high,
         playSound: true,
-        onlyAlertOnce: true ,
+        onlyAlertOnce: true,
       );
 
       NotificationDetails platformChannelSpecifics =
@@ -334,13 +327,12 @@ class _viewAllFood extends State<viewAllFood> {
         body: jsonEncode(
           <String, dynamic>{
             'priority': 'high',
-
             "notification": <String, dynamic>{
               "title": title,
               "body": text,
               "android_channel_id": "dbfood",
             },
-             'data': <String, dynamic>{
+            'data': <String, dynamic>{
               'click_action': 'Flutter_Notification_Click',
               'status': 'done',
               'body': text,

@@ -137,9 +137,7 @@ class _individualPageState extends State<individual> {
           Future.delayed(const Duration(seconds: 7), () {
             initInfo();
             sendPushMessage(
-                token: token,
-                title: " حاجز الطعام محظور ",
-                text: doc["postTitle"]);
+                token: token, title: "تم الغاء  الحجز", text: doc["postTitle"]);
           });
           FirebaseFirestore.instance
               .collection('foodPost')
@@ -152,7 +150,7 @@ class _individualPageState extends State<individual> {
           Future.delayed(const Duration(seconds: 5), () {
             initInfo();
             sendPushMessage(
-                token: token, title: " طعام ملغى ", text: doc["postTitle"]);
+                token: token, title: "تم الغاء الحجز", text: doc["postTitle"]);
           });
           FirebaseFirestore.instance
               .collection('foodPost')
@@ -173,7 +171,7 @@ class _individualPageState extends State<individual> {
           Future.delayed(const Duration(seconds: 5), () {
             initInfo();
             sendPushMessage(
-                token: token, title: " طعام ملغى ", text: doc["postTitle"]);
+                token: token, title: "تم الغاء الحجز", text: doc["postTitle"]);
           });
           FirebaseFirestore.instance
               .collection('foodPost')
